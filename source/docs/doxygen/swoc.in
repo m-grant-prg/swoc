@@ -1,0 +1,10 @@
+Document: SWOC
+Title: Server Wait On Clients system documentation.
+Author: Mark Grant
+Abstract: This document describes the library APIs and the command line
+programs for the SWOC system.
+Section: Programming/C
+
+Format: HTML
+Index: @htmldir@/html/index.html
+Files: @htmldir@/html/*.html
