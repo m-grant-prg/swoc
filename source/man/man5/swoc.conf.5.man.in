@@ -1,0 +1,58 @@
+NAME
+swoc.conf - Configuration file for the swocclient and swocserver suite.
+DESCRIPTION
+swoc.conf contains one line for each parameter (Key / Value pair).
+FILES
+swoc.conf
+
+The parameters are as follows:-
+.br
+[General]	The interval, in seconds, at which to poll the status of flags
+held by the swocserverd daemon during the --wait option.
+.br
+Polling interval must be in the range 1 - 21600 (seconds).
+.br
+pollint=300
+.br
+Use SSH must be yes or no (case insensitive).
+.br
+ssh=no
+[Server]	The name of the server running the swocserverd daemon to be
+used.
+.br
+server=hermes.mgent.home
+.br
+The port number on the server to which a connection is to be established. This
+must be in the 'user-defined' range of 49152 - 65535
+.br
+srvportno=62522
+[SSH]	Local port number to use for access at this local end of the tunnel.
+(If using SSH). This value MUST be different from server portno above, but in
+the same range.
+.br
+sshportno=62521
+.br
+User name on server for SSH authentication.
+.br
+sshuser=swoc
+
+.br
+The file is stored in an etc directory. The exact location depends on the method
+of installation but for Autotools installations on Linux this is likely to be
+/usr/local/etc/swoc.conf.
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2017-2018 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+SEE ALSO
+swocclient(8) swocserver(8)

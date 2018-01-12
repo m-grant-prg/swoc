@@ -1,0 +1,243 @@
+#! /usr/bin/env bash
+#########################################################################
+#									#
+#	setup.sh is automatically generated,				#
+#		please do not modify!					#
+#									#
+#########################################################################
+
+#########################################################################
+#									#
+# Script ID: setup.sh							#
+# Author: Mark Grant							#
+#									#
+# Purpose:								#
+#	To setup the config files for the swoc client and server.	#
+#									#
+# Syntax:	setup.sh [-h || -V ]					#
+#									#
+# Exit Codes:	0 & 64 - 113 as per C/C++ standard			#
+#		0 - success						#
+#		64 - Invalid arguments					#
+#		65 - File(s) already exist				#
+#		67 - trap received					#
+#									#
+# Further Info:								#
+# In order to make the package portable all the necessary parameters	#
+# are stored in a $PREFIX/etc/swoc.conf file.				#
+# This script will create the conf files as necessary. It will NOT	#
+# maintain the files once created, post-installation the files should	#
+# be maintained by using an editor.					#
+# Please refer to the man page for the structure of the			#
+# swoc.conf file.							#
+# This script creates the following files:				#
+#	swoc.conf							#
+#									#
+#########################################################################
+
+#########################################################################
+#									#
+# Changelog								#
+#									#
+# Date		Author	Version	Description				#
+#									#
+# 02/10/2017	MG	1.0.0	Created.				#
+#									#
+#########################################################################
+
+##################
+# Init variables #
+##################
+script_exit_code=0
+outputprefix="setup.sh: "
+version="1.0.0"				# set version variable
+etclocation=@sysconfdir@		# Path to etc directory
+packageversion=@pkgversion@		# Version of the complete package
+
+pollint=""
+ssh=""
+server=""
+srvportno=""
+sshportno=""
+sshuser=""
+
+
+#############
+# Functions #
+#############
+
+# Output $1 to stdout or stderr depending on $2
+output()
+{
+	if [ $2 = 0 ]
+	then
+		echo "$outputprefix$1"
+	else
+		echo "$outputprefix$1" 1>&2
+	fi
+}
+
+# Standard function to test command error ($1 is $?) and exit if non-zero
+std_cmd_err_handler()
+{
+	if [ $1 != 0 ]
+	then
+		script_exit_code=$1
+		script_exit
+	fi
+}
+
+# Standard function to tidy up and return exit code
+script_exit()
+{
+	exit $script_exit_code
+}
+
+# Standard trap exit function
+trap_exit()
+{
+script_exit_code=67
+output "Script terminating due to trap received. Code: "$script_exit_code 1
+script_exit
+}
+
+# Setup trap
+trap trap_exit SIGHUP SIGINT SIGTERM
+
+########
+# Main #
+########
+# Process command line arguments with getopts.
+while getopts :hV arg
+do
+	case $arg in
+	h)	echo "Usage is $0 [options]"
+		echo "	-h displays usage information"
+		echo "	OR"
+		echo "	-V displays version information"
+		script_exit_code=0
+		script_exit
+		;;
+	V)	echo "$0 Script version "$version
+		echo "$0 Package version "$packageversion
+		script_exit_code=0
+		script_exit
+		;;
+	\?)	script_exit_code=64
+		output "Invalid argument -$OPTARG." 1
+		script_exit
+		;;
+	esac
+done
+
+if [ -f $etclocation/swoc.conf ]
+then
+	script_exit_code=65
+	output "File(s) exist, they must be maintained with an editor." 1
+	script_exit
+fi
+
+echo "Polling interval must be in the range 1 - 21600 (seconds)"
+std_cmd_err_handler $?
+while ((pollint < 1 || pollint > 21600))
+do
+	read -p "Polling interval for checking server lock status: " pollint
+	std_cmd_err_handler $?
+done
+
+echo "Use SSH - yes / no"
+std_cmd_err_handler $?
+while [ "$ssh" != "YES" -a "$ssh" != "yes" -a "$ssh" != "NO" -a "$ssh" != "no" ]
+do
+	read -p "SSH: " ssh
+	std_cmd_err_handler $?
+done
+
+echo "Name of the SWOC server"
+std_cmd_err_handler $?
+read -p "Server name: " server
+std_cmd_err_handler $?
+
+echo "Port number must be in the range 49152 - 65535"
+std_cmd_err_handler $?
+while ((srvportno < 49152 || srvportno > 65535))
+do
+	read -p "Port number: " srvportno
+	std_cmd_err_handler $?
+done
+
+echo "Local port number for user access to this client end of the tunnel."
+echo "MUST be different from Server portno above."
+echo "Port number must be in the range 49152 - 65535"
+std_cmd_err_handler $?
+while ((sshportno < 49152 || sshportno > 65535 || sshportno == srvportno))
+do
+	read -p "SSH Port number: " sshportno
+	std_cmd_err_handler $?
+done
+
+echo "User name on server for SSH authentication."
+std_cmd_err_handler $?
+read -p "User name: " sshuser
+std_cmd_err_handler $?
+
+
+# Setup location
+test -d $etclocation || mkdir -p $etclocation
+std_cmd_err_handler $?
+
+# Write $etclocation/swoc.conf file
+echo "[General]" >>$etclocation/swoc.conf
+std_cmd_err_handler $?
+
+echo "# Polling interval must be in the range 1 - 21600 (seconds)" \
+	>>$etclocation/swoc.conf
+std_cmd_err_handler $?
+echo "pollint="$pollint >>$etclocation/swoc.conf
+std_cmd_err_handler $?
+
+echo "# Use SSH must be yes or no (case insensitive)" \
+	>>$etclocation/swoc.conf
+std_cmd_err_handler $?
+echo "ssh="$ssh >>$etclocation/swoc.conf
+std_cmd_err_handler $?
+
+echo "[Server]" >>$etclocation/swoc.conf
+std_cmd_err_handler $?
+
+echo "# Name of the SWOC server" >>$etclocation/swoc.conf
+std_cmd_err_handler $?
+echo "server="$server >>$etclocation/swoc.conf
+std_cmd_err_handler $?
+
+echo "# Server port number must be in the range 49152 - 65535" \
+	>>$etclocation/swoc.conf
+std_cmd_err_handler $?
+echo "srvportno="$srvportno >>$etclocation/swoc.conf
+std_cmd_err_handler $?
+
+echo "[SSH]" >>$etclocation/swoc.conf
+std_cmd_err_handler $?
+
+echo "# Local port number for user access to this client end of the tunnel." \
+	>>$etclocation/swoc.conf
+echo "# MUST be different from Server portno above." >>$etclocation/swoc.conf
+echo "# Port number must be in the range 49152 - 65535" \
+	>>$etclocation/swoc.conf
+std_cmd_err_handler $?
+echo "sshportno="$sshportno >>$etclocation/swoc.conf
+std_cmd_err_handler $?
+
+echo "# User name on server for SSH authentication." >>$etclocation/swoc.conf
+std_cmd_err_handler $?
+echo "sshuser="$sshuser >>$etclocation/swoc.conf
+std_cmd_err_handler $?
+
+
+# Ensure there is a new line
+echo "" >>$etclocation/swoc.conf
+std_cmd_err_handler $?
+
+script_exit_code=0
+output "Files set up." 0
+script_exit
