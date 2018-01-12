@@ -1,0 +1,45 @@
+NAME
+parse_msg - sets the message arguments, source and requests enums.
+SYNOPSIS
+#include <libswoccommon.h>
+
+void parse_msg(struct mgemessage *msg, enum msg_arguments *msg_args,
+	enum msg_source *msg_src, enum msg_request *msg_req);
+DESCRIPTION
+The parse_msg function analyses the message and sets the message arguments,
+source and request enums as appropriate.
+.br
+message arguments are ok or err.
+.br
+message source is swocclient, swocserver of swocserverd.
+.br
+message request is end, force, lock, release, status.
+PARAMETERS
+msg - a pointer to the message to be processed.
+
+msg_args - a pointer to the msg_arguments enum. This will be set in this
+function.
+
+msg_src - a pointer to the msg_source enum. This will be set in this function.
+
+msg_req - a pointer to the msg_request enum. This will be set in this function.
+RETURN VALUE
+Void
+ERRORS
+None.
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2016-2018 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+SEE ALSO
+exch_msg(3) send_outgoing_msg(3)

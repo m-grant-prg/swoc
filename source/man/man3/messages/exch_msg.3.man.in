@@ -1,0 +1,41 @@
+NAME
+exch_msg - sends 1 message, then receives 1 message.
+SYNOPSIS
+#include <libswoccommon.h>
+
+int exch_msg(char *outgoing_msg, size_t om_length,
+	struct mgemessage *msg);
+DESCRIPTION
+The exch_msg function sends 1 outgoing message and then receives 1 incoming
+message.
+PARAMETERS
+outgoing_msg - a pointer to the message to be sent.
+
+om_length - the size of the outgoing message.
+
+msg - a pointer to the incoming message.
+
+RETURN VALUE
+mge_errno is returned.
+.br
+0 on success.
+.br
+Non-zero Failure
+ERRORS
+mge_errno is set as required.
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2016-2018 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+SEE ALSO
+parse_msg(3) send_outgoing_msg(3)
