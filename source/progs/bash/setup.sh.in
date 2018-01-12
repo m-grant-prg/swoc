@@ -1,0 +1,180 @@
+#! /usr/bin/env bash
+#########################################################################
+#									#
+#	setup.sh is automatically generated,				#
+#		please do not modify!					#
+#									#
+#########################################################################
+
+#########################################################################
+#									#
+# Script ID: setup.sh							#
+# Author: Mark Grant							#
+#									#
+# Purpose:								#
+#	To setup the config files for the swocserverd package.		#
+#									#
+# Syntax:	setup.sh [-h || -V ]					#
+#									#
+# Exit Codes:	0 & 64 - 113 as per C/C++ standard			#
+#		0 - success						#
+#		64 - Invalid arguments					#
+#		65 - File(s) already exist				#
+#		67 - trap received					#
+#									#
+# Further Info:								#
+# In order to make the package portable all the necessary parameters	#
+# are stored in a $PREFIX/etc/swocserverd.conf file.			#
+# This script will create the conf files as necessary. It will NOT	#
+# maintain the files once created, post-installation the files should	#
+# be maintained by using an editor.					#
+# Please refer to the man page for the structure of the			#
+# swocserverd.conf file.						#
+# This script creates the following files:				#
+#	swocserverd.conf						#
+#									#
+#########################################################################
+
+#########################################################################
+#									#
+# Changelog								#
+#									#
+# Date		Author	Version	Description				#
+#									#
+# 19/05/2017	MG	1.0.0	Created.				#
+# 03/06/2017	MG	1.0.1	Modified to support multiple TLS and	#
+#				non-TLS ports.				#
+# 15/09/2017	MG	1.0.2	Change from SSL to TLS.			#
+# 29/10/2017	MG	1.0.3	Remove TLS references as now using SSH	#
+#				tunnelling from client.			#
+#									#
+#########################################################################
+
+##################
+# Init variables #
+##################
+script_exit_code=0
+outputprefix="setup.sh: "
+version="1.0.3"				# set version variable
+etclocation=@sysconfdir@		# Path to etc directory
+packageversion=@pkgversion@		# Version of the complete package
+
+portno=""
+
+
+#############
+# Functions #
+#############
+
+# Output $1 to stdout or stderr depending on $2
+output()
+{
+	if [ $2 = 0 ]
+	then
+		echo "$outputprefix$1"
+	else
+		echo "$outputprefix$1" 1>&2
+	fi
+}
+
+# Standard function to test command error ($1 is $?) and exit if non-zero
+std_cmd_err_handler()
+{
+	if [ $1 != 0 ]
+	then
+		script_exit_code=$1
+		script_exit
+	fi
+}
+
+# Standard function to tidy up and return exit code
+script_exit()
+{
+	exit $script_exit_code
+}
+
+# Standard trap exit function
+trap_exit()
+{
+script_exit_code=67
+output "Script terminating due to trap received. Code: "$script_exit_code 1
+script_exit
+}
+
+# Setup trap
+trap trap_exit SIGHUP SIGINT SIGTERM
+
+########
+# Main #
+########
+# Process command line arguments with getopts.
+while getopts :hV arg
+do
+	case $arg in
+	h)	echo "Usage is $0 [options]"
+		echo "	-h displays usage information"
+		echo "	OR"
+		echo "	-V displays version information"
+		script_exit_code=0
+		script_exit
+		;;
+	V)	echo "$0 Script version "$version
+		echo "$0 Package version "$packageversion
+		script_exit_code=0
+		script_exit
+		;;
+	\?)	script_exit_code=64
+		output "Invalid argument -$OPTARG." 1
+		script_exit
+		;;
+	esac
+done
+
+if [ -f $etclocation/swocserverd.conf ]
+then
+	script_exit_code=65
+	output "File(s) exist, they must be maintained with an editor." 1
+	script_exit
+fi
+
+echo "Port number must be in the range 49152 - 65535"
+std_cmd_err_handler $?
+while ((portno < 49152 || portno > 65535))
+do
+	read -p "Port number: " portno
+	std_cmd_err_handler $?
+done
+
+echo "To setup more ports please edit the file - "$etclocation/swocserverd.conf
+std_cmd_err_handler $?
+
+
+# Setup location
+test -d $etclocation || mkdir -p $etclocation
+std_cmd_err_handler $?
+
+# Write $etclocation/swocserverd.conf file
+echo "[Ports]" >> $etclocation/swocserverd.conf
+std_cmd_err_handler $?
+echo "# Port numbers must be in the range 49152 - 65535" \
+	>> $etclocation/swocserverd.conf
+std_cmd_err_handler $?
+echo "portno-0="$portno >> $etclocation/swocserverd.conf
+std_cmd_err_handler $?
+echo "# portno-1=62523" >> $etclocation/swocserverd.conf
+std_cmd_err_handler $?
+echo "# portno-2=62524" >> $etclocation/swocserverd.conf
+std_cmd_err_handler $?
+echo "# portno-3=62525" >> $etclocation/swocserverd.conf
+std_cmd_err_handler $?
+echo "# portno-4=62526" >> $etclocation/swocserverd.conf
+std_cmd_err_handler $?
+
+
+# Ensure there is a new line
+echo "" >> $etclocation/swocserverd.conf
+std_cmd_err_handler $?
+
+script_exit_code=0
+output "Files set up." 0
+script_exit

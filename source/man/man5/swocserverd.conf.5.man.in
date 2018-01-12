@@ -1,0 +1,38 @@
+NAME
+swocserverd.conf - Configuration file for the swocserverd daemon.
+DESCRIPTION
+swocserverd.conf contains a Ports section containing a line for each parameter
+(Key / Value pair) of port numbers.
+FILES
+swocserverd.conf	The parameters are as follows:-
+
+	Section
+	[Ports]
+	# The TCP port numbers for TCP socket communication. The 5
+	# possible ports to listen on must be in the range set aside
+	# for users, 49152 - 65535.
+	portno-0=62522
+	# portno-1=62523
+	# portno-2=62524
+	# portno-3=62525
+	# portno-4=62526
+
+The file is stored in an etc directory. The exact location depends on the method
+of installation but for AutoTools installations on Linux this is likely to
+be /usr/local/etc/swocserverd.conf.
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2017-2018 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+SEE ALSO
+swocserver(8) swocserverd(8) swocclient(8) swoc.conf(5)
