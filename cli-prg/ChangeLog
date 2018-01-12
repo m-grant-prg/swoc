@@ -1,0 +1,34 @@
+2017-05-07 v 1.1.0 Mark Grant <m.grant.prg@gmail.com>
+	*  Migrate to use mge_errno and handling from libmgec. Add error
+	message output to prevent silence on error.
+	Add --wait as a command line argument.
+	Adopt standards from atcclis template v1.0.0
+
+2016-06-13 v 1.0.9 Mark Grant <m.grant.prg@gmail.com>
+	*  Adopt convention of using void in function definitions with empty
+	parameter lists.
+
+2016-06-11 v 1.0.8 Mark Grant <m.grant.prg@gmail.com>
+	*  Modified following extraction of functionality to the libswocclient
+	library.
+
+2016-05-10 v 1.0.7 Mark Grant <m.grant.prg@gmail.com>
+	*  Reorganise source.
+
+2015-10-24 v 1.0.6 Mark Grant <m.grant.prg@gmail.com>
+	*  Restructure and change to conform to AutoTools Template version 1.0.6.
+
+2015-09-27 v 1.0.5 Mark Grant <m.grant.prg@gmail.com>
+	*  Change to conform to AutoTools Template version 1.0.4.
+
+2015-07-12 v 1.0.4 Mark Grant <m.grant.prg@gmail.com>
+	*  Change to use libmgesysutils.
+
+2015-07-10 v 1.0.3 Mark Grant <m.grant.prg@gmail.com>
+	*  Extract remsyslog to libremsyslog package.
+
+2015-07-08 v 1.0.2 Mark Grant <m.grant.prg@gmail.com>
+	*  Extracted remsyslog.h to libremsyslog-dev package.
+
+2015-07-08 v 1.0.1 Mark Grant <m.grant.prg@gmail.com>
+	*  Initial release.

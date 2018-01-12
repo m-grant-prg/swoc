@@ -1,0 +1,40 @@
+NAME
+swocserverd - daemon providing Server Wait On Client server processing.
+SYNOPSIS
+swocserverd [OPTION]
+DESCRIPTION
+Daemon to respond to client (swocclient) and server (swocserver) requests.
+OPTIONS
+-D, --debug  don't daemonise and print useful information to stdout.
+
+-h, --help  prints usage information
+
+-V, --version  prints version information
+EXIT STATUS
+0
+if OK.
+
+1
+if minor problems.
+
+64
+error in command line arguments.
+
+Other non-zero
+Standard library error numbers (errno).
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2017-2018 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+SEE ALSO
+swocserver(8) swocclient(8) swoc.conf(5) swocserverd.conf(5)

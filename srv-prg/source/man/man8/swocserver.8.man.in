@@ -1,0 +1,49 @@
+NAME
+swocserver - wait for or report on client 'Server Wait On Clients' flags.
+SYNOPSIS
+swocserver [OPTION]
+DESCRIPTION
+Monitors client lock flags on this server and waits until they are cleared.
+OPTIONS
+-e, --end-daemon  end the swocserver daemon.
+
+-h, --help  prints usage information
+
+-r, --reload-config  Requests the daemon to reload it's config file
+
+-s, --status  reports on the status of server locking
+
+-u, --unlock 'Lock Name'  remove lock 'Lock Name'
+
+-V, --version  prints version information
+
+-w, --wait  causes the server to wait until lock flags are cleared by the
+clients
+EXIT STATUS
+0
+if OK.
+
+1
+if minor problems.
+
+64
+error in command line arguments.
+
+Other non-zero
+Standard library error numbers (errno).
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2015-2018 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+SEE ALSO
+swocserverd(8) swocclient(8) swoc.conf(5) swocserverd.conf(5)

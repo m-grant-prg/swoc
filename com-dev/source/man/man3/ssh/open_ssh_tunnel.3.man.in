@@ -1,0 +1,47 @@
+NAME
+open_ssh_tunnel - Set up an SSH tunnel.
+SYNOPSIS
+#include <libswoccommon.h>
+
+int open_ssh_tunnel(void);
+DESCRIPTION
+This function opens an SSH session, connects to and authenticates as user
+sshuser with a server and creates a tunnel. It then spawns a thread to relay
+data over the tunnel.
+
+It uses the global variables:-
+.br
+	server[];
+.br
+	srvportno;
+.br
+	sshportno;
+.br
+	sshuser[];
+
+The function listens to the sshportno port on the client and relays that data to
+the srvportno on the server and then relays the answer back.
+PARAMETERS
+None.
+RETURN VALUE
+0 on success.
+.br
+-1 on failure.
+ERRORS
+mge_errno is set as required.
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2017 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+SEE ALSO
+close_ssh_tunnel(3)

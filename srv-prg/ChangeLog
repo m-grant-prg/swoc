@@ -1,0 +1,38 @@
+2017-05-06 v 1.1.0 Mark Grant <m.grant.prg@gmail.com>
+	*  Introduce swocserverd daemon and migrate from NFS 'file as a flag'
+	semaphore to TCP socket stream messaging between applications and
+	daemon.
+	Add end_daemon option to command line program.
+	Enable systemd service operation. Introduce AutoTool option to configure
+	systemd.
+	Adopt standards from atcclidsisy template v1.0.0
+
+2016-06-13 v 1.0.9 Mark Grant <m.grant.prg@gmail.com>
+	*  Modify to use new more unique library function names.
+
+2016-05-28 v 1.0.8 Mark Grant <m.grant.prg@gmail.com>
+	*  Modified following introduction of processing in the libswocserver
+	library.
+
+2016-05-17 v 1.0.7 Mark Grant <m.grant.prg@gmail.com>
+	*  Add --force-unlock functionality.
+	Make --status and --wait ignore directories in its lock directory.
+
+2016-05-10 v 1.0.6 Mark Grant <m.grant.prg@gmail.com>
+	*  Move header files to include directory.
+
+2015-10-24 v 1.0.5 Mark Grant <m.grant.prg@gmail.com>
+	*  Restructure and change to conform to AutoTools General Template
+	v1.0.6.
+
+2015-09-27 v 1.0.4 Mark Grant <m.grant.prg@gmail.com>
+	*  Change to conform to AutoTools Template version 1.0.4.
+
+2015-07-12 v 1.0.3 Mark Grant <m.grant.prg@gmail.com>
+	*  Change to use libmgesysutils.
+
+2015-06-24 v 1.0.2 Mark Grant <m.grant.prg@gmail.com>
+	*  Stop installation of config.h.
+
+2015-06-22 v 1.0.1 Mark Grant <m.grant.prg@gmail.com>
+	*  Initial release.

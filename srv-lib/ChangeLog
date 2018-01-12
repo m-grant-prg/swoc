@@ -1,0 +1,17 @@
+2017-05-06 v 1.1.0 Mark Grant <m.grant.prg@gmail.com>
+	*  Convert from NFS 'file as a flag' semaphore to TCP socket messaging
+	to new server daemon.
+	Add swocserver config file (swocserver.conf) man page.
+	Migrate to use of mge_errno error handling from libmgec.
+	Print the number of clients with locks in sws_show_status().
+	Adopt standards from atclstv template version 1.0.0
+
+2016-06-13 v 1.0.3 Mark Grant <m.grant.prg@gmail.com>
+	*  Make publicly visible function names more unique.
+	Add library check for libmgesysutils.
+
+2016-05-28 v 1.0.2 Mark Grant <m.grant.prg@gmail.com>
+	*  Remove unnecessary program checks from configure.
+
+2016-05-28 v 1.0.1 Mark Grant <m.grant.prg@gmail.com>
+	*  Initial release.

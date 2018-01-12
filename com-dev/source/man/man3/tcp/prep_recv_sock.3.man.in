@@ -1,0 +1,38 @@
+NAME
+prep_recv_sock - Prepare a socket to receive a TCP stream connection.
+SYNOPSIS
+#include <libswoccommon.h>
+
+int prep_recv_sock(int *sockfd, int *portno);
+DESCRIPTION
+The prep_recv_sock function effectively performs a socket, bind and listen based
+on getaddrinfo records by utilising the est_connect function. It attempts to
+setup a TCP stream socket over IPv4 or IPv6.
+PARAMETERS
+sockfd - a pointer to the socket. A value will be assigned in this function.
+
+portno - a pointer to the port number to be used with the socket.
+RETURN VALUE
+mge_errno is returned.
+.br
+0 on success.
+.br
+Non-zero Failure
+ERRORS
+mge_errno is set as required.
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2016-2018 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+SEE ALSO
+init_conn(3) est_connect(3) listen_sock(3) close_sock(3)

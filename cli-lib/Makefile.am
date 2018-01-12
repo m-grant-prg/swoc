@@ -1,0 +1,44 @@
+#! /usr/bin/env bash
+#########################################################################
+#									#
+# Script ID: cli-lib/Makefile.am					#
+# Author: Copyright (C) 2016-2018  Mark Grant				#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0					#
+#									#
+# Purpose:								#
+#	AutoMake script file to generate libswocclient project from	#
+# source.								#
+#									#
+#########################################################################
+
+#########################################################################
+#									#
+# Changelog								#
+#									#
+# Date		Author	Version	Description				#
+#									#
+# 05/06/2016	MG	1.0.1	First release.				#
+# 06/01/2017	MG	1.0.2	Add make of man5 pages following move	#
+#				of swocclient.conf(5).			#
+# 25/04/2017	MG	1.0.3	Add support for temporary header	#
+#				directory.				#
+# 09/06/2017	MG	1.0.4	Add support for temporary libraries.	#
+# 17/10/2017	MG	1.0.7	Remove test-validate and bash as they	#
+#				moved to libswoccommon.			#
+#				Remove config file man page after move	#
+#				to libswoccommon.			#
+# 12/01/2018	MG	1.0.8	Add SPDX license tags to source files.	#
+#									#
+#########################################################################
+
+ACLOCAL_AMFLAGS = -I m4 -I m4extra
+
+SUBDIRS = source/progs/c/sysgen/inc source/progs/c/sysgen/lib
+SUBDIRS += source/progs/c/inc-tmp
+SUBDIRS += source/progs/c/lib-tmp
+SUBDIRS += source/progs/c/src/libswocclient
+SUBDIRS += source/progs/c/src/test-optionproc
+
+EXTRA_DIST  = m4/gnulib-cache.m4

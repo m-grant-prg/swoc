@@ -1,0 +1,46 @@
+#! /usr/bin/env bash
+#########################################################################
+#									#
+# Script ID: cli-prg/source/man/man8/Makefile.am			#
+# Author: Copyright (C) 2015-2018  Mark Grant				#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0					#
+#									#
+# Purpose:								#
+#	AutoMake script file to generate SWOCClient manual pages from	#
+# source.								#
+#									#
+#########################################################################
+
+#########################################################################
+#									#
+# Changelog								#
+#									#
+# Date		Author	Version	Description				#
+#									#
+# 08/07/2015	MG	1.0.1	First release.				#
+# 27/09/2015	MG	1.0.2	Change to conform to AutoTools Template	#
+#				version 1.0.4.				#
+# 25/04/2017	MG	1.0.3	Output from $(edit) was being ignored.	#
+#				Change source file extension to .man.in	#
+#				Move to section 8.			#
+# 12/01/2018	MG	1.0.4	Add SPDX license tags to source files.	#
+#									#
+#########################################################################
+
+
+swocclient.8: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	$(edit) $(srcdir)/$(@F).man.in > $@.tmp
+	txt2manwrap $(@F) 8 "Server Wait on Client Manual" $@.tmp $@
+	rm -f $@.tmp
+
+swocclient.8: $(srcdir)/swocclient.8.man.in
+
+man_MANS = swocclient.8
+
+EXTRA_DIST = $(srcdir)/swocclient.8.man.in
+
+CLEANFILES = *.tmp swocclient.8

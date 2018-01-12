@@ -1,0 +1,35 @@
+Release 1.1.0 2017-05-06
+Introduce swocserverd daemon and migrate from NFS 'file as a flag' semaphore to
+TCP socket stream messaging between applications and daemon.
+Add end_daemon option to command line program.
+Enable systemd service operation. Introduce AutoTool option to configure
+systemd.
+Adopt standards from atcclidsisy template v1.0.0
+
+Release 1.0.9 2016-06-13
+Modify to use new more unique library function names.
+
+Release 1.0.8 2016-05-28
+Modified following introduction of processing in the libswocserver library.
+
+Release 1.0.7 2016-05-17
+Add --force-unlock functionality.
+Make --status and --wait ignore directories in its lock directory.
+
+Release 1.0.6 2016-05-10
+Move header files to include directory.
+
+Release 1.0.5 2015-10-24
+Restructure and change to conform to AutoTools General Template v1.0.6.
+
+Release 1.0.4 2015-09-27
+Change to conform to AutoTools Template version 1.0.4.
+
+Release 1.0.3 2015-07-12
+Change to use libmgesysutils.
+
+Release 1.0.2 2015-06-24
+Stop installation of config.h.
+
+Release 1.0.1 2015-06-22
+Initial release.

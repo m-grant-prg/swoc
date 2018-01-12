@@ -1,0 +1,33 @@
+Release 1.1.0 2017-05-07
+Migrate to use mge_errno and handling from libmgec. Add error message output to
+prevent silence on error.
+Add --wait as a command line argument.
+Adopt standards from atcclis template v1.0.0
+
+Release 1.0.9 2016-06-13
+Adopt convention of using void in function definitions with empty parameter
+lists.
+
+Release 1.0.8 2016-06-11
+Modified following extraction of functionality to the libswocclient library.
+
+Release 1.0.7 2016-05-10
+Reorganise source.
+
+Release 1.0.6 2015-10-24
+Restructure and change to conform to AutoTools Template version 1.0.6.
+
+Release 1.0.5 2015-09-27
+Change to conform to AutoTools Template version 1.0.4.
+
+Release 1.0.4 2015-07-12
+Change to use libmgesysutils.
+
+Release 1.0.3 2015-07-10
+Extract remsyslog to libremsyslog package.
+
+Release 1.0.2 2015-07-08
+Extracted remsyslog.h to libremsyslog-dev package.
+
+Release 1.0.1 2015-07-08
+Initial release.

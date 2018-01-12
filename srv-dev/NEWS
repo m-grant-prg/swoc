@@ -1,0 +1,10 @@
+Release 1.1.0 2017-05-05
+Move from NFS share 'file as a flag' mechanism to TCP socket connection to
+server daemon.
+Update to standards from atcldpc template version 1.0.0
+
+Release 1.0.2 2016-06-12
+Improve uniqueness of publicly visible function names.
+
+Release 1.0.1 2016-05-27
+Initial release.

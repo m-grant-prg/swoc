@@ -1,0 +1,16 @@
+[Unit]
+Description=Server Wait On Clients Daemon
+Documentation=man:swocserverd(8)
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=@runstatedir@/swocserverd.pid
+ExecStart=@sbindir@/swocserverd
+ExecReload=@sbindir@/swocserver -r
+ExecStop=@sbindir@/swocserver -e
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

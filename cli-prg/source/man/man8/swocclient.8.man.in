@@ -1,0 +1,49 @@
+NAME
+swocclient - manage client's 'Server Wait On Clients' flag.
+SYNOPSIS
+swocclient [OPTION]
+DESCRIPTION
+Sets, releases or reports on this client's 'Server Wait On Clients' flags on the
+server.
+OPTIONS
+-h, --help  prints usage information.
+
+-l, --lock  sets or increments the lock flag on the server.
+
+-r, --release  releases or decrements the lock flag on the server.
+
+-s, --status  reports on the status of server locking and how many locks are
+held.
+
+-V, --version  prints version information
+
+-w, --wait  Wait until this client has 1 or fewer locks.
+EXIT STATUS
+0
+if OK,
+
+1
+if minor problems,
+
+64
+error in command line arguments.
+EXAMPLE
+A simple example for the use of the wait option would be:-
+.br
+swocclient --lock ; swocclient --wait ; swocclient --release ; shutdown -P now
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2015-2018 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+SEE ALSO
+swocserver(8) swoc.conf(5)

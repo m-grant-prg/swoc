@@ -1,0 +1,12 @@
+2017-05-06 v 1.1.0 Mark Grant <m.grant.prg@gmail.com>
+	*  Migrate from NFS 'file as a flag' semaphore to TCP stream socket
+	messaging to new swocserverd daemon.
+	Add new swc_client_wait function.
+	Migrate to use of mge_errno and libmgec error handling.
+	Adopt standards from atclstv template v1.0.0
+
+2016-06-12 v 1.0.2 Mark Grant <m.grant.prg@gmail.com>
+	*  Use void in function definition if parameter list is empty.
+
+2016-06-11 v 1.0.1 Mark Grant <m.grant.prg@gmail.com>
+	*  Initial release.

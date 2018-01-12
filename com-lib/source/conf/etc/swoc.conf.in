@@ -1,0 +1,17 @@
+[General]
+# Polling interval must be in the range 1 - 21600 (seconds)
+pollint=10
+# Use SSH must be yes or no (case insensitive)
+ssh=no
+[Server]
+# Name of the SWOC server
+server=localhost
+# Server port number must be in the range 49152 - 65535
+srvportno=62522
+[SSH]
+# Local port number for user access to this client end of the tunnel.
+# MUST be different from Server portno above.
+sshportno=62521
+# User name on server for SSH authentication.
+sshuser=swoc
+

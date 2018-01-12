@@ -1,0 +1,34 @@
+NAME
+swcom_validate_config - validates the swocserver / swocclient configuration
+file.
+SYNOPSIS
+#include <libswoccommon.h>
+
+int swcom_validate_config();
+DESCRIPTION
+The swcom_validate_config function reads the swoc.conf configuration file,
+parses it and validates it's contents.
+RETURN VALUE
+0 on success.
+.br
+mge_errno on failure.
+ERRORS
+On failure mge_errno will be set as required.
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2017-2018 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+SEE ALSO
+swc_client_wait(3) swc_rel_lock(3) swc_set_lock(3) swc_show_status(3)
+sws_end_daemon(3) sws_server_wait(3) sws_show_status(3) sws_unlock(3)
+swoc.conf(5)
