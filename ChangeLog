@@ -1,0 +1,17 @@
+2017-05-06 v 1.1.0 Mark Grant <m.grant.prg@gmail.com>
+	*  Migrate from NFS 'file as a flag' semaphore to TCP socket stream
+	messaging to new swocserverd daemon.
+	Add new swc_client_wait() function.
+	Adopt standards from atcldpc template v1.0.0
+
+2016-06-11 v 1.0.4 Mark Grant <m.grant.prg@gmail.com>
+	*  Fix typo of missing closing ')'.
+
+2016-06-11 v 1.0.3 Mark Grant <m.grant.prg@gmail.com>
+	*  Add void to empty function prototype parameter lists.
+
+2016-06-10 v 1.0.2 Mark Grant <m.grant.prg@gmail.com>
+	*  Apply new function naming convention.
+
+2016-06-10 v 1.0.1 Mark Grant <m.grant.prg@gmail.com>
+	*  Initial release.

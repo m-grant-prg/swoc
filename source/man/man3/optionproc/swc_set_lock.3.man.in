@@ -1,0 +1,29 @@
+NAME
+swc_set_lock - Set this client's lock on the server.
+SYNOPSIS
+#include <libswocclient.h>
+
+int swc_set_lock(void);
+DESCRIPTION
+The swc_set_lock function sets or increments this client's lock on the server.
+RETURN VALUE
+0 on success.
+.br
+Non-zero Failure.
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2016-2018 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+SEE ALSO
+swc_client_wait(3) swc_rel_lock(3) swc_show_status(3) swcom_validate_config(3)
+swoc.conf(5)

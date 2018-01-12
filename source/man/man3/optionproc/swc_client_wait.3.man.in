@@ -1,0 +1,36 @@
+NAME
+swc_client_wait - Wait until this client has 1 or less locks on the server.
+SYNOPSIS
+#include <libswocclient.h>
+
+int swc_client_wait();
+DESCRIPTION
+The swc_client_wait function reads the swoc.conf configuration file and
+continually queries the server for client locks. Once 1 or fewer locks exist it
+exits.
+Typically an earlier command would have set a lock.
+RETURN VALUE
+0 on success.
+.br
+Non-zero Failure
+EXAMPLE
+A simple example would be:-
+.br
+swocclient --lock ; swocclient --wait ; swocclient --release ; shutdown -P now
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2016-2018 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+SEE ALSO
+swc_rel_lock(3) swc_set_lock(3) swc_show_status(3) swcom_validate_config(3)
+swoc.conf(5)
