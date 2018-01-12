@@ -1,0 +1,32 @@
+NAME
+sws_show_status - Show the locks on this server.
+SYNOPSIS
+#include <libswocserver.h>
+
+int sws_show_status();
+DESCRIPTION
+The sws_show_status function reads the swoc.conf configuration file and lists
+all the locks on this server to stdout.
+RETURN VALUE
+0 or greater on success - returns the number of clients with locks.
+.br
+-1 on failure.
+ERRORS
+On failure mge_errno will be set as required.
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2016-2018 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+SEE ALSO
+sws_end_daemon(3) sws_reload_config(3) sws_unlock(3) sws_server_wait(3)
+swoc.conf(5)

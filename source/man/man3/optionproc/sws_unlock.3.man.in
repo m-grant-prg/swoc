@@ -1,0 +1,34 @@
+NAME
+sws_unlock - Remove a named client lock.
+SYNOPSIS
+#include <libswocserver.h>
+
+int sws_unlock(char *clientlockname);
+DESCRIPTION
+The sws_unlock function reads the swoc.conf configuration file and removes the
+named client lock.
+PARAMETERS
+clientlockname - a pointer to a string holding the client lock name.
+RETURN VALUE
+0 on success.
+.br
+mge_errno on failure.
+ERRORS
+On failure mge_errno will be set as required.
+AUTHOR
+Written by Mark Grant.
+REPORTING BUGS
+Report bugs to <m.grant.prg@gmail.com>
+COPYRIGHT
+Copyright 2016-2018 Mark Grant.
+.br
+License GPLv3+: GNU GPL version 3 or later
+.br
+<http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+.br
+There is NO WARRANTY, to the extent permitted by law.
+SEE ALSO
+sws_end_daemon(3) sws_reload_config(3) sws_show_status(3) sws_server_wait(3)
+swoc.conf(5)

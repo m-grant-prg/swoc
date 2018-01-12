@@ -1,0 +1,10 @@
+2017-05-05 v 1.1.0 Mark Grant <m.grant.prg@gmail.com>
+	*  Move from NFS share 'file as a flag' mechanism to TCP socket
+	connection to server daemon.
+	Update to standards from atcldpc template version 1.0.0
+
+2016-06-12 v 1.0.2 Mark Grant <m.grant.prg@gmail.com>
+	*  Improve uniqueness of publicly visible function names.
+
+2016-05-27 v 1.0.1 Mark Grant <m.grant.prg@gmail.com>
+	*  Initial release.
