@@ -793,8 +793,8 @@ WARN_LOGFILE           =
 INPUT                  = @srcdir@ \
 			@top_srcdir@/../com-dev/source/ \
 			@top_srcdir@/../com-lib/source/ \
-			@top_srcdir@/../cli-dev/source/ \
-			@top_srcdir@/../cli-lib/source/ \
+			@top_srcdir@/../cli-dev/src/ \
+			@top_srcdir@/../cli-lib/src/ \
 			@top_srcdir@/../cli-prg/source/ \
 			@top_srcdir@/../srv-dev/source/ \
 			@top_srcdir@/../srv-lib/source/ \
