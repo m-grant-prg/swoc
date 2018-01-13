@@ -1,5 +1,5 @@
 /**
- * @file cli-lib/source/progs/c/src/libswocclient/version.c
+ * @file cli-lib/src/prg/c/src/libswocclient/version.c
  *
  * Source for version functions.
  *
