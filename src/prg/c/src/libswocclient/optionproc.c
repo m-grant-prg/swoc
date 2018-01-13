@@ -1,5 +1,5 @@
 /**
- * @file cli-lib/source/progs/c/src/libswocclient/optionproc.c
+ * @file cli-lib/src/prg/c/src/libswocclient/optionproc.c
  *
  * Functions to process client lock flag options.
  *

@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-# Script ID: cli-lib/source/progs/c/inc-tmp/Makefile.am			#
+# Script ID: cli-lib/src/prg/c/inc-tmp/Makefile.am			#
 # Author: Copyright (C) 2017-2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#

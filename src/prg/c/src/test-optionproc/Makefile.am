@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-# Script ID: cli-lib/source/progs/c/src/test-optionproc/Makefile.am	#
+# Script ID: cli-lib/src/prg/c/src/test-optionproc/Makefile.am		#
 # Author: Copyright (C) 2016-2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
