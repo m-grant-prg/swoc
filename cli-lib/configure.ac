@@ -50,6 +50,9 @@
 #				comments.				#
 #				Update minimum autotools version needed	#
 #				to 2.69.				#
+#				Change to manual package version	#
+#				numbering on adoption of project /	#
+#				sub-project structure.			#
 #									#
 #########################################################################
 
@@ -60,25 +63,16 @@ AC_PREREQ([2.69])
 
 ########################
 #
-# The following two macros use git to provide versioning information.
-# If git is not initialised or no commit has been made, then 'Pre-Release'
-# will be used.
-# If no Tag has been created then just a commit identifier will be used.
-# If a tag has been created then the most recent tag, plus number of commits
-# since the tag, plus a commit identifier will be used.
+# The package version in ac init will be used to create an output variable which
+# can be used by ac output and / or the sed setup below to substitute bookmarks
+# in source files.
 #
 ########################
 
-AC_INIT([Server Wait On Client client side library], m4_esyscmd([ \
-	git describe --always 1>/dev/null 2>/dev/null \
-	&& git describe --always | tr -d '\n' \
-	|| echo 'Pre-Release' | tr -d '\n']),
+AC_INIT([[Server Wait On Client client side library]], [v1.1.1-rc1],
 	[m.grant.prg@gmail.com], [libswocclient])
 
-AC_SUBST([pkgversion], [m4_esyscmd([ \
-	git describe --always 1>/dev/null 2>/dev/null \
-	&& git describe --always | tr -d '\n' \
-	|| echo 'Pre-Release' | tr -d '\n'])])
+AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
 
 ########################
