@@ -32,10 +32,11 @@
 #				Remove commented out code.		#
 # 20/10/2017	MG	1.0.4	Remove man 3 page for validateconfig.	#
 # 12/01/2018	MG	1.0.5	Add SPDX license tags to source files.	#
+# 13/01/2018	MG	1.0.6	Remove unnecessary config.h generation.	#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.5 $])
+AC_REVISION([$Revision: 1.0.6 $])
 
 AC_PREREQ([2.65])
 
@@ -139,10 +140,6 @@ AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
 # Checks the compiler to use and stores it in the cc variable.
 AC_PROG_CC
 
-# Causes AC_OUTPUT to create a c preprocessor file with #define statements about
-# the configuration.
-AC_CONFIG_HEADERS([src/prg/c/gen/inc/config.h])
-
 
 ########################
 #
@@ -199,7 +196,6 @@ AC_CONFIG_FILES([Makefile
 		src/man/3/optionproc/Makefile
 		src/prg/c/inc/Makefile
 		src/prg/c/src/libswocclient/Makefile
-		src/prg/c/src/libswocclient/libswocclient.pc
-		src/prg/c/gen/inc/Makefile])
+		src/prg/c/src/libswocclient/libswocclient.pc])
 
 AC_OUTPUT
