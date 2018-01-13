@@ -50,5 +50,8 @@ int main(int argc, char **argv)
 	prg_err = swc_client_wait();
 	printf("prg_err after swc_client_wait with 2 locks is %i\n", prg_err);
 
+	libswocclient_print_pkg_version();
+	libswocclient_print_src_version();
+
 	exit(prg_err);
 }

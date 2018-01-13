@@ -3,6 +3,7 @@
 **/m4/
 **/config.guess
 **/config.sub
+**/config.h.in
 **/configure
 **/Makefile
 **/Makefile.in
