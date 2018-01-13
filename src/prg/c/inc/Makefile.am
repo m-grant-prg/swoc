@@ -1,14 +1,14 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-# Script ID: cli-dev/source/progs/c/src/Makefile.am			#
+# Script ID: cli-dev/src/prg/c/inc/Makefile.am				#
 # Author: Copyright (C) 2016-2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
 #									#
 # Purpose:								#
-#	AutoMake script file to generate libswocclient pkgconfig from	#
+#	AutoMake script file to generate libswocclient headers from	#
 # source.								#
 #									#
 #########################################################################
@@ -24,6 +24,4 @@
 #									#
 #########################################################################
 
-
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = libswocclient.pc
+include_HEADERS = libswocclient.h

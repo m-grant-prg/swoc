@@ -141,7 +141,7 @@ AC_PROG_CC
 
 # Causes AC_OUTPUT to create a c preprocessor file with #define statements about
 # the configuration.
-AC_CONFIG_HEADERS([source/progs/c/sysgen/inc/config.h])
+AC_CONFIG_HEADERS([src/prg/c/gen/inc/config.h])
 
 
 ########################
@@ -196,10 +196,10 @@ AC_CHECK_HEADERS([portability.h], [], [AC_MSG_ERROR([header not found])])
 
 # Project Makefiles to create.
 AC_CONFIG_FILES([Makefile
-		source/man/man3/optionproc/Makefile
-		source/progs/c/inc/Makefile
-		source/progs/c/src/libswocclient/Makefile
-		source/progs/c/src/libswocclient/libswocclient.pc
-		source/progs/c/sysgen/inc/Makefile])
+		src/man/3/optionproc/Makefile
+		src/prg/c/inc/Makefile
+		src/prg/c/src/libswocclient/Makefile
+		src/prg/c/src/libswocclient/libswocclient.pc
+		src/prg/c/gen/inc/Makefile])
 
 AC_OUTPUT
