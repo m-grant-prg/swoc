@@ -1,8 +1,8 @@
 **/autom4te.cache/
 **/aclocal.*
 **/m4/
-**/*.guess
-**/*.sub
+**/config.guess
+**/config.sub
 **/configure
 **/Makefile
 **/Makefile.in
