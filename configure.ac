@@ -213,8 +213,8 @@ fi
 
 # Project Makefiles to create.
 AC_CONFIG_FILES([Makefile
-		source/docs/doxygen/Doxyfile
-		source/docs/doxygen/Makefile
+		src/docs/doxygen/Doxyfile
+		src/docs/doxygen/Makefile
 		])
 
 AC_OUTPUT
