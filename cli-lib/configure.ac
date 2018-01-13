@@ -48,12 +48,14 @@
 #				ac config headers.			#
 #				Add suggestions of autoscan and improve	#
 #				comments.				#
+#				Update minimum autotools version needed	#
+#				to 2.69.				#
 #									#
 #########################################################################
 
 AC_REVISION([$Revision: 1.0.10 $])
 
-AC_PREREQ([2.65])
+AC_PREREQ([2.69])
 
 
 ########################
