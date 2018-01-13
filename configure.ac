@@ -23,6 +23,8 @@
 # 11/01/2018	MG	1.0.1	First release.				#
 # 13/01/2018	MG	1.0.2	Update minimum AutoTools version needed	#
 #				to 2.69.				#
+#				Remove debug conditional printout of	#
+#				macros.					#
 #									#
 #########################################################################
 
@@ -139,15 +141,7 @@ AC_SUBST([edit], ["sed \
 # containing the source.
 # This also checks :-	BSD install	make variable set	mkdir -p
 #			gawk
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE([Running am init automake.])
-fi
-
 AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
-
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE([Finished running am init automake.])
-fi
 
 
 ########################
@@ -159,16 +153,7 @@ fi
 #
 ########################
 
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE([Running ac config macro dir.])
-fi
-
-
 AC_CONFIG_MACRO_DIR([m4])
-
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE([Finished running ac config macro dir.])
-fi
 
 
 ########################
