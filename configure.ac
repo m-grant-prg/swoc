@@ -33,12 +33,14 @@
 # 20/10/2017	MG	1.0.4	Remove man 3 page for validateconfig.	#
 # 12/01/2018	MG	1.0.5	Add SPDX license tags to source files.	#
 # 13/01/2018	MG	1.0.6	Remove unnecessary config.h generation.	#
+#				Remove unnecessary compiler check.	#
+#				Update AC version needed to 2.69.	#
 #									#
 #########################################################################
 
 AC_REVISION([$Revision: 1.0.6 $])
 
-AC_PREREQ([2.65])
+AC_PREREQ([2.69])
 
 
 ########################
