@@ -137,9 +137,6 @@ AC_SUBST([edit], ["sed \
 # containing the source.
 AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
 
-# Checks the compiler to use and stores it in the cc variable.
-AC_PROG_CC
-
 
 ########################
 #
