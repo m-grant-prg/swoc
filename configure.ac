@@ -199,7 +199,9 @@ fi
 AC_CHECK_HEADERS([portability.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([sys/types.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([netinet/in.h], [], [AC_MSG_ERROR([header not found])])
+AC_CHECK_HEADERS([netdb.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([mgemessage.h], [], [AC_MSG_ERROR([header not found])])
+
 # Checks for C++ header files.
 
 # Checks for typedefs, structures, and compiler characteristics.
