@@ -792,7 +792,7 @@ WARN_LOGFILE           =
 
 INPUT                  = @srcdir@ \
 			@top_srcdir@/../com-dev/src/ \
-			@top_srcdir@/../com-lib/source/ \
+			@top_srcdir@/../com-lib/src/ \
 			@top_srcdir@/../cli-dev/src/ \
 			@top_srcdir@/../cli-lib/src/ \
 			@top_srcdir@/../cli-prg/source/ \
