@@ -133,6 +133,8 @@ AC_SUBST([edit], ["sed \
 
 # Passes the options to all am files. Puts objects in the sub-directory
 # containing the source.
+# This also checks :-	BSD install	make variable set	mkdir -p
+#			gawk
 AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
 
 
@@ -151,8 +153,18 @@ AC_CONFIG_MACRO_DIR([m4])
 ########################
 #
 # Checks for programs.
-# install, mkdir and gawk are checked by AM_INIT_AUTOMAKE.
-# grep, egrep and ranlib are also automatically checked.
+# If using am init automake, gl early or lt init the following programs are
+# automatically checked:-
+#
+# am init automake
+#	BSD install	mkdir -p	gawk
+#
+# gl early
+#	ar	grep	egrep	ranlib
+#
+# lt init
+#	fgrep	ranlib	sed
+#
 # Particular and generic program checks follow:
 #
 ########################
