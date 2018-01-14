@@ -131,6 +131,8 @@ AC_SUBST([edit], ["sed \
 		-e 's|@pkglibexecdir[@]|\$(pkglibexecdir)|g'"])
 
 
+# Passes the options to all am files. Puts objects in the sub-directory
+# containing the source.
 AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
 
 
