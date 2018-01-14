@@ -24,6 +24,10 @@
 #				ignored.				#
 #				Rename source file extensions .man.in	#
 # 12/01/2018	MG	1.0.3	Add SPDX license tags to source files.	#
+# 14/01/2018	MG	1.0.4	Determine the manual section from the	#
+#				target suffix. If the suffix is blank	#
+#				(foo.) or if there is no suffix (foo)	#
+#				then error out.				#
 #									#
 #########################################################################
 
@@ -32,7 +36,19 @@ close_sock.3 est_connect.3 init_conn.3 listen_sock.3 prep_recv_sock.3: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	$(edit) $(srcdir)/$(@F).man.in > $@.tmp
-	txt2manwrap $(@F) 3 "SWOCCommon Library Manual" $@.tmp $@
+	targfile=$(@F);	\
+	if [[ $$targfile == *"."* ]]; then \
+		if [[ $${targfile##*.} == "" ]]; then \
+			echo "Source file suffix used as section but empty."; \
+			exit 1; \
+		else \
+			section=$${targfile##*.}; \
+		fi; \
+	else \
+		echo "Source file suffix used as section but no dot & empty."; \
+		exit 1; \
+	fi; \
+	txt2manwrap $(@F) $$section "Server Wait on Client Manual" $@.tmp $@
 	rm -f $@.tmp
 
 close_sock.3: $(srcdir)/close_sock.3.man.in
