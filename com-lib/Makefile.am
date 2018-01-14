@@ -31,13 +31,13 @@
 
 ACLOCAL_AMFLAGS = -I m4 -I m4extra
 
-SUBDIRS = source/conf/etc
-SUBDIRS += source/man/man5
-SUBDIRS += source/progs/bash
-SUBDIRS += source/progs/c/sysgen/lib
-SUBDIRS += source/progs/c/inc-tmp source/progs/c/lib-tmp
-SUBDIRS += source/progs/c/src/libswoccommon
-SUBDIRS += source/progs/c/src/test-messages source/progs/c/src/test-ssh
-SUBDIRS += source/progs/c/src/test-tcp source/progs/c/src/test-validate
+SUBDIRS = src/conf/etc
+SUBDIRS += src/man/5
+SUBDIRS += src/prg/bash
+SUBDIRS += src/prg/c/gen/lib
+SUBDIRS += src/prg/c/inc-tmp src/prg/c/lib-tmp
+SUBDIRS += src/prg/c/src/libswoccommon
+SUBDIRS += src/prg/c/src/test-messages src/prg/c/src/test-ssh
+SUBDIRS += src/prg/c/src/test-tcp src/prg/c/src/test-validate
 
 EXTRA_DIST  = m4/gnulib-cache.m4
