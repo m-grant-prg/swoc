@@ -176,7 +176,15 @@ fi
 
 # Check for ranlib recommended by autoscan for ltmain.sh but rendered obsolete
 # by lt init.
+if test "x${debug}" = xtrue; then
+	AC_MSG_NOTICE([Running ac prog ranlib.])
+fi
 
+AC_PROG_RANLIB
+
+if test "x${debug}" = xtrue; then
+	AC_MSG_NOTICE([Finished running ac prog ranlib.])
+fi
 
 # Check for libtool minimum version.
 if test "x${debug}" = xtrue; then
