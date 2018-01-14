@@ -131,6 +131,8 @@ AC_SUBST([edit], ["sed \
 
 # Passes the options to all am files. Puts objects in the sub-directory
 # containing the source.
+# This also checks :-	BSD install	make variable set	mkdir -p
+#			gawk
 AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
 
 
