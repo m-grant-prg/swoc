@@ -29,12 +29,13 @@
 #				and validateconfig man 3 pages.		#
 # 12/01/2018	MG	1.0.4	Add SPDX license tags to source files.	#
 # 14/01/2018	MG	1.0.5	Remove unnecessary config.h generation.	#
+#				Update AutoTools minimum version to 2.69#
 #									#
 #########################################################################
 
 AC_REVISION([$Revision: 1.0.5 $])
 
-AC_PREREQ([2.65])
+AC_PREREQ([2.69])
 
 
 ########################
