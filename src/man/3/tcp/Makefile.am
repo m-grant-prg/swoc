@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-# Script ID: com-dev/source/man/man3/tcp/Makefile.am			#
+# Script ID: com-dev/src/man/3/tcp/Makefile.am				#
 # Author: Copyright (C) 2016-2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#

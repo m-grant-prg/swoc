@@ -1,14 +1,14 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-# Script ID: com-dev/source/progs/c/src/libswoccommon/Makefile.am	#
+# Script ID: com-dev/src/prg/c/inc/Makefile.am				#
 # Author: Copyright (C) 2016-2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
 #									#
 # Purpose:								#
-#	AutoMake script file to generate libswoccommon pkgconfig from	#
+#	AutoMake script file to generate libswoccommon headers from	#
 # source.								#
 #									#
 #########################################################################
@@ -24,6 +24,4 @@
 #									#
 #########################################################################
 
-
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = libswoccommon.pc
+include_HEADERS = libswoccommon.h

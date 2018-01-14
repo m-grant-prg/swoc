@@ -29,7 +29,7 @@
 
 ACLOCAL_AMFLAGS = -I m4 -I m4extra
 
-SUBDIRS = source/man/man3/messages source/man/man3/ssh source/man/man3/tcp
-SUBDIRS += source/man/man3/validateconfig
-SUBDIRS += source/progs/c/inc
-SUBDIRS += source/progs/c/src/libswoccommon
+SUBDIRS = src/man/3/messages src/man/3/ssh src/man/3/tcp
+SUBDIRS += src/man/3/validateconfig
+SUBDIRS += src/prg/c/inc
+SUBDIRS += src/prg/c/src/libswoccommon

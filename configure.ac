@@ -214,12 +214,12 @@ AC_TYPE_SIZE_T
 
 # Project Makefiles to create.
 AC_CONFIG_FILES([Makefile
-		source/man/man3/messages/Makefile
-		source/man/man3/ssh/Makefile
-		source/man/man3/tcp/Makefile
-		source/man/man3/validateconfig/Makefile
-		source/progs/c/inc/Makefile
-		source/progs/c/src/libswoccommon/Makefile
-		source/progs/c/src/libswoccommon/libswoccommon.pc])
+		src/man/3/messages/Makefile
+		src/man/3/ssh/Makefile
+		src/man/3/tcp/Makefile
+		src/man/3/validateconfig/Makefile
+		src/prg/c/inc/Makefile
+		src/prg/c/src/libswoccommon/Makefile
+		src/prg/c/src/libswoccommon/libswoccommon.pc])
 
 AC_OUTPUT

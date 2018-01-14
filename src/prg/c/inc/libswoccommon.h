@@ -1,5 +1,5 @@
 /**
- * @file com-dev/source/progs/c/inc/libswoccommon.h
+ * @file com-dev/src/prg/c/inc/libswoccommon.h
  *
  * Header file for Server Wait on Client common library.
  *

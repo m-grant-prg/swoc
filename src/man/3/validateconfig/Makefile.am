@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-# Script ID: com-dev/source/man/man3/validateconfig/Makefile.am		#
+# Script ID: com-dev/src/man/3/validateconfig/Makefile.am		#
 # Author: Copyright (C) 2017-2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
