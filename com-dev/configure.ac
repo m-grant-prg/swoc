@@ -193,12 +193,22 @@ if test "x$TXT2MANWRAP" = "xno" ; then
    	AC_MSG_ERROR([txt2manwrap not found])
 fi
 
+# Checks for libraries.
 
 # Checks for C header files.
 AC_CHECK_HEADERS([portability.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([sys/types.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([netinet/in.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([mgemessage.h], [], [AC_MSG_ERROR([header not found])])
+# Checks for C++ header files.
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_MSG_NOTICE([checking for typedefs required by this application])
+AC_TYPE_SIZE_T
+
+# Checks for library functions.
+
+# Checks for pkg-config files.
 
 # Project Makefiles to create.
 AC_CONFIG_FILES([Makefile
