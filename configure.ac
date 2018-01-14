@@ -28,10 +28,11 @@
 # 18/10/2017	MG	1.0.3	Add open_ssh_tunnel, close_ssh_tunnel	#
 #				and validateconfig man 3 pages.		#
 # 12/01/2018	MG	1.0.4	Add SPDX license tags to source files.	#
+# 14/01/2018	MG	1.0.5	Remove unnecessary config.h generation.	#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.3 $])
+AC_REVISION([$Revision: 1.0.5 $])
 
 AC_PREREQ([2.65])
 
@@ -132,8 +133,6 @@ AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
 
 AC_PROG_CC
 
-AC_CONFIG_HEADERS([source/progs/c/sysgen/inc/config.h])
-
 
 ########################
 #
@@ -195,7 +194,6 @@ AC_CONFIG_FILES([Makefile
 		source/man/man3/validateconfig/Makefile
 		source/progs/c/inc/Makefile
 		source/progs/c/src/libswoccommon/Makefile
-		source/progs/c/src/libswoccommon/libswoccommon.pc
-		source/progs/c/sysgen/inc/Makefile])
+		source/progs/c/src/libswoccommon/libswoccommon.pc])
 
 AC_OUTPUT
