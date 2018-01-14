@@ -33,10 +33,11 @@
 #				store result in a variable for AutoMake	#
 #				consumption.				#
 # 12/01/2018	MG	1.0.6	Add SPDX license tags to source files.	#
+# 14/01/2018	MG	1.0.7	Correct the generation of config.h	#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.6 $])
+AC_REVISION([$Revision: 1.0.7 $])
 
 AC_PREREQ([2.65])
 
@@ -313,7 +314,6 @@ AC_CONFIG_FILES([Makefile
 		source/conf/etc/Makefile
 		source/man/man5/Makefile
 		source/progs/bash/Makefile
-		source/progs/c/sysgen/inc/Makefile
 		source/progs/c/sysgen/lib/Makefile
 		source/progs/c/inc-tmp/Makefile
 		source/progs/c/lib-tmp/Makefile

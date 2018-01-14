@@ -25,6 +25,7 @@
 # 17/10/2017	MG	1.0.4	Changes to support SSH introduction.	#
 #				Add man 5 build.			#
 # 12/01/2018	MG	1.0.5	Add SPDX license tags to source files.	#
+# 14/01/2018	MG	1.0.6	Correct the generation of config.h	#
 #									#
 #########################################################################
 
@@ -33,7 +34,7 @@ ACLOCAL_AMFLAGS = -I m4 -I m4extra
 SUBDIRS = source/conf/etc
 SUBDIRS += source/man/man5
 SUBDIRS += source/progs/bash
-SUBDIRS += source/progs/c/sysgen/inc source/progs/c/sysgen/lib
+SUBDIRS += source/progs/c/sysgen/lib
 SUBDIRS += source/progs/c/inc-tmp source/progs/c/lib-tmp
 SUBDIRS += source/progs/c/src/libswoccommon
 SUBDIRS += source/progs/c/src/test-messages source/progs/c/src/test-ssh
