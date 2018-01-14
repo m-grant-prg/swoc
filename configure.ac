@@ -24,12 +24,13 @@
 # Date		Author	Version	Description				#
 #									#
 # 11/01/2018	MG	1.0.1	First release.				#
+# 14/01/2018	MG	1.0.2	Update minimum AutoTools version.	#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.1 $])
+AC_REVISION([$Revision: 1.0.2 $])
 
-AC_PREREQ([2.65])
+AC_PREREQ([2.69])
 
 
 ########################
