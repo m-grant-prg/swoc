@@ -39,12 +39,12 @@ docbasedir = $(datarootdir)/doc-base
 # documentation which would then be installed.
 
 $(docpkg): doxygen.stamp
-	if [ -d $(top_srcdir)/../com-lib/source/ \
+	if [ -d $(top_srcdir)/../com-lib/src/ \
 		-a -d $(top_srcdir)/../com-dev/src/ ]; \
 		then tar chof - html | gzip -9 -c > $@; fi
 
 doxygen.stamp: Doxyfile
-	if [ -d $(top_srcdir)/../com-lib/source/ \
+	if [ -d $(top_srcdir)/../com-lib/src/ \
 		-a -d $(top_srcdir)/../com-dev/src/ ]; \
 		then doxygen $<; fi
 	echo Timestamp > $@
