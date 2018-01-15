@@ -27,6 +27,10 @@
 #				Rename source file extensions .man.in	#
 # 15/09/2017	MG	1.0.6	Change force_unlock to unlock.		#
 # 12/01/2018	MG	1.0.7	Add SPDX license tags to source files.	#
+# 15/01/2018	MG	1.0.8	Determine the manual section from the	#
+#				target suffix. If the suffix is blank	#
+#				(foo.) or if there is no suffix (foo)	#
+#				then error out.				#
 #									#
 #########################################################################
 
@@ -36,7 +40,19 @@ sws_end_daemon.3 sws_reload_config.3 sws_server_wait.3 sws_show_status.3 \
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	$(edit) $(srcdir)/$(@F).man.in > $@.tmp
-	txt2manwrap $(@F) 3 "SWOCServer Library Manual" $@.tmp $@
+	targfile=$(@F);	\
+	if [[ $$targfile == *"."* ]]; then \
+		if [[ $${targfile##*.} == "" ]]; then \
+			echo "Source file suffix used as section but empty."; \
+			exit 1; \
+		else \
+			section=$${targfile##*.}; \
+		fi; \
+	else \
+		echo "Source file suffix used as section but no dot & empty."; \
+		exit 1; \
+	fi; \
+	txt2manwrap $(@F) $$section "Server Wait on Client Manual" $@.tmp $@
 	rm -f $@.tmp
 
 sws_end_daemon.3: $(srcdir)/sws_end_daemon.3.man.in
