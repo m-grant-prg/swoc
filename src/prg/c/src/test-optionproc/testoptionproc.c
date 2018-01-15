@@ -45,5 +45,8 @@ int main(int argc, char **argv)
 
 	//printf("retval after sws_end_daemon is %i\n", retval);
 
+	libswocserver_print_pkg_version();
+	libswocserver_print_src_version();
+
 	exit(retval);
 }
