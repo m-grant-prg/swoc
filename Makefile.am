@@ -40,6 +40,7 @@
 ACLOCAL_AMFLAGS = -I m4 -I m4extra
 
 SUBDIRS = src/prg/c/gen/lib
+SUBDIRS += src/prg/c/inc-tmp
 SUBDIRS += src/prg/c/lib-tmp
 SUBDIRS += src/prg/c/src/libswocserver
 SUBDIRS += src/prg/c/src/test-optionproc
