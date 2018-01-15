@@ -1,5 +1,5 @@
 /**
- * @file cli-prg/source/progs/c/inc/swocclient.h
+ * @file cli-prg/src/prg/c/inc/swocclient.h
  *
  * Header file for Server Wait on Clients client-side program.
  *

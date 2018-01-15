@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-# Script ID: cli-prg/source/progs/c/src/swocclient/Makefile.am		#
+# Script ID: cli-prg/src/prg/c/src/swocclient/Makefile.am		#
 # Author: Copyright (C) 2015-2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#

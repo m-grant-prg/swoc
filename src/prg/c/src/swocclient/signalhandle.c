@@ -1,5 +1,5 @@
 /**
- * @file cli-prg/source/progs/c/src/swocclient/signalhandle.c
+ * @file cli-prg/src/prg/c/src/swocclient/signalhandle.c
  *
  * Signal handling functions.
  *

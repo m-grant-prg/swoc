@@ -1,5 +1,5 @@
 /**
- * @file cli-prg/source/progs/c/src/swocclient/cmdlineargs.c
+ * @file cli-prg/src/prg/c/src/swocclient/cmdlineargs.c
  *
  * Command line argument processing for swocclient using getopt_long.
  *

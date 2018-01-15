@@ -1,5 +1,5 @@
 /**
- * @file cli-prg/source/progs/c/src/swocclient/version.c
+ * @file cli-prg/src/prg/c/src/swocclient/version.c
  *
  * Source for version functions.
  *

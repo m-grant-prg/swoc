@@ -34,11 +34,11 @@
 
 ACLOCAL_AMFLAGS = -I m4 -I m4extra
 
-SUBDIRS = source/man/man8
-SUBDIRS += source/progs/c/sysgen/inc source/progs/c/sysgen/lib
-SUBDIRS += source/progs/c/inc
-SUBDIRS += source/progs/c/inc-tmp
-SUBDIRS += source/progs/c/lib-tmp
-SUBDIRS += source/progs/c/src/swocclient
+SUBDIRS = src/man/8
+SUBDIRS += src/prg/c/gen/inc src/prg/c/gen/lib
+SUBDIRS += src/prg/c/inc
+SUBDIRS += src/prg/c/inc-tmp
+SUBDIRS += src/prg/c/lib-tmp
+SUBDIRS += src/prg/c/src/swocclient
 
 EXTRA_DIST  = m4/gnulib-cache.m4
