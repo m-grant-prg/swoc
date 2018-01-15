@@ -795,7 +795,7 @@ INPUT                  = @srcdir@ \
 			@top_srcdir@/../com-lib/src/ \
 			@top_srcdir@/../cli-dev/src/ \
 			@top_srcdir@/../cli-lib/src/ \
-			@top_srcdir@/../cli-prg/source/ \
+			@top_srcdir@/../cli-prg/src/ \
 			@top_srcdir@/../srv-dev/src/ \
 			@top_srcdir@/../srv-lib/src/ \
 			@top_srcdir@/../srv-prg/source/
