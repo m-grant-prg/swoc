@@ -93,7 +93,7 @@ AC_SUBST([pkgversion], [m4_esyscmd([ \
 
 AC_SUBST([tmpheaders])
 
-for entry in `dirname $0`/source/progs/c/inc-tmp/*.h
+for entry in `dirname $0`/src/prg/c/inc-tmp/*.h
 do
 	if test -f "$entry" ;then
 		tmpheaders=$tmpheaders" "$(basename "$entry")
@@ -115,11 +115,11 @@ done
 
 AC_SUBST([tmplibraries])
 
-for direntry in `dirname $0`/source/progs/c/lib-tmp/*
+for direntry in `dirname $0`/src/prg/c/lib-tmp/*
 do
 	if test -d "$direntry" ;then
 		for entry in `dirname $0`\
-/source/progs/c/lib-tmp/$(basename "$direntry")/*.la
+/src/prg/c/lib-tmp/$(basename "$direntry")/*.la
 		do
 			if test -f "$entry" ;then
 				tmplibraries=$tmplibraries\
@@ -246,7 +246,7 @@ LT_INIT
 
 # Causes AC_OUTPUT to create a c preprocessor file with #define statements about
 # the configuration.
-AC_CONFIG_HEADERS([source/progs/c/sysgen/inc/config.h])
+AC_CONFIG_HEADERS([src/prg/c/gen/inc/config.h])
 
 
 ########################
@@ -323,11 +323,11 @@ PKG_CHECK_MODULES(LIBSWOCCOMMON, libswoccommon, [], \
 
 # Project Makefiles to create.
 AC_CONFIG_FILES([Makefile
-		source/progs/c/inc-tmp/Makefile
-		source/progs/c/lib-tmp/Makefile
-		source/progs/c/src/libswocserver/Makefile
-		source/progs/c/src/test-optionproc/Makefile
-		source/progs/c/sysgen/inc/Makefile
-		source/progs/c/sysgen/lib/Makefile])
+		src/prg/c/inc-tmp/Makefile
+		src/prg/c/lib-tmp/Makefile
+		src/prg/c/src/libswocserver/Makefile
+		src/prg/c/src/test-optionproc/Makefile
+		src/prg/c/gen/inc/Makefile
+		src/prg/c/gen/lib/Makefile])
 
 AC_OUTPUT

@@ -1,5 +1,5 @@
 /**
- * @file srv-lib/source/progs/c/src/libswocserver/optionproc.c
+ * @file srv-lib/src/prg/c/src/libswocserver/optionproc.c
  *
  * Functions to process server lock flag options.
  *
