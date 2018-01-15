@@ -1,5 +1,5 @@
 /**
- * @file cli-prg/source/progs/c/src/swocclient/main.c
+ * @file cli-prg/src/prg/c/src/swocclient/main.c
  *
  * Server Wait On Clients client program.
  * To enable a client to place lock flags on a server which will then wait for

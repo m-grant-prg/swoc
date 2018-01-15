@@ -97,7 +97,7 @@ AC_SUBST([pkgversion], [m4_esyscmd([ \
 
 AC_SUBST([tmpheaders])
 
-for entry in `dirname $0`/source/progs/c/inc-tmp/*.h
+for entry in `dirname $0`/src/prg/c/inc-tmp/*.h
 do
 	if test -f "$entry" ;then
 		tmpheaders=$tmpheaders" "$(basename "$entry")
@@ -119,11 +119,11 @@ done
 
 AC_SUBST([tmplibraries])
 
-for direntry in `dirname $0`/source/progs/c/lib-tmp/*
+for direntry in `dirname $0`/src/prg/c/lib-tmp/*
 do
 	if test -d "$direntry" ;then
 		for entry in `dirname $0`\
-/source/progs/c/lib-tmp/$(basename "$direntry")/*.la
+/src/prg/c/lib-tmp/$(basename "$direntry")/*.la
 		do
 			if test -f "$entry" ;then
 				tmplibraries=$tmplibraries\
@@ -236,7 +236,7 @@ AM_PROG_AR
 
 LT_INIT
 
-AC_CONFIG_HEADERS([source/progs/c/sysgen/inc/config.h])
+AC_CONFIG_HEADERS([src/prg/c/gen/inc/config.h])
 
 
 ########################
@@ -316,12 +316,12 @@ PKG_CHECK_MODULES(LIBMGEC, libmgec, [], \
 
 # Project Makefiles to create.
 AC_CONFIG_FILES([Makefile
-		source/man/man8/Makefile
-		source/progs/c/sysgen/inc/Makefile
-		source/progs/c/sysgen/lib/Makefile
-		source/progs/c/inc/Makefile
-		source/progs/c/inc-tmp/Makefile
-		source/progs/c/lib-tmp/Makefile
-		source/progs/c/src/swocclient/Makefile])
+		src/man/8/Makefile
+		src/prg/c/gen/inc/Makefile
+		src/prg/c/gen/lib/Makefile
+		src/prg/c/inc/Makefile
+		src/prg/c/inc-tmp/Makefile
+		src/prg/c/lib-tmp/Makefile
+		src/prg/c/src/swocclient/Makefile])
 
 AC_OUTPUT

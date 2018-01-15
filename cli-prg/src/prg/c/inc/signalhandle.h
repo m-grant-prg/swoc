@@ -1,5 +1,5 @@
 /**
- * @file cli-prg/source/progs/c/inc/signalhandle.h
+ * @file cli-prg/src/prg/c/inc/signalhandle.h
  *
  * Header file for signal handling.
  *

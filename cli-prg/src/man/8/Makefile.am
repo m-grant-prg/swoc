@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-# Script ID: cli-prg/source/man/man8/Makefile.am			#
+# Script ID: cli-prg/src/man/8/Makefile.am				#
 # Author: Copyright (C) 2015-2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
