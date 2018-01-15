@@ -50,10 +50,11 @@
 # 28/10/2017	MG	1.0.15	Remove getopt program check following	#
 #				removal of bash setup script.		#
 # 12/01/2018	MG	1.0.16	Add SPDX license tags to source files.	#
+# 15/01/2018	MG	1.0.17	Correct generation of config.h		#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.16 $])
+AC_REVISION([$Revision: 1.0.17 $])
 
 AC_PREREQ([2.65])
 
@@ -317,7 +318,6 @@ PKG_CHECK_MODULES(LIBMGEC, libmgec, [], \
 # Project Makefiles to create.
 AC_CONFIG_FILES([Makefile
 		src/man/8/Makefile
-		src/prg/c/gen/inc/Makefile
 		src/prg/c/gen/lib/Makefile
 		src/prg/c/inc/Makefile
 		src/prg/c/inc-tmp/Makefile
