@@ -28,10 +28,11 @@
 #				multi-line.				#
 # 21/10/2017	MG	1.0.5	Remove validateconfig build.		#
 # 12/01/2018	MG	1.0.6	Add SPDX license tags to source files.	#
+# 15/01/2018	MG	1.0.7	Remove unnecessary config.h generation.	#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.6 $])
+AC_REVISION([$Revision: 1.0.7 $])
 
 AC_PREREQ([2.65])
 
@@ -135,10 +136,6 @@ AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
 # Checks the compiler to use and stores it in the cc variable.
 AC_PROG_CC
 
-# Causes AC_OUTPUT to create a c preprocessor file with #define statements about
-# the configuration.
-AC_CONFIG_HEADERS([source/progs/c/sysgen/inc/config.h])
-
 
 ########################
 #
@@ -195,7 +192,6 @@ AC_CONFIG_FILES([Makefile
 		source/man/man3/optionproc/Makefile
 		source/progs/c/inc/Makefile
 		source/progs/c/src/libswocserver/Makefile
-		source/progs/c/src/libswocserver/libswocserver.pc
-		source/progs/c/sysgen/inc/Makefile])
+		source/progs/c/src/libswocserver/libswocserver.pc])
 
 AC_OUTPUT
