@@ -1,5 +1,5 @@
 /**
- * @file srv-dev/source/progs/c/inc/libswocserver.h
+ * @file srv-dev/src/prg/c/inc/libswocserver.h
  *
  * Header file for Server Wait on Clients server-side library.
  *

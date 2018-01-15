@@ -189,9 +189,9 @@ AC_CHECK_HEADERS([portability.h], [], [AC_MSG_ERROR([header not found])])
 
 # Project Makefiles to create.
 AC_CONFIG_FILES([Makefile
-		source/man/man3/optionproc/Makefile
-		source/progs/c/inc/Makefile
-		source/progs/c/src/libswocserver/Makefile
-		source/progs/c/src/libswocserver/libswocserver.pc])
+		src/man/3/optionproc/Makefile
+		src/prg/c/inc/Makefile
+		src/prg/c/src/libswocserver/Makefile
+		src/prg/c/src/libswocserver/libswocserver.pc])
 
 AC_OUTPUT

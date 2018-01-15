@@ -30,6 +30,6 @@
 
 ACLOCAL_AMFLAGS = -I m4 -I m4extra
 
-SUBDIRS = source/man/man3/optionproc
-SUBDIRS += source/progs/c/inc
-SUBDIRS += source/progs/c/src/libswocserver
+SUBDIRS = src/man/3/optionproc
+SUBDIRS += src/prg/c/inc
+SUBDIRS += src/prg/c/src/libswocserver
