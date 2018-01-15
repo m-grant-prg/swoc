@@ -1,5 +1,5 @@
 /**
- * @file srv-lib/source/progs/c/src/libswocserver/version.c
+ * @file srv-lib/src/prg/c/src/libswocserver/version.c
  *
  * Source for version functions.
  *
