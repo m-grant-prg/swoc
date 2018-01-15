@@ -24,6 +24,7 @@
 #				libswocserver package.			#
 # 21/10/2017	MG	1.0.3	Remove validateconfig build.		#
 # 12/01/2018	MG	1.0.4	Add SPDX license tags to source files.	#
+# 15/01/2018	MG	1.0.5	Remove unnecessary config.h generation.	#
 #									#
 #########################################################################
 
@@ -31,5 +32,4 @@ ACLOCAL_AMFLAGS = -I m4 -I m4extra
 
 SUBDIRS = source/man/man3/optionproc
 SUBDIRS += source/progs/c/inc
-SUBDIRS += source/progs/c/sysgen/inc
 SUBDIRS += source/progs/c/src/libswocserver
