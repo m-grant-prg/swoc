@@ -33,13 +33,13 @@
 # 17/10/2017	MG	1.0.7	Remove config file man page after move	#
 #				to libswoccommon.			#
 # 12/01/2018	MG	1.0.8	Add SPDX license tags to source files.	#
+# 15/01/2018	MG	1.0.9	Correct generation of config.h		#
 #									#
 #########################################################################
 
 ACLOCAL_AMFLAGS = -I m4 -I m4extra
 
-SUBDIRS = src/prg/c/gen/inc src/prg/c/gen/lib
-SUBDIRS += src/prg/c/inc-tmp
+SUBDIRS = src/prg/c/gen/lib
 SUBDIRS += src/prg/c/lib-tmp
 SUBDIRS += src/prg/c/src/libswocserver
 SUBDIRS += src/prg/c/src/test-optionproc
