@@ -51,12 +51,13 @@
 #				removal of bash setup script.		#
 # 12/01/2018	MG	1.0.16	Add SPDX license tags to source files.	#
 # 15/01/2018	MG	1.0.17	Correct generation of config.h		#
+#				Update minimum AutoTools version.	#
 #									#
 #########################################################################
 
 AC_REVISION([$Revision: 1.0.17 $])
 
-AC_PREREQ([2.65])
+AC_PREREQ([2.69])
 
 
 ########################
