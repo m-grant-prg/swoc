@@ -797,7 +797,7 @@ INPUT                  = @srcdir@ \
 			@top_srcdir@/../cli-lib/src/ \
 			@top_srcdir@/../cli-prg/source/ \
 			@top_srcdir@/../srv-dev/src/ \
-			@top_srcdir@/../srv-lib/source/ \
+			@top_srcdir@/../srv-lib/src/ \
 			@top_srcdir@/../srv-prg/source/
 
 # This tag can be used to specify the character encoding of the source files
