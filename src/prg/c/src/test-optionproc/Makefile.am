@@ -26,11 +26,15 @@
 #				LD_LIBRARY_PATH in the correct order.	#
 # 12/01/2018	MG	1.0.4	Add SPDX license tags to source files.	#
 # 15/01/2018	MG	1.0.5	Correct consumption of config.h		#
+# 16/01/2018	MG	1.0.6	Change to include headers from relevant	#
+#				-dev projects.				#
 #									#
 #########################################################################
 
 
 AM_CPPFLAGS = -I$(srcdir)/../../inc-tmp -I$(srcdir)/../../inc
+AM_CPPFLAGS += -I$(top_srcdir)/../com-dev/src/prg/c/inc
+AM_CPPFLAGS += -I$(top_srcdir)/../srv-dev/src/prg/c/inc
 AM_CPPFLAGS += -I../../sysgen/inc -I../../sysgen/lib
 
 
