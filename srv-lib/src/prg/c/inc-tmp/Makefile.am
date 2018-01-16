@@ -26,10 +26,12 @@
 #									#
 # 27/04/2017	MG	1.0.0	First release.				#
 # 12/01/2018	MG	1.0.1	Add SPDX license tags to source files.	#
+# 16/01/2018	MG	1.0.2	Change to include headers from relevant	#
+#				-dev projects.				#
 #									#
 #########################################################################
 
 
 noinst_HEADERS = $(tmpheaders)
 
-EXTRA_HEADERS = mge-errno.h libswoccommon.h libswocserver.h
+EXTRA_HEADERS = mge-errno.h
