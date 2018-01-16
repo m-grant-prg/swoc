@@ -64,6 +64,7 @@
 # 12/01/2018	MG	1.1.5	Add SPDX license tags to source files.	#
 # 16/01/2018	MG	1.1.6	Correct generation of config.h		#
 #				Update minimum AutoTools version.	#
+#				Update AC macros and comments.		#
 #									#
 #########################################################################
 
@@ -259,11 +260,52 @@ AC_SUBST([edit], ["sed \
 
 # Passes the options to all am files. Puts objects in the sub-directory
 # containing the source.
+# This also checks :-	BSD install	make variable set	mkdir -p
+#			gawk
 AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
 
-# Checks the compiler to use and stores it in the cc variable.
+# Set language for compilation tests.
+AC_LANG([C])
+
+# Checks the compiler to use, stores it in the cc variable and checks its
+# capabilities.
 AC_PROG_CC
 
+# Check that the compiler recognizes the restrict keyword.
+AC_C_RESTRICT
+
+# Checks the c pre-processor to use, stores it in the cpp variable and checks
+# its capabilities.
+AC_PROG_CPP
+
+# Checks the c++ compiler to use, stores it in the cxx variable and checks its
+# capabilities. (Required by ltmain.sh).
+AC_PROG_CXX
+
+# Checks that there is an installation program or script.
+AC_PROG_INSTALL
+
+# Check a source file to ensure no command line --srcdir typo.
+AC_CONFIG_SRCDIR([src/prg/c/gen/lib/dummy.c])
+
+# GNULIB macros.
+# Also checks for ar, grep, egrep, ranlib and how to run the cpp.
+gl_EARLY
+gl_INIT
+
+# Must use this macro if the ar archiver is used. ar is mostly now used for
+# static libraries.
+AM_PROG_AR
+
+# Check for libtool minimum version.
+LT_PREREQ([2.4.6])
+
+# Turn on shared libraries.
+# Also checks for fgrep, linker capabilities, ranlib, sed.
+# Also checks for:-	ANSI C header files	sys/types.h	sys/stat.h
+#			stdlib.h	string.h	memory.h
+#			strings.h	inttypes.h	stdint.h
+#			unistd.h	dlfcn.h
 LT_INIT
 
 # Causes AC_OUTPUT to create a c preprocessor file with #define statements about
@@ -286,8 +328,18 @@ AC_CONFIG_MACRO_DIR([m4])
 ########################
 #
 # Checks for programs.
-# install, mkdir and gawk are checked by AM_INIT_AUTOMAKE.
-# grep, egrep and ranlib are also automatically checked.
+# If using am init automake, gl early or lt init the following programs are
+# automatically checked:-
+#
+# am init automake
+#	BSD install	mkdir -p	gawk
+#
+# gl early
+#	ar	grep	egrep	ranlib
+#
+# lt init
+#	fgrep	ranlib	sed
+#
 # Particular and generic program checks follow:
 #
 ########################
@@ -357,8 +409,17 @@ AC_CHECK_HEADERS([mge-errno.h], [], [AC_MSG_ERROR([header not found])])
 # Checks for C++ header files.
 
 # Checks for typedefs, structures, and compiler characteristics.
+AC_MSG_NOTICE([checking for typedefs required by this application])
+AC_TYPE_PID_T
+AC_TYPE_SIZE_T
+AC_TYPE_SSIZE_T
 
 # Checks for library functions.
+AC_MSG_NOTICE([checking for GNU compatible library functions required by this \
+application])
+AC_FUNC_FORK
+AC_FUNC_MALLOC
+AC_CHECK_FUNCS([bzero memset socket strerror])
 
 # Checks for pkg-config files.
 PKG_CHECK_MODULES(LIBSWOCSERVER, libswocserver, [], \
