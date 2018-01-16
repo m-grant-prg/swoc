@@ -52,17 +52,17 @@ ACLOCAL_AMFLAGS = -I m4 -I m4extra
 # It also means that the service is stopped by a local target in swocserver
 # uninstall (swocserver -e is used as ExecStop).
 
-SUBDIRS = source/conf/etc
-SUBDIRS += source/man/man5 source/man/man8
-SUBDIRS += source/progs/c/sysgen/inc source/progs/c/sysgen/lib
-SUBDIRS += source/progs/bash
-SUBDIRS += source/progs/c/inc source/progs/c/inc-tmp
-SUBDIRS += source/progs/c/lib-tmp
-SUBDIRS += source/progs/c/src/swocserver
-SUBDIRS += source/progs/c/src/swocserverd
+SUBDIRS = src/conf/etc
+SUBDIRS += src/man/5 src/man/8
+SUBDIRS += src/prg/c/gen/inc src/prg/c/gen/lib
+SUBDIRS += src/prg/bash
+SUBDIRS += src/prg/c/inc src/prg/c/inc-tmp
+SUBDIRS += src/prg/c/lib-tmp
+SUBDIRS += src/prg/c/src/swocserver
+SUBDIRS += src/prg/c/src/swocserverd
 
 if SYSD
-SUBDIRS += source/systemd
+SUBDIRS += src/systemd
 endif
 
 EXTRA_DIST  = m4/gnulib-cache.m4
