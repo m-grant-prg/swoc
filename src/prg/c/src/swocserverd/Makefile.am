@@ -31,12 +31,13 @@
 #				directory does not necessarily leave	#
 #				LD_LIBRARY_PATH in the correct order.	#
 # 12/01/2018	MG	1.0.6	Add SPDX license tags to source files.	#
+# 16/01/2018	MG	1.0.7	Correct usage of config.h		#
 #									#
 #########################################################################
 
 
 AM_CPPFLAGS = -I$(srcdir)/../../inc-tmp -I$(srcdir)/../../inc
-AM_CPPFLAGS += -I../../gen/lib
+AM_CPPFLAGS += -I../../gen/inc -I../../gen/lib
 
 
 AM_CFLAGS = -Wall
