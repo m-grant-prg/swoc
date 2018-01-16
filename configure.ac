@@ -63,12 +63,13 @@
 #				consumption.				#
 # 12/01/2018	MG	1.1.5	Add SPDX license tags to source files.	#
 # 16/01/2018	MG	1.1.6	Correct generation of config.h		#
+#				Update minimum AutoTools version.	#
 #									#
 #########################################################################
 
 AC_REVISION([$Revision: 1.1.6 $])
 
-AC_PREREQ([2.65])
+AC_PREREQ([2.69])
 
 
 ########################
