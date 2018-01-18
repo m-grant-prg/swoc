@@ -35,7 +35,7 @@
 AM_CPPFLAGS = -I$(srcdir)/../../inc-tmp -I$(srcdir)/../../inc
 AM_CPPFLAGS += -I$(top_srcdir)/../com-dev/src/prg/c/inc
 AM_CPPFLAGS += -I$(top_srcdir)/../srv-dev/src/prg/c/inc
-AM_CPPFLAGS += -I../../sysgen/inc -I../../sysgen/lib
+AM_CPPFLAGS += -I../../gen/inc -I../../gen/lib
 
 
 AM_CFLAGS = -Wall
