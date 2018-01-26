@@ -40,10 +40,12 @@
 #				Change to manual package version	#
 #				numbering on adoption of project /	#
 #				sub-project structure.			#
+# 26/01/2018	MG	1.0.8	Add macro to check on threading		#
+#				libraries, compiler and linker flags.	#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.7 $])
+AC_REVISION([$Revision: 1.0.8 $])
 
 AC_PREREQ([2.69])
 
@@ -227,6 +229,9 @@ AC_PROG_CPP
 # Checks the c++ compiler to use, stores it in the cxx variable and checks its
 # capabilities. (Required by ltmain.sh).
 AC_PROG_CXX
+
+# Check for threading libraries, compiler and linker flags.
+AX_PTHREAD(, AC_MSG_ERROR([thread information not found]))
 
 # Checks that there is an installation program or script.
 AC_PROG_INSTALL

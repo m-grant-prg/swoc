@@ -33,16 +33,22 @@
 # 14/01/2018	MG	1.0.7	Correct usage of config.h		#
 # 16/01/2018	MG	1.0.8	Change to include headers from relevant	#
 #				-dev projects.				#
+# 26/01/2018	MG	1.0.9	Add correct pthread handling.		#
 #									#
 #########################################################################
 
 
-AM_CPPFLAGS = -I$(srcdir)/../../inc-tmp -I$(srcdir)/../../inc
+CC = $(PTHREAD_CC)
+
+
+AM_CPPFLAGS = $(PTHREAD_CFLAGS)
+AM_CPPFLAGS += -I$(srcdir)/../../inc-tmp -I$(srcdir)/../../inc
 AM_CPPFLAGS += -I$(top_srcdir)/../com-dev/src/prg/c/inc
 AM_CPPFLAGS += -I../../gen/inc -I../../gen/lib
 
 
-AM_CFLAGS = -Wall
+AM_CFLAGS = $(PTHREAD_CFLAGS)
+AM_CFLAGS += -Wall
 AM_CFLAGS += $(LIBMGEC_CFLAGS) $(LIBMGESYSUTILS_CFLAGS)
 AM_CFLAGS += $(LIBSSH_CFLAGS)
 
@@ -59,8 +65,8 @@ libswoccommon_la_SOURCES = messages.c ssh.c tcp.c
 libswoccommon_la_SOURCES += validateconfig.c
 libswoccommon_la_SOURCES += version.c
 
-
-AM_LDFLAGS = $(LIBMGEC_LIBS) $(LIBMGESYSUTILS_LIBS)
+AM_LDFLAGS = $(PTHREAD_CFLAGS) $(LDFLAGS) $(PTHREAD_LIBS) $(LIBS)
+AM_LDFLAGS += $(LIBMGEC_LIBS) $(LIBMGESYSUTILS_LIBS)
 AM_LDFLAGS += $(LIBSSH_LIBS)
 AM_LDFLAGS += -version-info 2:0:0
 
