@@ -58,7 +58,7 @@ AC_PREREQ([2.69])
 #
 ########################
 
-AC_INIT([[Server Wait On Client Common library]], [v1.0.1-rc1],
+AC_INIT([[Server Wait On Client Common library]], [v1.0.1-rc2],
 	[m.grant.prg@gmail.com], [libswoccommon])
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
