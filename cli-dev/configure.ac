@@ -54,7 +54,7 @@ AC_PREREQ([2.69])
 #
 ########################
 
-AC_INIT([[Server Wait On Client client side library dev files]], [v1.1.1-rc1],
+AC_INIT([[Server Wait On Client client side library dev files]], [v1.1.1-rc2],
 	[m.grant.prg@gmail.com], [libswocclient-dev])
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
