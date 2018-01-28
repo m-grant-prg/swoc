@@ -41,7 +41,7 @@ AC_PREREQ([2.69])
 #
 ########################
 
-AC_INIT([[Server Wait On Clients system documentation.]], [v1.0.1-rc3],
+AC_INIT([[Server Wait On Clients system documentation.]], [v1.0.1-rc4],
 		[m.grant.prg@gmail.com], [swoc-doc])
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
