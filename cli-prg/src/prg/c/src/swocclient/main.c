@@ -5,7 +5,7 @@
  * To enable a client to place lock flags on a server which will then wait for
  * them to be cleared before continuing processing, (by use of swocserver -w).
  *
- * @author Copyright (C) 2015-2017  Mark Grant
+ * @author Copyright (C) 2015-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
