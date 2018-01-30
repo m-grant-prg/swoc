@@ -99,10 +99,6 @@ int main(int argc, char **argv)
 			printf("1 or fewer lock flags set on server.\n");
 	}
 
-	/* -1 indicates program should exit but no error. */
-	if (prog_error == -1)
-		prog_error = 0;
-
 	if (prog_error) {
 		fprintf(stderr, "%s failed with error - %s\n", prog_name,
 				mge_strerror(mge_errno));
