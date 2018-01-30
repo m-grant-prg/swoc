@@ -3,12 +3,12 @@
  *
  * Command line argument processing for swocclient using getopt_long.
  *
- * @author Copyright (C) 2015-2017  Mark Grant
+ * @author Copyright (C) 2015-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.1 ==== 12/11/2017_
+ * @version _v1.1.2 ==== 30/01/2018_
  */
 
 /* **********************************************************************
@@ -27,6 +27,7 @@
  *				Add --wait as a command line argument.	*
  * 12/11/2017	MG	1.1.1	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 30/01/2018	MG	1.1.2	Use fprintf for error messages.		*
  *									*
  ************************************************************************
  */
@@ -97,8 +98,8 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 				if (release_flag->is_set
 					|| status_flag->is_set
 					|| wait_flag->is_set) {
-					printf("Options l, r, s and w are "
-						"mutually exclusive.\n");
+					fprintf(stderr, "Options l, r, s and w "
+						"are mutually exclusive.\n");
 					return 64;
 				}
 				lock_flag->is_set = 1;
@@ -107,8 +108,8 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 			case 'r':
 				if (lock_flag->is_set || status_flag->is_set
 					|| wait_flag->is_set) {
-					printf("Options l, r, s and w are "
-						"mutually exclusive.\n");
+					fprintf(stderr, "Options l, r, s and w "
+						"are mutually exclusive.\n");
 					return 64;
 				}
 				release_flag->is_set = 1;
@@ -117,8 +118,8 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 			case 's':
 				if (release_flag->is_set || lock_flag->is_set
 					|| wait_flag->is_set) {
-					printf("Options l, r, s and w are "
-						"mutually exclusive.\n");
+					fprintf(stderr, "Options l, r, s and w "
+						"are mutually exclusive.\n");
 					return 64;
 				}
 				status_flag->is_set = 1;
@@ -137,8 +138,8 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 			case 'w':
 				if (release_flag->is_set || lock_flag->is_set
 					|| status_flag->is_set) {
-					printf("Options l, r, s and w are "
-						"mutually exclusive.\n");
+					fprintf(stderr, "Options l, r, s and w "
+						"are mutually exclusive.\n");
 					return 64;
 				}
 				wait_flag->is_set = 1;
@@ -157,14 +158,14 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 
 	/* Non-option arguments are not accepted. */
 	if (optind < argc) {
-		printf("Program does not accept other arguments.\n");
+		fprintf(stderr, "Program does not accept other arguments.\n");
 		return 64;
 	}
 
 	/* Check for mandatory options */
 	if (!(lock_flag->is_set || release_flag->is_set
 		|| status_flag->is_set || wait_flag->is_set)) {
-		printf("Either l, r, s or w must be specified.\n");
+		fprintf(stderr, "Either l, r, s or w must be specified.\n");
 		return 64;
 	}
 	return 0;
@@ -180,7 +181,7 @@ int cpyarg(char *flagarg, char *srcarg)
 		strcpy(flagarg, srcarg);
 	else
 	{
-		printf("Option argument '%s' too long.\n", srcarg);
+		fprintf(stderr, "Option argument '%s' too long.\n", srcarg);
 		e = 64;
 	}
 	return e;
