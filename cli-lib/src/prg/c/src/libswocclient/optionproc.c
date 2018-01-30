@@ -188,8 +188,8 @@ int swc_client_wait(void)
 			mge_errno = MGE_INVAL_MSG;
 			syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message "
 				"- %s", msg->message);
-		clear_msg(msg, ';', ',');
-		return mge_errno;
+			clear_msg(msg, ';', ',');
+			return mge_errno;
 		}
 		locks = atoi(*(msg->argv + 3));
 		clear_msg(msg, ';', ',');
