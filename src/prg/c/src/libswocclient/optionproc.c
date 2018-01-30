@@ -3,7 +3,7 @@
  *
  * Functions to process client lock flag options.
  *
- * @author Copyright (C) 2016-2017  Mark Grant
+ * @author Copyright (C) 2016-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
