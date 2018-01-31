@@ -339,7 +339,7 @@ static void proc_msg(struct mgemessage *msg)
 				"message %s\n", client, msg->message);
 		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid arguments "
 			"from %s in message %s", client, msg->message);
-		sprintf(outgoing_msg, "swocserverd,,err,invalid arguments;");
+		sprintf(outgoing_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
 		send_outgoing_msg(outgoing_msg, strlen(outgoing_msg),
 				&cursockfd);
 		swsd_err = mge_errno;
@@ -377,8 +377,8 @@ static void proc_msg(struct mgemessage *msg)
 					"message %s\n", client, msg->message);
 			syslog((int) (LOG_USER | LOG_NOTICE), "Invalid request "
 				"from %s in message %s", client, msg->message);
-			sprintf(outgoing_msg, "swocserverd,,err,invalid "
-				"request;");
+			sprintf(outgoing_msg, "swocserverd, ,err,%i;",
+				MGE_INVAL_MSG);
 			send_outgoing_msg(outgoing_msg, strlen(outgoing_msg),
 				&cursockfd);
 			swsd_err = mge_errno;
@@ -410,8 +410,8 @@ static void proc_msg(struct mgemessage *msg)
 					"message %s\n", client, msg->message);
 			syslog((int) (LOG_USER | LOG_NOTICE), "Invalid request "
 				"from %s in message %s", client, msg->message);
-			sprintf(outgoing_msg, "swocserverd,,err,invalid "
-				"request;");
+			sprintf(outgoing_msg, "swocserverd, ,err,%i;",
+				MGE_INVAL_MSG);
 			send_outgoing_msg(outgoing_msg, strlen(outgoing_msg),
 				&cursockfd);
 			swsd_err = mge_errno;
@@ -424,7 +424,7 @@ static void proc_msg(struct mgemessage *msg)
 				"message %s\n", client, msg->message);
 		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message source "
 			"from %s in message %s", client, msg->message);
-		sprintf(outgoing_msg, "swocserverd,,err,invalid source;");
+		sprintf(outgoing_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
 		send_outgoing_msg(outgoing_msg, strlen(outgoing_msg),
 			&cursockfd);
 		swsd_err = mge_errno;
@@ -437,7 +437,7 @@ static void proc_msg(struct mgemessage *msg)
 				"message %s\n", client, msg->message);
 		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid arguments "
 			"from %s in message %s", client, msg->message);
-		sprintf(outgoing_msg, "swocserverd,,err,invalid arguments;");
+		sprintf(outgoing_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
 		send_outgoing_msg(outgoing_msg, strlen(outgoing_msg),
 			&cursockfd);
 		swsd_err = mge_errno;
