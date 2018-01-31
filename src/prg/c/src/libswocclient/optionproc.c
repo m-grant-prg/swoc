@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.1 ==== 11/11/2017_
+ * @version _v1.1.2 ==== 31/01/2018_
  */
 
 /* **********************************************************************
@@ -32,12 +32,16 @@
  *				error handling.				*
  * 11/11/2017	MG	1.1.1	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 31/01/2018	MG	1.1.2	Daemon return message now standardised.	*
+ *				On error use the error number in the	*
+ *				return message to populate mge_errno.	*
  *									*
  ************************************************************************
  */
 
 
 #include <stdio.h>
+#include <limits.h>
 #include <string.h>
 #include <unistd.h>
 #include <syslog.h>
@@ -58,6 +62,8 @@
 int swc_show_status(void)
 {
 	int prg_err = 0;
+	long int x;
+	char *end;
 	char *outgoing_msg = "swocclient,status;";
 	size_t om_length = strlen(outgoing_msg);
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
@@ -72,6 +78,14 @@ int swc_show_status(void)
 
 	if (strncmp(msg->message, "swocserverd,status,ok", 21)) {
 		mge_errno = MGE_INVAL_MSG;
+		if (!(strcmp(msg->argv[0], "swocserverd")) &&
+			!(strcmp(msg->argv[1], "status")) &&
+		    	!(strcmp(msg->argv[2], "err")) &&
+			msg->argc == 4) {
+			x = strtol(msg->argv[3], &end, 10);
+			if ((*end == '\0') && x <= INT_MAX && x >= INT_MIN)
+				mge_errno = (int)x;
+		}
 		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
 			msg->message);
 		clear_msg(msg, ';', ',');
@@ -93,6 +107,8 @@ int swc_show_status(void)
 int swc_set_lock(void)
 {
 	int prg_err = 0;
+	long int x;
+	char *end;
 	char *outgoing_msg = "swocclient,lock;";
 	size_t om_length = strlen(outgoing_msg);
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
@@ -107,6 +123,14 @@ int swc_set_lock(void)
 
 	if (strcmp(msg->message, "swocserverd,lock,ok;")) {
 		mge_errno = MGE_INVAL_MSG;
+		if (!(strcmp(msg->argv[0], "swocserverd")) &&
+			!(strcmp(msg->argv[1], "lock")) &&
+		    	!(strcmp(msg->argv[2], "err")) &&
+			msg->argc == 4) {
+			x = strtol(msg->argv[3], &end, 10);
+			if ((*end == '\0') && x <= INT_MAX && x >= INT_MIN)
+				mge_errno = (int)x;
+		}
 		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
 			msg->message);
 		clear_msg(msg, ';', ',');
@@ -129,6 +153,8 @@ int swc_set_lock(void)
 int swc_rel_lock(void)
 {
 	int prg_err = 0;
+	long int x;
+	char *end;
 	char *outgoing_msg = "swocclient,release;";
 	size_t om_length = strlen(outgoing_msg);
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
@@ -143,6 +169,14 @@ int swc_rel_lock(void)
 
 	if (strcmp(msg->message, "swocserverd,release,ok;")) {
 		mge_errno = MGE_INVAL_MSG;
+		if (!(strcmp(msg->argv[0], "swocserverd")) &&
+			!(strcmp(msg->argv[1], "release")) &&
+		    	!(strcmp(msg->argv[2], "err")) &&
+			msg->argc == 4) {
+			x = strtol(msg->argv[3], &end, 10);
+			if ((*end == '\0') && x <= INT_MAX && x >= INT_MIN)
+				mge_errno = (int)x;
+		}
 		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
 			msg->message);
 		clear_msg(msg, ';', ',');
@@ -167,6 +201,8 @@ int swc_rel_lock(void)
 int swc_client_wait(void)
 {
 	int prg_err = 0;
+	long int x;
+	char *end;
 	int locks;
 	char *outgoing_msg = "swocclient,status;";
 	size_t om_length = strlen(outgoing_msg);
@@ -186,6 +222,15 @@ int swc_client_wait(void)
 
 		if (strncmp(msg->message, "swocserverd,status,ok", 21)) {
 			mge_errno = MGE_INVAL_MSG;
+			if (!(strcmp(msg->argv[0], "swocserverd")) &&
+				!(strcmp(msg->argv[1], "status")) &&
+			    	!(strcmp(msg->argv[2], "err")) &&
+				msg->argc == 4) {
+				x = strtol(msg->argv[3], &end, 10);
+				if ((*end == '\0') && x <= INT_MAX &&
+					x >= INT_MIN)
+					mge_errno = (int)x;
+			}
 			syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message "
 				"- %s", msg->message);
 			clear_msg(msg, ';', ',');
