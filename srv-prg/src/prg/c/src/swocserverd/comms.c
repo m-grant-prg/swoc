@@ -3,12 +3,12 @@
  *
  * Comms functions associated with the swocserverd daemon.
  *
- * @author Copyright (C) 2017  Mark Grant
+ * @author Copyright (C) 2017-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.5 ==== 18/11/2017_
+ * @version _v1.0.6 ==== 31/01/2018_
  */
 
 /* **********************************************************************
@@ -31,6 +31,10 @@
  *				tunnelling.				*
  * 18/11/2017	MG	1.0.5	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 31/01/2018	MG	1.0.6	Standardise on error message daemon	*
+ *				returns, now, swocserverd, ,err,9;	*
+ *				where 9 is a valid mge-errno.h error	*
+ *				number.					*
  *									*
  ************************************************************************
  */
