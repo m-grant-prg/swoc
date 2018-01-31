@@ -3,12 +3,12 @@
  *
  * Request processing functions.
  *
- * @author Copyright (C) 2016-2017  Mark Grant
+ * @author Copyright (C) 2016-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.9 ==== 18/11/2017_
+ * @version _v1.0.10 ==== 31/01/2018_
  */
 
 /* **********************************************************************
@@ -39,6 +39,8 @@
  * 14/09/2017	MG		Change force_unlock to unlock.		*
  * 18/11/2017	MG	1.0.9	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 31/01/2018	MG	1.0.10	On unlock and release return a more	*
+ *				informative mge_errno.			*
  *									*
  ************************************************************************
  */
@@ -207,6 +209,9 @@ int unlock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 				mge_errno);
 		syslog((int) (LOG_USER | LOG_NOTICE), "Node removal errored "
 			"with %i.", mge_errno);
+		/* Change to more user informational error. */
+		if (mge_errno == MGE_NODE_NOT_FOUND)
+			mge_errno = MGE_LOCK_NOT_FOUND;
 		sprintf(outgoing_msg, "swocserverd,unlock,err,%i;", mge_errno);
 	} else {
 		locks = plocks;
@@ -286,6 +291,9 @@ int release_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 				mge_errno);
 		syslog((int) (LOG_USER | LOG_NOTICE), "Node delete errored "
 			"with %i.", mge_errno);
+		/* Change to more user informational error. */
+		if (mge_errno == MGE_NODE_NOT_FOUND)
+			mge_errno = MGE_LOCK_NOT_FOUND;
 		sprintf(outgoing_msg, "swocserverd,release,err,%i;", mge_errno);
 	} else {
 		locks = plocks;
