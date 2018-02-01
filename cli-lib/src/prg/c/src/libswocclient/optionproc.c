@@ -35,6 +35,8 @@
  * 31/01/2018	MG	1.1.2	Daemon return message now standardised.	*
  *				On error use the error number in the	*
  *				return message to populate mge_errno.	*
+ * 01/02/2018	MG	1.1.3	On error path check argc == 4 before	*
+ *				indexing into argv.			*
  *									*
  ************************************************************************
  */
@@ -78,13 +80,15 @@ int swc_show_status(void)
 
 	if (strncmp(msg->message, "swocserverd,status,ok", 21)) {
 		mge_errno = MGE_INVAL_MSG;
-		if (!(strcmp(msg->argv[0], "swocserverd")) &&
-			!(strcmp(msg->argv[1], "status")) &&
-		    	!(strcmp(msg->argv[2], "err")) &&
-			msg->argc == 4) {
-			x = strtol(msg->argv[3], &end, 10);
-			if ((*end == '\0') && x <= INT_MAX && x >= INT_MIN)
-				mge_errno = (int)x;
+		if (msg->argc == 4) {
+			if (!(strcmp(msg->argv[0], "swocserverd")) &&
+				!(strcmp(msg->argv[1], "status")) &&
+			    	!(strcmp(msg->argv[2], "err"))) {
+				x = strtol(msg->argv[3], &end, 10);
+				if ((*end == '\0') && x <= INT_MAX &&
+					x >= INT_MIN)
+					mge_errno = (int)x;
+			}
 		}
 		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
 			msg->message);
@@ -123,13 +127,15 @@ int swc_set_lock(void)
 
 	if (strcmp(msg->message, "swocserverd,lock,ok;")) {
 		mge_errno = MGE_INVAL_MSG;
-		if (!(strcmp(msg->argv[0], "swocserverd")) &&
-			!(strcmp(msg->argv[1], "lock")) &&
-		    	!(strcmp(msg->argv[2], "err")) &&
-			msg->argc == 4) {
-			x = strtol(msg->argv[3], &end, 10);
-			if ((*end == '\0') && x <= INT_MAX && x >= INT_MIN)
-				mge_errno = (int)x;
+		if (msg->argc == 4) {
+			if (!(strcmp(msg->argv[0], "swocserverd")) &&
+				!(strcmp(msg->argv[1], "lock")) &&
+			    	!(strcmp(msg->argv[2], "err"))) {
+				x = strtol(msg->argv[3], &end, 10);
+				if ((*end == '\0') && x <= INT_MAX &&
+					x >= INT_MIN)
+					mge_errno = (int)x;
+			}
 		}
 		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
 			msg->message);
@@ -169,13 +175,15 @@ int swc_rel_lock(void)
 
 	if (strcmp(msg->message, "swocserverd,release,ok;")) {
 		mge_errno = MGE_INVAL_MSG;
-		if (!(strcmp(msg->argv[0], "swocserverd")) &&
-			!(strcmp(msg->argv[1], "release")) &&
-		    	!(strcmp(msg->argv[2], "err")) &&
-			msg->argc == 4) {
-			x = strtol(msg->argv[3], &end, 10);
-			if ((*end == '\0') && x <= INT_MAX && x >= INT_MIN)
-				mge_errno = (int)x;
+		if (msg->argc == 4) {
+			if (!(strcmp(msg->argv[0], "swocserverd")) &&
+				!(strcmp(msg->argv[1], "release")) &&
+			    	!(strcmp(msg->argv[2], "err"))) {
+				x = strtol(msg->argv[3], &end, 10);
+				if ((*end == '\0') && x <= INT_MAX &&
+					x >= INT_MIN)
+					mge_errno = (int)x;
+			}
 		}
 		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
 			msg->message);
@@ -222,14 +230,15 @@ int swc_client_wait(void)
 
 		if (strncmp(msg->message, "swocserverd,status,ok", 21)) {
 			mge_errno = MGE_INVAL_MSG;
-			if (!(strcmp(msg->argv[0], "swocserverd")) &&
-				!(strcmp(msg->argv[1], "status")) &&
-			    	!(strcmp(msg->argv[2], "err")) &&
-				msg->argc == 4) {
-				x = strtol(msg->argv[3], &end, 10);
-				if ((*end == '\0') && x <= INT_MAX &&
-					x >= INT_MIN)
-					mge_errno = (int)x;
+			if (msg->argc == 4) {
+				if (!(strcmp(msg->argv[0], "swocserverd")) &&
+					!(strcmp(msg->argv[1], "status")) &&
+				    	!(strcmp(msg->argv[2], "err"))) {
+					x = strtol(msg->argv[3], &end, 10);
+					if ((*end == '\0') && x <= INT_MAX &&
+						x >= INT_MIN)
+						mge_errno = (int)x;
+				}
 			}
 			syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message "
 				"- %s", msg->message);
