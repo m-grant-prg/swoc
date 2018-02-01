@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.2 ==== 31/01/2018_
+ * @version _v1.1.3 ==== 01/02/2018_
  */
 
 /* **********************************************************************
