@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.3 ==== 01/02/2018_
+ * @version _v1.1.4 ==== 02/02/2018_
  */
 
 /* **********************************************************************
@@ -37,6 +37,7 @@
  *				return message to populate mge_errno.	*
  * 01/02/2018	MG	1.1.3	On error path check argc == 4 before	*
  *				indexing into argv.			*
+ * 02/02/2018	MG	1.1.4	Use safer strtol instead of atoi.	*
  *									*
  ************************************************************************
  */
@@ -211,7 +212,7 @@ int swc_client_wait(void)
 	int prg_err = 0;
 	long int x;
 	char *end;
-	int locks;
+	long int locks;
 	char *outgoing_msg = "swocclient,status;";
 	size_t om_length = strlen(outgoing_msg);
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
@@ -245,10 +246,18 @@ int swc_client_wait(void)
 			clear_msg(msg, ';', ',');
 			return mge_errno;
 		}
-		locks = atoi(*(msg->argv + 3));
+		locks = strtol(msg->argv[3], &end, 10);
+		if (*end != '\0') {
+			mge_errno = MGE_INVAL_MSG;
+			syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message "
+				"- %s", msg->message);
+			clear_msg(msg, ';', ',');
+			return mge_errno;
+		}
+
 		clear_msg(msg, ';', ',');
 	} while (locks > 1);
-	syslog((int) (LOG_USER | LOG_NOTICE), "%i locks remain for this "
+	syslog((int) (LOG_USER | LOG_NOTICE), "%li locks remain for this "
 		"client.", locks);
 	return 0;
 }
