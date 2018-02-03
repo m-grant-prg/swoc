@@ -3,8 +3,8 @@ swocclient - manage client's 'Server Wait On Clients' flag.
 SYNOPSIS
 swocclient [OPTION]
 DESCRIPTION
-Sets, releases or reports on this client's 'Server Wait On Clients' flags on the
-server.
+Sets, releases, reports or waits on this client's 'Server Wait On Clients' flags
+on the server.
 OPTIONS
 -h, --help  prints usage information.
 
@@ -17,7 +17,8 @@ held.
 
 -V, --version  prints version information
 
--w, --wait  Wait until this client has 1 or fewer locks.
+-w[NumLocks], --wait[=NumLocks]  Wait until this client has NumLocks or fewer
+locks.
 EXIT STATUS
 0
 if OK,
@@ -30,7 +31,7 @@ error in command line arguments.
 EXAMPLE
 A simple example for the use of the wait option would be:-
 .br
-swocclient --lock ; swocclient --wait ; swocclient --release ; shutdown -P now
+swocclient --lock ; swocclient --wait=1 ; swocclient --release ; shutdown -P now
 AUTHOR
 Written by Mark Grant.
 REPORTING BUGS

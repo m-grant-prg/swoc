@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.2 ==== 19/11/2017_
+ * @version _v1.1.3 ==== 02/02/2018_
  */
 
 /* **********************************************************************
@@ -33,6 +33,8 @@
  *				Add SPDX license tag.			*
  * 19/11/2017	MG	1.1.2	Make program exit with EXIT_SUCCESS or	*
  *				EXIT_FAILURE only.			*
+ * 02/02/2018	MG	1.1.3	Allow wait to take an optional number	*
+ *				of locks argument (default 0).		*
  *									*
  ************************************************************************
  */
@@ -93,10 +95,12 @@ int main(int argc, char **argv)
 			printf("Lock flag released on server.\n");
 	}
 	else if (wait_flag.is_set) {
-		printf("Waiting for 1 or fewer lock flags on server.\n");
-		prog_error = swc_client_wait();
+		printf("Waiting for maximum of %s lock flags on server.\n",
+			wait_flag.argument);
+		prog_error = swc_client_wait(wait_flag.argument);
 		if (!prog_error)
-			printf("1 or fewer lock flags set on server.\n");
+			printf("Maximum of %s lock flags set on server.\n",
+				wait_flag.argument);
 	}
 
 	if (prog_error) {

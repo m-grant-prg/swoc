@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.6 ==== 11/11/2017_
+ * @version _v1.0.7 ==== 02/02/2018_
  */
 
 /* **********************************************************************
@@ -25,6 +25,7 @@
  * 02/10/2017	MG	1.0.5	Move validate config to common.		*
  * 11/11/2017	MG	1.0.6	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 02/02/2018	MG	1.0.7	Add number of locks parameter to wait.	*
  *									*
  ************************************************************************
  */
@@ -46,7 +47,7 @@ int swc_set_lock(void);
 
 int swc_rel_lock(void);
 
-int swc_client_wait(void);
+int swc_client_wait(char *cnumlocks);
 
 char *libswocclient_get_pkg_version(void);
 
