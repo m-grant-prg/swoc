@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.2 ==== 30/01/2018_
+ * @version _v1.1.3 ==== 02/02/2018_
  */
 
 /* **********************************************************************
@@ -28,6 +28,8 @@
  * 12/11/2017	MG	1.1.1	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
  * 30/01/2018	MG	1.1.2	Use fprintf for error messages.		*
+ * 02/02/2018	MG	1.1.3	Allow wait to take an optional number	*
+ *				of locks argument (default 0).		*
  *									*
  ************************************************************************
  */
@@ -59,6 +61,7 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 	/* getopt_long stores the option index here. */
 	int option_index = 0;
 	int c;
+	int x;
 
 	struct option long_options[] = {
 		{"help",	no_argument,		0,	'h'},
@@ -66,11 +69,11 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 		{"release",	no_argument,		0,	'r'},
 		{"status",	no_argument,		0,	's'},
 		{"version",	no_argument,		0,	'V'},
-		{"wait",	no_argument,		0,	'w'},
+		{"wait",	optional_argument,	0,	'w'},
 		{0,		0,			0,	0}
 	};
 
-	while ((c = getopt_long(argc, argv, "hlrsVw",
+	while ((c = getopt_long(argc, argv, "hlrsVw::",
 		long_options, &option_index)) != -1) {
 
 		switch (c) {
@@ -89,8 +92,9 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 					"status.\n");
 				printf("-V | --version\tDisplay version "
 					"information.\n");
-				printf("-w | --wait\tWait until this client "
-					"has 1 or fewer locks.\n");
+				printf("-w[NumLocks] | --wait[=NumLocks]\tWait "
+					"until this client has NumLocks or "
+					"fewer locks.\n");
 				exit(0);
 				break;
 
@@ -143,6 +147,12 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 					return 64;
 				}
 				wait_flag->is_set = 1;
+				strcpy(wait_flag->argument, "0");
+				if (!optarg)
+					break;
+				x = cpyarg(wait_flag->argument, optarg);
+				if (x)
+					return x;
 				break;
 
 			case '?':
