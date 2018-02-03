@@ -77,92 +77,85 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 		long_options, &option_index)) != -1) {
 
 		switch (c) {
-			case 'h':
-				printf("%s %s", argv[0], " - Help option.\n");
-				printf("\tLong and short options can be mixed "
-					"on the command line but if an option "
-					"takes an optional argument it is best "
-					"to enter -o\"argument\" or "
-					"--option=argument.\n");
-				printf("-l | --lock\tSet client lock on "
-					"server.\n");
-				printf("-r | --release\tRelease client lock on "
-					"server.\n");
-				printf("-s | --status\tShow the locking "
-					"status.\n");
-				printf("-V | --version\tDisplay version "
-					"information.\n");
-				printf("-w[NumLocks] | --wait[=NumLocks]\tWait "
-					"until this client has NumLocks or "
-					"fewer locks.\n");
-				exit(0);
-				break;
+		case 'h':
+			printf("%s %s", argv[0], " - Help option.\n");
+			printf("\tLong and short options can be mixed on the "
+				"command line but if an option takes an "
+				"optional argument it is best to enter "
+				"-o\"argument\" or --option=argument.\n");
+			printf("-l | --lock\tSet client lock on server.\n");
+			printf("-r | --release\tRelease client lock on "
+				"server.\n");
+			printf("-s | --status\tShow the locking status.\n");
+			printf("-V | --version\tDisplay version "
+				"information.\n");
+			printf("-w[NumLocks] | --wait[=NumLocks]\tWait until "
+				"this client has NumLocks or fewer locks.\n");
+			exit(0);
+			break;
 
-			case 'l':
-				if (release_flag->is_set
-					|| status_flag->is_set
-					|| wait_flag->is_set) {
-					fprintf(stderr, "Options l, r, s and w "
-						"are mutually exclusive.\n");
-					return 64;
-				}
-				lock_flag->is_set = 1;
-				break;
-
-			case 'r':
-				if (lock_flag->is_set || status_flag->is_set
-					|| wait_flag->is_set) {
-					fprintf(stderr, "Options l, r, s and w "
-						"are mutually exclusive.\n");
-					return 64;
-				}
-				release_flag->is_set = 1;
-				break;
-
-			case 's':
-				if (release_flag->is_set || lock_flag->is_set
-					|| wait_flag->is_set) {
-					fprintf(stderr, "Options l, r, s and w "
-						"are mutually exclusive.\n");
-					return 64;
-				}
-				status_flag->is_set = 1;
-				break;
-
-			case 'V':
-				printf("%s %s %s %s", argv[0], "Source "
-					"version -",
-					swocclient_get_src_version(), "\n");
-				printf("%s %s %s %s", argv[0], "Package "
-					"version -",
-					swocclient_get_pkg_version(), "\n");
-				exit(0);
-				break;
-
-			case 'w':
-				if (release_flag->is_set || lock_flag->is_set
-					|| status_flag->is_set) {
-					fprintf(stderr, "Options l, r, s and w "
-						"are mutually exclusive.\n");
-					return 64;
-				}
-				wait_flag->is_set = 1;
-				strcpy(wait_flag->argument, "0");
-				if (!optarg)
-					break;
-				x = cpyarg(wait_flag->argument, optarg);
-				if (x)
-					return x;
-				break;
-
-			case '?':
-				/* getopt_long already printed an error
-				message. */
+		case 'l':
+			if (release_flag->is_set
+				|| status_flag->is_set
+				|| wait_flag->is_set) {
+				fprintf(stderr, "Options l, r, s and w are "
+				"mutually exclusive.\n");
 				return 64;
-				break;
+			}
+			lock_flag->is_set = 1;
+			break;
 
-			default:
-				abort();
+		case 'r':
+			if (lock_flag->is_set || status_flag->is_set
+				|| wait_flag->is_set) {
+				fprintf(stderr, "Options l, r, s and w are "
+				"mutually exclusive.\n");
+				return 64;
+			}
+			release_flag->is_set = 1;
+			break;
+
+		case 's':
+			if (release_flag->is_set || lock_flag->is_set
+				|| wait_flag->is_set) {
+				fprintf(stderr, "Options l, r, s and w are "
+				"mutually exclusive.\n");
+				return 64;
+			}
+			status_flag->is_set = 1;
+			break;
+
+		case 'V':
+			printf("%s %s %s %s", argv[0], "Source version -",
+				swocclient_get_src_version(), "\n");
+			printf("%s %s %s %s", argv[0], "Package version -",
+				swocclient_get_pkg_version(), "\n");
+			exit(0);
+			break;
+
+		case 'w':
+			if (release_flag->is_set || lock_flag->is_set
+				|| status_flag->is_set) {
+				fprintf(stderr, "Options l, r, s and w are "
+				"mutually exclusive.\n");
+				return 64;
+			}
+			wait_flag->is_set = 1;
+			strcpy(wait_flag->argument, "0");
+			if (!optarg)
+				break;
+			x = cpyarg(wait_flag->argument, optarg);
+			if (x)
+				return x;
+			break;
+
+		case '?':
+			/* getopt_long already printed an error message. */
+			return 64;
+			break;
+
+		default:
+			abort();
 		}
 	}
 
