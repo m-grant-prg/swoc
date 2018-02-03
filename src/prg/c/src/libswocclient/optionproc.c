@@ -38,6 +38,8 @@
  * 01/02/2018	MG	1.1.3	On error path check argc == 4 before	*
  *				indexing into argv.			*
  * 02/02/2018	MG	1.1.4	Use safer strtol instead of atoi.	*
+ *				Add number of locks as parameter to	*
+ *				the wait function.			*
  *									*
  ************************************************************************
  */
@@ -201,26 +203,35 @@ int swc_rel_lock(void)
 }
 
 /**
- * Wait until only 1 lock for this client remains.
- * Realistically this means that a previous command in this sequence would have
- * been a lock request.
+ * Wait until only a maximum of cnumlocks for this client remains.
+ * If cnumlocks > 0 this realistically means that a previous command in this
+ * sequence would have been a lock request.
  * On error mge_errno will be set.
+ * @param cnumlocks Wait until the number of locks is <= this value.
  * @return 0 on success, non-zero on failure.
  */
-int swc_client_wait(void)
+int swc_client_wait(char *cnumlocks)
 {
 	int prg_err = 0;
 	long int x;
 	char *end;
-	long int locks;
+	long int locks, numlocks;
 	char *outgoing_msg = "swocclient,status;";
 	size_t om_length = strlen(outgoing_msg);
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
 
-	syslog((int) (LOG_USER | LOG_NOTICE), "Waiting until 1 or fewer locks "
-		"remain for this client.");
+	numlocks = strtol(cnumlocks, &end, 10);
+	if ((*end != '\0') || (numlocks < 0) || (numlocks > 1)) {
+		mge_errno = MGE_PARAM;
+		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid number of locks "
+			"specified for wait - %s", cnumlocks);
+		return mge_errno;
+	}
+
+	syslog((int) (LOG_USER | LOG_NOTICE), "Waiting until no more than %li "
+		"locks remain for this client.", numlocks);
 
 	if ((prg_err = swcom_validate_config()))
 		return prg_err;
@@ -256,7 +267,7 @@ int swc_client_wait(void)
 		}
 
 		clear_msg(msg, ';', ',');
-	} while (locks > 1);
+	} while (locks > numlocks);
 	syslog((int) (LOG_USER | LOG_NOTICE), "%li locks remain for this "
 		"client.", locks);
 	return 0;
