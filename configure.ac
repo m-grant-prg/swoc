@@ -42,10 +42,12 @@
 #				sub-project structure.			#
 # 26/01/2018	MG	1.0.8	Add macro to check on threading		#
 #				libraries, compiler and linker flags.	#
+# 05/02/2018	NG	1.0.9	Change AC_CONFIG_SRCDIR to sensible	#
+#				value.					#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.8 $])
+AC_REVISION([$Revision: 1.0.9 $])
 
 AC_PREREQ([2.69])
 
@@ -237,7 +239,7 @@ AX_PTHREAD(, AC_MSG_ERROR([thread information not found]))
 AC_PROG_INSTALL
 
 # Check a source file to ensure no command line --srcdir typo.
-AC_CONFIG_SRCDIR([src/prg/c/gen/lib/dummy.c])
+AC_CONFIG_SRCDIR([src/prg/c/src/libswoccommon/messages.c])
 
 # GNULIB macros.
 # Also checks for ar, grep, egrep, ranlib and how to run the cpp.
