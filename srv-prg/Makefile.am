@@ -42,10 +42,11 @@
 # 07/06/2017	MG	1.1.2	Add support for temporary libraries.	#
 # 12/01/2018	MG	1.1.3	Add SPDX license tags to source files.	#
 # 16/01/2018	MG	1.1.4	Correct generation of config.h		#
+# 05/02/2018	MG	1.1.5	Remove unnecessary -I m4extra.		#
 #									#
 #########################################################################
 
-ACLOCAL_AMFLAGS = -I m4 -I m4extra
+ACLOCAL_AMFLAGS = -I m4
 
 # The sequence of the build below is important in so far as this sequence
 # means that the service start-up is done by a hook at the end of systemd

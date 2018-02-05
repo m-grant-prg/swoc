@@ -24,10 +24,11 @@
 #				and validateconfig man 3 pages.		#
 # 12/01/2018	MG	1.0.3	Add SPDX license tags to source files.	#
 # 14/01/2018	MG	1.0.4	Remove unnecessary config.h generation.	#
+# 05/02/2018	MG	1.0.5	Remove unnecessary -I m4extra.		#
 #									#
 #########################################################################
 
-ACLOCAL_AMFLAGS = -I m4 -I m4extra
+ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = src/man/3/messages src/man/3/ssh src/man/3/tcp
 SUBDIRS += src/man/3/validateconfig

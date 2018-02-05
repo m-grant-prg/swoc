@@ -26,10 +26,11 @@
 #				Add man 5 build.			#
 # 12/01/2018	MG	1.0.5	Add SPDX license tags to source files.	#
 # 14/01/2018	MG	1.0.6	Correct the generation of config.h	#
+# 05/02/2018	MG	1.0.7	Remove unnecessary -I m4extra.		#
 #									#
 #########################################################################
 
-ACLOCAL_AMFLAGS = -I m4 -I m4extra
+ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = src/conf/etc
 SUBDIRS += src/man/5

@@ -20,10 +20,12 @@
 # Date		Author	Version	Description				#
 #									#
 # 11/01/2018	MG	1.0.1	First release.				#
+# 05/02/2018	MG	1.0.2	Add  -I m4extra as a template for the	#
+#				project.				#
 #									#
 #########################################################################
 
-ACLOCAL_AMFLAGS = -I m4
+ACLOCAL_AMFLAGS = -I m4 -I m4extra
 
 
 SUBDIRS = com-dev com-lib

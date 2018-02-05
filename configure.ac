@@ -222,6 +222,8 @@ fi
 # Programmer defined macros should be placed in, say, m4extra which allows us
 # to exclude the standard macros from being git tracked. This other directory
 # must be specified as an include option in the Makefile.am ACLOCAL_AMFLAGS
+# e.g.
+# ACLOCAL_AMFLAGS = -I m4 -I m4extra
 #
 ########################
 

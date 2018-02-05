@@ -30,10 +30,11 @@
 # 08/06/2017	MG	1.0.7	Add support for temporary libraries.	#
 # 12/01/2018	MG	1.0.8	Add SPDX license tags to source files.	#
 # 15/01/2018	MG	1.0.9	Correct generation of config.h		#
+# 05/02/2018	MG	1.0.10	Remove unnecessary -I m4extra.		#
 #									#
 #########################################################################
 
-ACLOCAL_AMFLAGS = -I m4 -I m4extra
+ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = src/man/8
 SUBDIRS += src/prg/c/gen/lib
