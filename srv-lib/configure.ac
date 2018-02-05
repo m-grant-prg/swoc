@@ -52,10 +52,12 @@
 #				Change to manual package version	#
 #				numbering on adoption of project /	#
 #				sub-project structure.			#
+# 05/02/2018	NG	1.0.15	Change AC_CONFIG_SRCDIR to sensible	#
+#				value.					#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.14 $])
+AC_REVISION([$Revision: 1.0.15 $])
 
 AC_PREREQ([2.69])
 
@@ -248,7 +250,7 @@ AC_PROG_CXX
 AC_PROG_INSTALL
 
 # Check a source file to ensure no command line --srcdir typo.
-AC_CONFIG_SRCDIR([src/prg/c/gen/lib/dummy.c])
+AC_CONFIG_SRCDIR([src/prg/c/src/libswocserver/optionproc.c])
 
 # GNULIB macros.
 # Also checks for ar, grep, egrep, ranlib and how to run the cpp.
