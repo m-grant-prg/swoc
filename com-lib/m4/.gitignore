@@ -7,10 +7,6 @@
 # Ignore everything ...
 *
 
-# ... except myself
+# ... except myself and the cache file.
 !.gitignore
-/00gnulib.m4
-/configmake.m4
-/gnulib-common.m4
-/gnulib-comp.m4
-/gnulib-tool.m4
+!/gnulib-cache.m4
