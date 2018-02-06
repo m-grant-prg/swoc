@@ -1,15 +1,15 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-#	acmbuild is automatically generated,				#
+#	bootstrap.sh is automatically generated,			#
 #		please do not modify!					#
 #									#
 #########################################################################
 
 #########################################################################
 #									#
-# Script ID: acmbuild							#
-# Author: Copyright (C) 2014-2017  Mark Grant				#
+# Script ID: bootstrap.sh						#
+# Author: Copyright (C) 2014-2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -17,10 +17,11 @@
 # Purpose:								#
 # To simplify the AutoTools distribution build.				#
 #									#
-# Syntax:	acmbuild	[ -c || --distcheck ] ||		#
+# Syntax:	bootstrap.sh	[ -c || --distcheck ] ||		#
 #				[ -d || --debug ] ||			#
 #				[ -D || --dist ] ||			#
 #				[ -f || --distcheckfake ] ||		#
+#				[ -g || --gnulib ] ||			#
 #				[ -h || --help ] ||			#
 #				[ -m || --make ] ||			#
 #				[ -V || --version-V ]			#
@@ -58,8 +59,11 @@
 # 25/02/2017	MG	1.2.0	Add distcheck & distcheckfake options.	#
 # 25/06/2017	MG	1.2.1	Enforce 80 column rule.			#
 # 01/12/2017	MG	1.2.2	Add SPDX license tags to source files.	#
-# 04/12/2017	NG	1.2.3	Adopt standard exit codes; 0 on success	#
+# 04/12/2017	MG	1.2.3	Adopt standard exit codes; 0 on success	#
 #				1 on failure.				#
+# 06/02/2018	MG	1.3.1	Renamed from acmbuild.			#
+#				Add -g option.				#
+#				General script tidy up.			#
 #									#
 #########################################################################
 
@@ -67,10 +71,8 @@
 # Init variables #
 ##################
 script_exit_code=0
-osname=$(uname -s)			# Get system name for OS differentiation
-version="1.2.3"				# set version variable
-outputprefix="acmbuild: "
-packageversion=v1.2.2		# Version of the complete package
+version="1.3.1"			# set version variable
+packageversion=v1.2.2-1-g9ae5094	# Version of the complete package
 
 debug=""
 dist=FALSE
@@ -91,9 +93,9 @@ output()
 {
 	if [ $2 = 0 ]
 	then
-		echo "$outputprefix$1"
+		echo "$1"
 	else
-		echo "$outputprefix$1" 1>&2
+		echo "$1" 1>&2
 	fi
 }
 
@@ -144,7 +146,7 @@ do
 		then
 			script_exit_code=1
 			msg="Options c, D, f, & m are mutually exclusive."
-			output "$msg" 1 FALSE
+			output "$msg" 1
 			script_exit
 		fi
 		distcheck=TRUE
@@ -160,7 +162,7 @@ do
 		then
 			script_exit_code=1
 			msg="Options c, D, f, & m are mutually exclusive."
-			output "$msg" 1 FALSE
+			output "$msg" 1
 			script_exit
 		fi
 		dist=TRUE
@@ -171,7 +173,7 @@ do
 		then
 			script_exit_code=1
 			msg="Options c, D, f, & m are mutually exclusive."
-			output "$msg" 1 FALSE
+			output "$msg" 1
 			script_exit
 		fi
 		distcheckfake=TRUE
@@ -182,11 +184,12 @@ do
 		shift
 		;;
 	-h|--help)
-		echo "Usage is $0 [options]"
-		echo "  -c or --distcheck perform normal distcheck"
+		echo "Usage is:-"
+		echo "	-c or --distcheck perform normal distcheck"
 		echo "	-d or --debug build with appropriate debug flags"
 		echo "	-D or --dist perform a make dist"
-		echo "  -f or --distcheckfake fake a distcheck for fixed root"
+		echo "	-f or --distcheckfake fake a distcheck for fixed root"
+		echo "	-g or --gnulib run gnulib-tool --update"
 		echo "	-h or --help displays usage information"
 		echo "	-m or --make compile and link - plain make"
 		echo "	-V or --version displays version information"
@@ -200,7 +203,7 @@ do
 		then
 			script_exit_code=1
 			msg="Options c, D, f, & m are mutually exclusive."
-			output "$msg" 1 FALSE
+			output "$msg" 1
 			script_exit
 		fi
 		make=TRUE
@@ -241,7 +244,7 @@ if [ $distcheck = FALSE -a $dist = FALSE -a $make = FALSE \
 	-a $distcheckfake = FALSE ]
 then
 	script_exit_code=1
-	output "Either c, D, m or r must be set." 1 FALSE
+	output "Either c, D, m or r must be set." 1
 	script_exit
 fi
 
@@ -263,7 +266,7 @@ fi
 
 autoreconf -if $basedir
 status=$?
-output "autoreconf -if "$basedir" completed with exit status: "$status $status
+output "autoreconf -if "$basedir" completed with exit status: $status" $status
 std_cmd_err_handler $status
 
 cmdline=$basedir"/configure --enable-silent-rules=yes "$debug
