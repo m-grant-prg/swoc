@@ -247,11 +247,18 @@ fi
 
 if [ $gnulib = TRUE ]
 then
-	cmdline="gnulib-tool --update --dir="$basedir
-	eval "$cmdline"
-	status=$?
-	output "$cmdline completed with exit status: $status" $status
-	std_cmd_err_handler $status
+	if [ -f $basedir/m4/gnulib-cache.m4 ]
+	then
+		cmdline="gnulib-tool --update --quiet --quiet --dir="$basedir
+		eval "$cmdline"
+		status=$?
+		output "$cmdline completed with exit status: $status" $status
+		std_cmd_err_handler $status
+	else
+		msg="Option -g --gnulib ignored - "
+		msg+="missing $basedir/m4/gnulib-cache.m4"
+		output "$msg" 0
+	fi
 fi
 
 autoreconf -if $basedir
