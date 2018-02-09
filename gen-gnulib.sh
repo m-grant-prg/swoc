@@ -42,7 +42,7 @@
 ##################
 script_exit_code=0
 version="1.0.1"			# set version variable
-packageversion=v1.0.1	# Version of the complete package
+packageversion=v1.0.1-4-g7222bec	# Version of the complete package
 
 basedir="."
 
