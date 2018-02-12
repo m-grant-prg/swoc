@@ -34,10 +34,11 @@
 #				Change to manual package version	#
 #				numbering on adoption of project /	#
 #				sub-project structure.			#
+# 12/02/2018	MG	1.0.6	Make AutoMake use posix format for tar.	#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.5 $])
+AC_REVISION([$Revision: 1.0.6 $])
 
 AC_PREREQ([2.69])
 
@@ -126,10 +127,10 @@ AC_SUBST([edit], ["sed \
 
 
 # Passes the options to all am files. Puts objects in the sub-directory
-# containing the source.
+# containing the source. Forces tar to use --format=posix in make dist.
 # This also checks :-	BSD install	make variable set	mkdir -p
 #			gawk
-AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
+AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects tar-pax])
 
 
 ########################

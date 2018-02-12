@@ -55,10 +55,11 @@
 #				sub-project structure.			#
 # 05/02/2018	NG	1.0.11	Change AC_CONFIG_SRCDIR to sensible	#
 #				value.					#
+# 12/02/2018	MG	1.0.12	Make AutoMake use posix format for tar.	#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.11 $])
+AC_REVISION([$Revision: 1.0.12 $])
 
 AC_PREREQ([2.69])
 
@@ -223,10 +224,10 @@ AC_SUBST([edit], ["sed \
 
 
 # Passes the options to all am files. Puts objects in the sub-directory
-# containing the source.
+# containing the source. Forces tar to use --format=posix in make dist.
 # This also checks :-	BSD install	make variable set	mkdir -p
 #			gawk
-AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
+AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects tar-pax])
 
 # Set language for compilation tests.
 AC_LANG([C])
