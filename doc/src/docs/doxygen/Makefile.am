@@ -19,6 +19,8 @@
 # Date		Author	Version	Description				#
 #									#
 # 11/01/2018	MG	1.0.0	First release.				#
+# 12/02/2018	MG	1.0.1	Make tar use the Posix format for	#
+#				longer filenames.			#
 #									#
 #########################################################################
 
@@ -41,7 +43,7 @@ docbasedir = $(datarootdir)/doc-base
 $(docpkg): doxygen.stamp
 	if [ -d $(top_srcdir)/../com-lib/src/ \
 		-a -d $(top_srcdir)/../com-dev/src/ ]; \
-		then tar chof - html | gzip -9 -c > $@; fi
+		then tar -chz --format=posix -f $@ html; fi
 
 doxygen.stamp: Doxyfile
 	if [ -d $(top_srcdir)/../com-lib/src/ \
