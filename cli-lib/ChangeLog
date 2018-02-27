@@ -1,3 +1,8 @@
+2018-02-27 v 1.1.2 Mark Grant <m.grant.prg@gmail.com>
+	*  Add SSH support.
+	Add Doxygen comments.
+	Overhaul of AutoTools project structure.
+
 2017-05-06 v 1.1.0 Mark Grant <m.grant.prg@gmail.com>
 	*  Migrate from NFS 'file as a flag' semaphore to TCP stream socket
 	messaging to new swocserverd daemon.

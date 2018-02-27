@@ -1,3 +1,8 @@
+Release 1.1.2 2018-02-27
+Add SSH support.
+Add Doxygen comments.
+Overhaul of AutoTools project structure.
+
 Release 1.1.0 2017-05-06
 Migrate from NFS 'file as a flag' semaphore to TCP stream socket messaging to
 new swocserverd daemon.
