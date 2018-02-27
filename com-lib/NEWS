@@ -1,2 +1,7 @@
+Release 1.0.2 2018-02-27
+Add SSH support.
+Add Doxygen comments.
+Overhaul of AutoTools project structure.
+
 Release 1.0.0 2017-05-05
 Initial release.
