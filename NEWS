@@ -1,3 +1,7 @@
+Release 1.1.2 2018-02-27
+Add Doxygen comments.
+Overhaul of AutoTools project structure.
+
 Release 1.1.0 2017-05-07
 Migrate to use mge_errno and handling from libmgec. Add error message output to
 prevent silence on error.
