@@ -1,3 +1,10 @@
+2018-02-28 v 1.1.2 Mark Grant <m.grant.prg@gmail.com>
+	*  Add SSH support.
+	Implement epoll usage to support multiple ports.
+	Change force_unlock to unlock.
+	Add Doxygen comments.
+	Overhaul of AutoTools project structure.
+
 2017-05-06 v 1.1.0 Mark Grant <m.grant.prg@gmail.com>
 	*  Introduce swocserverd daemon and migrate from NFS 'file as a flag'
 	semaphore to TCP socket stream messaging between applications and
