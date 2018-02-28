@@ -1,3 +1,9 @@
+Release 1.1.2 2018-02-28
+Add SSH support.
+Change force_unlock to unlock.
+Add Doxygen comments.
+Overhaul of AutoTools project structure.
+
 Release 1.1.0 2017-05-06
 Convert from NFS 'file as a flag' semaphore to TCP socket messaging to new
 server daemon.
