@@ -8,6 +8,7 @@ includedir=@includedir@
 Name: libswoccommon
 Description: Server Wait On Client common library.
 Version: @PACKAGE_VERSION@
-Requires:
+Requires: @pc_requires@
+Requires.private: @pc_requires_private@
 Libs: -L${libdir} -lswoccommon
 Cflags: -I${includedir}
