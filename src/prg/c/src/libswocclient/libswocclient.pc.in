@@ -8,6 +8,7 @@ includedir=@includedir@
 Name: libswocclient
 Description: Server Wait On Client client-side library.
 Version: @PACKAGE_VERSION@
-Requires:
+Requires: @pc_requires@
+Requires.private: @pc_requires_private@
 Libs: -L${libdir} -lswocclient
 Cflags: -I${includedir}
