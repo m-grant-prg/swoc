@@ -61,9 +61,9 @@
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.13 $])
+AC_REVISION($Revision: 1.0.13 $)
 
-AC_PREREQ([2.69])
+AC_PREREQ(2.69)
 
 
 ########################
@@ -74,8 +74,8 @@ AC_PREREQ([2.69])
 #
 ########################
 
-AC_INIT([[Server Wait On Client client side library]], [v1.1.2],
-	[m.grant.prg@gmail.com], [libswocclient])
+AC_INIT(Server Wait On Client client side library, v1.1.2,
+	m.grant.prg@gmail.com, libswocclient)
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
@@ -94,7 +94,7 @@ AC_SUBST(pkgversion, $PACKAGE_VERSION)
 #
 ########################
 
-AC_SUBST([tmpheaders])
+AC_SUBST(tmpheaders)
 
 for entry in `dirname $0`/src/prg/c/inc-tmp/*.h
 do
@@ -116,7 +116,7 @@ done
 #
 ########################
 
-AC_SUBST([tmplibraries])
+AC_SUBST(tmplibraries)
 
 for direntry in `dirname $0`/src/prg/c/lib-tmp/*
 do
@@ -140,14 +140,16 @@ done
 #
 ########################
 
-AC_ARG_ENABLE([debug],
-	[  --enable-debug    Compile for debugging],
+AC_ARG_ENABLE(debug,
+	  --enable-debug    Compile for debugging,
 	[case "${enableval}" in
-		yes) debug=true ;;
-		no)  debug=false ;;
-		*) AC_MSG_ERROR([bad value ${enableval} for --enable-debug]) ;;
-	esac],[debug=false])
-AM_CONDITIONAL([DEBUG], [test x$debug = xtrue])
+		yes)	debug=true
+			AC_MSG_NOTICE(compiling with debugging flags.) ;;
+		no)	debug=false ;;
+		*)	AC_MSG_ERROR(bad value ${enableval} for --enable-debug)
+			;;
+	esac],debug=false)
+AM_CONDITIONAL(DEBUG, test x$debug = xtrue)
 
 # CFLAGS is usually set to -g -O2, but for debugging we will probably
 # want -g -Og and for production we will probably want -O2. So empty CFLAGS here
@@ -194,7 +196,7 @@ AM_CONDITIONAL([DEBUG], [test x$debug = xtrue])
 #
 ########################
 
-AC_SUBST([edit], ["sed \
+AC_SUBST(edit, "sed \
 		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
@@ -222,17 +224,17 @@ AC_SUBST([edit], ["sed \
 		-e 's|@pkgdatadir[@]|\$(pkgdatadir)|g' \
 		-e 's|@pkgincludedir[@]|\$(pkgincludedir)|g' \
 		-e 's|@pkglibdir[@]|\$(pkglibdir)|g' \
-		-e 's|@pkglibexecdir[@]|\$(pkglibexecdir)|g'"])
+		-e 's|@pkglibexecdir[@]|\$(pkglibexecdir)|g'")
 
 
 # Passes the options to all am files. Puts objects in the sub-directory
 # containing the source. Forces tar to use --format=posix in make dist.
 # This also checks :-	BSD install	make variable set	mkdir -p
 #			gawk
-AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects tar-pax])
+AM_INIT_AUTOMAKE(-Wall -Werror subdir-objects tar-pax)
 
 # Set language for compilation tests.
-AC_LANG([C])
+AC_LANG(C)
 
 # Checks the compiler to use, stores it in the cc variable and checks its
 # capabilities.
@@ -250,7 +252,7 @@ AC_PROG_CXX
 AC_PROG_INSTALL
 
 # Check a source file to ensure no command line --srcdir typo.
-AC_CONFIG_SRCDIR([src/prg/c/src/libswocclient/optionproc.c])
+AC_CONFIG_SRCDIR(src/prg/c/src/libswocclient/optionproc.c)
 
 # GNULIB macros.
 # Also checks for ar, grep, egrep, ranlib and how to run the cpp.
@@ -262,7 +264,7 @@ gl_INIT
 AM_PROG_AR
 
 # Check for libtool minimum version.
-LT_PREREQ([2.4.6])
+LT_PREREQ(2.4.6)
 
 # Turn on shared libraries.
 # Also checks for fgrep, linker capabilities, ranlib, sed.
@@ -274,7 +276,7 @@ LT_INIT
 
 # Causes AC_OUTPUT to create a c preprocessor file with #define statements about
 # the configuration.
-AC_CONFIG_HEADERS([src/prg/c/gen/inc/config.h])
+AC_CONFIG_HEADERS(src/prg/c/gen/inc/config.h)
 
 
 ########################
@@ -288,7 +290,7 @@ AC_CONFIG_HEADERS([src/prg/c/gen/inc/config.h])
 #
 ########################
 
-AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_MACRO_DIR(m4)
 
 
 ########################
@@ -310,66 +312,66 @@ AC_CONFIG_MACRO_DIR([m4])
 #
 ########################
 
-AC_MSG_NOTICE([checking for particular programs required by this application])
+AC_MSG_NOTICE(checking for particular programs required by this application)
 AC_PROG_SED
 
-AC_MSG_NOTICE([checking for generic programs required by this application])
-AC_CHECK_PROG([TAR], [tar], [yes], [no])
+AC_MSG_NOTICE(checking for generic programs required by this application)
+AC_CHECK_PROG(TAR, tar, yes, no)
 if test "x$TAR" = "xno" ; then
-	AC_MSG_ERROR([tar not found])
+	AC_MSG_ERROR(tar not found)
 fi
 
-AC_CHECK_PROG([BASH], [bash], [yes], [no])
+AC_CHECK_PROG(BASH, bash, yes, no)
 if test "x$BASH" = "xno" ; then
-   	AC_MSG_ERROR([bash not found])
+   	AC_MSG_ERROR(bash not found)
 fi
 
 
 # Checks for libraries.
 AC_SEARCH_LIBS(clear_msg, mgec, , \
 	AC_MSG_ERROR(function parsefile not found in libmgesysutils))
-AC_SEARCH_LIBS([parsefile], [mgesysutils], , \
-	[AC_MSG_ERROR([function parsefile not found in libmgesysutils])])
-AC_SEARCH_LIBS([prep_recv_sock], [swoccommon], , \
-	[AC_MSG_ERROR([function prep_recv_sock not found in libswoccommon])])
+AC_SEARCH_LIBS(parsefile, mgesysutils, , \
+	AC_MSG_ERROR(function parsefile not found in libmgesysutils))
+AC_SEARCH_LIBS(prep_recv_sock, swoccommon, , \
+	AC_MSG_ERROR(function prep_recv_sock not found in libswoccommon))
 
 # Checks for C header files.
-AC_CHECK_HEADERS([stdio.h], [], [AC_MSG_ERROR([header not found])])
-AC_CHECK_HEADERS([stdlib.h], [], [AC_MSG_ERROR([header not found])])
-AC_CHECK_HEADERS([signal.h], [], [AC_MSG_ERROR([header not found])])
-AC_CHECK_HEADERS([limits.h], [], [AC_MSG_ERROR([header not found])])
-AC_CHECK_HEADERS([ctype.h], [], [AC_MSG_ERROR([header not found])])
-AC_CHECK_HEADERS([string.h], [], [AC_MSG_ERROR([header not found])])
-AC_CHECK_HEADERS([unistd.h], [], [AC_MSG_ERROR([header not found])])
-AC_CHECK_HEADERS([syslog.h], [], [AC_MSG_ERROR([header not found])])
-AC_CHECK_HEADERS([mge-errno.h], [], [AC_MSG_ERROR([header not found])])
-AC_CHECK_HEADERS([mgemessage.h], [], [AC_MSG_ERROR([header not found])])
-AC_CHECK_HEADERS([libswoccommon.h], [], [AC_MSG_ERROR([header not found])])
-AC_CHECK_HEADERS([remsyslog.h], [], [AC_MSG_ERROR([header not found])])
-AC_CHECK_HEADERS([libswocclient.h], [], [AC_MSG_ERROR([header not found])])
+AC_CHECK_HEADERS(stdio.h, , AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(stdlib.h, , AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(signal.h, , AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(limits.h, , AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(ctype.h, , AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(string.h, , AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(unistd.h, , AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(syslog.h, , AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(mge-errno.h, , AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(mgemessage.h, , AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(libswoccommon.h, , AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(remsyslog.h, , AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(libswocclient.h, , AC_MSG_ERROR(header not found))
 
 
 # Checks for C++ header files.
 
 # Checks for typedefs, structures, and compiler characteristics.
-AC_MSG_NOTICE([checking for typedefs required by this application])
+AC_MSG_NOTICE(checking for typedefs required by this application)
 AC_TYPE_SIZE_T
 
 # Checks for library functions.
 
 # Checks for pkg-config files.
 PKG_CHECK_MODULES(LIBMGEC, libmgec, , AC_MSG_ERROR(pkg-config file not found))
-PKG_CHECK_MODULES(LIBMGESYSUTILS, libmgesysutils, [], \
-		[AC_MSG_ERROR([pkg-config file not found])])
-PKG_CHECK_MODULES(LIBSWOCCOMMON, libswoccommon, [], \
-		[AC_MSG_ERROR([pkg-config file not found])])
+PKG_CHECK_MODULES(LIBMGESYSUTILS, libmgesysutils, , \
+		AC_MSG_ERROR(pkg-config file not found))
+PKG_CHECK_MODULES(LIBSWOCCOMMON, libswoccommon, , \
+		AC_MSG_ERROR(pkg-config file not found))
 
 # Project Makefiles to create.
-AC_CONFIG_FILES([Makefile
+AC_CONFIG_FILES(Makefile
 		src/prg/c/inc-tmp/Makefile
 		src/prg/c/lib-tmp/Makefile
 		src/prg/c/src/libswocclient/Makefile
 		src/prg/c/src/test-optionproc/Makefile
-		src/prg/c/gen/lib/Makefile])
+		src/prg/c/gen/lib/Makefile)
 
 AC_OUTPUT
