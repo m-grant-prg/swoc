@@ -53,7 +53,7 @@
 #				Change to manual package version	#
 #				numbering on adoption of project /	#
 #				sub-project structure.			#
-# 05/02/2018	NG	1.0.11	Change AC_CONFIG_SRCDIR to sensible	#
+# 05/02/2018	MG	1.0.11	Change AC_CONFIG_SRCDIR to sensible	#
 #				value.					#
 # 12/02/2018	MG	1.0.12	Make AutoMake use posix format for tar.	#
 # 04/03/2018	MG	1.0.13	Add library and pkg-config search for	#
