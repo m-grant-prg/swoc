@@ -56,10 +56,12 @@
 # 05/02/2018	NG	1.0.11	Change AC_CONFIG_SRCDIR to sensible	#
 #				value.					#
 # 12/02/2018	MG	1.0.12	Make AutoMake use posix format for tar.	#
+# 04/03/2018	MG	1.0.13	Add library and pkg-config search for	#
+#				libmgec which is required.		#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.12 $])
+AC_REVISION([$Revision: 1.0.13 $])
 
 AC_PREREQ([2.69])
 
@@ -324,6 +326,8 @@ fi
 
 
 # Checks for libraries.
+AC_SEARCH_LIBS(clear_msg, mgec, , \
+	AC_MSG_ERROR(function parsefile not found in libmgesysutils))
 AC_SEARCH_LIBS([parsefile], [mgesysutils], , \
 	[AC_MSG_ERROR([function parsefile not found in libmgesysutils])])
 AC_SEARCH_LIBS([prep_recv_sock], [swoccommon], , \
@@ -354,6 +358,7 @@ AC_TYPE_SIZE_T
 # Checks for library functions.
 
 # Checks for pkg-config files.
+PKG_CHECK_MODULES(LIBMGEC, libmgec, , AC_MSG_ERROR(pkg-config file not found))
 PKG_CHECK_MODULES(LIBMGESYSUTILS, libmgesysutils, [], \
 		[AC_MSG_ERROR([pkg-config file not found])])
 PKG_CHECK_MODULES(LIBSWOCCOMMON, libswoccommon, [], \

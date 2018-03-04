@@ -36,6 +36,8 @@
 #				header directory to AM_CPPFLAGS.	#
 # 16/01/2018	MG	1.0.9	Change to include headers from relevant	#
 #				-dev projects.				#
+# 04/03/2018	MG	1.0.10	Add .pc file supplied libmgec CFLAGS	#
+#				and LIBS.				#
 #									#
 #########################################################################
 
@@ -47,7 +49,7 @@ AM_CPPFLAGS += -I../../gen/inc -I../../gen/lib
 
 
 AM_CFLAGS = -Wall
-AM_CFLAGS += $(LIBMGESYSUTILS_CFLAGS) $(LIBSWOCCOMMON_CFLAGS)
+AM_CFLAGS += $(LIBMGEC_CFLAGS) $(LIBMGESYSUTILS_CFLAGS) $(LIBSWOCCOMMON_CFLAGS)
 
 if DEBUG
 AM_CFLAGS += -g -Og
@@ -63,7 +65,7 @@ libswocclient_la_SOURCES += version.c
 
 
 AM_LDFLAGS = -version-info 1:0:0
-AM_LDFLAGS += $(LIBMGESYSUTILS_LIBS) $(LIBSWOCCOMMON_LIBS)
+AM_LDFLAGS += $(LIBMGEC_LIBS) $(LIBMGESYSUTILS_LIBS) $(LIBSWOCCOMMON_LIBS)
 
 
 libswocclient_la_LIBADD = $(tmplibraries)
