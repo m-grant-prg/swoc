@@ -1,3 +1,8 @@
+Release 1.0.3 2018-03-06
+When establishing a TCP connection, another client or server comms session could
+be taking place. Therefore allow bind and connect 10 tries if the address is in
+use.
+
 Release 1.0.2 2018-02-27
 Add SSH support.
 Add Doxygen comments.

@@ -3,12 +3,12 @@
  *
  * Source for version functions.
  *
- * @author Copyright (C) 2017  Mark Grant
+ * @author Copyright (C) 2017-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.1 ==== 10/11/2017_
+ * @version _v1.1.2 ==== 06/03/2018_
  */
 
 /* **********************************************************************
@@ -22,6 +22,11 @@
  * 19/10/2017	MG	1.1.0	Add support for SSH.			*
  * 10/11/2017	MG	1.1.1	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 06/03/2018	MG	1.1.2	When establishing a TCP connection,	*
+ *				another client or server comms session	*
+ *				could be taking place. Therefore allow	*
+ *				bind and connect 10 tries if the	*
+ *				address is in use.			*
  *									*
  ************************************************************************
  */
@@ -33,7 +38,7 @@
 #include <config.h>
 
 /** The source code version. */
-#define SOURCE_VERSION "1.1.1"
+#define SOURCE_VERSION "1.1.2"
 
 /**
  * Get the git-describe based package version.
