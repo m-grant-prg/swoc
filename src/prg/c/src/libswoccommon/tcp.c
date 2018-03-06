@@ -164,8 +164,9 @@ int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 					 */
 					i = bind(*sfd, rp->ai_addr,
 							rp->ai_addrlen);
-					sleep(1);
-				  } while (x++ <10 && i == -1
+					if (i == -1 && errno == EADDRINUSE)
+						sleep(1);
+				  } while (x++ < 10 && i == -1
 						&& errno == EADDRINUSE);
 			}
 		} else {
@@ -175,8 +176,9 @@ int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 				 * error, allow 10 tries.
 				 */
 				i = connect(*sfd, rp->ai_addr, rp->ai_addrlen);
-				sleep(1);
-			  } while (x++ <10 && i == -1 && errno == EADDRINUSE);
+				if (i == -1 && errno == EADDRINUSE)
+					sleep(1);
+			  } while (x++ < 10 && i == -1 && errno == EADDRINUSE);
 		}
 		if (!i)
 			break;
