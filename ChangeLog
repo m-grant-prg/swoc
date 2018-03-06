@@ -1,3 +1,8 @@
+2018-03-06 v 1.0.3 Mark Grant <m.grant.prg@gmail.com>
+	*  When establishing a TCP connection, another client or server comms
+	session could be taking place. Therefore allow bind and connect 10 tries
+	if the address is in use.
+
 2018-02-27 v 1.0.2 Mark Grant <m.grant.prg@gmail.com>
 	*  Add SSH support.
 	Add Doxygen comments.
