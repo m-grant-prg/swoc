@@ -3,12 +3,12 @@
  *
  * TCP connection processing functions.
  *
- * @author Copyright (C) 2017  Mark Grant
+ * @author Copyright (C) 2017-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.1 ==== 10/11/2017_
+ * @version _v1.1.2 ==== 06/03/2018_
  */
 
 /* **********************************************************************
@@ -22,6 +22,10 @@
  * 19/10/2017	MG	1.1.0	Add support for SSH.			*
  * 10/11/2017	MG	1.1.1	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 06/03/2018	MG	1.1.2	Another client or server comms session	*
+ *				could be taking place. Therefore allow	*
+ *				bind and connect 10 tries if the	*
+ *				address is in use.			*
  *									*
  ************************************************************************
  */
@@ -122,6 +126,7 @@ int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 {
 	struct addrinfo *result, *rp;
 	int i, r, s;
+	int x = 0;
 	char port[6];
 	mge_errno = 0;
 
@@ -151,12 +156,28 @@ int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 			 */
 			i = setsockopt(*sfd, SOL_SOCKET, SO_REUSEADDR, &r,
 				sizeof r);
-			if (!i)
-				i = bind(*sfd, rp->ai_addr, rp->ai_addrlen);
+			if (!i) {
+				do {
+					/*
+					 * If the address is in use, AOT any
+					 * other error, allow 10 tries.
+					 */
+					i = bind(*sfd, rp->ai_addr,
+							rp->ai_addrlen);
+					sleep(1);
+				  } while (x++ <10 && i == -1
+						&& errno == EADDRINUSE);
+			}
 		} else {
-			i = connect(*sfd, rp->ai_addr, rp->ai_addrlen);
+			do {
+				/*
+				 * If the address is in use, AOT any other
+				 * error, allow 10 tries.
+				 */
+				i = connect(*sfd, rp->ai_addr, rp->ai_addrlen);
+				sleep(1);
+			  } while (x++ <10 && i == -1 && errno == EADDRINUSE);
 		}
-
 		if (!i)
 			break;
 
