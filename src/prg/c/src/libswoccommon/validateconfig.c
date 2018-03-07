@@ -56,7 +56,7 @@ static int validatesshuser(const struct confsection *ps);
 int portno;				/**< General port number variable. */
 int pollint;				/**< Polling interval. */
 int ssh;				/**< Use SSH false == 0, true == 1 */
-char server[_POSIX_HOST_NAME_MAX];	/**<Server name. */
+char server[_POSIX_HOST_NAME_MAX];	/**< Server name. */
 int srvportno;				/**< Server port number. */
 int sshportno;				/**< Local port to use if using SSH. */
 char sshuser[_POSIX_LOGIN_NAME_MAX];	/**< Server username for SSH. */
