@@ -5,12 +5,12 @@
  *
  * Used for swocserver and swocclient not swocserverd.
  *
- * @author Copyright (C) 2017  Mark Grant
+ * @author Copyright (C) 2017-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.2 ==== 10/11/2017_
+ * @version _v1.0.3 ==== 07/03/2018_
  */
 
 /* **********************************************************************
@@ -22,6 +22,7 @@
  * 19/10/2017	MG	1.0.1	First release.				*
  * 10/11/2017	MG	1.0.2	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 07/03/2018	MG	1.0.3	Remove redundant global variable portno	*
  *									*
  ************************************************************************
  */
@@ -53,7 +54,6 @@ static int validatesshportno(const struct confsection *);
 static int validatesshuser(const struct confsection *ps);
 
 
-int portno;				/**< General port number variable. */
 int pollint;				/**< Polling interval. */
 int ssh;				/**< Use SSH false == 0, true == 1 */
 char server[_POSIX_HOST_NAME_MAX];	/**< Server name. */
