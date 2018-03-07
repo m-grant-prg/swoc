@@ -1,3 +1,8 @@
+Release 1.0.4 2018-03-07
+In the try and if necessary retry routine, do not sleep if bind or connect are
+successful. That would block the address for a full second, (an eternity).
+Keep global variables acquired from the config file unchanged throughout.
+
 Release 1.0.3 2018-03-06
 When establishing a TCP connection, another client or server comms session could
 be taking place. Therefore allow bind and connect 10 tries if the address is in

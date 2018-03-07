@@ -1,3 +1,10 @@
+2018-03-07 v 1.0.4 Mark Grant <m.grant.prg@gmail.com>
+	*  In the try and if necessary retry routine, do not sleep if bind or
+	connect are successful. That would block the address for a full second,
+	(an eternity).
+	Keep global variables acquired from the config file unchanged
+	throughout.
+
 2018-03-06 v 1.0.3 Mark Grant <m.grant.prg@gmail.com>
 	*  When establishing a TCP connection, another client or server comms
 	session could be taking place. Therefore allow bind and connect 10 tries
