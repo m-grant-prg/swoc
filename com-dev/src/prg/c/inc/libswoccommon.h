@@ -3,12 +3,12 @@
  *
  * Header file for Server Wait on Client common library.
  *
- * @author Copyright (C) 2017  Mark Grant
+ * @author Copyright (C) 2017-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.3 ==== 10/11/2017_
+ * @version _v1.0.4 ==== 07/03/2018_
  */
 
 /* **********************************************************************
@@ -22,6 +22,7 @@
  *				swocserverd.h.				*
  * 10/11/2017	MG	1.0.3	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 07/03/2018	MG	1.0.4	Remove redundant global variable portno	*
  *									*
  ************************************************************************
  */
@@ -40,7 +41,6 @@
 
 BEGIN_C_DECLS
 
-extern int portno;
 extern int pollint;
 extern int ssh;
 extern char server[];
