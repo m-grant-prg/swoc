@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.2 ==== 06/03/2018_
+ * @version _v1.1.3 ==== 07/03/2018_
  */
 
 /* **********************************************************************
@@ -27,6 +27,11 @@
  *				could be taking place. Therefore allow	*
  *				bind and connect 10 tries if the	*
  *				address is in use.			*
+ * 07/03/2018	MG	1.1.3	Do not sleep if connect or bind is	*
+ *				successful.				*
+ *				Preserve config file global variables	*
+ *				unchanged. Use local variables when	*
+ *				values need changing.			*
  *									*
  ************************************************************************
  */
@@ -38,7 +43,7 @@
 #include <config.h>
 
 /** The source code version. */
-#define SOURCE_VERSION "1.1.2"
+#define SOURCE_VERSION "1.1.3"
 
 /**
  * Get the git-describe based package version.
