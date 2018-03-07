@@ -1,3 +1,7 @@
+2018-03-07 v 1.1.4 Mark Grant <m.grant.prg@gmail.com>
+	*  Intermediate rc releases end up back with no changes but version must
+	be bumped.
+
 2018-03-04 v 1.1.3 Mark Grant <m.grant.prg@gmail.com>
 	*  Link against libmgec.
 
