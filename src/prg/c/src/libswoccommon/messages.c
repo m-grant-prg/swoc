@@ -3,12 +3,12 @@
  *
  * Message processing functions common to swoc programs.
  *
- * @author Copyright (C) 2017  Mark Grant
+ * @author Copyright (C) 2017-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.1 ==== 10/11/2017_
+ * @version _v1.1.2 ==== 07/03/2018_
  */
 
 /* **********************************************************************
@@ -22,6 +22,9 @@
  * 19/10/2017	MG	1.1.0	Add support for SSH.			*
  * 10/11/2017	MG	1.1.1	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 07/03/2018	MG	1.1.2	Preserve config file global variables	*
+ *				unchanged. Use local variables when	*
+ *				values need changing.			*
  *									*
  ************************************************************************
  */
@@ -126,21 +129,24 @@ int exch_msg(char *outgoing_msg, size_t om_length, struct mgemessage *msg)
 	int sockfd;
 	int portno;
 	ssize_t n;
+	char serv[strlen(server)];
 	char sock_buf[SOCK_BUF_SIZE];
 	struct mgebuffer msg_buf1 = { NULL, DEF_BUF_SIZE , 0 };
 	struct mgebuffer *msg_buf = &msg_buf1;
+
+	strcpy(serv, server);
 
 	if (ssh) {
 		portno = sshportno;
 		res = open_ssh_tunnel();
 		if (res)
 			return res;
-		strcpy(server, "localhost");
+		strcpy(serv, "localhost");
 	} else {
 		portno = srvportno;
 	}
 
-	res = init_conn(&sockfd, &portno, server);
+	res = init_conn(&sockfd, &portno, serv);
 	if (res)
 		goto err_exit_0;
 
