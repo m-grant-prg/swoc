@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.7 ==== 02/02/2018_
+ * @version _v1.0.8 ==== 18/03/2018_
  */
 
 /* **********************************************************************
@@ -26,6 +26,8 @@
  * 11/11/2017	MG	1.0.6	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
  * 02/02/2018	MG	1.0.7	Add number of locks parameter to wait.	*
+ * 18/03/2018	MG	1.0.8	Add locks_held for use during signal	*
+ *				handling, primarily in swocclient -w.	*
  *									*
  ************************************************************************
  */
@@ -39,6 +41,9 @@
 
 
 BEGIN_C_DECLS
+
+
+extern char locks_held[];
 
 
 int swc_show_status(void);
