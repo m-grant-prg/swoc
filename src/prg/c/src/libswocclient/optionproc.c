@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.4 ==== 02/02/2018_
+ * @version _v1.1.5 ==== 18/03/2018_
  */
 
 /* **********************************************************************
@@ -40,6 +40,11 @@
  * 02/02/2018	MG	1.1.4	Use safer strtol instead of atoi.	*
  *				Add number of locks as parameter to	*
  *				the wait function.			*
+ * 18/03/2018	MG	1.1.5	Store the number of locks currently	*
+ *				held during swc_client_wait() in a	*
+ *				global variable. This value can be	*
+ *				accessed in a handler if a signal is	*
+ *				received.				*
  *									*
  ************************************************************************
  */
@@ -57,6 +62,13 @@
 #include <libswoccommon.h>
 #include <remsyslog.h>
 #include <libswocclient.h>
+
+
+/**
+ * Holds the number of locks currently held during swc_client_wait(). This
+ * value can be accessed in a handler if a signal is received.
+ */
+char locks_held[10] = "0";
 
 
 /**
@@ -265,6 +277,7 @@ int swc_client_wait(char *cnumlocks)
 			clear_msg(msg, ';', ',');
 			return mge_errno;
 		}
+		sprintf(locks_held, "%li", locks);
 
 		clear_msg(msg, ';', ',');
 	} while (locks > numlocks);
