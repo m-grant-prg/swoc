@@ -55,10 +55,12 @@
 # 05/02/2018	NG	1.0.15	Change AC_CONFIG_SRCDIR to sensible	#
 #				value.					#
 # 12/02/2018	MG	1.0.16	Make AutoMake use posix format for tar.	#
+# 21/03/2018	MG	1.0.17	Remove unnecessary configfile.h header	#
+#				check.					#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.16 $])
+AC_REVISION([$Revision: 1.0.17 $])
 
 AC_PREREQ([2.69])
 
@@ -344,7 +346,6 @@ AC_CHECK_HEADERS([syslog.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([ctype.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([limits.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([portability.h], [], [AC_MSG_ERROR([header not found])])
-AC_CHECK_HEADERS([configfile.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([mge-errno.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([mgemessage.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([libswoccommon.h], [], [AC_MSG_ERROR([header not found])])
