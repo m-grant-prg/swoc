@@ -35,10 +35,13 @@
 #				numbering on adoption of project /	#
 #				sub-project structure.			#
 # 12/02/2018	MG	1.0.8	Make AutoMake use posix format for tar.	#
+# 21/03/2018	MG	1.0.9	Add substitution variables for 		#
+#				pkg-config file Requires and		#
+#				Requires.private fields.		#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.8 $])
+AC_REVISION([$Revision: 1.0.9 $])
 
 AC_PREREQ([2.69])
 
@@ -145,6 +148,21 @@ AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects tar-pax])
 ########################
 
 AC_CONFIG_MACRO_DIR([m4])
+
+
+########################
+#
+# Setup substitution variables for use in the pkg-config file.
+#
+########################
+# The Requires field.
+AC_SUBST(pc_requires)
+# LIBMGEC is a Requires AOT Requires.private because it exposes mge_errno.
+pc_requires="libmgec"
+
+# The Requires.private field
+AC_SUBST(pc_requires_private)
+pc_requires_private="libswoccommon"
 
 
 ########################
