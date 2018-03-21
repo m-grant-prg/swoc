@@ -54,7 +54,7 @@ AC_PREREQ([2.69])
 #
 ########################
 
-AC_INIT([[SWOC Server Library dev files]], [v1.1.2],
+AC_INIT([[SWOC Server Library dev files]], [v1.1.2+rc1],
 	[m.grant.prg@gmail.com], [libswocserver-dev])
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
