@@ -55,6 +55,7 @@
  *				Add SPDX license tag.			*
  * 19/11/2017	MG	1.0.12	Make program exit with EXIT_SUCCESS or	*
  *				EXIT_FAILURE only.			*
+ * 22/03/2018	MG	1.0.13	Remove unnecessary libsoccommon.h	*
  *									*
  ************************************************************************
  */
@@ -73,7 +74,6 @@
 #include <cmdlineargs.h>
 #include <signalhandle.h>
 #include <mge-errno.h>
-#include <libswoccommon.h>
 #include <swocserverd.h>
 
 
