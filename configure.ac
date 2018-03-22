@@ -71,10 +71,11 @@
 # 05/02/2018	NG	1.1.7	Change AC_CONFIG_SRCDIR to sensible	#
 #				value.					#
 # 12/02/2018	MG	1.1.8	Make AutoMake use posix format for tar.	#
+# 22/03/2018	MG	1.1.9	Add header check for configfile.h	#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.1.8 $])
+AC_REVISION([$Revision: 1.1.9 $])
 
 AC_PREREQ([2.69])
 
@@ -404,6 +405,7 @@ AC_CHECK_HEADERS([mgememory.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([mgemessage.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([bstree.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([mge-errno.h], [], [AC_MSG_ERROR([header not found])])
+AC_CHECK_HEADERS([configfile.h], [], [AC_MSG_ERROR([header not found])])
 
 # Checks for C++ header files.
 
