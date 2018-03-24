@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.10 ==== 31/01/2018_
+ * @version _v1.0.11 ==== 24/03/2018_
  */
 
 /* **********************************************************************
@@ -41,6 +41,7 @@
  *				Add SPDX license tag.			*
  * 31/01/2018	MG	1.0.10	On unlock and release return a more	*
  *				informative mge_errno.			*
+ * 24/03/2018	MG	1.0.11	Add missing mgemessage.h include.	*
  *									*
  ************************************************************************
  */
@@ -54,6 +55,7 @@
 
 #include <mgememory.h>
 #include <mge-errno.h>
+#include <mgemessage.h>
 #include <swocserverd.h>
 #include <bstree.h>
 
