@@ -174,6 +174,10 @@ AM_CONDITIONAL([DEBUG], [test x$debug = xtrue])
 
 : ${CFLAGS=""}
 
+if test "x${debug}" = xtrue; then
+	AC_MSG_NOTICE([Using compiler debug flags.])
+fi
+
 
 ########################
 #
