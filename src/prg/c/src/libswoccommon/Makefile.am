@@ -34,6 +34,7 @@
 # 16/01/2018	MG	1.0.8	Change to include headers from relevant	#
 #				-dev projects.				#
 # 26/01/2018	MG	1.0.9	Add correct pthread handling.		#
+# 26/03/2018	MG	1.0.10	Add support for sparse.			#
 #									#
 #########################################################################
 
@@ -56,6 +57,10 @@ if DEBUG
 AM_CFLAGS += -g -Og
 else
 AM_CFLAGS += -O2
+endif
+
+if SPARSE
+AM_CFLAGS += -Wsparse-all
 endif
 
 
