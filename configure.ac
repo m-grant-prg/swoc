@@ -9,7 +9,9 @@
 # Purpose:								#
 #	AutoConf script file to configure libswocclient project.	#
 #									#
-# cmd line syntax: ./configure	[--enable-debug=yes/no]			#
+# cmd line syntax:							#
+# ./configure	[--enable-debug=<yes|no> [default: no]]			#
+#		[--enable-sparse=<yes|no> [default: no]]		#
 #									#
 #########################################################################
 
@@ -58,10 +60,13 @@
 # 12/02/2018	MG	1.0.12	Make AutoMake use posix format for tar.	#
 # 04/03/2018	MG	1.0.13	Add library and pkg-config search for	#
 #				libmgec which is required.		#
+# 26/03/2018	MG	1.0.14	Add support for an enable-sparse CLA	#
+#				and passing a suitable variable to the	#
+#				Makefile.am's.				#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.0.13 $)
+AC_REVISION($Revision: 1.0.14 $)
 
 AC_PREREQ(2.69)
 
@@ -164,6 +169,27 @@ fi
 
 ########################
 #
+# The following allows for an enable-sparse=yes/no command line option. The
+# conditional SPARSE is made available to the makefiles.
+#
+########################
+
+AC_ARG_ENABLE([sparse],
+	[  --enable-sparse    Build with sparse],
+	[case "${enableval}" in
+		yes) sparse=true ;;
+		no)  sparse=false ;;
+		*) AC_MSG_ERROR([bad value ${enableval} for --enable-sparse]);;
+	esac],[sparse=false])
+AM_CONDITIONAL([SPARSE], [test x$sparse = xtrue])
+
+if test "x${sparse}" = xtrue; then
+	AC_MSG_NOTICE([Building using sparse.])
+fi
+
+
+########################
+#
 # Now set up a sed sequence to substitute bookmarks in script files with either
 # standard GNU Directory Variables, or with programmer-defined variables set up
 # using an AC_SUBST macro above. This sed sequence will be invoked at
@@ -240,9 +266,15 @@ AM_INIT_AUTOMAKE(-Wall -Werror subdir-objects tar-pax)
 # Set language for compilation tests.
 AC_LANG(C)
 
-# Checks the compiler to use, stores it in the cc variable and checks its
-# capabilities.
-AC_PROG_CC
+# Checks the compiler to use from either a standard list or one to use for
+# sparse, stores it in the CC variable and checks its capabilities.
+if test "x$sparse" = "xtrue" ; then
+	compiler_list="cgcc gcc cc"
+else
+	compiler_list="gcc cc"
+fi
+
+AC_PROG_CC($compiler_list)
 
 # Checks the c pre-processor to use, stores it in the cpp variable and checks
 # its capabilities.
