@@ -216,6 +216,10 @@ AC_ARG_ENABLE([systemd],
 	esac],[systemd=false])
 AM_CONDITIONAL([SYSD], [test x$systemd = xtrue])
 
+if test "x${systemd}" = xtrue; then
+	AC_MSG_NOTICE([Building for systemd.])
+fi
+
 
 ########################
 #
