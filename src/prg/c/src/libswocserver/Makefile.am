@@ -37,6 +37,7 @@
 # 15/01/2018	MG	1.0.9	Correct consumption of config.h		#
 # 16/01/2018	MG	1.0.10	Change to include headers from relevant	#
 #				-dev projects.				#
+# 26/03/2018	MG	1.0.11	Add support for sparse.			#
 #									#
 #########################################################################
 
@@ -54,6 +55,10 @@ if DEBUG
 AM_CFLAGS += -g -Og
 else
 AM_CFLAGS += -O2
+endif
+
+if SPARSE
+AM_CFLAGS += -Wsparse-all
 endif
 
 
