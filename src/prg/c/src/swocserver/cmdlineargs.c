@@ -44,6 +44,8 @@
  *				Add SPDX license tag.			*
  * 28/03/2018	MG	1.1.3	Ensure variables are declared before	*
  *				code, (fixes sparse warning).		*
+ *				Replace initialising pointers to zero	*
+ *				with NULL. (fixes sparse warnings).	*
  *									*
  ************************************************************************
  */
@@ -87,14 +89,14 @@ int process_cla(int argc, char **argv, ...)
 	int c;
 
 	struct option long_options[] = {
-		{"end-daemon",		no_argument,		0,	'e'},
-		{"help",		no_argument,		0,	'h'},
-		{"reload-config",	no_argument,		0,	'r'},
-		{"status",		no_argument,		0,	's'},
-		{"unlock",		required_argument,	0,	'u'},
-		{"version",		no_argument,		0,	'V'},
-		{"wait",		no_argument,		0,	'w'},
-		{0,			0,			0,	0}
+		{"end-daemon",		no_argument,		NULL,	'e'},
+		{"help",		no_argument,		NULL,	'h'},
+		{"reload-config",	no_argument,		NULL,	'r'},
+		{"status",		no_argument,		NULL,	's'},
+		{"unlock",		required_argument,	NULL,	'u'},
+		{"version",		no_argument,		NULL,	'V'},
+		{"wait",		no_argument,		NULL,	'w'},
+		{NULL,			0,			NULL,	0}
 	};
 
 	va_start(ap, argv);
