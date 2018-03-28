@@ -8,10 +8,10 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.4 ==== 01/02/2018_
+ * @version _v1.1.5 ==== 28/03/2018_
  */
 
- /***********************************************************************
+/* **********************************************************************
  *									*
  * Changelog								*
  *									*
@@ -38,6 +38,8 @@
  * 01/02/2018	MG	1.1.4	Daemon return message now standardised.	*
  *				On error use the error number in the	*
  *				return message to populate mge_errno.	*
+ * 28/03/2018	MG	1.1.5	Ensure variables are declared before	*
+ *				code, (fixes a sparse warning).		*
  *									*
  ************************************************************************
  */
@@ -181,10 +183,12 @@ int sws_unlock(char *lockname)
 	long int x;
 	char *end;
 	char outgoing_msg[17 + strlen(lockname) + 1];
-	sprintf(outgoing_msg, "swocserver,unlock,%s;", lockname);
-	size_t om_length = strlen(outgoing_msg);
+	size_t om_length;
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
+
+	sprintf(outgoing_msg, "swocserver,unlock,%s;", lockname);
+	om_length = strlen(outgoing_msg);
 
 
 	prg_err = swcom_validate_config();
