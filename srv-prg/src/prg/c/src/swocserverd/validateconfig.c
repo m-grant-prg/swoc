@@ -3,12 +3,12 @@
  *
  * To parse and validate the config file.
  *
- * @author Copyright (C) 2017  Mark Grant
+ * @author Copyright (C) 2017-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.6 ==== 18/11/2017_
+ * @version _v1.0.7 ==== 28/03/2018_
  */
 
 /* **********************************************************************
@@ -30,6 +30,8 @@
  *				tunnelling.				*
  * 18/11/2017	MG	1.0.6	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 28/03/2018	MG	1.0.7	Ensure variables are declared before	*
+ *				code, (fixes sparse warning).		*
  *									*
  ************************************************************************
  */
@@ -59,13 +61,15 @@ static int validateportnos(const struct confsection *ps);
  */
 int swsd_validate_config(void)
 {
-	swsd_err = 0;
 	/* Expand config file full path. */
 	char *configfile = SYSCONFDIR"/swocserverd.conf";
 	struct confsection *psections;
+	int nsections;
+
+	swsd_err = 0;
 
 	/* Set up config file parameters. */
-	int nsections = 1;
+	nsections = 1;
 	psections = malloc((sizeof(struct confsection)) * nsections);
 	if (psections == NULL) {
 		sav_errno = errno;
