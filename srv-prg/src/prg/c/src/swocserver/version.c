@@ -3,12 +3,12 @@
  *
  * Source for version functions.
  *
- * @author Copyright (C) 2015-2017  Mark Grant
+ * @author Copyright (C) 2015-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.2 ==== 17/11/2017_
+ * @version _v1.1.3 ==== 28/03/2018_
  */
 
 /* **********************************************************************
@@ -43,12 +43,17 @@
  * 12/09/2017	MG	1.1.1	Change 'force unlock' to just 'unlock'.	*
  * 17/11/2017	MG	1.1.2	Add Doxygen comments.			*
  *				Add SPDX license tags.			*
+ * 28/03/2018	MG	1.1.3	Include swocserver.h for function	*
+ *				prototypes, (fixes sparse warnings).	*
  *									*
  ************************************************************************
  */
 
 #include <stdio.h>
 #include <config.h>
+
+#include <swocserver.h>
+
 
 /** The source code version. */
 #define SOURCE_VERSION "1.1.2"
