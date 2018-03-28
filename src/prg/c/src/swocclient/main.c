@@ -37,6 +37,7 @@
  *				of locks argument (default 0).		*
  * 28/03/2018	MG	1.1.4	Ensure variables are declared before	*
  *				code, (fixes sparse warnings).		*
+ *				Make prog_name static.			*
  *									*
  ************************************************************************
  */
@@ -53,7 +54,7 @@
 
 
 /** The name of this program. */
-char *prog_name;
+static char *prog_name;
 
 
 /**
