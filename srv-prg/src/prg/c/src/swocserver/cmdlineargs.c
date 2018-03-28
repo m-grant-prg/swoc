@@ -3,12 +3,12 @@
  *
  * Command line argument processing for swocserver using getopt_long.
  *
- * @author Copyright (C) 2015-2017  Mark Grant
+ * @author Copyright (C) 2015-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.2 ==== 17/11/2017_
+ * @version _v1.1.3 ==== 28/03/2018_
  */
 
 /* **********************************************************************
@@ -42,6 +42,8 @@
  * 12/09/2017	MG	1.1.1	Change 'force unlock' to just 'unlock'.	*
  * 17/11/2017	MG	1.1.2	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 28/03/2018	MG	1.1.3	Ensure variables are declared before	*
+ *				code, (fixes sparse warning).		*
  *									*
  ************************************************************************
  */
@@ -84,14 +86,6 @@ int process_cla(int argc, char **argv, ...)
 	int option_index = 0;
 	int c;
 
-	va_start(ap, argv);
-	end_flag = va_arg(ap, struct cla *);
-	reload_flag = va_arg(ap, struct cla *);
-	status_flag = va_arg(ap, struct cla *);
-	unlock_flag = va_arg(ap, struct cla *);
-	wait_flag = va_arg(ap, struct cla *);
-	va_end(ap);
-
 	struct option long_options[] = {
 		{"end-daemon",		no_argument,		0,	'e'},
 		{"help",		no_argument,		0,	'h'},
@@ -102,6 +96,14 @@ int process_cla(int argc, char **argv, ...)
 		{"wait",		no_argument,		0,	'w'},
 		{0,			0,			0,	0}
 	};
+
+	va_start(ap, argv);
+	end_flag = va_arg(ap, struct cla *);
+	reload_flag = va_arg(ap, struct cla *);
+	status_flag = va_arg(ap, struct cla *);
+	unlock_flag = va_arg(ap, struct cla *);
+	wait_flag = va_arg(ap, struct cla *);
+	va_end(ap);
 
 	while ((c = getopt_long(argc, argv, "ehrsu:Vw",
 		long_options, &option_index)) != -1) {
