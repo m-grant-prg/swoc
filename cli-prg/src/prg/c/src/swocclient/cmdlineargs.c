@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.3 ==== 02/02/2018_
+ * @version _v1.1.4 ==== 28/03/2018_
  */
 
 /* **********************************************************************
@@ -30,6 +30,8 @@
  * 30/01/2018	MG	1.1.2	Use fprintf for error messages.		*
  * 02/02/2018	MG	1.1.3	Allow wait to take an optional number	*
  *				of locks argument (default 0).		*
+ * 28/03/2018	MG	1.1.4	For pointers assigned zero in option	*
+ *				struct, assign NULL instead.		*
  *									*
  ************************************************************************
  */
@@ -64,13 +66,13 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 	int x;
 
 	struct option long_options[] = {
-		{"help",	no_argument,		0,	'h'},
-		{"lock",	no_argument,		0,	'l'},
-		{"release",	no_argument,		0,	'r'},
-		{"status",	no_argument,		0,	's'},
-		{"version",	no_argument,		0,	'V'},
-		{"wait",	optional_argument,	0,	'w'},
-		{0,		0,			0,	0}
+		{"help",	no_argument,		NULL,	'h'},
+		{"lock",	no_argument,		NULL,	'l'},
+		{"release",	no_argument,		NULL,	'r'},
+		{"status",	no_argument,		NULL,	's'},
+		{"version",	no_argument,		NULL,	'V'},
+		{"wait",	optional_argument,	NULL,	'w'},
+		{NULL,		0,			NULL,	0}
 	};
 
 	while ((c = getopt_long(argc, argv, "hlrsVw::",
