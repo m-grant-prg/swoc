@@ -36,6 +36,8 @@
  *				where 9 is a valid mge-errno.h error	*
  *				number.					*
  * 28/03/2018	MG	1.0.7	Enforce ANSI function declarations.	*
+ *				Declare variables before code, (fixes	*
+ *				sparse warning).			*
  *									*
  ************************************************************************
  */
@@ -247,12 +249,13 @@ static int proc_events(int n_events, struct epoll_event *pevents)
 	ssize_t n;
 	struct sockaddr_in cli_addr;
 	socklen_t clilen;
-	clilen = sizeof(cli_addr);
 	char sock_buf[SOCK_BUF_SIZE];
 	struct mgebuffer msg_buf1;
 	struct mgebuffer *msg_buf;
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
+
+	clilen = sizeof(cli_addr);
 
 	for (i = 0; i < n_events; i++) {
 		swsd_err = 0;
