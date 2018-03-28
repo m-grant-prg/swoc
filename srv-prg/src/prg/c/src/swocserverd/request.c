@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.11 ==== 24/03/2018_
+ * @version _v1.0.12 ==== 28/03/2018_
  */
 
 /* **********************************************************************
@@ -42,6 +42,8 @@
  * 31/01/2018	MG	1.0.10	On unlock and release return a more	*
  *				informative mge_errno.			*
  * 24/03/2018	MG	1.0.11	Add missing mgemessage.h include.	*
+ * 28/03/2018	MG	1.0.12	Declare variables before code, (fixes	*
+ *				a sparse warning).			*
  *									*
  ************************************************************************
  */
@@ -319,8 +321,9 @@ int release_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 int client_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 {
 	char outgoing_msg[100];
-	swsd_err = 0;
 	int counter = 0;
+
+	swsd_err = 0;
 
 	if (msg->argc > 2) {
 		*msg_args = args_err;
