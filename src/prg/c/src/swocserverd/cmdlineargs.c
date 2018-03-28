@@ -3,12 +3,12 @@
  *
  * Command line argument processing for swocserverd using getopt_long.
  *
- * @author Copyright (C) 2016-2017  Mark Grant
+ * @author Copyright (C) 2016-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.3 ==== 18/11/2017_
+ * @version _v1.0.4 ==== 28/03/2018_
  */
 
 /* **********************************************************************
@@ -21,6 +21,8 @@
  * 04/06/2017	MG	1.0.2	Tidy up unnecessary include statements.	*
  * 18/11/2017	MG	1.0.3	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 28/03/2018	MG	1.0.4	Replace initialising pointers to zero	*
+ *				with NULL. (fixes sparse warnings).	*
  *									*
  ************************************************************************
  */
@@ -50,10 +52,10 @@ int process_cla(int argc, char **argv, ...)
 	int c;
 
 	struct option long_options[] = {
-		{"debug",		no_argument,		0,	'D'},
-		{"help",		no_argument,		0,	'h'},
-		{"version",		no_argument,		0,	'V'},
-		{0,			0,			0,	0}
+		{"debug",		no_argument,		NULL,	'D'},
+		{"help",		no_argument,		NULL,	'h'},
+		{"version",		no_argument,		NULL,	'V'},
+		{NULL,			0,			NULL,	0}
 	};
 
 	while ((c = getopt_long(argc, argv, "DhV",
