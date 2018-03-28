@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.3 ==== 02/02/2018_
+ * @version _v1.1.4 ==== 28/03/2018_
  */
 
 /* **********************************************************************
@@ -35,6 +35,8 @@
  *				EXIT_FAILURE only.			*
  * 02/02/2018	MG	1.1.3	Allow wait to take an optional number	*
  *				of locks argument (default 0).		*
+ * 28/03/2018	MG	1.1.4	Ensure variables are declared before	*
+ *				code, (fixes sparse warnings).		*
  *									*
  ************************************************************************
  */
@@ -62,11 +64,6 @@ char *prog_name;
  */
 int main(int argc, char **argv)
 {
-	prog_name = argv[0];
-
-	/* Initialise signal handling. */
-	init_sig_handle();
-
 	int prog_error = 0;
 
 	/* Command line argument flags. */
@@ -75,6 +72,10 @@ int main(int argc, char **argv)
 	struct cla status_flag = { 0, "" };
 	struct cla wait_flag = { 0, "" };
 
+	prog_name = argv[0];
+
+	/* Initialise signal handling. */
+	init_sig_handle();
 
 	/* Process command line. */
 	if ((prog_error = process_cla(argc, argv, &lock_flag, &release_flag,
