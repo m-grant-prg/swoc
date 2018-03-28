@@ -3,12 +3,12 @@
  *
  * Source for version functions.
  *
- * @author Copyright (C) 2016-2017  Mark Grant
+ * @author Copyright (C) 2016-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.1 ==== 18/11/2017_
+ * @version _v1.0.2 ==== 28/03/2018_
  */
 
 /* **********************************************************************
@@ -20,6 +20,8 @@
  * 19/11/2016	MG	1.0.0	First release.				*
  * 18/11/2017	MG	1.0.1	Add Doxygen comments.			*
  *				Add SPDX license tags.			*
+ * 28/03/2018	MG	1.0.2	Include swocserverd.h for function	*
+ *				prototypes, (fixes sparse warnings).	*
  *									*
  ************************************************************************
  */
@@ -27,6 +29,9 @@
 
 #include <stdio.h>
 #include <config.h>
+
+#include <swocserverd.h>
+
 
 /** The source code version. */
 #define SOURCE_VERSION "1.0.1"
