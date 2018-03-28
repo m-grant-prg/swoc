@@ -5,12 +5,12 @@
  * To enable a server to wait on clients releasing flags prior to further server
  * processing. (By use of swocserver -w).
  *
- * @author Copyright (C) 2015-2017  Mark Grant
+ * @author Copyright (C) 2015-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.3 ==== 19/11/2017_
+ * @version _v1.1.4 ==== 28/03/2018_
  */
 
 /* **********************************************************************
@@ -45,6 +45,8 @@
  *				Add SPDX license tag.			*
  * 19/11/2017	MG	1.1.3	Make program exit with EXIT_SUCCESS or	*
  *				EXIT_FAILURE only.			*
+ * 28/03/2018	MG	1.1.4	Ensure variables are declared before	*
+ *				code, (fixes sparse warning).		*
  *									*
  ************************************************************************
  */
@@ -69,18 +71,18 @@ int sws_err;		/**< Global swocserver error flag. */
  */
 int main(int argc, char **argv)
 {
-	prog_name = argv[0];
-	sws_err = 0;
-
-	/* Initialise signal handling. */
-	init_sig_handle();
-
 	/* Command line argument flags. */
 	struct cla end_flag = { 0, "" };
 	struct cla reload_flag = { 0, "" };
 	struct cla status_flag = { 0, "" };
 	struct cla unlock_flag = { 0, "" };
 	struct cla wait_flag = { 0, "" };
+
+	prog_name = argv[0];
+	sws_err = 0;
+
+	/* Initialise signal handling. */
+	init_sig_handle();
 
 	/* Process command line. */
 	if (process_cla(argc, argv, &end_flag, &reload_flag, &status_flag,
