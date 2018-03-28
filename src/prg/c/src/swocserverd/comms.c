@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.6 ==== 31/01/2018_
+ * @version _v1.0.7 ==== 28/03/2018_
  */
 
 /* **********************************************************************
@@ -35,6 +35,7 @@
  *				returns, now, swocserverd, ,err,9;	*
  *				where 9 is a valid mge-errno.h error	*
  *				number.					*
+ * 28/03/2018	MG	1.0.7	Enforce ANSI function declarations.	*
  *									*
  ************************************************************************
  */
@@ -64,7 +65,7 @@ static void proc_msg(struct mgemessage *message);
  * On error mge_errno will be set.
  * @return 0 on success, non-zero on failure.
  */
-int prepare_sockets()
+int prepare_sockets(void)
 {
 	int i;
 	struct addrinfo hints;
