@@ -3,12 +3,12 @@
  *
  * Source for version functions.
  *
- * @author Copyright (C) 2015-2017  Mark Grant
+ * @author Copyright (C) 2015-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.1 ==== 12/11/2017_
+ * @version _v1.1.2 ==== 28/03/2018_
  */
 
 /* **********************************************************************
@@ -34,12 +34,16 @@
  *				Add --wait as a command line argument.	*
  * 12/11/2017	MG	1.1.1	Add Doxygen comments.			*
  *				Add SPDX license tags.			*
+ * 28/03/2018	MG	1.1.2	Add swocclient.h, (fixes sparse		*
+ *				warnings).				*
  *									*
  ************************************************************************
  */
 
 #include <stdio.h>
 #include <config.h>
+
+#include <swocclient.h>
 
 
 /** The source code version. */
