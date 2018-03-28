@@ -47,6 +47,7 @@
  *				EXIT_FAILURE only.			*
  * 28/03/2018	MG	1.1.4	Ensure variables are declared before	*
  *				code, (fixes sparse warning).		*
+ *				Make prog_name static.			*
  *									*
  ************************************************************************
  */
@@ -60,7 +61,7 @@
 #include <signalhandle.h>
 #include <swocserver.h>
 
-char *prog_name;	/**< This program's name. */
+static char *prog_name;	/**< This program's name. */
 int sws_err;		/**< Global swocserver error flag. */
 
 /**
