@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.5 ==== 28/03/2018_
+ * @version _v1.1.6 ==== 29/03/2018_
  */
 
 /* **********************************************************************
@@ -40,6 +40,11 @@
  *				return message to populate mge_errno.	*
  * 28/03/2018	MG	1.1.5	Ensure variables are declared before	*
  *				code, (fixes a sparse warning).		*
+ * 29/03/2018	MG	1.1.6	Store the current number of clients	*
+ *				holding locks during sws_server_wait()	*
+ *				in a global variable. This value can be	*
+ *				accessed in a handler if a signal is	*
+ *				received.				*
  *									*
  ************************************************************************
  */
@@ -56,6 +61,13 @@
 #include <mgemessage.h>
 #include <libswoccommon.h>
 #include <libswocserver.h>
+
+
+/**
+ * Holds the number of clients currently holding locks during sws_server_wait().
+ * This value can be accessed in a handler if a signal is received.
+ */
+char locks_held[10] = "0";
 
 
 /**
@@ -161,6 +173,8 @@ int sws_server_wait(void)
 			clear_msg(msg, ';', ',');
 			return mge_errno;
 		}
+		if (msg->argc > 3)
+			sprintf(locks_held, "%i", ((msg->argc -3) / 2));
 		empty = strcmp(msg->message, "swocserverd,status,ok;");
 		clear_msg(msg, ';', ',');
 	} while (empty);
