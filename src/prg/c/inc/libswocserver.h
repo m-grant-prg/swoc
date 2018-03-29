@@ -3,12 +3,12 @@
  *
  * Header file for Server Wait on Clients server-side library.
  *
- * @author Copyright (C) 2016-2017  Mark Grant
+ * @author Copyright (C) 2016-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.9 ==== 12/11/2017_
+ * @version _v1.0.10 ==== 29/03/2018_
  */
 
 /* **********************************************************************
@@ -34,6 +34,8 @@
  * 02/10/2017	MG	1.0.8	Move validate config to common.		*
  * 12/11/2017	MG	1.0.9	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 29/03/2018	MG	1.0.10	Add locks_held for use during signal	*
+ *				handling, primarily in swocserver -w.	*
  *									*
  ************************************************************************
  */
@@ -47,6 +49,9 @@
 
 
 BEGIN_C_DECLS
+
+extern char locks_held[];
+
 
 int sws_show_status(void);
 
