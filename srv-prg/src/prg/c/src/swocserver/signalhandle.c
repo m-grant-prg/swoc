@@ -6,21 +6,21 @@
  * > Likely terminate signals to handle.
  * >
  * > SIGTERM\n
- * > SIGINT	(Ctrl-c)\n
+ * > SIGINT	(Ctrl-C)\n
  * > SIGQUIT	(Ctrl-\)\n
  * > SIGHUP\n
  * >
  * > Might want to handle these non-terminate signals.
  * >
- * > SIGCONT just print program continued.\n
- * > SIGTSTP (Ctrl-z) just print stopped.
+ * > SIGCONT\n
+ * > SIGTSTP (Ctrl-Z)
  *
- * @author Copyright (C) 2015-2017  Mark Grant
+ * @author Copyright (C) 2015-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.4 ==== 17/11/2017_
+ * @version _v1.0.5 ==== 29/03/2018_
  */
 
 /* **********************************************************************
@@ -35,35 +35,46 @@
  * 17/07/2016	MG	1.0.3	Move towards kernel coding style.	*
  * 17/11/2017	MG	1.0.4	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 29/03/2018	MG	1.0.5	Print clients holding locks warning.	*
+ *				Code for re-raise and return exit paths.*
+ *				Improve error handling.			*
+ *				Improve comments.			*
  *									*
  ************************************************************************
  */
 
+
 #include <stdio.h>
 #include <signal.h>
 #include <string.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 #include <signalhandle.h>
+#include <libswocserver.h>
 
-/** Caught signal is already being processed flag. */
-volatile sig_atomic_t processing_caught_signal = 0;
 
 /**
  * Initialise signal handler.
+ * Block all other caught signals whilst the handler processes.
  */
 void init_sig_handle(void)
 {
 	sigset_t block_mask;
 	struct sigaction new_action, old_action;
+
 	memset(&new_action, 0, sizeof(new_action));
 	new_action.sa_handler = termination_handler;
 
-	/* Block other terminate signals whilst this is processed. */
+	/* Block other caught signals whilst one is processed. */
 	sigemptyset(&block_mask);
 	sigaddset(&block_mask, SIGINT);
 	sigaddset(&block_mask, SIGQUIT);
 	sigaddset(&block_mask, SIGTERM);
 	sigaddset(&block_mask, SIGHUP);
+	sigaddset(&block_mask, SIGCONT);
+	sigaddset(&block_mask, SIGTSTP);
 	new_action.sa_mask = block_mask;
 	new_action.sa_flags = SA_RESTART;
 
@@ -71,51 +82,139 @@ void init_sig_handle(void)
 	 * If the action for these signals is set to ignore, then some parent
 	 * process explicitly did this and we should not change it.
 	 */
-	sigaction(SIGINT, NULL, &old_action);
-	if (old_action.sa_handler != SIG_IGN)
-		sigaction(SIGINT, &new_action, NULL);
-	sigaction(SIGQUIT, NULL, &old_action);
-	if (old_action.sa_handler != SIG_IGN)
-		sigaction(SIGQUIT, &new_action, NULL);
-	sigaction(SIGTERM, NULL, &old_action);
-	if (old_action.sa_handler != SIG_IGN)
-		sigaction(SIGTERM, &new_action, NULL);
-	sigaction(SIGHUP, NULL, &old_action);
-	if (old_action.sa_handler != SIG_IGN)
-		sigaction(SIGHUP, &new_action, NULL);
+	if (sigaction(SIGINT, NULL, &old_action)) {
+		perror("Cannot retrieve old SIGINT action");
+		exit(EXIT_FAILURE);
+	}
+	if (old_action.sa_handler != SIG_IGN) {
+		if (sigaction(SIGINT, &new_action, NULL)) {
+			perror("Cannot set new SIGINT action");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	if (sigaction(SIGQUIT, NULL, &old_action)) {
+		perror("Cannot retrieve old SIGQUIT action");
+		exit(EXIT_FAILURE);
+	}
+	if (old_action.sa_handler != SIG_IGN) {
+		if (sigaction(SIGQUIT, &new_action, NULL)) {
+			perror("Cannot set new SIGQUIT action");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	if (sigaction(SIGTERM, NULL, &old_action)) {
+		perror("Cannot retrieve old SIGTERM action");
+		exit(EXIT_FAILURE);
+	}
+	if (old_action.sa_handler != SIG_IGN) {
+		if (sigaction(SIGTERM, &new_action, NULL)) {
+			perror("Cannot set new SIGTERM action");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	if (sigaction(SIGHUP, NULL, &old_action)) {
+		perror("Cannot retrieve old SIGHUP action");
+		exit(EXIT_FAILURE);
+	}
+	if (old_action.sa_handler != SIG_IGN) {
+		if (sigaction(SIGHUP, &new_action, NULL)) {
+			perror("Cannot set new SIGHUP action");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	if (sigaction(SIGCONT, &new_action, NULL)) {
+		perror("Cannot set new SIGCONT action");
+		exit(EXIT_FAILURE);
+	}
+
+	if (sigaction(SIGTSTP, &new_action, NULL)) {
+		perror("Cannot set new SIGTSTP action");
+		exit(EXIT_FAILURE);
+	}
 }
 
 /**
- * Handler for caught terminating signals.
+ * Handler for caught signals.
+ * > There are 2 possibilities here:-\n
+ * > Catch, process and terminate\n
+ * > or\n
+ * > Catch, process and continue.\n
+ *
+ * Catch, process and terminate is straight forward as the easiest way to
+ * terminate is to re-raise the signal using the default hander.
+ *
+ * > Catch, process and continue has 2 forms:-\n
+ * > Continue via simple return\n
+ * > or\n
+ * > Continue via re-raise the signal using the default handler.\n
+ *
+ * The simple return is just that.\n
+ * \n
+ * Re-raise the signal using the default handler is required for instance with
+ * SIGTSTP (Ctrl-Z). This is because in a terminal the default handler ensures
+ * the stopped process is in the background and control is passed back to the
+ * shell, (fg can then be used to resume the process). This means that SIGTSTP
+ * is now set to use the default handler, hence this relies on SIGCONT to
+ * explicitly reset the SIGTSTP handler.
  * @param signum The signal number.
  */
-void termination_handler(const int signum)
+void termination_handler(int signum)
 {
-	/*
-	 * In general it is possible that since this handler is established for
-	 * more than one kind of signal, it might get invoked recursively by
-	 * delivery of another kind of signal, (if that signal is not blocked
-	 * above, or cannot be blocked). Use a static variable to keep track of
-	 * that.
-	 */
-	if (processing_caught_signal)
-		raise(signum);
-	processing_caught_signal = 1;
+	struct sigaction cur_action;
+	char msg[45] ="Currently ";
 
 	/*
-	 * Now do the clean up actions:
-	 * - reset terminal modes
-	 * - kill child processes
-	 * - remove lock files
+	 * Reset signal handlers for any non-terminating but default re-raising
+	 * signals which may have fired.
 	 */
-	psignal(signum, "Received");
+	if (sigaction(SIGTSTP, NULL, &cur_action)) {
+		psignal(SIGTSTP, "Cannot retrieve old action");
+		raise(SIGKILL);
+	}
+	if (cur_action.sa_handler != termination_handler) {
+		cur_action.sa_handler = termination_handler;
+		if (sigaction(SIGTSTP, &cur_action, NULL)) {
+			psignal(SIGTSTP, "Cannot set new action");
+			raise(SIGKILL);
+		}
+	}
+
+	if (sigaction(signum, NULL, &cur_action)) {
+		psignal(signum, "Cannot retrieve old action");
+		raise(SIGKILL);
+	}
 
 	/*
-	 * Now reraise the signal using the signal’s default handling, which is
-	 * to terminate the process.
-	 * We could just call exit or abort, but reraising the signal sets the
-	 * return status from the process correctly.
+	 * Print number of clients holding locks warning.
+	 * The value could be out of date by as much as the polling interval.
 	 */
-	signal(signum, SIG_DFL);
+	psignal(signum, "Signal Received");
+
+	strcat(msg, locks_held);
+	strcat(msg, " clients have locks.\n");
+	write(STDERR_FILENO, msg, strlen(msg));
+
+	/*
+	 * If the default signal should not be raised as the handler exits then
+	 * return.
+	 */
+	if (signum == SIGCONT)
+		return;
+
+	/*
+	 * Now re-raise the signal using the signal’s default handling. If the
+	 * default handling is to terminate we could just call exit or abort,
+	 * but re-raising the signal sets the return status from the process
+	 * correctly.
+	 */
+	cur_action.sa_handler = SIG_DFL;
+	if (sigaction(signum, &cur_action, NULL)) {
+		psignal(signum, "Cannot run default signal handler");
+		raise(SIGKILL);
+	}
 	raise(signum);
 }
