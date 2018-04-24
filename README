@@ -111,6 +111,8 @@ e) ... Type './configure'
 
 f) ... As root or sudo, type 'make install clean'
 
+g) ... Edit the sysconfdir/swoc.conf, (usually /etc/swoc.conf), as required.
+
 (Quote marks are for textual clarity only).
 
 To uninstall the package:
@@ -136,10 +138,12 @@ To add this PPA to your system please type the following:-
 
 To install this script on your system for use please type the following:-
 	sudo apt-get update
-	sudo apt-get install libswoccommon-lib
+	sudo apt-get install libswoccommon
+	After installation please follow section "2 ... AutoTools (configure
+	and make) Installation" from item (g) onwards.
 
 To uninstall this package at any time please type:-
-	sudo apt-get remove libswoccommon-lib
+	sudo apt-get remove libswoccommon
 
 
 --------------------------------------
@@ -149,7 +153,8 @@ Debian and Raspbian '.deb' packages can be downloaded from:-
 	https://github.com/m-grant-prg/libswoccommon-lib/releases
 
 They can then be installed using a utility such as GDebi which is available in
-the standard repos.
+the standard repos. After installation please follow section "2 ... AutoTools
+(configure and make) Installation" from item (g) onwards.
 
 
 ---------------------
@@ -210,3 +215,16 @@ building in what is required and thinking about it, thereafter it is best to use
 ../bootstrap.sh --gnulib ..
 as it determines whether to do a re-generate based on whether the cache file
 exists, i.e. it has been wanted before.
+
+setup.sh
+--------
+If the sysconfdir/swoc.conf configuration file is deleted, or, if corrupted then
+delete it, and run setup.sh from the pkglibexec directory. To find the script
+location on your system:-
+	type 'find / -path */libswoccommon/setup.sh 2>/dev/null'.
+Typically in an AutoTools build pkglibexec is /usr/local/libexec/PACKAGE
+so as root or sudo you would type:-
+	'/usr/local/libexec/libswoccommon/setup.sh'.
+Answer the prompts from the setup script.
+Subsequent to running this script, config files can only be modified with an
+editor, setup.sh will not work unless the config file is deleted.
