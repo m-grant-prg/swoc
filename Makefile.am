@@ -26,6 +26,9 @@
 # 12/01/2018	MG	1.0.4	Add SPDX license tags to source files.	#
 # 15/01/2018	MG	1.0.5	Remove unnecessary config.h generation.	#
 # 05/02/2018	MG	1.0.6	Remove unnecessary -I m4extra.		#
+# 25/04/2018	MG	1.0.7	Add srctarball target to build a source	#
+#				tarball in the build directory. Uses	#
+#				git archive to archive HEAD.		#
 #									#
 #########################################################################
 
@@ -34,3 +37,13 @@ ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = src/man/3/optionproc
 SUBDIRS += src/prg/c/inc
 SUBDIRS += src/prg/c/src/libswocserver
+
+
+srctarball:
+	@cwd="$${PWD}" && \
+	cd @srcdir@ && \
+	git archive --format=tar.gz \
+		--prefix=@PACKAGE_TARNAME@-@PACKAGE_VERSION@/ \
+		--output=$${cwd}/@PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz \
+		HEAD && \
+	cd -
