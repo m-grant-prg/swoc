@@ -35,6 +35,9 @@
 # 12/01/2018	MG	1.0.8	Add SPDX license tags to source files.	#
 # 15/01/2018	MG	1.0.9	Correct generation of config.h		#
 # 05/02/2018	MG	1.0.10	Remove unnecessary -I m4extra.		#
+# 25/04/2018	MG	1.0.11	Add srctarball target to build a source	#
+#				tarball in the build directory. Uses	#
+#				git archive to archive HEAD.		#
 #									#
 #########################################################################
 
@@ -47,3 +50,13 @@ SUBDIRS += src/prg/c/src/libswocserver
 SUBDIRS += src/prg/c/src/test-optionproc
 
 EXTRA_DIST  = m4/gnulib-cache.m4
+
+
+srctarball:
+	@cwd="$${PWD}" && \
+	cd @srcdir@ && \
+	git archive --format=tar.gz \
+		--prefix=@PACKAGE_TARNAME@-@PACKAGE_VERSION@/ \
+		--output=$${cwd}/@PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz \
+		HEAD && \
+	cd -
