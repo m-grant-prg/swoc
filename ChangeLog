@@ -1,3 +1,12 @@
+2018-04-25 v 1.1.3 Mark Grant <m.grant.prg@gmail.com>
+	*  Track m4 directory but keep gitignore to ensure directory exists,
+	even if empty.
+	Update this project bootstrap.sh to latest version 1.3.4.
+	Improve README file.
+	Add a make target srctarball to make a source tarball. This can be used
+	in the same way as github's source tarball enabling 1 package methodolgy
+	irrespective of source repository.
+
 2018-02-28 v 1.1.2 Mark Grant <m.grant.prg@gmail.com>
 	*  Add SSH support.
 	Change force_unlock to unlock.
