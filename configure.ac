@@ -77,8 +77,8 @@ AC_PREREQ([2.69])
 #
 ########################
 
-AC_INIT([[Server Wait On Client Server side library]], [v1.1.2+rc2],
-	[m.grant.prg@gmail.com], [libswocserver])
+AC_INIT(Server Wait On Client Server side library, v1.1.3,
+	m.grant.prg@gmail.com, libswocserver)
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
