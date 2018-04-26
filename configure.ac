@@ -93,8 +93,8 @@ AC_PREREQ([2.69])
 #
 ########################
 
-AC_INIT([[Server Wait On Client Server Package (C)]], [v1.1.2+rc2],
-	[m.grant.prg@gmail.com], [swocserver-c])
+AC_INIT(Server Wait On Client Server Package, v1.1.3,
+	m.grant.prg@gmail.com, swocserver)
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
