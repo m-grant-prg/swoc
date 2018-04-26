@@ -43,6 +43,9 @@
 # 12/01/2018	MG	1.1.3	Add SPDX license tags to source files.	#
 # 16/01/2018	MG	1.1.4	Correct generation of config.h		#
 # 05/02/2018	MG	1.1.5	Remove unnecessary -I m4extra.		#
+# 26/04/2018	MG	1.1.6	Add srctarball target to build a source	#
+#				tarball in the build directory. Uses	#
+#				git archive to archive HEAD.		#
 #									#
 #########################################################################
 
@@ -68,3 +71,13 @@ SUBDIRS += src/systemd
 endif
 
 EXTRA_DIST  = m4/gnulib-cache.m4
+
+
+srctarball:
+	@cwd="$${PWD}" && \
+	cd @srcdir@ && \
+	git archive --format=tar.gz \
+		--prefix=@PACKAGE_TARNAME@-@PACKAGE_VERSION@/ \
+		--output=$${cwd}/@PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz \
+		HEAD && \
+	cd -
