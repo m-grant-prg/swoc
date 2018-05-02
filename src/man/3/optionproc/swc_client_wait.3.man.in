@@ -8,11 +8,11 @@ int swc_client_wait(char *cnumlocks);
 DESCRIPTION
 The swc_client_wait function reads the swoc.conf configuration file and
 continually queries the server for client locks. Once cnumlocks or fewer locks
-exist it exits.
+exist it exits. Only values of 0 or 1 make any sense.
 Typically an earlier command would have set a lock.
 PARAMETERS
 cnumlocks - a pointer to a string holding the maximum number of locks to wait
-for.
+for. Valid values are 0 or 1.
 RETURN VALUE
 0 on success.
 .br
@@ -36,5 +36,5 @@ This is free software: you are free to change and redistribute it.
 .br
 There is NO WARRANTY, to the extent permitted by law.
 SEE ALSO
-swc_rel_lock(3) swc_set_lock(3) swc_show_status(3) swcom_validate_config(3)
-swoc.conf(5)
+swc_block(3) swc_rel_lock(3) swc_reset(3) swc_set_lock(3) swc_show_status(3)
+swc_unblock(3) swcom_validate_config(3) swoc.conf(5)

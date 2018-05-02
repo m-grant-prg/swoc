@@ -5,11 +5,15 @@ SYNOPSIS
 
 int swc_set_lock(void);
 DESCRIPTION
-The swc_set_lock function sets or increments this client's lock on the server.
+The swc_set_lock function sets or increments this client's lock on the server
+providing locking has not been blocked. If the client is blocked the function
+returns non-zero and mge_errno is set.
 RETURN VALUE
 0 on success.
 .br
 Non-zero Failure.
+ERRORS
+If blocked mge_errno is set to MGE_CLIENT_BLOCKED
 AUTHOR
 Written by Mark Grant.
 REPORTING BUGS
@@ -25,5 +29,5 @@ This is free software: you are free to change and redistribute it.
 .br
 There is NO WARRANTY, to the extent permitted by law.
 SEE ALSO
-swc_client_wait(3) swc_rel_lock(3) swc_show_status(3) swcom_validate_config(3)
-swoc.conf(5)
+swc_block(3) swc_client_wait(3) swc_rel_lock(3) swc_reset(3) swc_show_status(3)
+swc_unblock(3) swcom_validate_config(3) swoc.conf(5)
