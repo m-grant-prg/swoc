@@ -5,12 +5,12 @@
  * Daemon to enable a server to manage client locks and wait on the removal of
  * those locks prior to further server processing.
  *
- * @author Copyright (C) 2016-2017  Mark Grant
+ * @author Copyright (C) 2016-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.12 ==== 19/11/2017_
+ * @version _v1.0.14 ==== 01/05/2018_
  */
 
 /* **********************************************************************
@@ -56,6 +56,7 @@
  * 19/11/2017	MG	1.0.12	Make program exit with EXIT_SUCCESS or	*
  *				EXIT_FAILURE only.			*
  * 22/03/2018	MG	1.0.13	Remove unnecessary libsoccommon.h	*
+ * 01/05/2018	MG	1.0.14	Add support for blocked clients list.	*
  *									*
  ************************************************************************
  */
@@ -84,6 +85,7 @@ int end;				/**< End pending. */
 int cursockfd;				/**< Socket file descriptor in use. */
 struct comm_spec *port_spec;		/**< Port / socket config mappings. */
 struct bstree *locks;			/**< Clients and locks. */
+struct bstree *blocked;			/**< Blocked client list. */
 struct bstree *port_sock;		/**< Port / socket actual mappings. */
 
 
@@ -152,6 +154,18 @@ int main(int argc, char **argv)
 		goto b4_locks;
 	}
 
+	blocked = cre_bst(BST_NODES_UNIQUE,
+			(int (*)(const void *, const void *))strcmp);
+	if (blocked == NULL) {
+		if (debug)
+			fprintf(stderr, "BST creation errored with %i.\n",
+				mge_errno);
+		syslog((int) (LOG_USER | LOG_NOTICE), "BST creation errored "
+			"with %i.", mge_errno);
+		goto b4_blocked;
+	}
+
+
 	/* Prepare sockets. */
 	port_sock = cre_bst(BST_NODES_UNIQUE,
 			(int (*)(const void *, const void *))csscmp);
@@ -174,6 +188,9 @@ comms_fail:
 	port_sock = del_bst(port_sock);
 
 b4_port_sock:
+	blocked = del_bst(blocked);
+
+b4_blocked:
 	locks = del_bst(locks);
 
 b4_locks:
