@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.4 ==== 28/03/2018_
+ * @version _v1.1.5 ==== 02/05/2018_
  */
 
 /* **********************************************************************
@@ -38,6 +38,7 @@
  * 28/03/2018	MG	1.1.4	Ensure variables are declared before	*
  *				code, (fixes sparse warnings).		*
  *				Make prog_name static.			*
+ * 02/05/2018	MG	1.1.5	Add support for client block list.	*
  *									*
  ************************************************************************
  */
@@ -68,9 +69,12 @@ int main(int argc, char **argv)
 	int prog_error = 0;
 
 	/* Command line argument flags. */
+	struct cla block_flag = { 0, "" };
 	struct cla lock_flag = { 0, "" };
 	struct cla release_flag = { 0, "" };
+	struct cla reset_flag = { 0, "" };
 	struct cla status_flag = { 0, "" };
+	struct cla unblock_flag = { 0, "" };
 	struct cla wait_flag = { 0, "" };
 
 	prog_name = argv[0];
@@ -79,24 +83,34 @@ int main(int argc, char **argv)
 	init_sig_handle();
 
 	/* Process command line. */
-	if ((prog_error = process_cla(argc, argv, &lock_flag, &release_flag,
-		&status_flag, &wait_flag)))
+	prog_error = process_cla(argc, argv, &block_flag, &lock_flag,
+				 &release_flag, &reset_flag, &status_flag,
+				 &unblock_flag, &wait_flag);
+	if (prog_error)
 		exit(EXIT_FAILURE);
 
 	/* Invoke main processing. */
 	if (status_flag.is_set)
 		prog_error = swc_show_status();
-	else if (lock_flag.is_set) {
+	else if (block_flag.is_set) {
+		prog_error = swc_block();
+		if (!prog_error)
+			printf("Client blocked on server.\n");
+	} else if (lock_flag.is_set) {
 		prog_error = swc_set_lock();
 		if (!prog_error)
 			printf("Lock flag set on server.\n");
-	}
-	else if (release_flag.is_set) {
+	} else if (release_flag.is_set) {
 		prog_error = swc_rel_lock();
 		if (!prog_error)
 			printf("Lock flag released on server.\n");
-	}
-	else if (wait_flag.is_set) {
+	} else if (reset_flag.is_set) {
+		prog_error = swc_reset();
+	} else if (unblock_flag.is_set) {
+		prog_error = swc_unblock();
+		if (!prog_error)
+			printf("Client blocking removed on server.\n");
+	} else if (wait_flag.is_set) {
 		printf("Waiting for maximum of %s lock flags on server.\n",
 			wait_flag.argument);
 		prog_error = swc_client_wait(wait_flag.argument);

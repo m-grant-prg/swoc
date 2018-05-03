@@ -53,9 +53,10 @@ struct cla {
 	char argument[ARG_BUF];	/**< A possible argument to the flag. */
 };
 
-int process_cla(int argc, char **argv, struct cla *lock_flag,
-		struct cla *release_flag, struct cla *status_flag,
-		struct cla *wait_flag);
+int process_cla(int argc, char **argv, struct cla *block_flag,
+		struct cla *lock_flag, struct cla *release_flag,
+		struct cla *reset_flag,struct cla *status_flag,
+		struct cla *unblock_flag, struct cla *wait_flag);
 
 int cpyarg(char *flagarg, char *srcarg);
 
