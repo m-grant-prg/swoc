@@ -338,7 +338,7 @@ static void proc_msg(struct mgemessage *msg)
 	enum msg_source msg_src;
 	enum msg_request msg_req;
 	enum msg_arguments msg_args;
-	char outgoing_msg[100];
+	char out_msg[100];
 
 	parse_msg(msg, &msg_args, &msg_src, &msg_req);
 
@@ -348,9 +348,8 @@ static void proc_msg(struct mgemessage *msg)
 				"message %s\n", client, msg->message);
 		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid arguments "
 			"from %s in message %s", client, msg->message);
-		sprintf(outgoing_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
-		send_outgoing_msg(outgoing_msg, strlen(outgoing_msg),
-				&cursockfd);
+		sprintf(out_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
+		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 		swsd_err = mge_errno;
 		return;
 	}
@@ -363,22 +362,22 @@ static void proc_msg(struct mgemessage *msg)
 		case swocend:
 			if (debug)
 				printf("request = end\n");
-			end_req(msg, &msg_args);
+			srv_end_req(msg, &msg_args);
 			break;
 		case swocreload:
 			if (debug)
 				printf("request = reload\n");
-			reload_req(msg, &msg_args);
+			srv_reload_req(msg, &msg_args);
 			break;
 		case swocstatus:
 			if (debug)
 				printf("request = status\n");
-			server_status_req(msg, &msg_args);
+			srv_status_req(msg, &msg_args);
 			break;
 		case swocunlock:
 			if (debug)
 				printf("request = unlock\n");
-			unlock_req(msg, &msg_args);
+			srv_cli_rel_req(msg, &msg_args);
 			break;
 		default:
 			if (debug)
@@ -386,10 +385,9 @@ static void proc_msg(struct mgemessage *msg)
 					"message %s\n", client, msg->message);
 			syslog((int) (LOG_USER | LOG_NOTICE), "Invalid request "
 				"from %s in message %s", client, msg->message);
-			sprintf(outgoing_msg, "swocserverd, ,err,%i;",
+			sprintf(out_msg, "swocserverd, ,err,%i;",
 				MGE_INVAL_MSG);
-			send_outgoing_msg(outgoing_msg, strlen(outgoing_msg),
-				&cursockfd);
+			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 			swsd_err = mge_errno;
 		return;
 		}
@@ -401,32 +399,32 @@ static void proc_msg(struct mgemessage *msg)
 		case swocblock:
 			if (debug)
 				printf("request = block\n");
-			block_req(msg, &msg_args);
+			cli_block_req(msg, &msg_args);
 			break;
 		case swoclock:
 			if (debug)
 				printf("request = lock\n");
-			lock_req(msg, &msg_args);
+			cli_lock_req(msg, &msg_args);
 			break;
 		case swocrelease:
 			if (debug)
 				printf("request = release\n");
-			release_req(msg, &msg_args);
+			cli_rel_req(msg, &msg_args);
 			break;
 		case swocreset:
 			if (debug)
 				printf("request = reset\n");
-			reset_req(msg, &msg_args);
+			cli_reset_req(msg, &msg_args);
 			break;
 		case swocstatus:
 			if (debug)
 				printf("request = status\n");
-			client_status_req(msg, &msg_args);
+			cli_status_req(msg, &msg_args);
 			break;
 		case swocunblock:
 			if (debug)
 				printf("request = unblock\n");
-			unblock_req(msg, &msg_args);
+			cli_unblock_req(msg, &msg_args);
 			break;
 		default:
 			if (debug)
@@ -434,10 +432,9 @@ static void proc_msg(struct mgemessage *msg)
 					"message %s\n", client, msg->message);
 			syslog((int) (LOG_USER | LOG_NOTICE), "Invalid request "
 				"from %s in message %s", client, msg->message);
-			sprintf(outgoing_msg, "swocserverd, ,err,%i;",
+			sprintf(out_msg, "swocserverd, ,err,%i;",
 				MGE_INVAL_MSG);
-			send_outgoing_msg(outgoing_msg, strlen(outgoing_msg),
-				&cursockfd);
+			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 			swsd_err = mge_errno;
 		return;
 		}
@@ -448,9 +445,8 @@ static void proc_msg(struct mgemessage *msg)
 				"message %s\n", client, msg->message);
 		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message source "
 			"from %s in message %s", client, msg->message);
-		sprintf(outgoing_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
-		send_outgoing_msg(outgoing_msg, strlen(outgoing_msg),
-			&cursockfd);
+		sprintf(out_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
+		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 		swsd_err = mge_errno;
 		return;
 	}
@@ -461,9 +457,8 @@ static void proc_msg(struct mgemessage *msg)
 				"message %s\n", client, msg->message);
 		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid arguments "
 			"from %s in message %s", client, msg->message);
-		sprintf(outgoing_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
-		send_outgoing_msg(outgoing_msg, strlen(outgoing_msg),
-			&cursockfd);
+		sprintf(out_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
+		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 		swsd_err = mge_errno;
 		return;
 	}

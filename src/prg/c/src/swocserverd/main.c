@@ -84,8 +84,8 @@ int debug;				/**< Debug - 0 false, 1 true. */
 int end;				/**< End pending. */
 int cursockfd;				/**< Socket file descriptor in use. */
 struct comm_spec *port_spec;		/**< Port / socket config mappings. */
-struct bstree *locks;			/**< Clients and locks. */
-struct bstree *blocked;			/**< Blocked client list. */
+struct bstree *cli_locks;		/**< Clients and locks. */
+struct bstree *cli_blocked;		/**< Blocked client list. */
 struct bstree *port_sock;		/**< Port / socket actual mappings. */
 
 
@@ -132,37 +132,37 @@ int main(int argc, char **argv)
 	}
 	swsd_err = swsd_validate_config();
 	if (swsd_err)
-		goto b4_locks;
+		goto b4_cli_locks;
 
 	/* Process command line. */
 	swsd_err = process_cla(argc, argv);
 	if (swsd_err)
-		goto b4_locks;
+		goto b4_cli_locks;
 
 	/* Daemonise if not in debug mode. */
 	if (!debug)
 		daemonise();
 
-	locks = cre_bst(BST_NODES_DUPLICATES,
+	cli_locks = cre_bst(BST_NODES_DUPLICATES,
 			(int (*)(const void *, const void *))strcmp);
-	if (locks == NULL) {
+	if (cli_locks == NULL) {
 		if (debug)
 			fprintf(stderr, "BST creation errored with %i.\n",
 				mge_errno);
 		syslog((int) (LOG_USER | LOG_NOTICE), "BST creation errored "
 			"with %i.", mge_errno);
-		goto b4_locks;
+		goto b4_cli_locks;
 	}
 
-	blocked = cre_bst(BST_NODES_UNIQUE,
+	cli_blocked = cre_bst(BST_NODES_UNIQUE,
 			(int (*)(const void *, const void *))strcmp);
-	if (blocked == NULL) {
+	if (cli_blocked == NULL) {
 		if (debug)
 			fprintf(stderr, "BST creation errored with %i.\n",
 				mge_errno);
 		syslog((int) (LOG_USER | LOG_NOTICE), "BST creation errored "
 			"with %i.", mge_errno);
-		goto b4_blocked;
+		goto b4_cli_blocked;
 	}
 
 
@@ -188,12 +188,12 @@ comms_fail:
 	port_sock = del_bst(port_sock);
 
 b4_port_sock:
-	blocked = del_bst(blocked);
+	cli_blocked = del_bst(cli_blocked);
 
-b4_blocked:
-	locks = del_bst(locks);
+b4_cli_blocked:
+	cli_locks = del_bst(cli_locks);
 
-b4_locks:
+b4_cli_locks:
 	free(port_spec);
 	if (!debug)
 		remove(pidfile);

@@ -73,7 +73,7 @@ extern int debug;
 extern int end;
 extern int cursockfd;
 extern struct comm_spec *port_spec;
-extern struct bstree *locks, *blocked, *port_sock;
+extern struct bstree *cli_locks, *cli_blocked, *port_sock;
 
 
 int swsd_validate_config(void);
@@ -82,25 +82,25 @@ int prepare_sockets(void);
 
 int process_comms(void);
 
-int end_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int srv_end_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int server_status_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int block_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int cli_block_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int cli_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int unlock_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int srv_cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int lock_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int cli_lock_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int release_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int reload_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int srv_reload_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int client_status_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int cli_status_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int reset_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int cli_reset_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
 char *swocserverd_get_pkg_version(void);
 
