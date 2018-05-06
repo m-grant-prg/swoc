@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.2 ==== 07/03/2018_
+ * @version _v1.1.4 ==== 05/05/2018_
  */
 
 /* **********************************************************************
@@ -25,6 +25,11 @@
  * 07/03/2018	MG	1.1.2	Preserve config file global variables	*
  *				unchanged. Use local variables when	*
  *				values need changing.			*
+ * 01/05/2018	MG	1.1.3	Add support for client blocking list.	*
+ * 05/05/2018	MG	1.1.4	Improve function name consistency,	*
+ *				unlock -> release.			*
+ *				Add support for server listing blocked	*
+ *				clients.				*
  *									*
  ************************************************************************
  */
@@ -73,7 +78,11 @@ void parse_msg(struct mgemessage *msg, enum msg_arguments *msg_args,
 		*msg_src = src_err;
 
 	/* Get request. */
-	if (!strcmp(*(msg->argv + 1), "end"))
+	if (!strcmp(*(msg->argv + 1), "block"))
+		*msg_req = swocblock;
+	else if (!strcmp(*(msg->argv + 1), "blocklist"))
+		*msg_req = swocblocklist;
+	else if (!strcmp(*(msg->argv + 1), "end"))
 		*msg_req = swocend;
 	else if (!strcmp(*(msg->argv + 1), "lock"))
 		*msg_req = swoclock;
@@ -81,10 +90,12 @@ void parse_msg(struct mgemessage *msg, enum msg_arguments *msg_args,
 		*msg_req = swocrelease;
 	else if (!strcmp(*(msg->argv + 1), "reload"))
 		*msg_req = swocreload;
+	else if (!strcmp(*(msg->argv + 1), "reset"))
+		*msg_req = swocreset;
 	else if (!strcmp(*(msg->argv + 1), "status"))
 		*msg_req = swocstatus;
-	else if (!strcmp(*(msg->argv + 1), "unlock"))
-		*msg_req = swocunlock;
+	else if (!strcmp(*(msg->argv + 1), "unblock"))
+		*msg_req = swocunblock;
 	else
 		*msg_req = req_err;
 }
