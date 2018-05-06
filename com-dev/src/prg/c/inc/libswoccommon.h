@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.4 ==== 07/03/2018_
+ * @version _v1.0.6 ==== 05/05/2018_
  */
 
 /* **********************************************************************
@@ -23,6 +23,11 @@
  * 10/11/2017	MG	1.0.3	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
  * 07/03/2018	MG	1.0.4	Remove redundant global variable portno	*
+ * 01/05/2018	MG	1.0.5	Add support for blocked clients list.	*
+ * 05/05/2018	MG	1.0.6	Add support for server list of blocked	*
+ *				clients.				*
+ *				Improve function name consistency,	*
+ *				unlock -> release.			*
  *									*
  ************************************************************************
  */
@@ -62,8 +67,8 @@ extern char sshuser[];
 enum msg_source {swocclient, swocserver, swocserverd, src_err};
 
 /** enum identifying the message request. */
-enum msg_request {swocend, swoclock, swocrelease, swocreload, swocstatus,
-	swocunlock, req_err};
+enum msg_request {swocblock, swocblocklist, swocend, swoclock, swocrelease,
+	swocreload, swocreset, swocstatus, swocunblock, req_err};
 
 /** enum specifying error status of arguments. */
 enum msg_arguments {args_ok, args_err};
