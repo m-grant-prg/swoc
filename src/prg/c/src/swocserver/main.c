@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.4 ==== 28/03/2018_
+ * @version _v1.1.5 ==== 05/05/2018_
  */
 
 /* **********************************************************************
@@ -48,6 +48,10 @@
  * 28/03/2018	MG	1.1.4	Ensure variables are declared before	*
  *				code, (fixes sparse warning).		*
  *				Make prog_name static.			*
+ * 05/05/2018	MG	1.1.5	Improve function name consistency,	*
+ *				unlock -> release.			*
+ *				Add support for server listing blocked	*
+ *				clients.				*
  *									*
  ************************************************************************
  */
@@ -74,9 +78,9 @@ int main(int argc, char **argv)
 {
 	/* Command line argument flags. */
 	struct cla end_flag = { 0, "" };
+	struct cla release_flag = { 0, "" };
 	struct cla reload_flag = { 0, "" };
 	struct cla status_flag = { 0, "" };
-	struct cla unlock_flag = { 0, "" };
 	struct cla wait_flag = { 0, "" };
 
 	prog_name = argv[0];
@@ -86,8 +90,8 @@ int main(int argc, char **argv)
 	init_sig_handle();
 
 	/* Process command line. */
-	if (process_cla(argc, argv, &end_flag, &reload_flag, &status_flag,
-			&unlock_flag, &wait_flag))
+	if (process_cla(argc, argv, &end_flag, &release_flag, &reload_flag,
+			&status_flag, &wait_flag))
 		exit(EXIT_FAILURE);
 
 	/* Invoke main processing. */
@@ -95,23 +99,25 @@ int main(int argc, char **argv)
 		sws_err = sws_end_daemon();
 		if (!sws_err)
 			printf("Request to end daemon acknowledged.\n");
-	}
-	else if (reload_flag.is_set) {
+	} else if (release_flag.is_set) {
+		sws_err = sws_release(release_flag.argument);
+		if (!sws_err)
+			printf("Lock removed manually from server - %s.\n",
+				release_flag.argument);
+	} else if (reload_flag.is_set) {
 		sws_err = sws_reload_config();
 		if (!sws_err)
 			printf("Daemon reloaded it's config file.\n");
-	}
-	else if (status_flag.is_set) {
+	} else if (status_flag.is_set) {
 		sws_err = sws_show_status();
 		/* sws_show_status() returns -1 on error. */
 		if (sws_err > 0)
 			sws_err = 0;
-	}
-	else if (unlock_flag.is_set) {
-		sws_err = sws_unlock(unlock_flag.argument);
+		printf("\n");
 		if (!sws_err)
-			printf("Lock removed manually from server - %s.\n",
-				unlock_flag.argument);
+			sws_err = sws_show_cli_blocklist();
+		if (sws_err > 0)
+			sws_err = 0;
 	} else {
 		printf("Waiting for any client locks to be released.\n");
 		sws_err = sws_server_wait();

@@ -86,6 +86,8 @@ int srv_end_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
 int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
+int srv_cli_blocklist_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+
 int cli_block_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
 int cli_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args);

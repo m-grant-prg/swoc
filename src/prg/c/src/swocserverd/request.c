@@ -188,6 +188,63 @@ int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 }
 
 /**
+ * Server client block list request.
+ * @param mgemessage The message being processed.
+ * @param msg_args The message arguments.
+ * @return 0 on success, non-zero on failure.
+ */
+int srv_cli_blocklist_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+{
+	char *out_msg, *t_out_msg = NULL;
+	size_t out_msg_size = DEF_MSG_SIZE;
+	char tmp_msg[_POSIX_HOST_NAME_MAX + 100] = "";
+	char *client_lu = "";
+	swsd_err = 0;
+
+	if (msg->argc > 2) {
+		*msg_args = args_err;
+		return swsd_err;
+	}
+
+	if ((int) out_msg_size < 26)
+		out_msg_size = 26;
+	out_msg = mg_realloc(NULL, out_msg_size);
+	if (out_msg == NULL) {
+		swsd_err = errno;
+		return swsd_err;
+	}
+	*out_msg = '\0';
+	strcat(out_msg, "swocserverd,blocklist,ok");
+
+	while((client_lu = (char *) find_next_bst_node(cli_blocked, client_lu))
+		!= NULL) {
+
+		sprintf(tmp_msg, ",%s", client_lu);
+		if (((int) out_msg_size - (int) strlen(out_msg))
+				< ((int) strlen(tmp_msg) + 2)) {
+			out_msg_size += (int) strlen(tmp_msg) + 2;
+			t_out_msg = out_msg;
+			out_msg = mg_realloc(t_out_msg, out_msg_size);
+			if (out_msg == NULL) {
+				swsd_err = errno;
+				free(t_out_msg);
+				return swsd_err;
+			}
+		}
+
+		if (debug)
+			printf("Client %s is blocked.\n", client_lu);
+		strcat(out_msg, tmp_msg);
+	}
+	strcat(out_msg, ";");
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+	swsd_err = mge_errno;
+
+	free(out_msg);
+	return swsd_err;
+}
+
+/**
  * Server requests client lock release.
  * Exactly 1 argument, the client lock to be released.
  * @param mgemessage The message being processed.
@@ -215,7 +272,7 @@ int srv_cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		/* Change to more user informational error. */
 		if (mge_errno == MGE_NODE_NOT_FOUND)
 			mge_errno = MGE_LOCK_NOT_FOUND;
-		sprintf(out_msg, "swocserverd,unlock,err,%i;", mge_errno);
+		sprintf(out_msg, "swocserverd,release,err,%i;", mge_errno);
 	} else {
 		cli_locks = plocks;
 		if (debug)
@@ -223,7 +280,7 @@ int srv_cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 				*(msg->argv + 2));
 		syslog((int) (LOG_USER | LOG_NOTICE), "Client %s lock removed "
 			"by server.", *(msg->argv + 2));
-		sprintf(out_msg, "swocserverd,unlock,ok,%s;", *(msg->argv + 2));
+		sprintf(out_msg, "swocserverd,release,ok,%s;", *(msg->argv + 2));
 	}
 	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 	swsd_err = mge_errno;

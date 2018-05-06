@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.3 ==== 28/03/2018_
+ * @version _v1.1.4 ==== 05/05/2018_
  */
 
 /* **********************************************************************
@@ -46,6 +46,8 @@
  *				code, (fixes sparse warning).		*
  *				Replace initialising pointers to zero	*
  *				with NULL. (fixes sparse warnings).	*
+ * 05/05/2018	MG	1.1.4	Improve function name consistency,	*
+ *				unlock -> release.			*
  *									*
  ************************************************************************
  */
@@ -69,9 +71,9 @@ static int cpyarg(char *flagarg, char *srcarg);
  * @param argc The standard CLA argc.
  * @param argv The standard CLA argv.
  * @param end_flag Struct for the end daemon flag.
+ * @param release_flag Struct for the release flag.
  * @param reload_flag Struct for the reload config flag.
  * @param status_flag Struct for the status flag.
- * @param unlock_flag Struct for the unlock flag.
  * @param wait_flag Struct for the wait flag.
  * @return 0 on success, on failure standard EX_USAGE (64) command line  usage
  * error.
@@ -81,7 +83,7 @@ int process_cla(int argc, char **argv, ...)
 	va_list ap;
 
 	/* Command line argument flags. */
-	struct cla *end_flag, *reload_flag, *status_flag, *unlock_flag;
+	struct cla *end_flag, *reload_flag, *status_flag, *release_flag;
 	struct cla *wait_flag;
 
 	/* getopt_long stores the option index here. */
@@ -91,9 +93,9 @@ int process_cla(int argc, char **argv, ...)
 	struct option long_options[] = {
 		{"end-daemon",		no_argument,		NULL,	'e'},
 		{"help",		no_argument,		NULL,	'h'},
-		{"reload-config",	no_argument,		NULL,	'r'},
+		{"release",		required_argument,	NULL,	'r'},
+		{"reload-config",	no_argument,		NULL,	'c'},
 		{"status",		no_argument,		NULL,	's'},
-		{"unlock",		required_argument,	NULL,	'u'},
 		{"version",		no_argument,		NULL,	'V'},
 		{"wait",		no_argument,		NULL,	'w'},
 		{NULL,			0,			NULL,	0}
@@ -101,54 +103,49 @@ int process_cla(int argc, char **argv, ...)
 
 	va_start(ap, argv);
 	end_flag = va_arg(ap, struct cla *);
+	release_flag = va_arg(ap, struct cla *);
 	reload_flag = va_arg(ap, struct cla *);
 	status_flag = va_arg(ap, struct cla *);
-	unlock_flag = va_arg(ap, struct cla *);
 	wait_flag = va_arg(ap, struct cla *);
 	va_end(ap);
 
-	while ((c = getopt_long(argc, argv, "ehrsu:Vw",
+	while ((c = getopt_long(argc, argv, "cehr:sVw",
 		long_options, &option_index)) != -1) {
 
 		switch (c) {
+		case 'c':
+			reload_flag->is_set = 1;
+			break;
 		case 'e':
 			end_flag->is_set = 1;
 			break;
-
 		case 'h':
 			printf("%s %s", argv[0], " - Help option.\n");
 			printf("\tLong and short options can be mixed on the "
 				"command line but if an option\ntakes an "
 				"optional argument it is best to enter "
 				"-o\"argument\" or\n--option=argument.\n");
+			printf("-c | --reload-config\tRequest the daemon to "
+				"reload it's config file.\n");
 			printf("-e | --end-daemon\tEnd the swocserver "
 				"daemon.\n");
-			printf("-r | --reload-config\tRequest the daemon to "
-				"reload it's config file.\n");
-			printf("-s | --status\tShow the locking status.\n");
-			printf("-u | --unlock 'Lock Name'\tRemove the "
+			printf("-r | --release 'Lock Name'\tRemove the "
 				"lock 'Lock Name'.\n");
+			printf("-s | --status\tShow the locking status.\n");
 			printf("-V | --version\tDisplay version "
 				"information.\n");
 			printf("-w | --wait\tWait for all locks to clear.\n");
 			if (!sws_err)
 				sws_err = -1;
 			break;
-
 		case 'r':
-			reload_flag->is_set = 1;
+			release_flag->is_set = 1;
+			if ((sws_err = cpyarg(release_flag->argument, optarg)))
+				return sws_err;
 			break;
-
 		case 's':
 			status_flag->is_set = 1;
 			break;
-
-		case 'u':
-			unlock_flag->is_set = 1;
-			if ((sws_err = cpyarg(unlock_flag->argument, optarg)))
-				return sws_err;
-			break;
-
 		case 'V':
 			printf("%s %s %s %s", argv[0], "Source version -",
 				swocserver_get_src_version(), "\n");
@@ -157,11 +154,9 @@ int process_cla(int argc, char **argv, ...)
 			if (!sws_err)
 				sws_err = -1;
 			break;
-
 		case 'w':
 			wait_flag->is_set = 1;
 			break;
-
 		case '?':
 			/* getopt_long already printed a message. */
 			sws_err = EX_USAGE;
@@ -185,11 +180,11 @@ int process_cla(int argc, char **argv, ...)
 	}
 
 	/* Check mutually exclusive options. */
-	if (end_flag->is_set && unlock_flag->is_set) {
-		fprintf(stderr, "Options e and f are mutually exclusive.\n");
+	if (end_flag->is_set && release_flag->is_set) {
+		fprintf(stderr, "Options e and r are mutually exclusive.\n");
 		sws_err = EX_USAGE;
 	} else if (end_flag->is_set && reload_flag->is_set) {
-		fprintf(stderr, "Options e and r are mutually exclusive.\n");
+		fprintf(stderr, "Options e and c are mutually exclusive.\n");
 		sws_err = EX_USAGE;
 	} else if (end_flag->is_set && status_flag->is_set) {
 		fprintf(stderr, "Options e and s are mutually exclusive.\n");
@@ -197,29 +192,29 @@ int process_cla(int argc, char **argv, ...)
 	} else if (end_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options e and w are mutually exclusive.\n");
 		sws_err = EX_USAGE;
-	} else if (unlock_flag->is_set && reload_flag->is_set) {
-		fprintf(stderr, "Options f and r are mutually exclusive.\n");
+	} else if (release_flag->is_set && reload_flag->is_set) {
+		fprintf(stderr, "Options c and r are mutually exclusive.\n");
 		sws_err = EX_USAGE;
-	} else if (unlock_flag->is_set && status_flag->is_set) {
-		fprintf(stderr, "Options f and s are mutually exclusive.\n");
-		sws_err = EX_USAGE;
-	} else if (unlock_flag->is_set && wait_flag->is_set) {
-		fprintf(stderr, "Options f and w are mutually exclusive.\n");
-		sws_err = EX_USAGE;
-	} else if (reload_flag->is_set && status_flag->is_set) {
+	} else if (release_flag->is_set && status_flag->is_set) {
 		fprintf(stderr, "Options r and s are mutually exclusive.\n");
 		sws_err = EX_USAGE;
-	} else if (reload_flag->is_set && wait_flag->is_set) {
+	} else if (release_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options r and w are mutually exclusive.\n");
+		sws_err = EX_USAGE;
+	} else if (reload_flag->is_set && status_flag->is_set) {
+		fprintf(stderr, "Options c and s are mutually exclusive.\n");
+		sws_err = EX_USAGE;
+	} else if (reload_flag->is_set && wait_flag->is_set) {
+		fprintf(stderr, "Options c and w are mutually exclusive.\n");
 		sws_err = EX_USAGE;
 	} else if (status_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options s and w are mutually exclusive.\n");
 		sws_err = EX_USAGE;
 	}
 	/* Check for mandatory options */
-	if (!(end_flag->is_set || unlock_flag->is_set || reload_flag->is_set
+	if (!(end_flag->is_set || release_flag->is_set || reload_flag->is_set
 		|| status_flag->is_set || wait_flag->is_set)) {
-		fprintf(stderr, "Either e, f, r, s or w must be specified.\n");
+		fprintf(stderr, "Either c, e, r, s or w must be specified.\n");
 		sws_err = EX_USAGE;
 	}
 	return sws_err;

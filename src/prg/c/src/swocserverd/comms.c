@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.8 ==== 01/05/2018_
+ * @version _v1.0.9 ==== 05/05/2018_
  */
 
 /* **********************************************************************
@@ -39,6 +39,8 @@
  *				Declare variables before code, (fixes	*
  *				sparse warning).			*
  * 01/05/2018	MG	1.0.8	Add support for blocked clients list.	*
+ * 05/05/2018	MG	1.0.9	Improve function name consistency,	*
+ *				unlock -> release.			*
  *									*
  ************************************************************************
  */
@@ -364,6 +366,16 @@ static void proc_msg(struct mgemessage *msg)
 				printf("request = end\n");
 			srv_end_req(msg, &msg_args);
 			break;
+		case swocblocklist:
+			if (debug)
+				printf("request = blocklist\n");
+			srv_cli_blocklist_req(msg, &msg_args);
+			break;
+		case swocrelease:
+			if (debug)
+				printf("request = release\n");
+			srv_cli_rel_req(msg, &msg_args);
+			break;
 		case swocreload:
 			if (debug)
 				printf("request = reload\n");
@@ -373,11 +385,6 @@ static void proc_msg(struct mgemessage *msg)
 			if (debug)
 				printf("request = status\n");
 			srv_status_req(msg, &msg_args);
-			break;
-		case swocunlock:
-			if (debug)
-				printf("request = unlock\n");
-			srv_cli_rel_req(msg, &msg_args);
 			break;
 		default:
 			if (debug)
