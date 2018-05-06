@@ -31,11 +31,13 @@
 #				target suffix. If the suffix is blank	#
 #				(foo.) or if there is no suffix (foo)	#
 #				then error out.				#
+# 02/05/2018	MG	1.0.7	Add support for client block list.	#
 #									#
 #########################################################################
 
 
-swc_client_wait.3 swc_rel_lock.3 swc_set_lock.3 swc_show_status.3: Makefile
+swc_block.3 swc_client_wait.3 swc_rel_lock.3 swc_reset.3 swc_set_lock.3 \
+	swc_show_status.3 swc_unblock.3: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	$(edit) $(srcdir)/$(@F).man.in > $@.tmp
@@ -54,16 +56,21 @@ swc_client_wait.3 swc_rel_lock.3 swc_set_lock.3 swc_show_status.3: Makefile
 	txt2manwrap $(@F) $$section "Server Wait on Client Manual" $@.tmp $@
 	rm -f $@.tmp
 
+swc_block.3: $(srcdir)/swc_block.3.man.in
 swc_client_wait.3: $(srcdir)/swc_client_wait.3.man.in
 swc_rel_lock.3: $(srcdir)/swc_rel_lock.3.man.in
+swc_reset.3: $(srcdir)/swc_reset.3.man.in
 swc_set_lock.3: $(srcdir)/swc_set_lock.3.man.in
 swc_show_status.3: $(srcdir)/swc_show_status.3.man.in
+swc_unblock.3: $(srcdir)/swc_unblock.3.man.in
 
-man_MANS = swc_client_wait.3 swc_rel_lock.3 swc_set_lock.3 swc_show_status.3
+man_MANS = swc_block.3 swc_client_wait.3 swc_rel_lock.3 swc_reset.3 \
+	swc_set_lock.3 swc_show_status.3 swc_unblock.3
 
-EXTRA_DIST = $(srcdir)/swc_client_wait.3.man.in \
-	$(srcdir)/swc_rel_lock.3.man.in $(srcdir)/swc_set_lock.3.man.in \
-	$(srcdir)/swc_show_status.3.man.in
+EXTRA_DIST = $(srcdir)/swc_block.3.man.in $(srcdir)/swc_client_wait.3.man.in \
+	$(srcdir)/swc_rel_lock.3.man.in $(srcdir)/swc_reset.3.man.in \
+	$(srcdir)/swc_set_lock.3.man.in $(srcdir)/swc_show_status.3.man.in \
+	$(srcdir)/swc_unblock.3.man.in
 
-CLEANFILES = *.tmp swc_client_wait.3 swc_rel_lock.3 swc_set_lock.3 \
-	swc_show_status.3
+CLEANFILES = *.tmp swc_block.3 swc_client_wait.3 swc_rel_lock.3 swc_reset.3 \
+	swc_set_lock.3 swc_show_status.3 swc_unblock.3

@@ -1,12 +1,12 @@
 NAME
-swc_show_status - Show the status of this client's locks on the server.
+swc_unblock - Unblock locking for this client on the server.
 SYNOPSIS
 #include <libswocclient.h>
 
-int swc_show_status(void);
+int swc_unblock(void);
 DESCRIPTION
-The swc_show_status function shows the status of this client's locks on the
-server, how many locks it holds and the status of blocking for this client.
+The swc_unblock function requests the server to reinstate locking for this
+client.
 RETURN VALUE
 0 on success.
 .br
@@ -16,7 +16,7 @@ Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright 2016-2018 Mark Grant.
+Copyright 2018 Mark Grant.
 .br
 License GPLv3+: GNU GPL version 3 or later
 .br
@@ -27,4 +27,4 @@ This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 SEE ALSO
 swc_block(3) swc_client_wait(3) swc_rel_lock(3) swc_reset(3) swc_set_lock(3)
-swc_unblock(3) swcom_validate_config(3) swoc.conf(5)
+swc_show_status(3) swcom_validate_config(3) swoc.conf(5)
