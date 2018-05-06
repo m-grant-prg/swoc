@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.12 ==== 28/03/2018_
+ * @version _v1.0.13 ==== 01/05/2018_
  */
 
 /* **********************************************************************
@@ -44,6 +44,7 @@
  * 24/03/2018	MG	1.0.11	Add missing mgemessage.h include.	*
  * 28/03/2018	MG	1.0.12	Declare variables before code, (fixes	*
  *				a sparse warning).			*
+ * 01/05/2018	MG	1.0.13	Add support for blocked clients list.	*
  *									*
  ************************************************************************
  */
@@ -68,9 +69,9 @@
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
-int end_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+int srv_end_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 {
-	char outgoing_msg[100];
+	char out_msg[100];
 	swsd_err = 0;
 
 	if (msg->argc > 2) {
@@ -84,8 +85,8 @@ int end_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 	syslog((int) (LOG_USER | LOG_NOTICE), "Termination request received - "
 		"exiting.");
 
-	sprintf(outgoing_msg, "swocserverd,end,ok;");
-	send_outgoing_msg(outgoing_msg, strlen(outgoing_msg), &cursockfd);
+	sprintf(out_msg, "swocserverd,end,ok;");
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 	swsd_err = mge_errno;
 	return swsd_err;
 }
@@ -96,9 +97,9 @@ int end_req(struct mgemessage *msg, enum msg_arguments *msg_args)
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
-int reload_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+int srv_reload_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 {
-	char outgoing_msg[100];
+	char out_msg[100];
 	swsd_err = 0;
 
 	if (msg->argc > 2) {
@@ -113,16 +114,15 @@ int reload_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 				mge_errno);
 		syslog((int) (LOG_USER | LOG_NOTICE), "Validate config errored "
 			"with %i.", mge_errno);
-		sprintf(outgoing_msg, "swocserverd,reload,err,%i;", mge_errno);
-		send_outgoing_msg(outgoing_msg, strlen(outgoing_msg),
-			&cursockfd);
+		sprintf(out_msg, "swocserverd,reload,err,%i;", mge_errno);
+		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 		exit(swsd_err);
 	}
 	if (debug)
 		printf("Config file reloaded.\n");
 	syslog((int) (LOG_USER | LOG_NOTICE), "Config file reloaded.");
-	sprintf(outgoing_msg, "swocserverd,reload,ok;");
-	send_outgoing_msg(outgoing_msg, strlen(outgoing_msg), &cursockfd);
+	sprintf(out_msg, "swocserverd,reload,ok;");
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 	swsd_err = mge_errno;
 	return swsd_err;
 }
@@ -133,10 +133,10 @@ int reload_req(struct mgemessage *msg, enum msg_arguments *msg_args)
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
-int server_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 {
-	char *outgoing_msg, *t_outgoing_msg = NULL;
-	size_t outgoing_msg_size = DEF_MSG_SIZE;
+	char *out_msg, *t_out_msg = NULL;
+	size_t out_msg_size = DEF_MSG_SIZE;
 	char tmp_msg[_POSIX_HOST_NAME_MAX + 100] = "";
 	char *client_lu = "";
 	int counter;
@@ -147,65 +147,121 @@ int server_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		return swsd_err;
 	}
 
-	if ((int) outgoing_msg_size < 23)
-		outgoing_msg_size = 23;
-	outgoing_msg = mg_realloc(NULL, outgoing_msg_size);
-	if (outgoing_msg == NULL) {
+	if ((int) out_msg_size < 23)
+		out_msg_size = 23;
+	out_msg = mg_realloc(NULL, out_msg_size);
+	if (out_msg == NULL) {
 		swsd_err = errno;
 		return swsd_err;
 	}
-	*outgoing_msg = '\0';
-	strcat(outgoing_msg, "swocserverd,status,ok");
+	*out_msg = '\0';
+	strcat(out_msg, "swocserverd,status,ok");
 
-	while((client_lu = (char *) find_next_bst_node(locks, client_lu))
+	while((client_lu = (char *) find_next_bst_node(cli_locks, client_lu))
 		!= NULL) {
 
-		counter = get_counter_bst_node(locks, client_lu);
+		counter = get_counter_bst_node(cli_locks, client_lu);
 
 		sprintf(tmp_msg, ",%s,%i", client_lu, counter);
-		if (((int) outgoing_msg_size - (int) strlen(outgoing_msg))
+		if (((int) out_msg_size - (int) strlen(out_msg))
 				< ((int) strlen(tmp_msg) + 2)) {
-			outgoing_msg_size += (int) strlen(tmp_msg) + 2;
-			t_outgoing_msg = outgoing_msg;
-			outgoing_msg = mg_realloc(t_outgoing_msg,
-							outgoing_msg_size);
-			if (outgoing_msg == NULL) {
+			out_msg_size += (int) strlen(tmp_msg) + 2;
+			t_out_msg = out_msg;
+			out_msg = mg_realloc(t_out_msg, out_msg_size);
+			if (out_msg == NULL) {
 				swsd_err = errno;
-				free(t_outgoing_msg);
+				free(t_out_msg);
 				return swsd_err;
 			}
 		}
 
 		if (debug)
 			printf("Client %s has %i locks.\n", client_lu, counter);
-		strcat(outgoing_msg, tmp_msg);
+		strcat(out_msg, tmp_msg);
 	}
-	strcat(outgoing_msg, ";");
-	send_outgoing_msg(outgoing_msg, strlen(outgoing_msg), &cursockfd);
+	strcat(out_msg, ";");
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 	swsd_err = mge_errno;
 
-	free(outgoing_msg);
+	free(out_msg);
 	return swsd_err;
 }
 
 /**
- * Server lock removal.
- * Exactly 1 argument, the client lock to be removed.
+ * Server client block list request.
  * @param mgemessage The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
-int unlock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+int srv_cli_blocklist_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+{
+	char *out_msg, *t_out_msg = NULL;
+	size_t out_msg_size = DEF_MSG_SIZE;
+	char tmp_msg[_POSIX_HOST_NAME_MAX + 100] = "";
+	char *client_lu = "";
+	swsd_err = 0;
+
+	if (msg->argc > 2) {
+		*msg_args = args_err;
+		return swsd_err;
+	}
+
+	if ((int) out_msg_size < 26)
+		out_msg_size = 26;
+	out_msg = mg_realloc(NULL, out_msg_size);
+	if (out_msg == NULL) {
+		swsd_err = errno;
+		return swsd_err;
+	}
+	*out_msg = '\0';
+	strcat(out_msg, "swocserverd,blocklist,ok");
+
+	while((client_lu = (char *) find_next_bst_node(cli_blocked, client_lu))
+		!= NULL) {
+
+		sprintf(tmp_msg, ",%s", client_lu);
+		if (((int) out_msg_size - (int) strlen(out_msg))
+				< ((int) strlen(tmp_msg) + 2)) {
+			out_msg_size += (int) strlen(tmp_msg) + 2;
+			t_out_msg = out_msg;
+			out_msg = mg_realloc(t_out_msg, out_msg_size);
+			if (out_msg == NULL) {
+				swsd_err = errno;
+				free(t_out_msg);
+				return swsd_err;
+			}
+		}
+
+		if (debug)
+			printf("Client %s is blocked.\n", client_lu);
+		strcat(out_msg, tmp_msg);
+	}
+	strcat(out_msg, ";");
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+	swsd_err = mge_errno;
+
+	free(out_msg);
+	return swsd_err;
+}
+
+/**
+ * Server requests client lock release.
+ * Exactly 1 argument, the client lock to be released.
+ * @param mgemessage The message being processed.
+ * @param msg_args The message arguments.
+ * @return 0 on success, non-zero on failure.
+ */
+int srv_cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 {
 	struct bstree *plocks;
-	char outgoing_msg[100];
+	char out_msg[100];
 	swsd_err = 0;
 
 	if (msg->argc != 3) {
 		*msg_args = args_err;
 		return swsd_err;
 	}
-	plocks = del_bst_node(locks, *(msg->argv + 2));
+	plocks = del_bst_node(cli_locks, *(msg->argv + 2));
 
 	if (plocks == NULL) {
 		if (debug)
@@ -216,18 +272,115 @@ int unlock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		/* Change to more user informational error. */
 		if (mge_errno == MGE_NODE_NOT_FOUND)
 			mge_errno = MGE_LOCK_NOT_FOUND;
-		sprintf(outgoing_msg, "swocserverd,unlock,err,%i;", mge_errno);
+		sprintf(out_msg, "swocserverd,release,err,%i;", mge_errno);
 	} else {
-		locks = plocks;
+		cli_locks = plocks;
 		if (debug)
 			printf("Lock %s removed by server.\n",
 				*(msg->argv + 2));
 		syslog((int) (LOG_USER | LOG_NOTICE), "Client %s lock removed "
 			"by server.", *(msg->argv + 2));
-		sprintf(outgoing_msg, "swocserverd,unlock,ok,%s;",
-			*(msg->argv + 2));
+		sprintf(out_msg, "swocserverd,release,ok,%s;", *(msg->argv + 2));
 	}
-	send_outgoing_msg(outgoing_msg, strlen(outgoing_msg), &cursockfd);
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+	swsd_err = mge_errno;
+	return swsd_err;
+}
+
+/**
+ * Client block further locks request.
+ * No parameters allowed.
+ * Set a block on this client so that it cannot instantiate any more locks until
+ * the client is unblocked. The client can release locks while blocked.
+ * If the client is already blocked the function succedes.
+ * @param mgemessage The message being processed.
+ * @param msg_args The message arguments.
+ * @return 0 on success, non-zero on failure.
+ */
+int cli_block_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+{
+	struct bstree *pblocked;
+	char out_msg[100];
+	swsd_err = 0;
+
+	if (msg->argc > 2) {
+		*msg_args = args_err;
+		return swsd_err;
+	}
+	pblocked = find_bst_node(cli_blocked, client);
+
+	if (pblocked == NULL) {
+		pblocked = add_bst_node(cli_blocked, client,
+					strlen(client) + 1);
+		if (pblocked == NULL) {
+			if (debug)
+				fprintf(stderr, "Node add errored with %i.\n",
+					mge_errno);
+			syslog((int) (LOG_USER | LOG_NOTICE), "Node add errored"
+			" with %i.", mge_errno);
+			sprintf(out_msg, "swocserverd,block,err,%i;",
+				mge_errno);
+			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+			swsd_err = mge_errno;
+			return swsd_err;
+		}
+		cli_blocked = pblocked;
+	}
+
+	if (debug)
+		printf("Client %s blocked.\n", client);
+	syslog((int) (LOG_USER | LOG_NOTICE), "Client %s blocked.", client);
+	sprintf(out_msg, "swocserverd,block,ok;");
+
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+	swsd_err = mge_errno;
+	return swsd_err;
+}
+
+/**
+ * Client unblock further locks request.
+ * No parameters allowed.
+ * Remove a block on this client so that it can instantiate locks again.
+ * If the client is already unblocked the function succedes.
+ * @param mgemessage The message being processed.
+ * @param msg_args The message arguments.
+ * @return 0 on success, non-zero on failure.
+ */
+int cli_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+{
+	struct bstree *pblocked;
+	char out_msg[100];
+	swsd_err = 0;
+
+	if (msg->argc > 2) {
+		*msg_args = args_err;
+		return swsd_err;
+	}
+	pblocked = find_bst_node(cli_blocked, client);
+
+	if (pblocked != NULL) {
+		pblocked = del_bst_node(cli_blocked, client);
+		if (pblocked == NULL) {
+			if (debug)
+				fprintf(stderr, "Node del errored with %i.\n",
+					mge_errno);
+			syslog((int) (LOG_USER | LOG_NOTICE), "Node del errored"
+			" with %i.", mge_errno);
+			sprintf(out_msg, "swocserverd,unblock,err,%i;",
+				mge_errno);
+			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+			swsd_err = mge_errno;
+			return swsd_err;
+		}
+		cli_blocked = pblocked;
+	}
+
+	if (debug)
+		printf("Client %s unblocked.\n", client);
+	syslog((int) (LOG_USER | LOG_NOTICE), "Client %s unblocked.", client);
+	sprintf(out_msg, "swocserverd,unblock,ok;");
+
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 	swsd_err = mge_errno;
 	return swsd_err;
 }
@@ -239,34 +392,48 @@ int unlock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
-int lock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+int cli_lock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 {
-	struct bstree *plocks;
-	char outgoing_msg[100];
+	struct bstree *plocks, *pblocked;
+	char out_msg[100];
 	swsd_err = 0;
 
 	if (msg->argc > 2) {
 		*msg_args = args_err;
 		return swsd_err;
 	}
-	plocks = add_bst_node(locks, client, strlen(client) + 1);
 
+	pblocked = find_bst_node(cli_blocked, client);
+	if (pblocked != NULL) {
+		mge_errno = MGE_CLIENT_BLOCKED;
+		if (debug)
+			fprintf(stderr, "Client blocked - %i.\n",
+				mge_errno);
+		syslog((int) (LOG_USER | LOG_NOTICE), "Client blocked - %i.",
+		       mge_errno);
+		sprintf(out_msg, "swocserverd,lock,err,%i;", mge_errno);
+		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+		swsd_err = mge_errno;
+		return swsd_err;
+	}
+
+	plocks = add_bst_node(cli_locks, client, strlen(client) + 1);
 	if (plocks == NULL) {
 		if (debug)
 			fprintf(stderr, "Node add errored with %i.\n",
 				mge_errno);
 		syslog((int) (LOG_USER | LOG_NOTICE), "Node add errored "
 			"with %i.", mge_errno);
-		sprintf(outgoing_msg, "swocserverd,lock,err,%i;", mge_errno);
+		sprintf(out_msg, "swocserverd,lock,err,%i;", mge_errno);
 	} else {
-		locks = plocks;
+		cli_locks = plocks;
 		if (debug)
 			printf("Lock %s added.\n", client);
 		syslog((int) (LOG_USER | LOG_NOTICE), "Client %s lock added.",
 			client);
-		sprintf(outgoing_msg, "swocserverd,lock,ok;");
+		sprintf(out_msg, "swocserverd,lock,ok;");
 	}
-	send_outgoing_msg(outgoing_msg, strlen(outgoing_msg), &cursockfd);
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 	swsd_err = mge_errno;
 	return swsd_err;
 }
@@ -277,17 +444,17 @@ int lock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
-int release_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+int cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 {
 	struct bstree *plocks;
-	char outgoing_msg[100];
+	char out_msg[100];
 	swsd_err = 0;
 
 	if (msg->argc > 2) {
 		*msg_args = args_err;
 		return swsd_err;
 	}
-	plocks = del_bst_node(locks, client);
+	plocks = del_bst_node(cli_locks, client);
 
 	if (plocks == NULL) {
 		if (debug)
@@ -298,16 +465,16 @@ int release_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		/* Change to more user informational error. */
 		if (mge_errno == MGE_NODE_NOT_FOUND)
 			mge_errno = MGE_LOCK_NOT_FOUND;
-		sprintf(outgoing_msg, "swocserverd,release,err,%i;", mge_errno);
+		sprintf(out_msg, "swocserverd,release,err,%i;", mge_errno);
 	} else {
-		locks = plocks;
+		cli_locks = plocks;
 		if (debug)
 			printf("Lock %s removed.\n", client);
 		syslog((int) (LOG_USER | LOG_NOTICE), "Client %s lock removed.",
 			client);
-		sprintf(outgoing_msg, "swocserverd,release,ok;");
+		sprintf(out_msg, "swocserverd,release,ok;");
 	}
-	send_outgoing_msg(outgoing_msg, strlen(outgoing_msg), &cursockfd);
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 	swsd_err = mge_errno;
 	return swsd_err;
 }
@@ -318,10 +485,10 @@ int release_req(struct mgemessage *msg, enum msg_arguments *msg_args)
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
-int client_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+int cli_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 {
-	char outgoing_msg[100];
-	int counter = 0;
+	char out_msg[100];
+	int counter, block;
 
 	swsd_err = 0;
 
@@ -329,21 +496,81 @@ int client_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		*msg_args = args_err;
 		return swsd_err;
 	}
-	counter = get_counter_bst_node(locks, client);
 
+	counter = get_counter_bst_node(cli_locks, client);
 	if (counter == -1) {
 		if (debug)
 			fprintf(stderr, "Node count errored with %i.\n",
 				mge_errno);
 		syslog((int) (LOG_USER | LOG_NOTICE), "Node count errored "
 			"with %i.", mge_errno);
-		sprintf(outgoing_msg, "swocserverd,status,err,%i;", mge_errno);
-	} else {
-		if (debug)
-			printf("Client %s has %i locks.\n", client, counter);
-		sprintf(outgoing_msg, "swocserverd,status,ok,%i;", counter);
+		sprintf(out_msg, "swocserverd,status,err,%i;", mge_errno);
+		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+		swsd_err = mge_errno;
+		return swsd_err;
 	}
-	send_outgoing_msg(outgoing_msg, strlen(outgoing_msg), &cursockfd);
+
+	block = get_counter_bst_node(cli_blocked, client);
+	if (block == -1) {
+		if (debug)
+			fprintf(stderr, "Node count errored with %i.\n",
+				mge_errno);
+		syslog((int) (LOG_USER | LOG_NOTICE), "Node count errored "
+			"with %i.", mge_errno);
+		sprintf(out_msg, "swocserverd,status,err,%i;", mge_errno);
+		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+		swsd_err = mge_errno;
+		return swsd_err;
+	}
+
+	if (debug) {
+		printf("Client %s has %i locks.\n", client, counter);
+		printf("Client has blocked status of %i.\n", block);
+	}
+	sprintf(out_msg, "swocserverd,status,ok,%i,%i;", counter, block);
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+	swsd_err = mge_errno;
+	return swsd_err;
+}
+
+/**
+ * Reset request from client.
+ * Remove all locks and any block.
+ * @param mgemessage The message being processed.
+ * @param msg_args The message arguments.
+ * @return 0 on success, non-zero on failure.
+ */
+int cli_reset_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+{
+	struct bstree *plocks, *pblocked;
+	char out_msg[100];
+	int b = 0;
+	int l = 0;
+	swsd_err = 0;
+
+	if (msg->argc > 2) {
+		*msg_args = args_err;
+		return swsd_err;
+	}
+	while ((plocks = del_bst_node(cli_locks, client)) != NULL) {
+		l++;
+		cli_locks = plocks;
+	}
+
+	pblocked = del_bst_node(cli_blocked, client);
+	if (pblocked != NULL) {
+		b = 1;
+		cli_blocked = pblocked;
+	}
+
+	if (debug) {
+		printf("%i locks removed.\n", l);
+		printf("%i blocks removed.\n", b);
+	}
+	syslog((int) (LOG_USER | LOG_NOTICE), "Client %s, %i locks removed and "
+			"%i blocks removed.", client, l, b);
+	sprintf(out_msg, "swocserverd,reset,ok,%i,%i;", l, b);
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 	swsd_err = mge_errno;
 	return swsd_err;
 }

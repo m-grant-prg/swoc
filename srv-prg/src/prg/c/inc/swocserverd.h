@@ -3,12 +3,12 @@
  *
  * Header file for Server Wait on Clients server-side daemon.
  *
- * @author Copyright (C) 2016-2017  Mark Grant
+ * @author Copyright (C) 2016-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.8 ==== 17/11/2017_
+ * @version _v1.0.9 ==== 01/05/2018_
  */
 
 /* **********************************************************************
@@ -33,6 +33,7 @@
  * 				tunnelling.				*
  * 17/11/2017	MG	1.0.8	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 01/05/2018	MG	1.0.9	Add support for blocked clients list.	*
  *									*
  ************************************************************************
  */
@@ -72,7 +73,7 @@ extern int debug;
 extern int end;
 extern int cursockfd;
 extern struct comm_spec *port_spec;
-extern struct bstree *locks, *port_sock;
+extern struct bstree *cli_locks, *cli_blocked, *port_sock;
 
 
 int swsd_validate_config(void);
@@ -81,19 +82,27 @@ int prepare_sockets(void);
 
 int process_comms(void);
 
-int end_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int srv_end_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int server_status_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int unlock_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int srv_cli_blocklist_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int lock_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int cli_block_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int release_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int cli_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int reload_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int srv_cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-int client_status_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+int cli_lock_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+
+int cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+
+int srv_reload_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+
+int cli_status_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+
+int cli_reset_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
 char *swocserverd_get_pkg_version(void);
 
