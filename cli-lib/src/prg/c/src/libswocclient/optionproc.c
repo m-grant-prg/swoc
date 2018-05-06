@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.5 ==== 18/03/2018_
+ * @version _v1.1.6 ==== 02/05/2018_
  */
 
 /* **********************************************************************
@@ -45,6 +45,7 @@
  *				global variable. This value can be	*
  *				accessed in a handler if a signal is	*
  *				received.				*
+ * 02/05/2018	MG	1.1.6	Add support for clinet blocked list.	*
  *									*
  ************************************************************************
  */
@@ -112,6 +113,107 @@ int swc_show_status(void)
 	}
 
 	printf("Client has %s locks on server.\n", *(msg->argv + 3));
+	if (!strcmp(msg->argv[4], "0"))
+		printf("Client is not blocked on server.\n");
+	else
+		printf("Client is blocked on server.\n");
+
+
+	clear_msg(msg, ';', ',');
+
+	return 0;
+}
+
+/**
+ * Set block flag on server to prevent this client from setting any more locks.
+ * On error mge_errno will be set.
+ * @return 0 on success, non-zero on failure.
+ */
+int swc_block(void)
+{
+	int prg_err = 0;
+	long int x;
+	char *end;
+	char *outgoing_msg = "swocclient,block;";
+	size_t om_length = strlen(outgoing_msg);
+	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage *msg = &msg1;
+
+
+	if ((prg_err = swcom_validate_config()))
+		return prg_err;
+
+	if ((prg_err = exch_msg(outgoing_msg, om_length, msg)))
+		return prg_err;
+
+	if (strcmp(msg->message, "swocserverd,block,ok;")) {
+		mge_errno = MGE_INVAL_MSG;
+		if (msg->argc == 4) {
+			if (!(strcmp(msg->argv[0], "swocserverd")) &&
+				!(strcmp(msg->argv[1], "block")) &&
+			    	!(strcmp(msg->argv[2], "err"))) {
+				x = strtol(msg->argv[3], &end, 10);
+				if ((*end == '\0') && x <= INT_MAX &&
+					x >= INT_MIN)
+					mge_errno = (int)x;
+			}
+		}
+		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
+			msg->message);
+		clear_msg(msg, ';', ',');
+		return mge_errno;
+	}
+
+	syslog((int) (LOG_USER | LOG_NOTICE), "Server block flag is set.");
+	sndremsyslogmsg(server, "swocclient", "Server block flag is set.");
+
+	clear_msg(msg, ';', ',');
+
+	return 0;
+}
+
+/**
+ * Remove block flag on server to allow this client to set locks.
+ * On error mge_errno will be set.
+ * @return 0 on success, non-zero on failure.
+ */
+int swc_unblock(void)
+{
+	int prg_err = 0;
+	long int x;
+	char *end;
+	char *outgoing_msg = "swocclient,unblock;";
+	size_t om_length = strlen(outgoing_msg);
+	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage *msg = &msg1;
+
+
+	if ((prg_err = swcom_validate_config()))
+		return prg_err;
+
+	if ((prg_err = exch_msg(outgoing_msg, om_length, msg)))
+		return prg_err;
+
+	if (strcmp(msg->message, "swocserverd,unblock,ok;")) {
+		mge_errno = MGE_INVAL_MSG;
+		if (msg->argc == 4) {
+			if (!(strcmp(msg->argv[0], "swocserverd")) &&
+				!(strcmp(msg->argv[1], "unblock")) &&
+			    	!(strcmp(msg->argv[2], "err"))) {
+				x = strtol(msg->argv[3], &end, 10);
+				if ((*end == '\0') && x <= INT_MAX &&
+					x >= INT_MIN)
+					mge_errno = (int)x;
+			}
+		}
+		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
+			msg->message);
+		clear_msg(msg, ';', ',');
+		return mge_errno;
+	}
+
+	syslog((int) (LOG_USER | LOG_NOTICE), "Server block flag removed.");
+	sndremsyslogmsg(server, "swocclient", "Server block flag removed.");
 
 	clear_msg(msg, ';', ',');
 
@@ -219,7 +321,8 @@ int swc_rel_lock(void)
  * If cnumlocks > 0 this realistically means that a previous command in this
  * sequence would have been a lock request.
  * On error mge_errno will be set.
- * @param cnumlocks Wait until the number of locks is <= this value.
+ * @param cnumlocks Wait until the number of locks is <= this value. This value
+ * must be 0 or 1.
  * @return 0 on success, non-zero on failure.
  */
 int swc_client_wait(char *cnumlocks)
@@ -283,5 +386,57 @@ int swc_client_wait(char *cnumlocks)
 	} while (locks > numlocks);
 	syslog((int) (LOG_USER | LOG_NOTICE), "%li locks remain for this "
 		"client.", locks);
+	return 0;
+}
+
+/**
+ * Reset the client on the server to 0 locks and unblocked.
+ * On error mge_errno will be set.
+ * @return 0 on success, non-zero on failure.
+ */
+int swc_reset(void)
+{
+	int prg_err = 0;
+	long int x;
+	char *end;
+	char *outgoing_msg = "swocclient,reset;";
+	size_t om_length = strlen(outgoing_msg);
+	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage *msg = &msg1;
+
+
+	if ((prg_err = swcom_validate_config()))
+		return prg_err;
+
+	if ((prg_err = exch_msg(outgoing_msg, om_length, msg)))
+		return prg_err;
+
+	if (strncmp(msg->message, "swocserverd,reset,ok", 20)) {
+		mge_errno = MGE_INVAL_MSG;
+		if (msg->argc == 4) {
+			if (!(strcmp(msg->argv[0], "swocserverd")) &&
+				!(strcmp(msg->argv[1], "reset")) &&
+			    	!(strcmp(msg->argv[2], "err"))) {
+				x = strtol(msg->argv[3], &end, 10);
+				if ((*end == '\0') && x <= INT_MAX &&
+					x >= INT_MIN)
+					mge_errno = (int)x;
+			}
+		}
+		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
+			msg->message);
+		clear_msg(msg, ';', ',');
+		return mge_errno;
+	}
+
+	printf("%s Client locks removed on server.\n", *(msg->argv + 3));
+	if (!strcmp(msg->argv[4], "0"))
+		printf("Client was not blocked on server.\n");
+	else
+		printf("Client block on server removed.\n");
+
+
+	clear_msg(msg, ';', ',');
+
 	return 0;
 }
