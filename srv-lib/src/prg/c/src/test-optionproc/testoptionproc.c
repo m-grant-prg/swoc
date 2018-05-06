@@ -29,8 +29,8 @@ int main(int argc, char **argv)
 	retval = sws_show_status();
 	printf("retval after sws_show_status is %i\n", retval);
 
-	retval = sws_unlock("localhost");
-	printf("retval after sws_unlock of localhost is %i\n", retval);
+	retval = sws_release("localhost");
+	printf("retval after sws_release of localhost is %i\n", retval);
 	sws_show_status();
 
 	retval = sws_server_wait();
