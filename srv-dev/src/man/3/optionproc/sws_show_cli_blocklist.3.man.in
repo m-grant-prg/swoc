@@ -1,14 +1,14 @@
 NAME
-sws_show_status - Show the locks on this server.
+sws_show_cli_blocklist - Show the locks on this server.
 SYNOPSIS
 #include <libswocserver.h>
 
-int sws_show_status();
+int sws_show_cli_blocklist();
 DESCRIPTION
-The sws_show_status function reads the swoc.conf configuration file and lists
-all the locks on this server to stdout.
+The sws_show_cli_blocklist function reads the swoc.conf configuration file and
+lists all the blocked clients on this server to stdout.
 RETURN VALUE
-0 or greater on success - returns the number of clients with locks.
+0 or greater on success - returns the number of blocked clients.
 .br
 -1 on failure.
 ERRORS
@@ -29,4 +29,4 @@ This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 SEE ALSO
 sws_end_daemon(3) sws_release(3) sws_reload_config(3) sws_server_wait(3)
-sws_show_cli_blocklist(3) swoc.conf(5)
+swoc.conf(5)

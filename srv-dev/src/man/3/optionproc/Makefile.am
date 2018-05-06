@@ -31,12 +31,14 @@
 #				target suffix. If the suffix is blank	#
 #				(foo.) or if there is no suffix (foo)	#
 #				then error out.				#
+# 05/05/2018	MG	1.0.9	Improve function name consistency,	#
+#				unlock -> release.			#
 #									#
 #########################################################################
 
 
-sws_end_daemon.3 sws_reload_config.3 sws_server_wait.3 sws_show_status.3 \
-	sws_unlock.3: Makefile
+sws_end_daemon.3 sws_release.3 sws_reload_config.3 sws_server_wait.3 \
+	sws_show_status.3: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	$(edit) $(srcdir)/$(@F).man.in > $@.tmp
@@ -56,18 +58,17 @@ sws_end_daemon.3 sws_reload_config.3 sws_server_wait.3 sws_show_status.3 \
 	rm -f $@.tmp
 
 sws_end_daemon.3: $(srcdir)/sws_end_daemon.3.man.in
+sws_release.3: $(srcdir)/sws_release.3.man.in
 sws_reload_config.3: $(srcdir)/sws_reload_config.3.man.in
 sws_server_wait.3: $(srcdir)/sws_server_wait.3.man.in
 sws_show_status.3: $(srcdir)/sws_show_status.3.man.in
-sws_unlock.3: $(srcdir)/sws_unlock.3.man.in
 
-man_MANS = sws_end_daemon.3 sws_reload_config.3 sws_server_wait.3 \
-	sws_show_status.3 sws_unlock.3
+man_MANS = sws_end_daemon.3 sws_release.3 sws_reload_config.3 \
+	sws_server_wait.3 sws_show_status.3
 
-EXTRA_DIST = $(srcdir)/sws_end_daemon.3.man.in \
+EXTRA_DIST = $(srcdir)/sws_end_daemon.3.man.in $(srcdir)/sws_release.3.man.in \
 	$(srcdir)/sws_reload_config.3.man.in \
-	$(srcdir)/sws_server_wait.3.man.in $(srcdir)/sws_show_status.3.man.in \
-	$(srcdir)/sws_unlock.3.man.in
+	$(srcdir)/sws_server_wait.3.man.in $(srcdir)/sws_show_status.3.man.in
 
-CLEANFILES = *.tmp sws_end_daemon.3 sws_reload_config.3 sws_server_wait.3 \
-	sws_show_status.3 sws_unlock.3
+CLEANFILES = *.tmp sws_end_daemon.3 sws_release.3 sws_reload_config.3 \
+	sws_server_wait.3 sws_show_status.3

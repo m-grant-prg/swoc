@@ -28,5 +28,5 @@ This is free software: you are free to change and redistribute it.
 .br
 There is NO WARRANTY, to the extent permitted by law.
 SEE ALSO
-sws_reload_config(3) sws_server_wait(3) sws_show_status(3) sws_unlock(3)
-swoc.conf(5)
+sws_release(3) sws_reload_config(3) sws_server_wait(3) sws_show_cli_blocklist(3)
+sws_show_status(3) swoc.conf(5)
