@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.4 ==== 28/03/2018_
+ * @version _v1.1.5 ==== 02/05/2018_
  */
 
 /* **********************************************************************
@@ -32,6 +32,7 @@
  *				of locks argument (default 0).		*
  * 28/03/2018	MG	1.1.4	For pointers assigned zero in option	*
  *				struct, assign NULL instead.		*
+ * 02/05/2018	MG	1.1.5	Add support for client block list.	*
  *									*
  ************************************************************************
  */
@@ -49,16 +50,20 @@
  * Process command line arguments using getopt_long.
  * @param argc The standard CLA argc.
  * @param argv The standard CLA argv.
+ * @param block_flag Struct for the block flag.
  * @param lock_flag Struct for the lock flag.
  * @param release_flag Struct for the release flag.
+ * @param reset_flag Struct for the reset flag.
  * @param status_flag Struct for the status flag.
+ * @param unblock_flag Struct for the unblock flag.
  * @param wait_flag Struct for the wait flag.
  * @return 0 on success, on failure standard EX_USAGE (64) command line  usage
  * error.
  */
-int process_cla(int argc, char **argv, struct cla *lock_flag,
-		struct cla *release_flag, struct cla *status_flag,
-		struct cla *wait_flag)
+int process_cla(int argc, char **argv, struct cla *block_flag,
+		struct cla *lock_flag, struct cla *release_flag,
+		struct cla *reset_flag,struct cla *status_flag,
+		struct cla *unblock_flag, struct cla *wait_flag)
 {
 	/* getopt_long stores the option index here. */
 	int option_index = 0;
@@ -66,28 +71,55 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 	int x;
 
 	struct option long_options[] = {
+		{"block",	no_argument,		NULL,	'b'},
 		{"help",	no_argument,		NULL,	'h'},
 		{"lock",	no_argument,		NULL,	'l'},
 		{"release",	no_argument,		NULL,	'r'},
+		{"reset",	no_argument,		NULL,	'i'},
 		{"status",	no_argument,		NULL,	's'},
+		{"unblock",	no_argument,		NULL,	'u'},
 		{"version",	no_argument,		NULL,	'V'},
 		{"wait",	optional_argument,	NULL,	'w'},
 		{NULL,		0,			NULL,	0}
 	};
 
-	while ((c = getopt_long(argc, argv, "hlrsVw::",
+	while ((c = getopt_long(argc, argv, "bhilrsuVw::",
 		long_options, &option_index)) != -1) {
 
 		switch (c) {
+		case 'b':
+			if (lock_flag->is_set || release_flag->is_set
+			    || reset_flag->is_set || status_flag->is_set
+			    || unblock_flag->is_set || wait_flag->is_set) {
+				fprintf(stderr, "Options b, i, l, r, s, u and "
+					"w are mutually exclusive.\n");
+				return 64;
+			}
+			block_flag->is_set = 1;
+			break;
+		case 'i':
+			if (block_flag->is_set || lock_flag->is_set
+			    || release_flag->is_set || status_flag->is_set
+			    || unblock_flag->is_set || wait_flag->is_set) {
+				fprintf(stderr, "Options b, i, l, r, s, u and "
+					"w are mutually exclusive.\n");
+				return 64;
+			}
+			reset_flag->is_set = 1;
+			break;
 		case 'h':
 			printf("%s %s", argv[0], " - Help option.\n");
 			printf("\tLong and short options can be mixed on the "
 				"command line but if an option takes an "
 				"optional argument it is best to enter "
 				"-o\"argument\" or --option=argument.\n");
+			printf("-b | --block\tBlock client on server.\n");
+			printf("-i | --reset\tSet locks to 0 and unblock "
+			       "client on server.\n");
 			printf("-l | --lock\tSet client lock on server.\n");
 			printf("-r | --release\tRelease client lock on "
 				"server.\n");
+			printf("-u | --unblock\tUnblock client on server.\n");
 			printf("-s | --status\tShow the locking status.\n");
 			printf("-V | --version\tDisplay version "
 				"information.\n");
@@ -95,38 +127,47 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 				"this client has NumLocks or fewer locks.\n");
 			exit(0);
 			break;
-
 		case 'l':
-			if (release_flag->is_set
-				|| status_flag->is_set
-				|| wait_flag->is_set) {
-				fprintf(stderr, "Options l, r, s and w are "
-				"mutually exclusive.\n");
+			if (block_flag->is_set || release_flag->is_set
+			    || reset_flag->is_set || status_flag->is_set
+			    || unblock_flag->is_set || wait_flag->is_set) {
+				fprintf(stderr, "Options b, i, l, r, s, u and "
+					"w are mutually exclusive.\n");
 				return 64;
 			}
 			lock_flag->is_set = 1;
 			break;
 
 		case 'r':
-			if (lock_flag->is_set || status_flag->is_set
-				|| wait_flag->is_set) {
-				fprintf(stderr, "Options l, r, s and w are "
-				"mutually exclusive.\n");
+			if (block_flag->is_set || lock_flag->is_set
+			    || reset_flag->is_set || status_flag->is_set
+			    || unblock_flag->is_set || wait_flag->is_set) {
+				fprintf(stderr, "Options b, i, l, r, s, u and "
+					"w are mutually exclusive.\n");
 				return 64;
 			}
 			release_flag->is_set = 1;
 			break;
-
+		case 'u':
+			if (block_flag->is_set || lock_flag->is_set
+			    || release_flag->is_set || reset_flag->is_set
+			    || status_flag->is_set || wait_flag->is_set) {
+				fprintf(stderr, "Options b, i, l, r, s, u and "
+					"w are mutually exclusive.\n");
+				return 64;
+			}
+			unblock_flag->is_set = 1;
+			break;
 		case 's':
-			if (release_flag->is_set || lock_flag->is_set
-				|| wait_flag->is_set) {
-				fprintf(stderr, "Options l, r, s and w are "
-				"mutually exclusive.\n");
+			if (block_flag->is_set || lock_flag->is_set
+			    || release_flag->is_set || reset_flag->is_set
+			    || unblock_flag->is_set || wait_flag->is_set) {
+				fprintf(stderr, "Options b, i, l, r, s, u and "
+					"w are mutually exclusive.\n");
 				return 64;
 			}
 			status_flag->is_set = 1;
 			break;
-
 		case 'V':
 			printf("%s %s %s %s", argv[0], "Source version -",
 				swocclient_get_src_version(), "\n");
@@ -134,12 +175,12 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 				swocclient_get_pkg_version(), "\n");
 			exit(0);
 			break;
-
 		case 'w':
-			if (release_flag->is_set || lock_flag->is_set
-				|| status_flag->is_set) {
-				fprintf(stderr, "Options l, r, s and w are "
-				"mutually exclusive.\n");
+			if (block_flag->is_set || lock_flag->is_set
+			    || release_flag->is_set || reset_flag->is_set
+			    || status_flag->is_set || unblock_flag->is_set) {
+				fprintf(stderr, "Options b, i, l, r, s, u and "
+					"w are mutually exclusive.\n");
 				return 64;
 			}
 			wait_flag->is_set = 1;
@@ -150,12 +191,10 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 			if (x)
 				return x;
 			break;
-
 		case '?':
 			/* getopt_long already printed an error message. */
 			return 64;
 			break;
-
 		default:
 			abort();
 		}
@@ -168,9 +207,11 @@ int process_cla(int argc, char **argv, struct cla *lock_flag,
 	}
 
 	/* Check for mandatory options */
-	if (!(lock_flag->is_set || release_flag->is_set
-		|| status_flag->is_set || wait_flag->is_set)) {
-		fprintf(stderr, "Either l, r, s or w must be specified.\n");
+	if (!(block_flag->is_set || lock_flag->is_set || release_flag->is_set
+	      || reset_flag->is_set || status_flag->is_set
+	      || unblock_flag->is_set || wait_flag->is_set)) {
+		fprintf(stderr, "Either b, i, l, r, s, u or w must be "
+			       "specified.\n");
 		return 64;
 	}
 	return 0;

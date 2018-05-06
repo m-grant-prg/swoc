@@ -21,8 +21,10 @@
 #									#
 # 08/06/2017	MG	1.0.0	First release.				#
 # 12/01/2018	MG	1.0.1	Add SPDX license tags to source files.	#
+# 02/05/2018	MG	1.0.2	Add libmgec.				#
 #									#
 #########################################################################
 
 
-EXTRA_DIST = $(srcdir)/libswoccommon $(srcdir)/libswocclient
+EXTRA_DIST = $(srcdir)/libmgec
+EXTRA_DIST += $(srcdir)/libswoccommon $(srcdir)/libswocclient

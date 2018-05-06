@@ -6,14 +6,20 @@ DESCRIPTION
 Sets, releases, reports or waits on this client's 'Server Wait On Clients' flags
 on the server.
 OPTIONS
+-b, --block  block this client from setting further locks.
+
 -h, --help  prints usage information.
+
+-i, --reset  remove all locks and set client as unblocked.
 
 -l, --lock  sets or increments the lock flag on the server.
 
 -r, --release  releases or decrements the lock flag on the server.
 
--s, --status  reports on the status of server locking and how many locks are
-held.
+-s, --status  reports on the status of server locking, how many locks are
+held and the status of blocking.
+
+-u, --unblock  remove block on this client setting locks.
 
 -V, --version  prints version information
 
