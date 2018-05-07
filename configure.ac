@@ -12,6 +12,8 @@
 #									#
 # cmd line syntax:							#
 # ./configure	[--enable-debug=<yes|no> [default: no]]			#
+#		[--enable-sparse=<yes|no> [default: no]]		#
+#									#
 # Any command line arguments are passed to the sub-project configure's.	#
 # This accepts any sub-project supported arguments.			#
 #									#
@@ -26,10 +28,13 @@
 # 11/01/2018	MG	1.0.1	First release.				#
 # 14/01/2018	MG	1.0.2	Update minimum AutoTools version.	#
 # 12/02/2018	MG	1.0.3	Make AutoMake use posix format for tar.	#
+# 07/05/2018	MG	1.0.4	Add support for an enable-sparse CLA	#
+#				and passing a suitable variable to the	#
+#				Makefile.am's.				#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.3 $])
+AC_REVISION([$Revision: 1.0.4 $])
 
 AC_PREREQ([2.69])
 
@@ -75,6 +80,27 @@ AM_CONDITIONAL([DEBUG], [test x$debug = xtrue])
 
 if test "x${debug}" = xtrue; then
 	AC_MSG_NOTICE([Build in debug mode.])
+fi
+
+
+########################
+#
+# The following allows for an enable-sparse=yes/no command line option. The
+# conditional SPARSE is made available to the makefiles.
+#
+########################
+
+AC_ARG_ENABLE([sparse],
+	[  --enable-sparse    Build with sparse],
+	[case "${enableval}" in
+		yes) sparse=true ;;
+		no)  sparse=false ;;
+		*) AC_MSG_ERROR([bad value ${enableval} for --enable-sparse]);;
+	esac],[sparse=false])
+AM_CONDITIONAL([SPARSE], [test x$sparse = xtrue])
+
+if test "x${sparse}" = xtrue; then
+	AC_MSG_NOTICE([Building using sparse.])
 fi
 
 
