@@ -22,6 +22,9 @@
 # 11/01/2018	MG	1.0.1	First release.				#
 # 05/02/2018	MG	1.0.2	Add  -I m4extra as a template for the	#
 #				project.				#
+# 07/05/2018	MG	1.0.3	Add srctarball target to build a source	#
+#				tarball in the build directory. Uses	#
+#				git archive to archive HEAD.		#
 #									#
 #########################################################################
 
@@ -32,3 +35,13 @@ SUBDIRS = com-dev com-lib
 SUBDIRS += cli-dev cli-lib cli-prg
 SUBDIRS += srv-dev srv-lib srv-prg
 SUBDIRS += doc
+
+
+srctarball:
+	@cwd="$${PWD}" && \
+	cd @srcdir@ && \
+	git archive --format=tar.gz \
+		--prefix=@PACKAGE_TARNAME@-@PACKAGE_VERSION@/ \
+		--output=$${cwd}/@PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz \
+		HEAD && \
+	cd -
