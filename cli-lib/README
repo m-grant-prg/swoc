@@ -74,20 +74,9 @@ Related packages in this system are the dev and lib packages for libswoccommon
 SWOC Common Library, equivalent packages for the libswocserver Server Library,
 equivalent packages for the libswocclient Client Library, a package swocclient
 for the client application, a package swocserver for the server application and
-a documentation project swocdoc. There is also a super project (git),
-swoc-super, which has the above mentioned projects as git submodules.
+a documentation project swocdoc. There is also a parent project, swoc-full.
 
-So please refer also to:-
-https://github.com/m-grant-prg/swocserver
-https://github.com/m-grant-prg/libswocserver-lib
-https://github.com/m-grant-prg/libswocserver-dev
-https://github.com/m-grant-prg/swocclient
-https://github.com/m-grant-prg/libswocclient-lib
-https://github.com/m-grant-prg/libswocclient-dev
-https://github.com/m-grant-prg/libswoccommon-lib
-https://github.com/m-grant-prg/libswoccommon-dev
-https://github.com/m-grant-prg/swocdoc
-https://github.com/m-grant-prg/swoc-super
+So please refer also to the README files of these projects.
 
 
 -------------------------------------------------
@@ -96,7 +85,7 @@ https://github.com/m-grant-prg/swoc-super
 
 a) ... Download either the source or distribution tarball (the .tar.gz file)
 	from:-
-	https://github.com/m-grant-prg/libswocclient-lib/releases
+	https://github.com/m-grant-prg/swoc/releases
 
 b) ... Extract the tarball preserving the directory structure.
 
@@ -143,7 +132,7 @@ To uninstall this package at any time please type:-
 4 ... Debian and Raspbian Installation
 ======================================
 Debian and Raspbian '.deb' packages can be downloaded from:-
-	https://github.com/m-grant-prg/libswocclient-lib/releases
+	https://github.com/m-grant-prg/swoc/releases
 
 They can then be installed using a utility such as GDebi which is available in
 the standard repos.
