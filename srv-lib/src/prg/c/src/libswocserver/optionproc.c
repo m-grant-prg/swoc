@@ -87,8 +87,8 @@ int sws_show_status(void)
 	int prg_err;
 	long int x;
 	char *end;
-	char *outgoing_msg = "swocserver,status;";
-	size_t om_length = strlen(outgoing_msg);
+	char *out_msg = "swocserver,status;";
+	size_t om_length = strlen(out_msg);
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
@@ -97,7 +97,7 @@ int sws_show_status(void)
 	if (prg_err)
 		return prg_err;
 
-	prg_err = exch_msg(outgoing_msg, om_length, msg);
+	prg_err = exch_msg(out_msg, om_length, msg);
 	if (prg_err)
 		return prg_err;
 
@@ -144,8 +144,8 @@ int sws_show_cli_blocklist(void)
 	int prg_err;
 	long int x;
 	char *end;
-	char *outgoing_msg = "swocserver,blocklist;";
-	size_t om_length = strlen(outgoing_msg);
+	char *out_msg = "swocserver,blocklist;";
+	size_t om_length = strlen(out_msg);
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
@@ -154,7 +154,7 @@ int sws_show_cli_blocklist(void)
 	if (prg_err)
 		return prg_err;
 
-	prg_err = exch_msg(outgoing_msg, om_length, msg);
+	prg_err = exch_msg(out_msg, om_length, msg);
 	if (prg_err)
 		return prg_err;
 
@@ -199,8 +199,8 @@ int sws_server_wait(void)
 	int empty;
 	long int x;
 	char *end;
-	char *outgoing_msg = "swocserver,status;";
-	size_t om_length = strlen(outgoing_msg);
+	char *out_msg = "swocserver,status;";
+	size_t om_length = strlen(out_msg);
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
@@ -213,7 +213,7 @@ int sws_server_wait(void)
 		return prg_err;
 	do {
 		sleep(pollint);
-		prg_err = exch_msg(outgoing_msg, om_length, msg);
+		prg_err = exch_msg(out_msg, om_length, msg);
 		if (prg_err)
 			return prg_err;
 
@@ -257,19 +257,19 @@ int sws_release(char *lockname)
 	int prg_err = 0;
 	long int x;
 	char *end;
-	char outgoing_msg[20 + strlen(lockname) + 1];
+	char out_msg[20 + strlen(lockname) + 1];
 	size_t om_length;
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
-	sprintf(outgoing_msg, "swocserver,release,%s;", lockname);
-	om_length = strlen(outgoing_msg);
+	sprintf(out_msg, "swocserver,release,%s;", lockname);
+	om_length = strlen(out_msg);
 
 	prg_err = swcom_validate_config();
 	if (prg_err)
 		return prg_err;
 
-	prg_err = exch_msg(outgoing_msg, om_length, msg);
+	prg_err = exch_msg(out_msg, om_length, msg);
 	if (prg_err)
 		return prg_err;
 
@@ -310,20 +310,20 @@ int sws_cli_block(char *blockname)
 	int prg_err = 0;
 	long int x;
 	char *end;
-	char outgoing_msg[18 + strlen(blockname) + 1];
+	char out_msg[18 + strlen(blockname) + 1];
 	size_t om_length;
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
-	sprintf(outgoing_msg, "swocserver,block,%s;", blockname);
-	om_length = strlen(outgoing_msg);
+	sprintf(out_msg, "swocserver,block,%s;", blockname);
+	om_length = strlen(out_msg);
 
 
 	prg_err = swcom_validate_config();
 	if (prg_err)
 		return prg_err;
 
-	prg_err = exch_msg(outgoing_msg, om_length, msg);
+	prg_err = exch_msg(out_msg, om_length, msg);
 	if (prg_err)
 		return prg_err;
 
@@ -363,20 +363,20 @@ int sws_cli_unblock(char *blockname)
 	int prg_err = 0;
 	long int x;
 	char *end;
-	char outgoing_msg[20 + strlen(blockname) + 1];
+	char out_msg[20 + strlen(blockname) + 1];
 	size_t om_length;
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
-	sprintf(outgoing_msg, "swocserver,unblock,%s;", blockname);
-	om_length = strlen(outgoing_msg);
+	sprintf(out_msg, "swocserver,unblock,%s;", blockname);
+	om_length = strlen(out_msg);
 
 
 	prg_err = swcom_validate_config();
 	if (prg_err)
 		return prg_err;
 
-	prg_err = exch_msg(outgoing_msg, om_length, msg);
+	prg_err = exch_msg(out_msg, om_length, msg);
 	if (prg_err)
 		return prg_err;
 
@@ -417,8 +417,8 @@ int sws_end_daemon(void)
 	int prg_err = 0;
 	long int x;
 	char *end;
-	char *outgoing_msg = "swocserver,end;";
-	size_t om_length = strlen(outgoing_msg);
+	char *out_msg = "swocserver,end;";
+	size_t om_length = strlen(out_msg);
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
@@ -427,7 +427,7 @@ int sws_end_daemon(void)
 	if (prg_err)
 		return prg_err;
 
-	prg_err = exch_msg(outgoing_msg, om_length, msg);
+	prg_err = exch_msg(out_msg, om_length, msg);
 	if (prg_err)
 		return prg_err;
 
@@ -468,8 +468,8 @@ int sws_reload_config(void)
 	int prg_err = 0;
 	long int x;
 	char *end;
-	char *outgoing_msg = "swocserver,reload;";
-	size_t om_length = strlen(outgoing_msg);
+	char *out_msg = "swocserver,reload;";
+	size_t om_length = strlen(out_msg);
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
@@ -478,7 +478,7 @@ int sws_reload_config(void)
 	if (prg_err)
 		return prg_err;
 
-	prg_err = exch_msg(outgoing_msg, om_length, msg);
+	prg_err = exch_msg(out_msg, om_length, msg);
 	if (prg_err)
 		return prg_err;
 
