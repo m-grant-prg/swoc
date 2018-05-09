@@ -281,7 +281,7 @@ int srv_cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 				*(msg->argv + 2));
 		syslog((int) (LOG_USER | LOG_NOTICE), "Client %s lock removed "
 			"by server.", *(msg->argv + 2));
-		sprintf(out_msg, "swocserverd,release,ok,%s;", *(msg->argv + 2));
+		sprintf(out_msg, "swocserverd,release,ok;");
 	}
 	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 	swsd_err = mge_errno;

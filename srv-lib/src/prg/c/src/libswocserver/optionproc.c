@@ -273,7 +273,7 @@ int sws_release(char *lockname)
 	if (prg_err)
 		return prg_err;
 
-	if (strncmp(msg->message, "swocserverd,release,ok", 22)) {
+	if (strcmp(msg->message, "swocserverd,release,ok;")) {
 		mge_errno = MGE_INVAL_MSG;
 		if (msg->argc == 4) {
 			if (!(strcmp(msg->argv[0], "swocserverd")) &&
