@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.7 ==== 05/05/2018_
+ * @version _v1.1.7 ==== 08/05/2018_
  */
 
 /* **********************************************************************
@@ -45,10 +45,11 @@
  *				in a global variable. This value can be	*
  *				accessed in a handler if a signal is	*
  *				received.				*
- * 05/05/2018	MG	1.1.7	Improve function name consistency,	*
+ * 08/05/2018	MG	1.1.7	Improve function name consistency,	*
  *				unlock -> release.			*
  *				Add support for server listing blocked	*
  *				clients.				*
+ *				Add client block and unblock.		*
  *									*
  ************************************************************************
  */
@@ -256,14 +257,13 @@ int sws_release(char *lockname)
 	int prg_err = 0;
 	long int x;
 	char *end;
-	char outgoing_msg[17 + strlen(lockname) + 1];
+	char outgoing_msg[20 + strlen(lockname) + 1];
 	size_t om_length;
 	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
 	sprintf(outgoing_msg, "swocserver,release,%s;", lockname);
 	om_length = strlen(outgoing_msg);
-
 
 	prg_err = swcom_validate_config();
 	if (prg_err)
@@ -273,7 +273,7 @@ int sws_release(char *lockname)
 	if (prg_err)
 		return prg_err;
 
-	if (strncmp(msg->message, "swocserverd,release,ok", 21)) {
+	if (strncmp(msg->message, "swocserverd,release,ok", 22)) {
 		mge_errno = MGE_INVAL_MSG;
 		if (msg->argc == 4) {
 			if (!(strcmp(msg->argv[0], "swocserverd")) &&
@@ -293,6 +293,113 @@ int sws_release(char *lockname)
 
 	syslog((int) (LOG_USER | LOG_NOTICE), "Lock removed manually from "
 		"server - %s.", lockname);
+
+	clear_msg(msg, ';', ',');
+
+	return 0;
+}
+
+/**
+ * Set a client to blocked.
+ * On error mge_errno is set.
+ * @param blockname Client to block.
+ * @return 0 on success, non-zero on failure.
+ */
+int sws_cli_block(char *blockname)
+{
+	int prg_err = 0;
+	long int x;
+	char *end;
+	char outgoing_msg[18 + strlen(blockname) + 1];
+	size_t om_length;
+	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage *msg = &msg1;
+
+	sprintf(outgoing_msg, "swocserver,block,%s;", blockname);
+	om_length = strlen(outgoing_msg);
+
+
+	prg_err = swcom_validate_config();
+	if (prg_err)
+		return prg_err;
+
+	prg_err = exch_msg(outgoing_msg, om_length, msg);
+	if (prg_err)
+		return prg_err;
+
+	if (strcmp(msg->message, "swocserverd,block,ok;")) {
+		mge_errno = MGE_INVAL_MSG;
+		if (msg->argc == 4) {
+			if (!(strcmp(msg->argv[0], "swocserverd")) &&
+				!(strcmp(msg->argv[1], "block")) &&
+			    	!(strcmp(msg->argv[2], "err"))) {
+				x = strtol(msg->argv[3], &end, 10);
+				if ((*end == '\0') && x <= INT_MAX &&
+					x >= INT_MIN)
+					mge_errno = (int)x;
+			}
+		}
+		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
+			msg->message);
+		clear_msg(msg, ';', ',');
+		return mge_errno;
+	}
+
+	syslog((int) (LOG_USER | LOG_NOTICE), "Client %s blocked.", blockname);
+
+	clear_msg(msg, ';', ',');
+
+	return 0;
+}
+
+/**
+ * Unblock a client block.
+ * On error mge_errno is set.
+ * @param blockname Client to unblock.
+ * @return 0 on success, non-zero on failure.
+ */
+int sws_cli_unblock(char *blockname)
+{
+	int prg_err = 0;
+	long int x;
+	char *end;
+	char outgoing_msg[20 + strlen(blockname) + 1];
+	size_t om_length;
+	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage *msg = &msg1;
+
+	sprintf(outgoing_msg, "swocserver,unblock,%s;", blockname);
+	om_length = strlen(outgoing_msg);
+
+
+	prg_err = swcom_validate_config();
+	if (prg_err)
+		return prg_err;
+
+	prg_err = exch_msg(outgoing_msg, om_length, msg);
+	if (prg_err)
+		return prg_err;
+
+	if (strcmp(msg->message, "swocserverd,unblock,ok;")) {
+		mge_errno = MGE_INVAL_MSG;
+		if (msg->argc == 4) {
+			if (!(strcmp(msg->argv[0], "swocserverd")) &&
+				!(strcmp(msg->argv[1], "unblock")) &&
+			    	!(strcmp(msg->argv[2], "err"))) {
+				x = strtol(msg->argv[3], &end, 10);
+				if ((*end == '\0') && x <= INT_MAX &&
+					x >= INT_MIN)
+					mge_errno = (int)x;
+			}
+		}
+		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
+			msg->message);
+		clear_msg(msg, ';', ',');
+		return mge_errno;
+	}
+
+	syslog((int) (LOG_USER | LOG_NOTICE), "Client %s unblocked.",
+	       blockname);
 
 	clear_msg(msg, ';', ',');
 

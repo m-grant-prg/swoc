@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.4 ==== 05/05/2018_
+ * @version _v1.1.4 ==== 09/05/2018_
  */
 
 /* **********************************************************************
@@ -46,8 +46,9 @@
  *				code, (fixes sparse warning).		*
  *				Replace initialising pointers to zero	*
  *				with NULL. (fixes sparse warnings).	*
- * 05/05/2018	MG	1.1.4	Improve function name consistency,	*
+ * 09/05/2018	MG	1.1.4	Improve function name consistency,	*
  *				unlock -> release.			*
+ *				Add block and unblock options.		*
  *									*
  ************************************************************************
  */
@@ -70,10 +71,12 @@ static int cpyarg(char *flagarg, char *srcarg);
  * they are:-
  * @param argc The standard CLA argc.
  * @param argv The standard CLA argv.
+ * @param block_flag Struct for the block client flag.
  * @param end_flag Struct for the end daemon flag.
  * @param release_flag Struct for the release flag.
  * @param reload_flag Struct for the reload config flag.
  * @param status_flag Struct for the status flag.
+ * @param unblock_flag Struct for the unblock client flag.
  * @param wait_flag Struct for the wait flag.
  * @return 0 on success, on failure standard EX_USAGE (64) command line  usage
  * error.
@@ -83,36 +86,45 @@ int process_cla(int argc, char **argv, ...)
 	va_list ap;
 
 	/* Command line argument flags. */
-	struct cla *end_flag, *reload_flag, *status_flag, *release_flag;
-	struct cla *wait_flag;
+	struct cla *block_flag, *end_flag, *reload_flag, *status_flag;
+	struct cla *release_flag, *unblock_flag, *wait_flag;
 
 	/* getopt_long stores the option index here. */
 	int option_index = 0;
 	int c;
 
 	struct option long_options[] = {
+		{"block",		required_argument,	NULL,	'b'},
 		{"end-daemon",		no_argument,		NULL,	'e'},
 		{"help",		no_argument,		NULL,	'h'},
 		{"release",		required_argument,	NULL,	'r'},
 		{"reload-config",	no_argument,		NULL,	'c'},
 		{"status",		no_argument,		NULL,	's'},
+		{"unblock",		required_argument,	NULL,	'u'},
 		{"version",		no_argument,		NULL,	'V'},
 		{"wait",		no_argument,		NULL,	'w'},
 		{NULL,			0,			NULL,	0}
 	};
 
 	va_start(ap, argv);
+	block_flag = va_arg(ap, struct cla *);
 	end_flag = va_arg(ap, struct cla *);
 	release_flag = va_arg(ap, struct cla *);
 	reload_flag = va_arg(ap, struct cla *);
 	status_flag = va_arg(ap, struct cla *);
+	unblock_flag = va_arg(ap, struct cla *);
 	wait_flag = va_arg(ap, struct cla *);
 	va_end(ap);
 
-	while ((c = getopt_long(argc, argv, "cehr:sVw",
+	while ((c = getopt_long(argc, argv, "b:cehr:su:Vw",
 		long_options, &option_index)) != -1) {
 
 		switch (c) {
+		case 'b':
+			block_flag->is_set = 1;
+			if ((sws_err = cpyarg(block_flag->argument, optarg)))
+				return sws_err;
+			break;
 		case 'c':
 			reload_flag->is_set = 1;
 			break;
@@ -125,16 +137,18 @@ int process_cla(int argc, char **argv, ...)
 				"command line but if an option\ntakes an "
 				"optional argument it is best to enter "
 				"-o\"argument\" or\n--option=argument.\n");
+			printf("-b | --block 'Client'\tBlock 'Client'.\n");
 			printf("-c | --reload-config\tRequest the daemon to "
 				"reload it's config file.\n");
 			printf("-e | --end-daemon\tEnd the swocserver "
 				"daemon.\n");
-			printf("-r | --release 'Lock Name'\tRemove the "
-				"lock 'Lock Name'.\n");
-			printf("-s | --status\tShow the locking status.\n");
-			printf("-V | --version\tDisplay version "
+			printf("-r | --release 'Client'\tRemove the lock for "
+				"'Client'.\n");
+			printf("-s | --status\t\tShow the locking status.\n");
+			printf("-u | --unblock 'Client'\tUnblock 'Client'.\n");
+			printf("-V | --version\t\tDisplay version "
 				"information.\n");
-			printf("-w | --wait\tWait for all locks to clear.\n");
+			printf("-w | --wait\t\tWait for all locks to clear.\n");
 			if (!sws_err)
 				sws_err = -1;
 			break;
@@ -145,6 +159,11 @@ int process_cla(int argc, char **argv, ...)
 			break;
 		case 's':
 			status_flag->is_set = 1;
+			break;
+		case 'u':
+			unblock_flag->is_set = 1;
+			if ((sws_err = cpyarg(unblock_flag->argument, optarg)))
+				return sws_err;
 			break;
 		case 'V':
 			printf("%s %s %s %s", argv[0], "Source version -",
@@ -180,7 +199,25 @@ int process_cla(int argc, char **argv, ...)
 	}
 
 	/* Check mutually exclusive options. */
-	if (end_flag->is_set && release_flag->is_set) {
+	if (block_flag->is_set && end_flag->is_set) {
+		fprintf(stderr, "Options b and e are mutually exclusive.\n");
+		sws_err = EX_USAGE;
+	} else 	if (block_flag->is_set && release_flag->is_set) {
+		fprintf(stderr, "Options b and e are mutually exclusive.\n");
+		sws_err = EX_USAGE;
+	} else if (block_flag->is_set && reload_flag->is_set) {
+		fprintf(stderr, "Options b and c are mutually exclusive.\n");
+		sws_err = EX_USAGE;
+	} else if (block_flag->is_set && status_flag->is_set) {
+		fprintf(stderr, "Options b and s are mutually exclusive.\n");
+		sws_err = EX_USAGE;
+	} else if (block_flag->is_set && unblock_flag->is_set) {
+		fprintf(stderr, "Options b and u are mutually exclusive.\n");
+		sws_err = EX_USAGE;
+	} else if (block_flag->is_set && wait_flag->is_set) {
+		fprintf(stderr, "Options b and w are mutually exclusive.\n");
+		sws_err = EX_USAGE;
+	} else if (end_flag->is_set && release_flag->is_set) {
 		fprintf(stderr, "Options e and r are mutually exclusive.\n");
 		sws_err = EX_USAGE;
 	} else if (end_flag->is_set && reload_flag->is_set) {
@@ -188,6 +225,9 @@ int process_cla(int argc, char **argv, ...)
 		sws_err = EX_USAGE;
 	} else if (end_flag->is_set && status_flag->is_set) {
 		fprintf(stderr, "Options e and s are mutually exclusive.\n");
+		sws_err = EX_USAGE;
+	} else if (end_flag->is_set && unblock_flag->is_set) {
+		fprintf(stderr, "Options e and u are mutually exclusive.\n");
 		sws_err = EX_USAGE;
 	} else if (end_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options e and w are mutually exclusive.\n");
@@ -198,23 +238,37 @@ int process_cla(int argc, char **argv, ...)
 	} else if (release_flag->is_set && status_flag->is_set) {
 		fprintf(stderr, "Options r and s are mutually exclusive.\n");
 		sws_err = EX_USAGE;
+	} else if (release_flag->is_set && unblock_flag->is_set) {
+		fprintf(stderr, "Options r and u are mutually exclusive.\n");
+		sws_err = EX_USAGE;
 	} else if (release_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options r and w are mutually exclusive.\n");
 		sws_err = EX_USAGE;
 	} else if (reload_flag->is_set && status_flag->is_set) {
 		fprintf(stderr, "Options c and s are mutually exclusive.\n");
 		sws_err = EX_USAGE;
+	} else if (reload_flag->is_set && unblock_flag->is_set) {
+		fprintf(stderr, "Options c and u are mutually exclusive.\n");
+		sws_err = EX_USAGE;
 	} else if (reload_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options c and w are mutually exclusive.\n");
+		sws_err = EX_USAGE;
+	} else if (status_flag->is_set && unblock_flag->is_set) {
+		fprintf(stderr, "Options s and u are mutually exclusive.\n");
 		sws_err = EX_USAGE;
 	} else if (status_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options s and w are mutually exclusive.\n");
 		sws_err = EX_USAGE;
+	} else if (unblock_flag->is_set && wait_flag->is_set) {
+		fprintf(stderr, "Options u and w are mutually exclusive.\n");
+		sws_err = EX_USAGE;
 	}
 	/* Check for mandatory options */
-	if (!(end_flag->is_set || release_flag->is_set || reload_flag->is_set
-		|| status_flag->is_set || wait_flag->is_set)) {
-		fprintf(stderr, "Either c, e, r, s or w must be specified.\n");
+	if (!(block_flag->is_set || end_flag->is_set || release_flag->is_set
+	      || reload_flag->is_set || status_flag->is_set
+	      || unblock_flag->is_set || wait_flag->is_set)) {
+		fprintf(stderr, "Either b, c, e, r, s, u or w "
+			"must be specified.\n");
 		sws_err = EX_USAGE;
 	}
 	return sws_err;

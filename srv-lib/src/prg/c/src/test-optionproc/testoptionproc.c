@@ -41,6 +41,14 @@ int main(int argc, char **argv)
 	printf("retval after sws_reload_config is %i\n", retval);
 	sws_show_status();
 
+	retval = sws_cli_block("localhost");
+	printf("retval after sws_cli_block is %i\n", retval);
+	sws_show_status();
+
+	retval = sws_cli_unblock("localhost");
+	printf("retval after sws_cli_unblock is %i\n", retval);
+	sws_show_status();
+
 	//retval = sws_end_daemon();
 
 	//printf("retval after sws_end_daemon is %i\n", retval);

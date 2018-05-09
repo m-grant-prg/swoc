@@ -1,12 +1,14 @@
 NAME
-sws_reload_config - Request the swocserver daemon to reload it's config file.
+sws_cli_block - Block a client.
 SYNOPSIS
 #include <libswocserver.h>
 
-int sws_reload_config();
+int sws_cli_block(char *clientblockname);
 DESCRIPTION
-The sws_reload_config function reads the swoc.conf configuration file and
-requests the swocserver daemon to reload it's configuration file.
+The sws_cli_block function reads the swoc.conf configuration file and requests
+the server to block the client clientlockname.
+PARAMETERS
+clientblockname - a pointer to a string holding the name of the client to block.
 RETURN VALUE
 0 on success.
 .br
@@ -28,5 +30,5 @@ This is free software: you are free to change and redistribute it.
 .br
 There is NO WARRANTY, to the extent permitted by law.
 SEE ALSO
-sws_cli_block(3) sws_cli_unblock(3) sws_end_daemon(3) sws_release(3)
-sws_server_wait(3) sws_show_cli_blocklist(3) sws_show_status(3) swoc.conf(5)
+sws_cli_unblock(3) sws_end_daemon(3) sws_release(3) sws_reload_config(3)
+sws_show_cli_blocklist(3) sws_show_status(3) sws_server_wait(3) swoc.conf(5)

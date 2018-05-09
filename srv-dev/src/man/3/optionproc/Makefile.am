@@ -31,13 +31,16 @@
 #				target suffix. If the suffix is blank	#
 #				(foo.) or if there is no suffix (foo)	#
 #				then error out.				#
-# 05/05/2018	MG	1.0.9	Improve function name consistency,	#
+# 08/05/2018	MG	1.0.9	Improve function name consistency,	#
 #				unlock -> release.			#
+#				Add show_cli_blocklist man page.	#
+#				Add block and unblock man pages.	#
 #									#
 #########################################################################
 
 
-sws_end_daemon.3 sws_release.3 sws_reload_config.3 sws_server_wait.3 \
+sws_cli_block.3 sws_cli_unblock.3 sws_end_daemon.3 sws_release.3 \
+	sws_reload_config.3 sws_server_wait.3 sws_show_cli_blocklist.3 \
 	sws_show_status.3: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
@@ -56,19 +59,26 @@ sws_end_daemon.3 sws_release.3 sws_reload_config.3 sws_server_wait.3 \
 	fi; \
 	txt2manwrap $(@F) $$section "Server Wait on Client Manual" $@.tmp $@
 	rm -f $@.tmp
-
+sws_cli_block.3:$(srcdir)/sws_cli_block.3.man.in
+sws_cli_unblock.3:$(srcdir)/sws_cli_unblock.3.man.in
 sws_end_daemon.3: $(srcdir)/sws_end_daemon.3.man.in
 sws_release.3: $(srcdir)/sws_release.3.man.in
 sws_reload_config.3: $(srcdir)/sws_reload_config.3.man.in
 sws_server_wait.3: $(srcdir)/sws_server_wait.3.man.in
+sws_show_cli_blocklist.3: $(srcdir)/sws_show_cli_blocklist.3.man.in
 sws_show_status.3: $(srcdir)/sws_show_status.3.man.in
 
-man_MANS = sws_end_daemon.3 sws_release.3 sws_reload_config.3 \
-	sws_server_wait.3 sws_show_status.3
+man_MANS = sws_cli_block.3 sws_cli_unblock.3 sws_end_daemon.3 sws_release.3 \
+	sws_reload_config.3 sws_server_wait.3 sws_show_cli_blocklist.3 \
+	sws_show_status.3
 
-EXTRA_DIST = $(srcdir)/sws_end_daemon.3.man.in $(srcdir)/sws_release.3.man.in \
-	$(srcdir)/sws_reload_config.3.man.in \
-	$(srcdir)/sws_server_wait.3.man.in $(srcdir)/sws_show_status.3.man.in
+EXTRA_DIST = $(srcdir)/sws_cli_block.3.man.in \
+	$(srcdir)/sws_cli_unblock.3.man.in $(srcdir)/sws_end_daemon.3.man.in \
+	$(srcdir)/sws_release.3.man.in $(srcdir)/sws_reload_config.3.man.in \
+	$(srcdir)/sws_server_wait.3.man.in \
+	$(srcdir)/sws_show_cli_blocklist.3.man.in \
+	$(srcdir)/sws_show_status.3.man.in
 
-CLEANFILES = *.tmp sws_end_daemon.3 sws_release.3 sws_reload_config.3 \
-	sws_server_wait.3 sws_show_status.3
+CLEANFILES = *.tmp sws_cli_block.3 sws_cli_unblock.3 sws_end_daemon.3 \
+	sws_release.3 sws_reload_config.3 sws_server_wait.3 \
+	sws_show_cli_blocklist.3 sws_show_status.3

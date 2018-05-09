@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.13 ==== 01/05/2018_
+ * @version _v1.0.13 ==== 08/05/2018_
  */
 
 /* **********************************************************************
@@ -44,7 +44,8 @@
  * 24/03/2018	MG	1.0.11	Add missing mgemessage.h include.	*
  * 28/03/2018	MG	1.0.12	Declare variables before code, (fixes	*
  *				a sparse warning).			*
- * 01/05/2018	MG	1.0.13	Add support for blocked clients list.	*
+ * 08/05/2018	MG	1.0.13	Add support for blocked clients list.	*
+ *				Add server client block and unblock.	*
  *									*
  ************************************************************************
  */
@@ -282,6 +283,101 @@ int srv_cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 			"by server.", *(msg->argv + 2));
 		sprintf(out_msg, "swocserverd,release,ok,%s;", *(msg->argv + 2));
 	}
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+	swsd_err = mge_errno;
+	return swsd_err;
+}
+
+/**
+ * Server requests client to be blocked.
+ * Exactly 1 argument, the client to be blocked.
+ * @param mgemessage The message being processed.
+ * @param msg_args The message arguments.
+ * @return 0 on success, non-zero on failure.
+ */
+int srv_cli_block_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+{
+	struct bstree *pblocked;
+	char out_msg[100];
+	swsd_err = 0;
+
+	if (msg->argc != 3) {
+		*msg_args = args_err;
+		return swsd_err;
+	}
+	pblocked = find_bst_node(cli_blocked, *(msg->argv + 2));
+
+	if (pblocked == NULL) {
+		pblocked = add_bst_node(cli_blocked, *(msg->argv + 2),
+					strlen(*(msg->argv + 2)) + 1);
+		if (pblocked == NULL) {
+			if (debug)
+				fprintf(stderr, "Node add errored with %i.\n",
+					mge_errno);
+			syslog((int) (LOG_USER | LOG_NOTICE), "Node add errored"
+			" with %i.", mge_errno);
+			sprintf(out_msg, "swocserverd,block,err,%i;",
+				mge_errno);
+			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+			swsd_err = mge_errno;
+			return swsd_err;
+		}
+		cli_blocked = pblocked;
+	}
+
+	if (debug)
+		printf("Client %s blocked.\n", *(msg->argv + 2));
+	syslog((int) (LOG_USER | LOG_NOTICE), "Client %s blocked.",
+	       *(msg->argv + 2));
+	sprintf(out_msg, "swocserverd,block,ok;");
+
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+	swsd_err = mge_errno;
+	return swsd_err;
+}
+
+/**
+ * Server requests client to be unblocked.
+ * Exactly 1 argument, the client to be unblocked.
+ * @param mgemessage The message being processed.
+ * @param msg_args The message arguments.
+ * @return 0 on success, non-zero on failure.
+ */
+int srv_cli_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+{
+	struct bstree *pblocked;
+	char out_msg[100];
+	swsd_err = 0;
+
+	if (msg->argc != 3) {
+		*msg_args = args_err;
+		return swsd_err;
+	}
+	pblocked = find_bst_node(cli_blocked, *(msg->argv + 2));
+
+	if (pblocked != NULL) {
+		pblocked = del_bst_node(cli_blocked, *(msg->argv + 2));
+		if (pblocked == NULL) {
+			if (debug)
+				fprintf(stderr, "Node del errored with %i.\n",
+					mge_errno);
+			syslog((int) (LOG_USER | LOG_NOTICE), "Node del errored"
+			" with %i.", mge_errno);
+			sprintf(out_msg, "swocserverd,unblock,err,%i;",
+				mge_errno);
+			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+			swsd_err = mge_errno;
+			return swsd_err;
+		}
+		cli_blocked = pblocked;
+	}
+
+	if (debug)
+		printf("Client %s unblocked.\n", *(msg->argv + 2));
+	syslog((int) (LOG_USER | LOG_NOTICE), "Client %s unblocked.",
+	       *(msg->argv + 2));
+	sprintf(out_msg, "swocserverd,unblock,ok;");
+
 	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 	swsd_err = mge_errno;
 	return swsd_err;

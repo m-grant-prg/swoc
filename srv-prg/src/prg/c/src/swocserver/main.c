@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.5 ==== 05/05/2018_
+ * @version _v1.1.5 ==== 09/05/2018_
  */
 
 /* **********************************************************************
@@ -48,10 +48,11 @@
  * 28/03/2018	MG	1.1.4	Ensure variables are declared before	*
  *				code, (fixes sparse warning).		*
  *				Make prog_name static.			*
- * 05/05/2018	MG	1.1.5	Improve function name consistency,	*
+ * 09/05/2018	MG	1.1.5	Improve function name consistency,	*
  *				unlock -> release.			*
  *				Add support for server listing blocked	*
  *				clients.				*
+ *				Add client block and unblock options.	*
  *									*
  ************************************************************************
  */
@@ -77,10 +78,12 @@ int sws_err;		/**< Global swocserver error flag. */
 int main(int argc, char **argv)
 {
 	/* Command line argument flags. */
+	struct cla block_flag = { 0, "" };
 	struct cla end_flag = { 0, "" };
 	struct cla release_flag = { 0, "" };
 	struct cla reload_flag = { 0, "" };
 	struct cla status_flag = { 0, "" };
+	struct cla unblock_flag = { 0, "" };
 	struct cla wait_flag = { 0, "" };
 
 	prog_name = argv[0];
@@ -90,12 +93,16 @@ int main(int argc, char **argv)
 	init_sig_handle();
 
 	/* Process command line. */
-	if (process_cla(argc, argv, &end_flag, &release_flag, &reload_flag,
-			&status_flag, &wait_flag))
+	if (process_cla(argc, argv, &block_flag, &end_flag, &release_flag,
+			&reload_flag, &status_flag, &unblock_flag, &wait_flag))
 		exit(EXIT_FAILURE);
 
 	/* Invoke main processing. */
-	if (end_flag.is_set) {
+	if (block_flag.is_set) {
+		sws_err = sws_cli_block(block_flag.argument);
+		if (!sws_err)
+			printf("Client %s blocked.\n", block_flag.argument);
+	} else if (end_flag.is_set) {
 		sws_err = sws_end_daemon();
 		if (!sws_err)
 			printf("Request to end daemon acknowledged.\n");
@@ -118,6 +125,10 @@ int main(int argc, char **argv)
 			sws_err = sws_show_cli_blocklist();
 		if (sws_err > 0)
 			sws_err = 0;
+	} else if (unblock_flag.is_set) {
+		sws_err = sws_cli_unblock(unblock_flag.argument);
+		if (!sws_err)
+			printf("Client %s unblocked.\n", unblock_flag.argument);
 	} else {
 		printf("Waiting for any client locks to be released.\n");
 		sws_err = sws_server_wait();
