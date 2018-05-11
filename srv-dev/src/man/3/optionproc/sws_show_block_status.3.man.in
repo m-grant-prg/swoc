@@ -1,12 +1,12 @@
 NAME
-sws_reload_config - Request the swocserver daemon to reload it's config file.
+sws_show_block_status - Show the status of blocking on this server.
 SYNOPSIS
 #include <libswocserver.h>
 
-int sws_reload_config();
+int sws_show_block_status();
 DESCRIPTION
-The sws_reload_config function reads the swoc.conf configuration file and
-requests the swocserver daemon to reload it's configuration file.
+The sws_show_block_status function reads the swoc.conf configuration file and
+displays the status of server blocking on stdout.
 RETURN VALUE
 0 on success.
 .br
@@ -29,5 +29,5 @@ This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 SEE ALSO
 sws_cli_block(3) sws_cli_unblock(3) sws_end_daemon(3) sws_release(3)
-sws_server_wait(3) sws_show_block_status(3) sws_show_cli_blocklist(3)
+sws_reload_config(3) sws_server_wait(3) sws_show_cli_blocklist(3)
 sws_show_status(3) sws_srv_block(3) sws_srv_unblock(3) swoc.conf(5)

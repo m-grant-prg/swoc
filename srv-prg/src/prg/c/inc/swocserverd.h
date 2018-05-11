@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.9 ==== 08/05/2018_
+ * @version _v1.0.9 ==== 10/05/2018_
  */
 
 /* **********************************************************************
@@ -33,8 +33,9 @@
  * 				tunnelling.				*
  * 17/11/2017	MG	1.0.8	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
- * 08/05/2018	MG	1.0.9	Add support for blocked clients list.	*
+ * 10/05/2018	MG	1.0.9	Add support for blocked clients list.	*
  *				Add server client block and unblock.	*
+ *				Add server block and unblock.		*
  *									*
  ************************************************************************
  */
@@ -46,6 +47,7 @@
 
 #include <sys/types.h>
 #include <limits.h>
+#include <stdbool.h>
 
 #include <portability.h>
 #include <bstree.h>
@@ -74,6 +76,7 @@ extern int debug;
 extern int end;
 extern int cursockfd;
 extern struct comm_spec *port_spec;
+extern bool srv_blocked;
 extern struct bstree *cli_locks, *cli_blocked, *port_sock;
 
 
@@ -92,6 +95,12 @@ int srv_cli_blocklist_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 int srv_cli_block_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
 int srv_cli_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+
+int srv_block_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+
+int srv_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+
+int srv_block_status_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
 int cli_block_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 

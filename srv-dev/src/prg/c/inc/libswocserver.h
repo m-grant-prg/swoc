@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.11 ==== 08/05/2018_
+ * @version _v1.0.11 ==== 10/05/2018_
  */
 
 /* **********************************************************************
@@ -36,11 +36,12 @@
  *				Add SPDX license tag.			*
  * 29/03/2018	MG	1.0.10	Add locks_held for use during signal	*
  *				handling, primarily in swocserver -w.	*
- * 08/05/2018	MG	1.0.11	Improve function name consistency,	*
+ * 10/05/2018	MG	1.0.11	Improve function name consistency,	*
  *				unlock -> release.			*
  *				Add support for server listing blocked	*
  *				clients.				*
  *				Add client block and unblock.		*
+ *				Add server block and unblock.		*
  *									*
  ************************************************************************
  */
@@ -59,6 +60,12 @@ extern char locks_held[];
 
 
 int sws_show_status(void);
+
+int sws_show_block_status(void);
+
+int sws_srv_block(void);
+
+int sws_srv_unblock(void);
 
 int sws_show_cli_blocklist(void);
 

@@ -43,11 +43,23 @@ int main(int argc, char **argv)
 
 	retval = sws_cli_block("localhost");
 	printf("retval after sws_cli_block is %i\n", retval);
-	sws_show_status();
+	sws_show_cli_blocklist();
 
 	retval = sws_cli_unblock("localhost");
 	printf("retval after sws_cli_unblock is %i\n", retval);
-	sws_show_status();
+	sws_show_cli_blocklist();
+
+	retval = sws_show_block_status();
+	printf("retval after sws_show_block_status is %i\n", retval);
+
+	retval = sws_srv_block();
+	printf("retval after sws_srv_block is %i\n", retval);
+	retval = sws_show_block_status();
+
+	retval = sws_srv_unblock();
+	printf("retval after sws_srv_unblock is %i\n", retval);
+	retval = sws_show_block_status();
+
 
 	//retval = sws_end_daemon();
 

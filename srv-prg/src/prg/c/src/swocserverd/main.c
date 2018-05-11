@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.14 ==== 01/05/2018_
+ * @version _v1.0.14 ==== 10/05/2018_
  */
 
 /* **********************************************************************
@@ -56,7 +56,8 @@
  * 19/11/2017	MG	1.0.12	Make program exit with EXIT_SUCCESS or	*
  *				EXIT_FAILURE only.			*
  * 22/03/2018	MG	1.0.13	Remove unnecessary libsoccommon.h	*
- * 01/05/2018	MG	1.0.14	Add support for blocked clients list.	*
+ * 10/05/2018	MG	1.0.14	Add support for blocked clients list.	*
+ *				Add support for server locking.		*
  *									*
  ************************************************************************
  */
@@ -70,6 +71,7 @@
 #include <errno.h>
 #include <syslog.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 #include <configmake.h>
 #include <cmdlineargs.h>
@@ -84,6 +86,7 @@ int debug;				/**< Debug - 0 false, 1 true. */
 int end;				/**< End pending. */
 int cursockfd;				/**< Socket file descriptor in use. */
 struct comm_spec *port_spec;		/**< Port / socket config mappings. */
+bool srv_blocked;			/**< Server is blocked? */
 struct bstree *cli_locks;		/**< Clients and locks. */
 struct bstree *cli_blocked;		/**< Blocked client list. */
 struct bstree *port_sock;		/**< Port / socket actual mappings. */
@@ -142,6 +145,8 @@ int main(int argc, char **argv)
 	/* Daemonise if not in debug mode. */
 	if (!debug)
 		daemonise();
+
+	srv_blocked = false;
 
 	cli_locks = cre_bst(BST_NODES_DUPLICATES,
 			(int (*)(const void *, const void *))strcmp);

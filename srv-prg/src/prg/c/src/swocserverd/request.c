@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.13 ==== 08/05/2018_
+ * @version _v1.0.13 ==== 10/05/2018_
  */
 
 /* **********************************************************************
@@ -44,8 +44,9 @@
  * 24/03/2018	MG	1.0.11	Add missing mgemessage.h include.	*
  * 28/03/2018	MG	1.0.12	Declare variables before code, (fixes	*
  *				a sparse warning).			*
- * 08/05/2018	MG	1.0.13	Add support for blocked clients list.	*
+ * 10/05/2018	MG	1.0.13	Add support for blocked clients list.	*
  *				Add server client block and unblock.	*
+ *				Add server block and unblock.		*
  *									*
  ************************************************************************
  */
@@ -56,6 +57,7 @@
 #include <syslog.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <stdbool.h>
 
 #include <mgememory.h>
 #include <mge-errno.h>
@@ -384,6 +386,89 @@ int srv_cli_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 }
 
 /**
+ * Server requests server level blocking.
+ * @param mgemessage The message being processed.
+ * @param msg_args The message arguments.
+ * @return 0 on success, non-zero on failure.
+ */
+int srv_block_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+{
+	char out_msg[100];
+	swsd_err = 0;
+
+	if (msg->argc > 2) {
+		*msg_args = args_err;
+		return swsd_err;
+	}
+
+	srv_blocked = true;
+
+	if (debug)
+		printf("Server blocked.\n");
+	syslog((int) (LOG_USER | LOG_NOTICE), "Server blocked.");
+
+	sprintf(out_msg, "swocserverd,disallow,ok;");
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+	swsd_err = mge_errno;
+	return swsd_err;
+}
+
+/**
+ * Server requests removal of server level blocking.
+ * @param mgemessage The message being processed.
+ * @param msg_args The message arguments.
+ * @return 0 on success, non-zero on failure.
+ */
+int srv_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+{
+	char out_msg[100];
+	swsd_err = 0;
+
+	if (msg->argc > 2) {
+		*msg_args = args_err;
+		return swsd_err;
+	}
+
+	srv_blocked = false;
+
+	if (debug)
+		printf("Server unblocked.\n");
+	syslog((int) (LOG_USER | LOG_NOTICE), "Server unblocked.");
+
+	sprintf(out_msg, "swocserverd,allow,ok;");
+
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+	swsd_err = mge_errno;
+	return swsd_err;
+}
+
+/**
+ * Server requests status of server level blocking.
+ * @param mgemessage The message being processed.
+ * @param msg_args The message arguments.
+ * @return 0 on success, non-zero on failure.
+ */
+int srv_block_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+{
+	char out_msg[100];
+	swsd_err = 0;
+
+	if (msg->argc > 2) {
+		*msg_args = args_err;
+		return swsd_err;
+	}
+
+	if (debug)
+		printf("Server block status.\n");
+
+	sprintf(out_msg, "swocserverd,blockstatus,ok,%i;", srv_blocked);
+
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+	swsd_err = mge_errno;
+	return swsd_err;
+}
+
+/**
  * Client block further locks request.
  * No parameters allowed.
  * Set a block on this client so that it cannot instantiate any more locks until
@@ -500,7 +585,7 @@ int cli_lock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 	}
 
 	pblocked = find_bst_node(cli_blocked, client);
-	if (pblocked != NULL) {
+	if (pblocked != NULL || srv_blocked) {
 		mge_errno = MGE_CLIENT_BLOCKED;
 		if (debug)
 			fprintf(stderr, "Client blocked - %i.\n",

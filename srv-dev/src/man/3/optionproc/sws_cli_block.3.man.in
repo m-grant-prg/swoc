@@ -12,7 +12,7 @@ clientblockname - a pointer to a string holding the name of the client to block.
 RETURN VALUE
 0 on success.
 .br
-mge_errno on failure.
+non-zero on failure.
 ERRORS
 On failure mge_errno will be set as required.
 AUTHOR
@@ -31,4 +31,5 @@ This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 SEE ALSO
 sws_cli_unblock(3) sws_end_daemon(3) sws_release(3) sws_reload_config(3)
-sws_show_cli_blocklist(3) sws_show_status(3) sws_server_wait(3) swoc.conf(5)
+sws_server_wait(3) sws_show_block_status(3) sws_show_cli_blocklist(3)
+sws_show_status(3) sws_srv_block(3) sws_srv_unblock(3) swoc.conf(5)

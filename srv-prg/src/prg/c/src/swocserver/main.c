@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.5 ==== 09/05/2018_
+ * @version _v1.1.5 ==== 10/05/2018_
  */
 
 /* **********************************************************************
@@ -48,11 +48,12 @@
  * 28/03/2018	MG	1.1.4	Ensure variables are declared before	*
  *				code, (fixes sparse warning).		*
  *				Make prog_name static.			*
- * 09/05/2018	MG	1.1.5	Improve function name consistency,	*
+ * 10/05/2018	MG	1.1.5	Improve function name consistency,	*
  *				unlock -> release.			*
  *				Add support for server listing blocked	*
  *				clients.				*
  *				Add client block and unblock options.	*
+ *				Add server block and unblock.		*
  *									*
  ************************************************************************
  */
@@ -78,7 +79,9 @@ int sws_err;		/**< Global swocserver error flag. */
 int main(int argc, char **argv)
 {
 	/* Command line argument flags. */
+	struct cla allow_flag = { 0, "" };
 	struct cla block_flag = { 0, "" };
+	struct cla disallow_flag = { 0, "" };
 	struct cla end_flag = { 0, "" };
 	struct cla release_flag = { 0, "" };
 	struct cla reload_flag = { 0, "" };
@@ -93,15 +96,24 @@ int main(int argc, char **argv)
 	init_sig_handle();
 
 	/* Process command line. */
-	if (process_cla(argc, argv, &block_flag, &end_flag, &release_flag,
-			&reload_flag, &status_flag, &unblock_flag, &wait_flag))
+	if (process_cla(argc, argv, &allow_flag, &block_flag, &disallow_flag,
+			&end_flag, &release_flag, &reload_flag, &status_flag,
+			&unblock_flag, &wait_flag))
 		exit(EXIT_FAILURE);
 
 	/* Invoke main processing. */
-	if (block_flag.is_set) {
+	if (allow_flag.is_set) {
+		sws_err = sws_srv_unblock();
+		if (!sws_err)
+			printf("Server is unblocked.\n");
+	} else if (block_flag.is_set) {
 		sws_err = sws_cli_block(block_flag.argument);
 		if (!sws_err)
 			printf("Client %s blocked.\n", block_flag.argument);
+	} else if (disallow_flag.is_set) {
+		sws_err = sws_srv_block();
+		if (!sws_err)
+			printf("Server is blocked.\n");
 	} else if (end_flag.is_set) {
 		sws_err = sws_end_daemon();
 		if (!sws_err)
@@ -123,6 +135,11 @@ int main(int argc, char **argv)
 		printf("\n");
 		if (!sws_err)
 			sws_err = sws_show_cli_blocklist();
+		if (sws_err > 0)
+			sws_err = 0;
+		printf("\n");
+		if (!sws_err)
+			sws_err = sws_show_block_status();
 		if (sws_err > 0)
 			sws_err = 0;
 	} else if (unblock_flag.is_set) {

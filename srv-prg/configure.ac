@@ -77,10 +77,11 @@
 # 24/03/2018	MG	1.1.10	Add support for an enable-sparse CLA	#
 #				and passing a suitable variable to the	#
 #				Makefile.am's.				#
+# 10/05/2018	MG	1.1.11	Add check for stdbool.h			#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.1.10 $])
+AC_REVISION([$Revision: 1.1.11 $])
 
 AC_PREREQ([2.69])
 
@@ -427,6 +428,7 @@ AC_SEARCH_LIBS([prep_recv_sock], [swoccommon], , \
 # Checks for C header files.
 AC_CHECK_HEADERS([stdio.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([stdarg.h], [], [AC_MSG_ERROR([header not found])])
+AC_CHECK_HEADERS(stdbool.h, , AC_MSG_ERROR([header not found]))
 AC_CHECK_HEADERS([sysexits.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([signal.h], [], [AC_MSG_ERROR([header not found])])
 AC_CHECK_HEADERS([limits.h], [], [AC_MSG_ERROR([header not found])])

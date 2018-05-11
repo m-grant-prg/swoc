@@ -5,15 +5,23 @@ swocserver [OPTION]
 DESCRIPTION
 Monitors client lock flags on this server and waits until they are cleared.
 OPTIONS
+-a, --allow  unblock the server so it can accept lock requests
+
+-b, --block 'Client'  block 'Client' from adding locks
+
 -c, --reload-config  requests the daemon to reload it's config file
 
--e, --end-daemon  end the swocserver daemon.
+-d, --disallow  block the server from accepting any lock requests
+
+-e, --end-daemon  end the swocserver daemon
 
 -h, --help  prints usage information
 
 -r, --release 'Lock Name'  remove lock 'Lock Name'
 
 -s, --status  reports on the status of server locking
+
+-u, --unblock 'Client'  unblock 'Client' allowing them to add locks
 
 -V, --version  prints version information
 
