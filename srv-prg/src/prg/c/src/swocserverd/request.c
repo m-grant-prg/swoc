@@ -161,9 +161,21 @@ int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 	strcat(out_msg, "swocserverd,status,ok");
 
 	while((client_lu = (char *) find_next_bst_node(cli_locks, client_lu))
-		!= NULL) {
+	      != NULL) {
 
 		counter = get_counter_bst_node(cli_locks, client_lu);
+		if (counter < 0) {
+			if (debug)
+				fprintf(stderr, "Node count errored with %i.\n",
+					mge_errno);
+			syslog((int) (LOG_USER | LOG_NOTICE), "Node count "
+				"errored with %i.", mge_errno);
+			sprintf(out_msg, "swocserverd,status,err,%i;",
+				mge_errno);
+			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+			swsd_err = mge_errno;
+			return swsd_err;
+		}
 
 		sprintf(tmp_msg, ",%s,%i", client_lu, counter);
 		if (((int) out_msg_size - (int) strlen(out_msg))
@@ -679,7 +691,7 @@ int cli_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 	}
 
 	counter = get_counter_bst_node(cli_locks, client);
-	if (counter == -1) {
+	if (counter < 0) {
 		if (debug)
 			fprintf(stderr, "Node count errored with %i.\n",
 				mge_errno);
@@ -692,7 +704,7 @@ int cli_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 	}
 
 	block = get_counter_bst_node(cli_blocked, client);
-	if (block == -1) {
+	if (block < 0) {
 		if (debug)
 			fprintf(stderr, "Node count errored with %i.\n",
 				mge_errno);
