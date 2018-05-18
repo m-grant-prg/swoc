@@ -26,5 +26,6 @@ This is free software: you are free to change and redistribute it.
 .br
 There is NO WARRANTY, to the extent permitted by law.
 SEE ALSO
-swc_block(3) swc_client_wait(3) swc_reset(3) swc_set_lock(3) swc_show_status(3)
-swc_unblock(3) swcom_validate_config(3) swoc.conf(5)
+swc_block(3) swc_client_wait(3) swc_reset(3) swc_set_lock(3)
+swc_show_srv_block_status(3) swc_show_status(3) swc_unblock(3)
+swcom_validate_config(3) swoc.conf(5)

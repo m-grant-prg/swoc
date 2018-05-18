@@ -32,12 +32,13 @@
 #				(foo.) or if there is no suffix (foo)	#
 #				then error out.				#
 # 02/05/2018	MG	1.0.7	Add support for client block list.	#
+# 18/05/2018	MG	1.0.8	Add swc_show_srv_block_status.3		#
 #									#
 #########################################################################
 
 
 swc_block.3 swc_client_wait.3 swc_rel_lock.3 swc_reset.3 swc_set_lock.3 \
-	swc_show_status.3 swc_unblock.3: Makefile
+	swc_show_srv_block_status.3 swc_show_status.3 swc_unblock.3: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	$(edit) $(srcdir)/$(@F).man.in > $@.tmp
@@ -61,16 +62,20 @@ swc_client_wait.3: $(srcdir)/swc_client_wait.3.man.in
 swc_rel_lock.3: $(srcdir)/swc_rel_lock.3.man.in
 swc_reset.3: $(srcdir)/swc_reset.3.man.in
 swc_set_lock.3: $(srcdir)/swc_set_lock.3.man.in
+swc_show_srv_block_status.3: $(srcdir)/swc_show_srv_block_status.3.man.in
 swc_show_status.3: $(srcdir)/swc_show_status.3.man.in
 swc_unblock.3: $(srcdir)/swc_unblock.3.man.in
 
 man_MANS = swc_block.3 swc_client_wait.3 swc_rel_lock.3 swc_reset.3 \
-	swc_set_lock.3 swc_show_status.3 swc_unblock.3
+	swc_set_lock.3 swc_show_srv_block_status.3 swc_show_status.3 \
+	swc_unblock.3
 
 EXTRA_DIST = $(srcdir)/swc_block.3.man.in $(srcdir)/swc_client_wait.3.man.in \
 	$(srcdir)/swc_rel_lock.3.man.in $(srcdir)/swc_reset.3.man.in \
-	$(srcdir)/swc_set_lock.3.man.in $(srcdir)/swc_show_status.3.man.in \
-	$(srcdir)/swc_unblock.3.man.in
+	$(srcdir)/swc_set_lock.3.man.in \
+	$(srcdir)/swc_show_srv_block_status.3.man.in \
+	$(srcdir)/swc_show_status.3.man.in $(srcdir)/swc_unblock.3.man.in
 
 CLEANFILES = *.tmp swc_block.3 swc_client_wait.3 swc_rel_lock.3 swc_reset.3 \
-	swc_set_lock.3 swc_show_status.3 swc_unblock.3
+	swc_set_lock.3 swc_show_srv_block_status.3 swc_show_status.3 \
+	swc_unblock.3

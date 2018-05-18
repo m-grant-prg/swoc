@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.13 ==== 10/05/2018_
+ * @version _v1.0.14 ==== 18/05/2018_
  */
 
 /* **********************************************************************
@@ -47,6 +47,7 @@
  * 10/05/2018	MG	1.0.13	Add support for blocked clients list.	*
  *				Add server client block and unblock.	*
  *				Add server block and unblock.		*
+ * 18/05/2018	MG	1.0.14	Add client show server block status.	*
  *									*
  ************************************************************************
  */
@@ -576,6 +577,18 @@ int cli_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 	swsd_err = mge_errno;
 	return swsd_err;
+}
+
+/**
+ * Client requests status of server level blocking.
+ * @param mgemessage The message being processed.
+ * @param msg_args The message arguments.
+ * @return 0 on success, non-zero on failure.
+ */
+int cli_srv_block_status_req(struct mgemessage *msg,
+			     enum msg_arguments *msg_args)
+{
+	return srv_block_status_req(msg, msg_args);
 }
 
 /**

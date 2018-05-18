@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.9 ==== 10/05/2018_
+ * @version _v1.0.10 ==== 18/05/2018_
  */
 
 /* **********************************************************************
@@ -43,6 +43,7 @@
  *				unlock -> release.			*
  *				Add server client block and unblock.	*
  *				Add server block and unblock.		*
+ * 18/05/2018	MG	1.0.10	Add client show server block status.	*
  *									*
  ************************************************************************
  */
@@ -434,6 +435,11 @@ static void proc_msg(struct mgemessage *msg)
 			if (debug)
 				printf("request = block\n");
 			cli_block_req(msg, &msg_args);
+			break;
+		case swocblockstatus:
+			if (debug)
+				printf("request = blockstatus\n");
+			cli_srv_block_status_req(msg, &msg_args);
 			break;
 		case swoclock:
 			if (debug)

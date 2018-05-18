@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.5 ==== 02/05/2018_
+ * @version _v1.1.6 ==== 18/05/2018_
  */
 
 /* **********************************************************************
@@ -39,6 +39,7 @@
  *				code, (fixes sparse warnings).		*
  *				Make prog_name static.			*
  * 02/05/2018	MG	1.1.5	Add support for client block list.	*
+ * 18/05/2018	MG	1.1.6	Add show server block status to status.	*
  *									*
  ************************************************************************
  */
@@ -90,9 +91,11 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 
 	/* Invoke main processing. */
-	if (status_flag.is_set)
+	if (status_flag.is_set) {
 		prog_error = swc_show_status();
-	else if (block_flag.is_set) {
+		if (!prog_error)
+			prog_error = swc_show_srv_block_status();
+	} else if (block_flag.is_set) {
 		prog_error = swc_block();
 		if (!prog_error)
 			printf("Client blocked on server.\n");

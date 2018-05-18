@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.9 ==== 02/05/2018_
+ * @version _v1.0.10 ==== 18/05/2018_
  */
 
 /* **********************************************************************
@@ -29,6 +29,7 @@
  * 18/03/2018	MG	1.0.8	Add locks_held for use during signal	*
  *				handling, primarily in swocclient -w.	*
  * 02/05/2018	MG	1.0.9	Add support for client block list.	*
+ * 18/05/2018	MG	1.0.10	Add show server block status.		*
  *									*
  ************************************************************************
  */
@@ -48,6 +49,8 @@ extern char locks_held[];
 
 
 int swc_show_status(void);
+
+int swc_show_srv_block_status(void);
 
 int swc_block(void);
 

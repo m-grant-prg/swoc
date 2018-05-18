@@ -1,17 +1,18 @@
 NAME
-swc_reset - Removes all locks and any blocking for this client on the server.
+swc_show_srv_block_status - Show the status of blocking on this server.
 SYNOPSIS
 #include <libswocclient.h>
 
-int swc_reset(void);
+int swc_show_srv_block_status();
 DESCRIPTION
-The swc_reset function requests the server to re-initialise locking for this
-client. This means that for this client any locks held are released and, if
-blocked, blocking is removed.
+The swc_show_srv_block_status function reads the swoc.conf configuration file
+and displays the status of server blocking on stdout.
 RETURN VALUE
 0 on success.
 .br
-Non-zero Failure.
+non-zero on failure.
+ERRORS
+On failure mge_errno will be set as required.
 AUTHOR
 Written by Mark Grant.
 REPORTING BUGS
@@ -27,6 +28,6 @@ This is free software: you are free to change and redistribute it.
 .br
 There is NO WARRANTY, to the extent permitted by law.
 SEE ALSO
-swc_block(3) swc_client_wait(3) swc_rel_lock(3) swc_set_lock(3)
-swc_show_srv_block_status(3) swc_show_status(3) swc_unblock(3)
+swc_block(3) swc_client_wait(3) swc_rel_lock(3) swc_reset(3) swc_set_lock(3)
+swc_show_status(3) swc_unblock(3)
 swcom_validate_config(3) swoc.conf(5)
