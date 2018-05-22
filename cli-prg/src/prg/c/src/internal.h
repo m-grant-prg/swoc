@@ -1,14 +1,14 @@
 /**
- * @file cli-prg/src/prg/c/inc/swocclient.h
+ * @file cli-prg/src/prg/c/src/internal.h
  *
  * Header file for Server Wait on Clients client-side program.
  *
- * @author Copyright (C) 2015-2017  Mark Grant
+ * @author Copyright (C) 2015-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.6 ==== 12/11/2017_
+ * @version _v1.0.7 ==== 22/05/2018_
  */
 
 /* **********************************************************************
@@ -26,13 +26,15 @@
  * 17/07/2016	MG	1.0.5	Move towards kernel coding style.	*
  * 12/11/2017	MG	1.0.6	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 22/05/2018	MG	1.0.7	Change name to internal.h and place in	*
+ *				src directory.				*
  *									*
  ************************************************************************
  */
 
 
-#ifndef SWOCCLIENT_H
-#define SWOCCLIENT_H
+#ifndef SWOCCLIENT_INTERNAL_H
+#define SWOCCLIENT_INTERNAL_H
 
 
 #include <portability.h>
@@ -49,4 +51,4 @@ void swocclient_print_src_version(void);
 
 END_C_DECLS
 
-#endif /* ndef SWOCCLIENT_H */
+#endif /* ndef SWOCCLIENT_INTERNAL_H */

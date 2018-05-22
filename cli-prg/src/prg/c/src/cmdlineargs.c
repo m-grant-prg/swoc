@@ -1,5 +1,5 @@
 /**
- * @file cli-prg/src/prg/c/src/swocclient/cmdlineargs.c
+ * @file cli-prg/src/prg/c/src/cmdlineargs.c
  *
  * Command line argument processing for swocclient using getopt_long.
  *
@@ -36,6 +36,8 @@
  * 22/05/2018	MG	1.1.6	Make more generic for copy and paste	*
  *				re-usability by using function with a	*
  *				variable number of arguments.		*
+ *				Simplify src directory structure and	*
+ *				header file location.			*
  *									*
  ************************************************************************
  */
@@ -46,8 +48,8 @@
 #include <string.h>
 #include <getopt.h>
 
-#include <swocclient.h>
-#include <cmdlineargs.h>
+#include "internal.h"
+#include "cmdlineargs.h"
 
 
 /**

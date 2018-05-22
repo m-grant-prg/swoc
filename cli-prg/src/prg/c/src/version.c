@@ -1,5 +1,5 @@
 /**
- * @file cli-prg/src/prg/c/src/swocclient/version.c
+ * @file cli-prg/src/prg/c/src/version.c
  *
  * Source for version functions.
  *
@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.2 ==== 28/03/2018_
+ * @version _v1.1.3 ==== 22/05/2018_
  */
 
 /* **********************************************************************
@@ -36,6 +36,8 @@
  *				Add SPDX license tags.			*
  * 28/03/2018	MG	1.1.2	Add swocclient.h, (fixes sparse		*
  *				warnings).				*
+ * 22/05/2018	MG	1.1.3	Simplify src directory structure and	*
+ *				header file location.			*
  *									*
  ************************************************************************
  */
@@ -43,7 +45,7 @@
 #include <stdio.h>
 #include <config.h>
 
-#include <swocclient.h>
+#include "internal.h"
 
 
 /** The source code version. */

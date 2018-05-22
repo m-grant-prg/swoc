@@ -1,5 +1,5 @@
 /**
- * @file cli-prg/src/prg/c/src/swocclient/signalhandle.c
+ * @file cli-prg/src/prg/c/src/signalhandle.c
  *
  * Signal handling functions.
  *
@@ -20,7 +20,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.5 ==== 19/03/2018_
+ * @version _v1.0.6 ==== 22/05/2018_
  */
 
 /* **********************************************************************
@@ -39,6 +39,8 @@
  *				Code for re-raise and return exit paths.*
  *				Improve error handling.			*
  *				Improve comments.			*
+ * 22/05/2018	MG	1.0.6	Simplify src directory structure and	*
+ *				header file location.			*
  *									*
  ************************************************************************
  */
@@ -51,7 +53,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <signalhandle.h>
+#include "signalhandle.h"
 #include <libswocclient.h>
 
 

@@ -1,14 +1,14 @@
 /**
- * @file cli-prg/src/prg/c/inc/signalhandle.h
+ * @file cli-prg/src/prg/c/src/signalhandle.h
  *
  * Header file for signal handling.
  *
- * @author Copyright (C) 2015-2017  Mark Grant
+ * @author Copyright (C) 2015-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.5 ==== 12/11/2017_
+ * @version _v1.0.6 ==== 22/05/2018_
  */
 
 /* **********************************************************************
@@ -24,6 +24,8 @@
  * 17/07/2016	MG	1.0.4	Move towards kernel coding style.	*
  * 12/11/2017	MG	1.0.5	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 22/05/2018	MG	1.0.6	Simplify src directory structure and	*
+ *				header file location.			*
  *									*
  ************************************************************************
  */

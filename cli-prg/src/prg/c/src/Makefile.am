@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-# Script ID: cli-prg/src/prg/c/src/swocclient/Makefile.am		#
+# Script ID: cli-prg/src/prg/c/src/Makefile.am				#
 # Author: Copyright (C) 2015-2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
@@ -43,14 +43,16 @@
 # 16/01/2018	MG	1.0.15	Change to include headers from relevant	#
 #				-dev projects.				#
 # 26/03/2018	MG	1.0.16	Add support for sparse.			#
+# 22/05/2018	MG	1.0.17	Simplify src directory structure and	#
+#				header file location.			#
 #									#
 #########################################################################
 
 
-AM_CPPFLAGS = -I$(srcdir)/../../inc-tmp -I$(srcdir)/../../inc
+AM_CPPFLAGS = -I$(srcdir)/../inc-tmp -I$(srcdir)/../inc
 AM_CPPFLAGS += -I$(top_srcdir)/../com-dev/src/prg/c/inc
 AM_CPPFLAGS += -I$(top_srcdir)/../cli-dev/src/prg/c/inc
-AM_CPPFLAGS += -I../../gen/inc -I../../gen/lib
+AM_CPPFLAGS += -I../gen/inc -I../gen/lib
 
 
 AM_CFLAGS = -Wall
@@ -65,6 +67,9 @@ endif
 if SPARSE
 AM_CFLAGS += -Wsparse-all
 endif
+
+
+noinst_HEADERS = internal.h cmdlineargs.h signalhandle.h
 
 
 sbin_PROGRAMS = swocclient

@@ -64,10 +64,12 @@
 # 26/03/2018	MG	1.0.20	Add support for an enable-sparse CLA	#
 #				and passing a suitable variable to the	#
 #				Makefile.am's.				#
+# 22/05/2018	MG	1.0.21	Simplify src directory structure and	#
+#				header file location.			#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.20 $])
+AC_REVISION([$Revision: 1.0.21 $])
 
 AC_PREREQ([2.69])
 
@@ -287,7 +289,7 @@ AC_PROG_CXX
 AC_PROG_INSTALL
 
 # Check a source file to ensure no command line --srcdir typo.
-AC_CONFIG_SRCDIR([src/prg/c/src/swocclient/main.c])
+AC_CONFIG_SRCDIR([src/prg/c/src/main.c])
 
 # GNULIB macros.
 # Also checks for ar, grep, egrep, ranlib and how to run the cpp.
@@ -406,9 +408,8 @@ PKG_CHECK_MODULES(LIBMGEC, libmgec, [], \
 AC_CONFIG_FILES([Makefile
 		src/man/8/Makefile
 		src/prg/c/gen/lib/Makefile
-		src/prg/c/inc/Makefile
 		src/prg/c/inc-tmp/Makefile
 		src/prg/c/lib-tmp/Makefile
-		src/prg/c/src/swocclient/Makefile])
+		src/prg/c/src/Makefile])
 
 AC_OUTPUT

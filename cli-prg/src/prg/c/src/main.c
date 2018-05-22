@@ -1,5 +1,5 @@
 /**
- * @file cli-prg/src/prg/c/src/swocclient/main.c
+ * @file cli-prg/src/prg/c/src/main.c
  *
  * Server Wait On Clients client program.
  * To enable a client to place lock flags on a server which will then wait for
@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.6 ==== 18/05/2018_
+ * @version _v1.1.7 ==== 22/05/2018_
  */
 
 /* **********************************************************************
@@ -40,6 +40,8 @@
  *				Make prog_name static.			*
  * 02/05/2018	MG	1.1.5	Add support for client block list.	*
  * 18/05/2018	MG	1.1.6	Add show server block status to status.	*
+ * 22/05/2018	MG	1.1.7	Simplify src directory structure and	*
+ *				header file location.			*
  *									*
  ************************************************************************
  */
@@ -49,9 +51,9 @@
 #include <stdlib.h>
 
 #include <mge-errno.h>
-#include <swocclient.h>
-#include <signalhandle.h>
-#include <cmdlineargs.h>
+#include "internal.h"
+#include "signalhandle.h"
+#include "cmdlineargs.h"
 #include <libswocclient.h>
 
 

@@ -34,6 +34,8 @@
 # 26/04/2018	MG	1.0.11	Add srctarball target to build a source	#
 #				tarball in the build directory. Uses	#
 #				git archive to archive HEAD.		#
+# 22/05/2018	MG	1.0.12	Simplify src directory structure and	#
+#				header file location.			#
 #									#
 #########################################################################
 
@@ -41,10 +43,9 @@ ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = src/man/8
 SUBDIRS += src/prg/c/gen/lib
-SUBDIRS += src/prg/c/inc
 SUBDIRS += src/prg/c/inc-tmp
 SUBDIRS += src/prg/c/lib-tmp
-SUBDIRS += src/prg/c/src/swocclient
+SUBDIRS += src/prg/c/src
 
 EXTRA_DIST  = m4/gnulib-cache.m4
 

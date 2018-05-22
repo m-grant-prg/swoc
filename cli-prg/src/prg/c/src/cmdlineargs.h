@@ -1,5 +1,5 @@
 /**
- * @file cli-prg/src/prg/c/inc/cmdlineargs.h
+ * @file cli-prg/src/prg/c/src/cmdlineargs.h
  *
  * Header file for command line processing.
  *
