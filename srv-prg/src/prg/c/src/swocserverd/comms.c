@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.10 ==== 18/05/2018_
+ * @version _v1.0.11 ==== 22/05/2018_
  */
 
 /* **********************************************************************
@@ -44,6 +44,7 @@
  *				Add server client block and unblock.	*
  *				Add server block and unblock.		*
  * 18/05/2018	MG	1.0.10	Add client show server block status.	*
+ * 22/05/2018	MG	1.0.11	Change from swocserverd.h to internal.h	*
  *									*
  ************************************************************************
  */
@@ -58,7 +59,7 @@
 #include <sys/epoll.h>
 
 #include <mge-errno.h>
-#include <swocserverd.h>
+#include "internal.h"
 
 
 static int bind_ports(int *sfd, int *portno, struct addrinfo *hints);

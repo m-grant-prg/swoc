@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.7 ==== 28/03/2018_
+ * @version _v1.0.8 ==== 22/05/2018_
  */
 
 /* **********************************************************************
@@ -32,6 +32,7 @@
  *				Add SPDX license tag.			*
  * 28/03/2018	MG	1.0.7	Ensure variables are declared before	*
  *				code, (fixes sparse warning).		*
+ * 22/05/2018	MG	1.0.8	Change from swocserverd.h to internal.h	*
  *									*
  ************************************************************************
  */
@@ -48,7 +49,7 @@
 
 #include <mge-errno.h>
 #include <configfile.h>
-#include <swocserverd.h>
+#include "internal.h"
 
 
 static int validateportnos(const struct confsection *ps);

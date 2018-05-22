@@ -1,5 +1,5 @@
 /**
- * @file srv-prg/src/prg/c/inc/swocserverd.h
+ * @file srv-prg/src/prg/c/src/swocserverd/internal.h
  *
  * Header file for Server Wait on Clients server-side daemon.
  *
@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.10 ==== 18/05/2018_
+ * @version _v1.0.11 ==== 22/05/2018_
  */
 
 /* **********************************************************************
@@ -37,13 +37,14 @@
  *				Add server client block and unblock.	*
  *				Add server block and unblock.		*
  * 18/05/2018	MG	1.0.10	Add client show server block status.	*
+ * 22/05/2018	MG	1.0.11	Change from swocserverd.h to internal.h	*
  *									*
  ************************************************************************
  */
 
 
-#ifndef SWOCSERVERD_H
-#define SWOCSERVERD_H
+#ifndef SWOCSERVERD_INTERNAL_H
+#define SWOCSERVERD_INTERNAL_H
 
 
 #include <sys/types.h>
@@ -132,4 +133,4 @@ void swocserverd_print_src_version(void);
 
 END_C_DECLS
 
-#endif /* ndef SWOCSERVERD_H */
+#endif /* ndef SWOCSERVERD_INTERNAL_H */

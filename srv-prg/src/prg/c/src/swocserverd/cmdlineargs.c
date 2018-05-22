@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.4 ==== 28/03/2018_
+ * @version _v1.0.5 ==== 22/05/2018_
  */
 
 /* **********************************************************************
@@ -23,6 +23,7 @@
  *				Add SPDX license tag.			*
  * 28/03/2018	MG	1.0.4	Replace initialising pointers to zero	*
  *				with NULL. (fixes sparse warnings).	*
+ * 22/05/2018	MG	1.0.5	Change from swocserverd.h to internal.h	*
  *									*
  ************************************************************************
  */
@@ -32,7 +33,7 @@
 #include <sysexits.h>
 #include <getopt.h>
 
-#include <swocserverd.h>
+#include "internal.h"
 #include <cmdlineargs.h>
 
 

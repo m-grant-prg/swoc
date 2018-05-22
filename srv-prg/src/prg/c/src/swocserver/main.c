@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.5 ==== 10/05/2018_
+ * @version _v1.1.6 ==== 22/05/2018_
  */
 
 /* **********************************************************************
@@ -54,6 +54,7 @@
  *				clients.				*
  *				Add client block and unblock options.	*
  *				Add server block and unblock.		*
+ * 22/05/2018	MG	1.1.6	Change from swocserver.h to internal.h	*
  *									*
  ************************************************************************
  */
@@ -65,7 +66,7 @@
 #include <mge-errno.h>
 #include <cmdlineargs.h>
 #include <signalhandle.h>
-#include <swocserver.h>
+#include "internal.h"
 
 static char *prog_name;	/**< This program's name. */
 int sws_err;		/**< Global swocserver error flag. */

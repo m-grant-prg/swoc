@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.14 ==== 10/05/2018_
+ * @version _v1.0.15 ==== 22/05/2018_
  */
 
 /* **********************************************************************
@@ -58,6 +58,7 @@
  * 22/03/2018	MG	1.0.13	Remove unnecessary libsoccommon.h	*
  * 10/05/2018	MG	1.0.14	Add support for blocked clients list.	*
  *				Add support for server locking.		*
+ * 22/05/2018	MG	1.0.15	Change from swocserverd.h to internal.h	*
  *									*
  ************************************************************************
  */
@@ -77,7 +78,7 @@
 #include <cmdlineargs.h>
 #include <signalhandle.h>
 #include <mge-errno.h>
-#include <swocserverd.h>
+#include "internal.h"
 
 
 int swsd_err;				/**< swoc daemon error number. */

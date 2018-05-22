@@ -1,14 +1,14 @@
 /**
- * @file srv-prg/src/prg/c/inc/swocserver.h
+ * @file srv-prg/src/prg/c/src/swocserver/internal.h
  *
  * Header file for Server Wait on Clients server-side program.
  *
- * @author Copyright (C) 2015-2017  Mark Grant
+ * @author Copyright (C) 2015-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.6 ==== 17/11/2017_
+ * @version _v1.0.7 ==== 22/05/2018_
  */
 
 /* **********************************************************************
@@ -27,13 +27,14 @@
  *				Use more informative name - sws_err.	*
  * 12/11/2017	MG	1.0.6	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 22/05/2018	MG	1.0.7	Change from swocserver.h to internal.h	*
  *									*
  ************************************************************************
  */
 
 
-#ifndef SWOCSERVER_H
-#define SWOCSERVER_H
+#ifndef SWOCSERVER_INTERNAL_H
+#define SWOCSERVER_INTERNAL_H
 
 
 #include <portability.h>
@@ -53,4 +54,4 @@ void swocserver_print_src_version(void);
 
 END_C_DECLS
 
-#endif /* ndef SWOCSERVER_H */
+#endif /* ndef SWOCSERVER_INTERNAL_H */
