@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.5 ==== 02/05/2018_
+ * @version _v1.1.6 ==== 22/05/2018_
  */
 
 /* **********************************************************************
@@ -33,12 +33,16 @@
  * 28/03/2018	MG	1.1.4	For pointers assigned zero in option	*
  *				struct, assign NULL instead.		*
  * 02/05/2018	MG	1.1.5	Add support for client block list.	*
+ * 22/05/2018	MG	1.1.6	Make more generic for copy and paste	*
+ *				re-usability by using function with a	*
+ *				variable number of arguments.		*
  *									*
  ************************************************************************
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include <string.h>
 #include <getopt.h>
 
@@ -60,12 +64,15 @@
  * @return 0 on success, on failure standard EX_USAGE (64) command line  usage
  * error.
  */
-int process_cla(int argc, char **argv, struct cla *block_flag,
-		struct cla *lock_flag, struct cla *release_flag,
-		struct cla *reset_flag,struct cla *status_flag,
-		struct cla *unblock_flag, struct cla *wait_flag)
+int process_cla(int argc, char **argv, ...)
 {
-	/* getopt_long stores the option index here. */
+	va_list ap;
+
+	/* Command line argument flags. */
+	struct cla *block_flag, *lock_flag, *release_flag, *reset_flag;
+	struct cla *status_flag, *unblock_flag, *wait_flag;
+
+	//* getopt_long stores the option index here. */
 	int option_index = 0;
 	int c;
 	int x;
@@ -82,6 +89,16 @@ int process_cla(int argc, char **argv, struct cla *block_flag,
 		{"wait",	optional_argument,	NULL,	'w'},
 		{NULL,		0,			NULL,	0}
 	};
+
+	va_start(ap, argv);
+	block_flag = va_arg(ap, struct cla *);
+	lock_flag = va_arg(ap, struct cla *);
+	release_flag = va_arg(ap, struct cla *);
+	reset_flag = va_arg(ap, struct cla *);
+	status_flag = va_arg(ap, struct cla *);
+	unblock_flag = va_arg(ap, struct cla *);
+	wait_flag = va_arg(ap, struct cla *);
+	va_end(ap);
 
 	while ((c = getopt_long(argc, argv, "bhilrsuVw::",
 		long_options, &option_index)) != -1) {
