@@ -31,14 +31,15 @@
 # 24/04/2018	MG	1.0.7	Add srctarball target to build a source	#
 #				tarball in the build directory. Uses	#
 #				git archive to archive HEAD.		#
+# 22/05/2018	MG	1.0.8	Simplify source directory structure.	#
 #									#
 #########################################################################
 
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = src/man/3/optionproc
+SUBDIRS = src/man/3
 SUBDIRS += src/prg/c/inc
-SUBDIRS += src/prg/c/src/libswocclient
+SUBDIRS += src/prg/c/src
 
 
 srctarball:

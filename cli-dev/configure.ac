@@ -44,10 +44,11 @@
 #				Requires.private fields.		#
 # 21/03/2018	MG	1.0.9	Remove unnecessary configfile.h header	#
 #				check.					#
+# 22/05/2018	MG	1.0.10	Simplify source directory structure.	#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.9 $])
+AC_REVISION([$Revision: 1.0.10 $])
 
 AC_PREREQ([2.69])
 
@@ -220,9 +221,9 @@ AC_CHECK_HEADERS([portability.h], [], [AC_MSG_ERROR([header not found])])
 
 # Project Makefiles to create.
 AC_CONFIG_FILES([Makefile
-		src/man/3/optionproc/Makefile
+		src/man/3/Makefile
 		src/prg/c/inc/Makefile
-		src/prg/c/src/libswocclient/Makefile
-		src/prg/c/src/libswocclient/libswocclient.pc])
+		src/prg/c/src/Makefile
+		src/prg/c/src/libswocclient.pc])
 
 AC_OUTPUT

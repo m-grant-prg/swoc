@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-# Script ID: cli-dev/src/man/3/optionproc/Makefile.am			#
+# Script ID: cli-dev/src/man/3/Makefile.am				#
 # Author: Copyright (C) 2016-2018  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
