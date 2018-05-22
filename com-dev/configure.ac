@@ -55,7 +55,7 @@ AC_PREREQ([2.69])
 #
 ########################
 
-AC_INIT(SWOC Common Library dev files, v1.0.5-rc4,
+AC_INIT(SWOC Common Library dev files, v1.0.5-rc5,
 	m.grant.prg@gmail.com, libswoccommon-dev)
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
