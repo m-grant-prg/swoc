@@ -38,10 +38,11 @@
 # 04/03/2018	MG	1.0.7	Add substitution variables for 		#
 #				pkg-config file Requires and		#
 #				Requires.private fields.		#
+# 22/05/2018	MG	1.0.8	Simplify src directory structure.	#
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.7 $])
+AC_REVISION([$Revision: 1.0.8 $])
 
 AC_PREREQ([2.69])
 
@@ -234,7 +235,7 @@ AC_CONFIG_FILES([Makefile
 		src/man/3/tcp/Makefile
 		src/man/3/validateconfig/Makefile
 		src/prg/c/inc/Makefile
-		src/prg/c/src/libswoccommon/Makefile
-		src/prg/c/src/libswoccommon/libswoccommon.pc])
+		src/prg/c/src/Makefile
+		src/prg/c/src/libswoccommon.pc])
 
 AC_OUTPUT
