@@ -146,7 +146,7 @@ done
 ########################
 
 AC_ARG_ENABLE(debug,
-	  --enable-debug    Compile for debugging,
+	--enable-debug    Compile for debugging,
 	[case "${enableval}" in
 		yes)	debug=true
 			AC_MSG_NOTICE(compiling with debugging flags.) ;;
@@ -163,7 +163,7 @@ AM_CONDITIONAL(DEBUG, test x$debug = xtrue)
 : ${CFLAGS=""}
 
 if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE([Using compiler debug flags.])
+	AC_MSG_NOTICE(Using compiler debug flags.)
 fi
 
 
@@ -174,17 +174,17 @@ fi
 #
 ########################
 
-AC_ARG_ENABLE([sparse],
-	[  --enable-sparse    Build with sparse],
+AC_ARG_ENABLE(sparse,
+	--enable-sparse    Build with sparse,
 	[case "${enableval}" in
 		yes) sparse=true ;;
 		no)  sparse=false ;;
 		*) AC_MSG_ERROR([bad value ${enableval} for --enable-sparse]);;
 	esac],[sparse=false])
-AM_CONDITIONAL([SPARSE], [test x$sparse = xtrue])
+AM_CONDITIONAL(SPARSE, test x$sparse = xtrue)
 
 if test "x${sparse}" = xtrue; then
-	AC_MSG_NOTICE([Building using sparse.])
+	AC_MSG_NOTICE(Building using sparse.)
 fi
 
 
