@@ -29,9 +29,9 @@
 #									#
 #########################################################################
 
-AC_REVISION([$Revision: 1.0.3 $])
+AC_REVISION($Revision: 1.0.3 $)
 
-AC_PREREQ([2.69])
+AC_PREREQ(2.69)
 
 
 ########################
@@ -55,17 +55,17 @@ AC_SUBST(pkgversion, $PACKAGE_VERSION)
 #
 ########################
 
-AC_ARG_ENABLE([debug],
-	[  --enable-debug    Compile for debugging],
+AC_ARG_ENABLE(debug,
+	--enable-debug    Compile for debugging,
 	[case "${enableval}" in
 		yes) debug=true ;;
 		no)  debug=false ;;
-		*) AC_MSG_ERROR([bad value ${enableval} for --enable-debug]) ;;
-	esac],[debug=false])
-AM_CONDITIONAL([DEBUG], [test x$debug = xtrue])
+		*) AC_MSG_ERROR(bad value ${enableval} for --enable-debug) ;;
+	esac],debug=false)
+AM_CONDITIONAL(DEBUG, test x$debug = xtrue)
 
 if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE([Build in debug mode.])
+	AC_MSG_NOTICE(Build in debug mode.)
 fi
 
 
@@ -142,7 +142,7 @@ AC_SUBST([edit], ["sed \
 # containing the source. Forces tar to use --format=posix in make dist.
 # This also checks :-	BSD install	make variable set	mkdir -p
 #			gawk
-AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects tar-pax])
+AM_INIT_AUTOMAKE(-Wall -Werror subdir-objects tar-pax)
 
 
 ########################
@@ -156,7 +156,7 @@ AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects tar-pax])
 #
 ########################
 
-AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_MACRO_DIR(m4)
 
 
 ########################
@@ -178,15 +178,15 @@ AC_CONFIG_MACRO_DIR([m4])
 #
 ########################
 
-AC_MSG_NOTICE([checking for generic programs required by this application])
-AC_CHECK_PROG([TAR], [tar], [yes], [no])
+AC_MSG_NOTICE(checking for generic programs required by this application)
+AC_CHECK_PROG(TAR, tar, yes, no)
 if test "x$TAR" = "xno" ; then
-	AC_MSG_ERROR([tar not found])
+	AC_MSG_ERROR(tar not found)
 fi
 
-AC_CHECK_PROG([DOXYGEN], [doxygen], [yes], [no])
+AC_CHECK_PROG(DOXYGEN, doxygen, yes, no)
 if test "x$DOXYGEN" = "xno" ; then
-	AC_MSG_ERROR([doxygen not found])
+	AC_MSG_ERROR(doxygen not found)
 fi
 
 
@@ -202,9 +202,8 @@ fi
 # Checks for library functions.
 
 # Project Makefiles to create.
-AC_CONFIG_FILES([Makefile
+AC_CONFIG_FILES(Makefile
 		src/docs/doxygen/Doxyfile
-		src/docs/doxygen/Makefile
-		])
+		src/docs/doxygen/Makefile)
 
 AC_OUTPUT
