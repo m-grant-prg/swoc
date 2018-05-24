@@ -94,7 +94,7 @@ AC_PREREQ(2.69)
 #
 ########################
 
-AC_INIT(Server Wait On Client Server Package, v1.1.3-rc8,
+AC_INIT(Server Wait On Client Server Package, v1.1.3-rc9,
 	m.grant.prg@gmail.com, swocserver)
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
