@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.15 ==== 22/05/2018_
+ * @version _v1.0.16 ==== 03/06/2018_
  */
 
 /* **********************************************************************
@@ -49,6 +49,9 @@
  *				Add server block and unblock.		*
  * 18/05/2018	MG	1.0.14	Add client show server block status.	*
  * 22/05/2018	MG	1.0.15	Change from swocserverd.h to internal.h	*
+ * 03/06/2018	MG	1.0.16	Log number of clients and locks		*
+ *				existing when an end request is		*
+ *				processed.				*
  *									*
  ************************************************************************
  */
@@ -89,6 +92,12 @@ int srv_end_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		printf("Termination request received - exiting.\n");
 	syslog((int) (LOG_USER | LOG_NOTICE), "Termination request received - "
 		"exiting.");
+	if (debug) {
+		printf("%i clients have %i locks on this server.\n",
+		       cli_locks->node_total, cli_locks->count_total);
+	}
+	syslog((int) (LOG_USER | LOG_NOTICE), "%i clients have %i locks on "
+		"this server.", cli_locks->node_total, cli_locks->count_total);
 
 	sprintf(out_msg, "swocserverd,end,ok;");
 	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
