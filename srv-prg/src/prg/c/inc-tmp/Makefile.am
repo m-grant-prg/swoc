@@ -30,10 +30,11 @@
 # 16/01/2018	MG	1.0.3	Change to include headers from relevant	#
 #				-dev projects.				#
 # 01/05/2018	MG	1.0.4	Add libswoccommon.h.			#
+# 03/06/2018	MG	1.0.5	Add bstree.h				#
 #									#
 #########################################################################
 
 
 noinst_HEADERS = $(tmpheaders)
 
-EXTRA_HEADERS = mge-errno.h libswoccommon.h
+EXTRA_HEADERS = bstree.h libswoccommon.h mge-errno.h
