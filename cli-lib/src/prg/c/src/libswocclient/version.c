@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.1 ==== 11/11/2017_
+ * @version _v1.0.6 ==== 05/06/2018_
  */
 
 /* **********************************************************************
@@ -24,14 +24,9 @@
  *				just as with prototypes.		*
  * 16/07/2016	MG	1.0.3	Move towards kernel coding style.	*
  * 17/07/2016	MG	1.0.4	Further coding style changes.		*
- * 06/05/2017	MG	1.1.0	Migrate from NFS 'file as a flag'	*
- *				semaphore to TCP stream socket		*
- *				messaging to new swocserverd daemon.	*
- *				Add new swc_client_wait function.	*
- *				Migrate to use of mge_errno and libmgec	*
- *				error handling.				*
- * 11/11/2017	MG	1.1.1	Add Doxygen comments.			*
+ * 11/11/2017	MG	1.0.5	Add Doxygen comments.			*
  *				Add SPDX license tags.			*
+ * 05/06/2018	MG	1.0.6	Make this ChangeLog for this file only.	*
  *									*
  ************************************************************************
  */
