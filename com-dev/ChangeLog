@@ -1,3 +1,10 @@
+2018-06-03 v 1.0.6 Mark Grant <m.grant.prg@gmail.com>
+	*  Add client blocklist.
+	Add server blocklist.
+	Change server unlock option to release for consistency.
+	Update README file.
+	Simplify source directory structure.
+
 2018-04-24 v 1.0.5 Mark Grant <m.grant.prg@gmail.com>
 	*  Track m4 directory but keep gitignore to ensure directory exists,
 	even if empty.
