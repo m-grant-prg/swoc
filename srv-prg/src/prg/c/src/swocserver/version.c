@@ -33,7 +33,7 @@
 
 
 /** The source code version. */
-#define SOURCE_VERSION "1.1.2"
+#define SOURCE_VERSION "1.1.3"
 
 /**
  * Get the git-describe based package version.
