@@ -1,3 +1,8 @@
+Release 1.1.6 2018-06-04
+Add support for client blocking.
+Simplify source directory structure.
+Update README file.
+
 Release 1.1.5 2018-04-25
 Start git tracking of m4 and src/prg/c/gen/lib as downstream packaging using a
 source (AOT distribution) tarball requires these gnulib elements to be present.

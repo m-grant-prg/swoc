@@ -1,3 +1,8 @@
+2018-06-04 v 1.1.6 Mark Grant <m.grant.prg@gmail.com>
+	*  Add support for client blocking.
+	Simplify source directory structure.
+	Update README file.
+
 2018-04-25 v 1.1.5 Mark Grant <m.grant.prg@gmail.com>
 	*  Start git tracking of m4 and src/prg/c/gen/lib as downstream
 	packaging using a source (AOT distribution) tarball requires these
