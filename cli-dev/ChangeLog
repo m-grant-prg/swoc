@@ -1,3 +1,8 @@
+2018-06-04 v 1.1.5 Mark Grant <m.grant.prg@gmail.com>
+	*  Add support for client blocking.
+	Simplify source directory structure.
+	Update README file.
+
 2018-04-24 v 1.1.4 Mark Grant <m.grant.prg@gmail.com>
 	*  Track m4 directory but keep gitignore to ensure directory exists,
 	even if empty.

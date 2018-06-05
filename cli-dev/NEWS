@@ -1,3 +1,8 @@
+Release 1.1.5 2018-06-04
+Add support for client blocking.
+Simplify source directory structure.
+Update README file.
+
 Release 1.1.4 2018-04-24
 Track m4 directory but keep gitignore to ensure directory exists, even if empty.
 Update this project bootstrap.sh to latest version 1.3.4.
