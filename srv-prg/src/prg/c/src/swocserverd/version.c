@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.3 ==== 22/05/2018_
+ * @version _v1.0.3 ==== 05/06/2018_
  */
 
 /* **********************************************************************
@@ -17,12 +17,10 @@
  *									*
  * Date		Author	Version	Description				*
  *									*
- * 19/11/2016	MG	1.0.0	First release.				*
- * 18/11/2017	MG	1.0.1	Add Doxygen comments.			*
+ * 19/11/2016	MG	1.0.1	First release.				*
+ * 18/11/2017	MG	1.0.2	Add Doxygen comments.			*
  *				Add SPDX license tags.			*
- * 28/03/2018	MG	1.0.2	Include swocserverd.h for function	*
- *				prototypes, (fixes sparse warnings).	*
- * 22/05/2018	MG	1.0.3	Change from swocserverd.h to internal.h	*
+ * 05/06/2018	MG	1.0.3	Make this ChangeLog for this file only.	*
  *									*
  ************************************************************************
  */
