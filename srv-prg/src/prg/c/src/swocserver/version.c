@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.4 ==== 22/05/2018_
+ * @version _v1.0.4 ==== 05/06/2018_
  */
 
 /* **********************************************************************
@@ -18,34 +18,10 @@
  * Date		Author	Version	Description				*
  *									*
  * 22/06/2015	MG	1.0.1	First release.				*
- * 10/05/2016	MG	1.0.2	Move header files to include directory.	*
- * 16/05/2016	MG	1.0.3	Add --force-unlock option.		*
- *				Make --status and --wait ignore		*
- *				directories.				*
- * 28/05/2016	MG	1.0.4	Modified following introduction of	*
- *				libswocserver library.			*
- * 13/06/2016	MG	1.0.5	Use new more unique library function	*
- *				names.					*
- * 17/07/2016	MG	1.0.6	Move towards kernel coding style.	*
- * 27/09/2016	MG	1.0.7	Further coding style changes.		*
- *				Improve in-source documentation.	*
- *				Enable cmdlineargs support for multiple	*
- *				command line programs in a single	*
- *				project.				*
- *				Simplify cmdlineargs error handling.	*
- *				Use more informative name - sws_err.	*
- * 06/05/2017	MG	1.1.0	Migrate from NFS 'file as a flag' 	*
- *				semaphore to TCP socket stream		*
- *				messaging between applications and	*
- *				daemon.					*
- *				Add end_daemon option to command line	*
- *				program.				*
- * 12/09/2017	MG	1.1.1	Change 'force unlock' to just 'unlock'.	*
- * 17/11/2017	MG	1.1.2	Add Doxygen comments.			*
+ * 17/07/2016	MG	1.0.2	Move towards kernel coding style.	*
+ * 17/11/2017	MG	1.0.3	Add Doxygen comments.			*
  *				Add SPDX license tags.			*
- * 28/03/2018	MG	1.1.3	Include swocserver.h for function	*
- *				prototypes, (fixes sparse warnings).	*
- * 22/05/2018	MG	1.1.4	Change from swocserver.h to internal.h	*
+ * 05/06/2018	MG	1.0.4	Make this ChangeLog for this file only.	*
  *									*
  ************************************************************************
  */
