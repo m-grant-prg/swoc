@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.3 ==== 07/03/2018_
+ * @version _v1.0.3 ==== 05/06/2018_
  */
 
 /* **********************************************************************
@@ -17,21 +17,10 @@
  *									*
  * Date		Author	Version	Description				*
  *									*
- * 05/05/2017	MG	1.0.0	First release.				*
- * 15/09/2017	MG	1.0.1	Change force-unlock option to unlock.	*
- * 19/10/2017	MG	1.1.0	Add support for SSH.			*
- * 10/11/2017	MG	1.1.1	Add Doxygen comments.			*
+ * 05/05/2017	MG	1.0.1	First release.				*
+ * 10/11/2017	MG	1.0.2	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
- * 06/03/2018	MG	1.1.2	When establishing a TCP connection,	*
- *				another client or server comms session	*
- *				could be taking place. Therefore allow	*
- *				bind and connect 10 tries if the	*
- *				address is in use.			*
- * 07/03/2018	MG	1.1.3	Do not sleep if connect or bind is	*
- *				successful.				*
- *				Preserve config file global variables	*
- *				unchanged. Use local variables when	*
- *				values need changing.			*
+ * 05/06/2018	MG	1.0.3	Make this ChangeLog for this file only.	*
  *									*
  ************************************************************************
  */
