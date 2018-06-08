@@ -117,7 +117,7 @@ To uninstall the package:
 -------------------------
 3 ... Ubuntu Installation
 =========================
-This script is available as an Ubuntu package hosted in a Personal Package
+This project is available as an Ubuntu package hosted in a Personal Package
 Archive (PPA). If you add this PPA to your software sources then you can easily
 install, update and remove the package.
 
@@ -128,7 +128,7 @@ To add this PPA to your system please type the following:-
 	sudo add-apt-repository ppa:m-grant-prg/utils
 	sudo apt-get update
 
-To install this script on your system for use please type the following:-
+To install this package on your system please type the following:-
 	sudo apt-get update
 	sudo apt-get install libswocserver
 

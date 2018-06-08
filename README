@@ -153,6 +153,16 @@ To add this PPA to your system please type the following:-
 All 9 sub-projects are available as packages with the proper dependencies set
 up, so each package can be addressed individually, however, most commonly only
 the top level packages will be handled.
+The packages are:-
+libswoccommon-dev	The development files for the common library.
+libswoccommon-lib	The common library libswoccommon.
+libswocclient-dev	The development files for the client library.
+libswocclient-lib	The client library libswocclient.
+swocclient		The command line client program.
+libswocserver-dev	The development files for the server library.
+libswocserver-lib	The server library libswocserver.
+swocserver		The command line server program and the server daemon.
+swocdoc			Doxygen documentation on the entire project.
 
 To install the server package on your system please type the following:-
 	sudo apt-get update
