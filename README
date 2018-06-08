@@ -93,6 +93,18 @@ configure script. Any of these produced by this author can be found in a
 repository located here:-
 https://github.com/m-grant-prg
 
+N.B.
+----
+At a source modification / development level, this project expects to reside in
+a git environment. This manifests itself in 3 places:-
+1) ... .gitignore files are included in the source.
+2) ... The make target, 'srctarball', relies on the command 'git am' so it will
+	fail if git is not installed or it is not in a git repository.
+3) ... Package building for the full project relies on the command
+	'git describe' so it will fail if git is not installed or it is not in
+	a git repository. (As said before, building the full package is not a
+	particularly meaningful task.)
+
 
 -------------------------------------------------
 2 ... AutoTools (configure and make) Installation
