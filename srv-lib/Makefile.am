@@ -38,6 +38,7 @@
 # 25/04/2018	MG	1.0.11	Add srctarball target to build a source	#
 #				tarball in the build directory. Uses	#
 #				git archive to archive HEAD.		#
+# 08/06/2018	MG	1.0.12	Add info messages to srctarball target.	#
 #									#
 #########################################################################
 
@@ -55,6 +56,9 @@ EXTRA_DIST  = m4/gnulib-cache.m4
 srctarball:
 	@cwd="$${PWD}" && \
 	cd @srcdir@ && \
+	echo "making srctarball from @srcdir@" && \
+	echo "GA	@builddir@/@PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz" \
+	&& \
 	git archive --format=tar.gz \
 		--prefix=@PACKAGE_TARNAME@-@PACKAGE_VERSION@/ \
 		--output=$${cwd}/@PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz \
