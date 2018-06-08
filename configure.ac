@@ -31,6 +31,7 @@
 # 07/05/2018	MG	1.0.4	Add support for an enable-sparse CLA	#
 #				and passing a suitable variable to the	#
 #				Makefile.am's.				#
+# 08/06/2018	MG	1.0.5	Make package name swoc-full.		#
 #									#
 #########################################################################
 
@@ -54,7 +55,7 @@ AC_INIT([Server Wait on Clients system - all projects.], m4_esyscmd([ \
 		git describe --always 1>/dev/null 2>/dev/null \
 		&& git describe --always | tr -d '\n' \
 		|| echo 'Pre-Release' | tr -d '\n']),
-		m.grant.prg@gmail.com, swoc)
+		m.grant.prg@gmail.com, swoc-full)
 
 AC_SUBST(pkgversion, m4_esyscmd([ \
 		git describe --always 1>/dev/null 2>/dev/null \
