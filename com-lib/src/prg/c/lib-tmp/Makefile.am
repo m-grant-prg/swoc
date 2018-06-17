@@ -22,8 +22,9 @@
 # 09/06/2017	MG	1.0.0	First release.				#
 # 27/10/2017	MG	1.0.1	Add libmgesysutils.			#
 # 12/01/2018	MG	1.0.2	Add SPDX license tags to source files.	#
+# 16/06/2018	MG	1.0.3	Add libmgec.				#
 #									#
 #########################################################################
 
 
-EXTRA_DIST = $(srcdir)/libmgesysutils
+EXTRA_DIST = $(srcdir)/libmgec $(srcdir)/libmgesysutils
