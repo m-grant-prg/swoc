@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.11 ==== 22/05/2018_
+ * @version _v1.0.12 ==== 17/06/2018_
  */
 
 /* **********************************************************************
@@ -45,6 +45,11 @@
  *				Add server block and unblock.		*
  * 18/05/2018	MG	1.0.10	Add client show server block status.	*
  * 22/05/2018	MG	1.0.11	Change from swocserverd.h to internal.h	*
+ * 17/06/2018	MG	1.0.12	libmgec/pull_msg now allows for the 	*
+ *				extraction of partial messages from the	*
+ *				buffer struct to the message struct, so	*
+ *				eliminate the clear_msg call if the	*
+ *				message after pull is incomplete.	*
  *									*
  ************************************************************************
  */
@@ -314,9 +319,10 @@ static int proc_events(int n_events, struct epoll_event *pevents)
 				if (debug)
 					print_msg(msg);
 				tmp_comp = msg1.complete;
-				if (tmp_comp && !swsd_err)
+				if (tmp_comp && !swsd_err) {
 					proc_msg(msg);
-				clear_msg(msg, ';', ',');
+					clear_msg(msg, ';', ',');
+				}
 			} while (tmp_comp && !swsd_err);
 
 			if (debug)
@@ -327,6 +333,7 @@ static int proc_events(int n_events, struct epoll_event *pevents)
 
 			bzero(sock_buf, sizeof(sock_buf));
 		}
+		clear_msg(msg, ';', ',');
 		free(msg_buf1.buffer);
 		if (close_sock(&cursockfd))
 			return swsd_err;

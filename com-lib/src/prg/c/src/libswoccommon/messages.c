@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.4 ==== 10/05/2018_
+ * @version _v1.1.5 ==== 17/06/2018_
  */
 
 /* **********************************************************************
@@ -31,6 +31,11 @@
  *				Add support for server listing blocked	*
  *				clients.				*
  *				Add support for server blocking.	*
+ * 17/06/2018	MG	1.1.5	libmgec/pull_msg now allows for the 	*
+ *				extraction of partial messages from the	*
+ *				buffer struct to the message struct, so	*
+ *				eliminate the clear_msg call if the	*
+ *				message after pull is incomplete.	*
  *									*
  ************************************************************************
  */
@@ -195,8 +200,6 @@ int exch_msg(char *outgoing_msg, size_t om_length, struct mgemessage *msg)
 
 		if (msg->complete || mge_errno)
 			break;
-
-		clear_msg(msg, ';', ',');
 
 		bzero(sock_buf, sizeof(sock_buf));
 	}
