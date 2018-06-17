@@ -31,10 +31,11 @@
 #				-dev projects.				#
 # 01/05/2018	MG	1.0.4	Add libswoccommon.h.			#
 # 03/06/2018	MG	1.0.5	Add bstree.h				#
+# 17/06/2018	MG	1.0.6	Add mgebuffer & mgemessage candidates.	#
 #									#
 #########################################################################
 
 
 noinst_HEADERS = $(tmpheaders)
 
-EXTRA_HEADERS = bstree.h libswoccommon.h mge-errno.h
+EXTRA_HEADERS = bstree.h libswoccommon.h mgebuffer.h mge-errno.h mgemessage.h
