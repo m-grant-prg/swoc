@@ -9,7 +9,10 @@
 #########################################################################
 #									#
 # Script ID: setup.sh							#
-# Author: Mark Grant							#
+# Author: Copyright (C) 2017-2018  Mark Grant				#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0					#
 #									#
 # Purpose:								#
 #	To setup the config files for the swoc client and server.	#
@@ -44,6 +47,7 @@
 # 02/10/2017	MG	1.0.0	Created.				#
 # 22/06/2018	MG	1.0.1	Change package version substitution	#
 #				variable for build in AC_CONFIG_FILES.	#
+#				Add SPDX identifier and copyright.	#
 #									#
 #########################################################################
 
