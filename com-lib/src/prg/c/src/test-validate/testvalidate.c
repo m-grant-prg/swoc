@@ -42,5 +42,9 @@ int main(int argc, char **argv)
 
 	printf("user name is:- %s\n", sshuser);
 
+	printf("\n");
+	libswoccommon_print_src_version();
+	libswoccommon_print_pkg_version();
+
 	exit(retval);
 }
