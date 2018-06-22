@@ -26,26 +26,25 @@
 #				Remove debug conditional printout of	#
 #				macros.					#
 # 12/02/2018	MG	1.0.3	Make AutoMake use posix format for tar.	#
+# 22/06/2018	MG	1.0.4	Remove AC_SUBST pkgversion as it is	#
+#				available as standard.			#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.0.3 $)
+AC_REVISION($Revision: 1.0.4 $)
 
 AC_PREREQ(2.69)
 
 
 ########################
 #
-# The package version in ac init will be used to create an output variable which
-# can be used by ac output and / or the sed setup below to substitute bookmarks
-# in source files.
+# The following macros set all top level versioning for this project. All
+# information can be propagated via AC_CONFIG_HEADERS and AC_CONFIG_FILES.
 #
 ########################
 
 AC_INIT(Server Wait On Clients system documentation, v1.0.1-rc7,
 	m.grant.prg@gmail.com, swocdoc)
-
-AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
 
 ########################
@@ -108,7 +107,6 @@ fi
 ########################
 
 AC_SUBST([edit], ["sed \
-		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
 		-e 's|@bindir[@]|\$(bindir)|g' \
