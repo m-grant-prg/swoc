@@ -26,10 +26,10 @@
 #				tarball in the build directory. Uses	#
 #				git archive to archive HEAD.		#
 # 08/06/2018	MG	1.0.4	Add info messages to srctarball target.	#
+# 22/06/2018	MG	1.0.5	Remove macro directory entries as not	#
+#				required in this project.		#
 #									#
 #########################################################################
-
-ACLOCAL_AMFLAGS = -I m4 -I m4extra
 
 
 SUBDIRS = com-dev com-lib

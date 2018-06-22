@@ -12,7 +12,6 @@
 #									#
 # cmd line syntax:							#
 # ./configure	[--enable-debug=<yes|no> [default: no]]			#
-#		[--enable-sparse=<yes|no> [default: no]]		#
 #									#
 # Any command line arguments are passed to the sub-project configure's.	#
 # This accepts any sub-project supported arguments.			#
@@ -32,19 +31,20 @@
 #				and passing a suitable variable to the	#
 #				Makefile.am's.				#
 # 08/06/2018	MG	1.0.5	Make package name swoc-full.		#
+# 22/06/2018	MG	1.0.6	Simplify project structure to better	#
+#				reflect it's purpose.			#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.0.4 $)
+AC_REVISION($Revision: 1.0.6 $)
 
 AC_PREREQ(2.69)
 
 
 ########################
 #
-# The following two macros use git to provide versioning information.
-# If git is not initialised or no commit has been made, then 'Pre-Release'
-# will be used.
+# The following macros uses git to provide versioning information. If git is not
+# initialised or no commit has been made, then 'Pre-Release' will be used.
 # If no Tag has been created then just a commit identifier will be used.
 # If a tag has been created then the most recent tag, plus number of commits
 # since the tag, plus a commit identifier will be used.
@@ -56,11 +56,6 @@ AC_INIT([Server Wait on Clients system - all projects.], m4_esyscmd([ \
 		&& git describe --always | tr -d '\n' \
 		|| echo 'Pre-Release' | tr -d '\n']),
 		m.grant.prg@gmail.com, swoc-full)
-
-AC_SUBST(pkgversion, m4_esyscmd([ \
-		git describe --always 1>/dev/null 2>/dev/null \
-		&& git describe --always | tr -d '\n' \
-		|| echo 'Pre-Release' | tr -d '\n']))
 
 
 ########################
@@ -81,27 +76,6 @@ AM_CONDITIONAL(DEBUG, [test x$debug = xtrue])
 
 if test "x${debug}" = xtrue; then
 	AC_MSG_NOTICE(Build in debug mode.)
-fi
-
-
-########################
-#
-# The following allows for an enable-sparse=yes/no command line option. The
-# conditional SPARSE is made available to the makefiles.
-#
-########################
-
-AC_ARG_ENABLE(sparse,
-	[  --enable-sparse    Build with sparse],
-	[case "${enableval}" in
-		yes) sparse=true ;;
-		no)  sparse=false ;;
-		*) AC_MSG_ERROR([bad value ${enableval} for --enable-sparse]);;
-	esac],[sparse=false])
-AM_CONDITIONAL(SPARSE, [test x$sparse = xtrue])
-
-if test "x${sparse}" = xtrue; then
-	AC_MSG_NOTICE(Building using sparse.)
 fi
 
 
@@ -144,7 +118,6 @@ fi
 ########################
 
 AC_SUBST([edit], ["sed \
-		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
 		-e 's|@bindir[@]|\$(bindir)|g' \
@@ -186,84 +159,6 @@ AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects tar-pax])
 
 if test "x${debug}" = xtrue; then
 	AC_MSG_NOTICE(Finished running am init automake.)
-fi
-
-
-# Checks the c++ compiler to use, stores it in the cxx variable and checks its
-# capabilities. (Required by ltmain.sh).
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE([Running ac prog cxx. (Required by ltmain.sh).])
-fi
-
-AC_PROG_CXX
-
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE(Finished running ac prog cxx.)
-fi
-
-
-# Check for ranlib recommended by autoscan for ltmain.sh but rendered obsolete
-# by lt init.
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE(Running ac prog ranlib.)
-fi
-
-AC_PROG_RANLIB
-
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE(Finished running ac prog ranlib.)
-fi
-
-# Check for libtool minimum version.
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE(Running lt prereq.)
-fi
-
-LT_PREREQ(2.4.6)
-
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE(Finished running lt prereq.)
-fi
-
-
-# Turn on shared libraries.
-# Also checks for fgrep, linker capabilities, ranlib, sed.
-# Also checks for:-	ANSI C header files	sys/types.h	sys/stat.h
-#			stdlib.h	string.h	memory.h
-#			strings.h	inttypes.h	stdint.h
-#			unistd.h	dlfcn.h
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE(Running lt init.)
-fi
-
-LT_INIT
-
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE(Finished running lt init.)
-fi
-
-
-
-########################
-#
-# Standard macros will be automatically placed in m4.
-# Programmer defined macros should be placed in, say, m4extra which allows us
-# to exclude the standard macros from being git tracked. This other directory
-# must be specified as an include option in the Makefile.am ACLOCAL_AMFLAGS
-# e.g.
-# ACLOCAL_AMFLAGS = -I m4 -I m4extra
-#
-########################
-
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE(Running ac config macro dir.)
-fi
-
-
-AC_CONFIG_MACRO_DIR(m4)
-
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE(Finished running ac config macro dir.)
 fi
 
 
