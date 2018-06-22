@@ -28,6 +28,8 @@
 # 12/02/2018	MG	1.0.3	Make AutoMake use posix format for tar.	#
 # 22/06/2018	MG	1.0.4	Remove AC_SUBST pkgversion as it is	#
 #				available as standard.			#
+#				Add swoc doc-base file to		#
+#				AC_CONFIG_FILES build.			#
 #									#
 #########################################################################
 
@@ -202,6 +204,7 @@ fi
 # Project Makefiles to create.
 AC_CONFIG_FILES(Makefile
 		src/docs/doxygen/Doxyfile
+		src/docs/doxygen/swoc
 		src/docs/doxygen/Makefile)
 
 AC_OUTPUT
