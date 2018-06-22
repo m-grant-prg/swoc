@@ -21,21 +21,11 @@
 #									#
 # 03/10/2017	MG	1.0.0	First release.				#
 # 12/01/2018	MG	1.0.1	Add SPDX license tags to source files.	#
+# 22/06/2018	MG	1.0.2	Build setup.sh in AC_CONFIG_FILES.	#
 #									#
 #########################################################################
 
 
-setup.sh: Makefile
-	mkdir -p $(@D)
-	rm -f $@ $@.tmp
-	test -f ./$@.in || srcdir=$(srcdir)/; \
-	$(edit) $${srcdir}$(@F).in >$@.tmp
-	mv $@.tmp $@
-	chmod a+x $@
-setup.sh: $(srcdir)/setup.sh.in
-
 pkglibexec_SCRIPTS = setup.sh
-
-EXTRA_DIST = $(srcdir)/setup.sh.in
 
 CLEANFILES = *.tmp setup.sh

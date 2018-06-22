@@ -52,6 +52,7 @@
 #				Makefile.am's.				#
 # 22/06/2018	MG	1.0.12	AC_DEFINE SOURCE_VERSION for use in	#
 #				version.c via config.h			#
+#				Build setup.sh in AC_CONFIG_FILES.	#
 #									#
 #########################################################################
 
@@ -413,6 +414,9 @@ PKG_CHECK_MODULES(LIBMGESYSUTILS, libmgesysutils, [], \
 		AC_MSG_ERROR(pkg-config file not found))
 PKG_CHECK_MODULES(LIBSSH, libssh, [], \
 		AC_MSG_ERROR(pkg-config file not found))
+
+# Create setup.sh
+AC_CONFIG_FILES(src/prg/bash/setup.sh, chmod a+x src/prg/bash/setup.sh)
 
 # Project Makefiles to create.
 AC_CONFIG_FILES(Makefile
