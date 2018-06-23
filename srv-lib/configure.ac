@@ -65,6 +65,9 @@
 #				version.c via config.h			#
 #				Remove no longer needed AC_SUBST	#
 #				variable pkgversion.			#
+#				AC_SUBST the lib_version_info so that	#
+#				all top level versioning can be done	#
+#				from configure.ac			#
 #									#
 #########################################################################
 
@@ -75,9 +78,8 @@ AC_PREREQ(2.69)
 
 ########################
 #
-# The package version in ac init will be used to create an output variable which
-# can be used by ac output and / or the sed setup below to substitute bookmarks
-# in source files.
+# The following macros set all top level versioning for this project. All
+# information can be propagated via AC_CONFIG_HEADERS and AC_CONFIG_FILES.
 #
 ########################
 
@@ -86,6 +88,8 @@ AC_INIT(Server Wait On Client Server side library, v1.1.4,
 
 AC_DEFINE(SOURCE_VERSION, "1.1.4", \
 	Define to the version of source code in this package.)
+
+AC_SUBST(lib_version_info, "2:0:0")
 
 
 ########################

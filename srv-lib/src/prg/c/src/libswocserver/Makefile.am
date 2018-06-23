@@ -40,6 +40,10 @@
 # 26/03/2018	MG	1.0.11	Add support for sparse.			#
 # 23/06/2018	MG	1.0.12	Disable sparse variable length array	#
 #				warnings.				#
+#				Use lib_version_info AC_SUBST variable	#
+#				passed via AC_CONFIG_FILES to enable	#
+#				all top level versioning to be done in	#
+#				configure.ac				#
 #									#
 #########################################################################
 
@@ -70,7 +74,7 @@ libswocserver_la_SOURCES = optionproc.c
 libswocserver_la_SOURCES += version.c
 
 
-AM_LDFLAGS = -version-info 2:0:0
+AM_LDFLAGS = -version-info @lib_version_info@
 AM_LDFLAGS += $(LIBMGEC_LIBS) $(LIBSWOCCOMMON_LIBS)
 
 
