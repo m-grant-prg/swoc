@@ -21,22 +21,13 @@
 #									#
 # 02/10/2017	MG	1.0.0	Initial release.			#
 # 12/01/2018	MG	1.0.1	Add SPDX license tags to source files.	#
+# 23/06/2018	MG	1.0.2	Build swoc.conf in AC_CONFIG_FILES.	#
 #									#
 #########################################################################
 
 
 confdir = $(sysconfdir)
 
-swoc.conf: Makefile
-	mkdir -p $(@D)
-	rm -f $@ $@.tmp
-	test -f ./$@.in || srcdir=$(srcdir)/; \
-	$(edit) $${srcdir}$(@F).in > $@.tmp
-	mv $@.tmp $@
-swoc.conf: $(srcdir)/swoc.conf.in
-
 conf_DATA = swoc.conf
-
-EXTRA_DIST = $(srcdir)/swoc.conf.in
 
 CLEANFILES = *.tmp swoc.conf

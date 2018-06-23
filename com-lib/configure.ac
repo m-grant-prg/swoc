@@ -50,9 +50,10 @@
 # 26/03/2018	MG	1.0.11	Add support for an enable-sparse CLA	#
 #				and passing a suitable variable to the	#
 #				Makefile.am's.				#
-# 22/06/2018	MG	1.0.12	AC_DEFINE SOURCE_VERSION for use in	#
+# 23/06/2018	MG	1.0.12	AC_DEFINE SOURCE_VERSION for use in	#
 #				version.c via config.h			#
 #				Build setup.sh in AC_CONFIG_FILES.	#
+#				Build swoc.conf in AC_CONFIG_FILES.	#
 #									#
 #########################################################################
 
@@ -417,6 +418,9 @@ PKG_CHECK_MODULES(LIBSSH, libssh, [], \
 
 # Create setup.sh
 AC_CONFIG_FILES(src/prg/bash/setup.sh, chmod a+x src/prg/bash/setup.sh)
+
+# Create other files.
+AC_CONFIG_FILES(src/conf/etc/swoc.conf)
 
 # Project Makefiles to create.
 AC_CONFIG_FILES(Makefile
