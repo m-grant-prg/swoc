@@ -39,26 +39,26 @@
 #				pkg-config file Requires and		#
 #				Requires.private fields.		#
 # 22/05/2018	MG	1.0.8	Simplify src directory structure.	#
+# 23/06/2018	MG	1.0.9	Remove pkgversion AC_SUBST as it is	#
+#				available via AC_CONFIG_HEADERS and	#
+#				AC_CONFIG_FILES from AC_INIT info.	#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.0.8 $)
+AC_REVISION($Revision: 1.0.9 $)
 
 AC_PREREQ(2.69)
 
 
 ########################
 #
-# The package version in ac init will be used to create an output variable which
-# can be used by ac output and / or the sed setup below to substitute bookmarks
-# in source files.
+# The following macros set all top level versioning for this project. All
+# information can be propagated via AC_CONFIG_HEADERS and AC_CONFIG_FILES.
 #
 ########################
 
 AC_INIT(SWOC Common Library dev files, v1.0.6,
 	m.grant.prg@gmail.com, libswoccommon-dev)
-
-AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
 
 ########################
@@ -100,7 +100,6 @@ AC_SUBST(pkgversion, $PACKAGE_VERSION)
 ########################
 
 AC_SUBST([edit], ["sed \
-		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
 		-e 's|@bindir[@]|\$(bindir)|g' \
