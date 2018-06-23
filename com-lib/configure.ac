@@ -74,13 +74,13 @@ AC_PREREQ(2.69)
 #
 ########################
 
-AC_INIT(Server Wait On Client Common library, v1.0.6,
+AC_INIT(Server Wait On Client Common library, v1.0.7,
 	m.grant.prg@gmail.com, libswoccommon)
 
-AC_DEFINE(SOURCE_VERSION, "1.1.4", \
+AC_DEFINE(SOURCE_VERSION, "1.1.5", \
 	Define to the version of source code in this package.)
 
-AC_SUBST(lib_version_info, "2:0:0")
+AC_SUBST(lib_version_info, "2:1:0")
 
 
 ########################
