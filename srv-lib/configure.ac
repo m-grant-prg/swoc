@@ -61,10 +61,12 @@
 # 26/03/2018	MG	1.0.18	Add support for an enable-sparse CLA	#
 #				and passing a suitable variable to the	#
 #				Makefile.am's.				#
+# 23/06/2018	MG	1.0.19	AC_DEFINE SOURCE_VERSION for use in	#
+#				version.c via config.h			#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.0.18 $)
+AC_REVISION($Revision: 1.0.19 $)
 
 AC_PREREQ(2.69)
 
@@ -79,6 +81,9 @@ AC_PREREQ(2.69)
 
 AC_INIT(Server Wait On Client Server side library, v1.1.4,
 	m.grant.prg@gmail.com, libswocserver)
+
+AC_DEFINE(SOURCE_VERSION, "1.1.4", \
+	Define to the version of source code in this package.)
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
 

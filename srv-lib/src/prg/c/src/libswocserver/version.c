@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.5 ==== 05/06/2018_
+ * @version _v1.0.6 ==== 23/06/2018_
  */
 
 /* **********************************************************************
@@ -23,6 +23,8 @@
  * 12/11/2017	MG	1.0.4	Add Doxygen comments.			*
  *				Add SPDX license tags.			*
  * 05/06/2018	MG	1.0.5	Make this ChangeLog for this file only.	*
+ * 23/06/2018	MG	1.0.6	Remove SOURCE_CODE define, now uses the	*
+ *				AC_DEFINE'd value in config.h		*
  *									*
  ************************************************************************
  */
@@ -32,8 +34,6 @@
 #include <libswocserver.h>
 #include <config.h>
 
-/** The source code version. */
-#define SOURCE_VERSION "1.1.4"
 
 /**
  * Get the git-describe based package version.
