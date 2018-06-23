@@ -83,6 +83,8 @@
 #				AC_CONFIG_FILES.			#
 #				Build swocserverd.service in		#
 #				AC_CONFIG_FILES.			#
+#				Remove no longer needed AC_SUBST	#
+#				variable pkgversion.			#
 #									#
 #########################################################################
 
@@ -93,16 +95,13 @@ AC_PREREQ(2.69)
 
 ########################
 #
-# The package version in ac init will be used to create an output variable which
-# can be used by ac output and / or the sed setup below to substitute bookmarks
-# in source files.
+# The following macros set all top level versioning for this project. All
+# information can be propagated via AC_CONFIG_HEADERS and AC_CONFIG_FILES.
 #
 ########################
 
 AC_INIT(Server Wait On Client Server Package, v1.1.4,
 	m.grant.prg@gmail.com, swocserver)
-
-AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
 
 ########################
@@ -266,7 +265,6 @@ fi
 ########################
 
 AC_SUBST([edit], ["sed \
-		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
 		-e 's|@bindir[@]|\$(bindir)|g' \
