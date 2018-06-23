@@ -78,10 +78,11 @@
 #				and passing a suitable variable to the	#
 #				Makefile.am's.				#
 # 10/05/2018	MG	1.1.11	Add check for stdbool.h			#
+# 23/06/2018	MG	1.1.12	Build setup.sh in AC_CONFIG_FILES.	#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.1.11 $)
+AC_REVISION($Revision: 1.1.12 $)
 
 AC_PREREQ(2.69)
 
@@ -473,6 +474,9 @@ PKG_CHECK_MODULES(LIBMGEC, libmgec, [], \
 		AC_MSG_ERROR(pkg-config file not found))
 PKG_CHECK_MODULES(LIBSWOCCOMMON, libswoccommon, [], \
 		AC_MSG_ERROR(pkg-config file not found))
+
+# Create setup.sh
+AC_CONFIG_FILES(src/prg/bash/setup.sh, chmod a+x src/prg/bash/setup.sh)
 
 # Project Makefiles to create.
 AC_CONFIG_FILES(Makefile
