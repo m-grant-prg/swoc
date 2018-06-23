@@ -81,6 +81,8 @@
 # 23/06/2018	MG	1.1.12	Build setup.sh in AC_CONFIG_FILES.	#
 #				Build swocserverd.conf in		#
 #				AC_CONFIG_FILES.			#
+#				Build swocserverd.service in		#
+#				AC_CONFIG_FILES.			#
 #									#
 #########################################################################
 
@@ -481,7 +483,8 @@ PKG_CHECK_MODULES(LIBSWOCCOMMON, libswoccommon, [], \
 AC_CONFIG_FILES(src/prg/bash/setup.sh, chmod a+x src/prg/bash/setup.sh)
 
 # Create other files.
-AC_CONFIG_FILES(src/conf/etc/swocserverd.conf)
+AC_CONFIG_FILES(src/conf/etc/swocserverd.conf
+		src/systemd/swocserverd.service)
 
 # Project Makefiles to create.
 AC_CONFIG_FILES(Makefile

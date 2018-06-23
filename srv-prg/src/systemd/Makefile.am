@@ -22,25 +22,17 @@
 #				if configure is run with		#
 #				--enable-systemd=yes.			#
 # 12/01/2018	MG	1.0.2	Add SPDX license tags to source files.	#
+# 23/06/2018	MG	1.0.3	Build swocserverd.service in		#
+#				AC_CONFIG_FILES.			#
 #									#
 #########################################################################
 
 systemddir = $(libdir)/systemd/system
-
-swocserverd.service: Makefile
-	mkdir -p $(@D)
-	rm -f $@ $@.tmp
-	test -f ./$@.in || srcdir=$(srcdir)/; \
-	$(edit) $${srcdir}$(@F).in > $@.tmp
-	mv $@.tmp $@
-swocserverd.service: $(srcdir)/swocserverd.service.in
 
 systemd_DATA = swocserverd.service
 
 install-data-hook:
 	systemctl enable swocserverd.service
 	systemctl start swocserverd.service
-
-EXTRA_DIST = $(srcdir)/swocserverd.service.in
 
 CLEANFILES = *.tmp swocserverd.service
