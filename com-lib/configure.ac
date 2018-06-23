@@ -54,6 +54,8 @@
 #				version.c via config.h			#
 #				Build setup.sh in AC_CONFIG_FILES.	#
 #				Build swoc.conf in AC_CONFIG_FILES.	#
+#				Remove no longer needed AC_SUBST	#
+#				variable pkgversion.			#
 #									#
 #########################################################################
 
@@ -75,8 +77,6 @@ AC_INIT(Server Wait On Client Common library, v1.0.6,
 
 AC_DEFINE(SOURCE_VERSION, "1.1.4", \
 	Define to the version of source code in this package.)
-
-AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
 
 ########################
@@ -219,7 +219,6 @@ fi
 ########################
 
 AC_SUBST([edit], ["sed \
-		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
 		-e 's|@bindir[@]|\$(bindir)|g' \
