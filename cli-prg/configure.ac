@@ -66,10 +66,12 @@
 #				Makefile.am's.				#
 # 22/05/2018	MG	1.0.21	Simplify src directory structure and	#
 #				header file location.			#
+# 23/06/2018	MG	1.0.22	AC_DEFINE SOURCE_VERSION for use in	#
+#				version.c via config.h			#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.0.21 $)
+AC_REVISION($Revision: 1.0.22 $)
 
 AC_PREREQ(2.69)
 
@@ -84,6 +86,9 @@ AC_PREREQ(2.69)
 
 AC_INIT(Server Wait On Client Client Package, v1.1.4,
 	m.grant.prg@gmail.com, swocclient)
+
+AC_DEFINE(SOURCE_VERSION, "1.1.2", \
+	Define to the version of source code in this package.)
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
