@@ -1,3 +1,21 @@
+Release 1.0.7 2018-06-23
+Add informational messages to make srctarball output.
+README: Add N.B. concerning expecting to be in a git environment.
+README: Improve the clarity of the Ubuntu Installation sections.
+Add mgebuffer & mgemessage as temporary header file candidates.
+Add libmgec as a temporary library candidate.
+Allow partial extraction from buffer to msg structs. libmgec/pull_msg now allows
+for the extraction of partial messages from the buffer struct to the message
+struct, so eliminate the clear_msg call if the message after pull is incomplete.
+Disable sparse variable length array warnings.
+Define SOURCE_VERSION in configure.ac
+test-validate: Print source and package version.
+Build setup.sh in AC_CONFIG_FILES.
+setup.sh: Add SPDX identifier and copyright.
+Make swoc.conf in AC_CONFIG_FILES.
+Remove no longer needed AC_SUBST pkgversion variable.
+Add lib_version_info, all top level versioning in configure.ac
+
 Release 1.0.6 2018-06-03
 Add client blocklist.
 Add server blocklist.
