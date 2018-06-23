@@ -35,8 +35,12 @@
 #				-dev projects.				#
 # 26/01/2018	MG	1.0.9	Add correct pthread handling.		#
 # 26/03/2018	MG	1.0.10	Add support for sparse.			#
-# 22/06/2018	MG	1.0.11	Disable sparse variable length array	#
+# 23/06/2018	MG	1.0.11	Disable sparse variable length array	#
 #				warnings.				#
+#				Use lib_version_info AC_SUBST variable	#
+#				passed via AC_CONFIG_FILES to enable	#
+#				all top level versioning to be done in	#
+#				configure.ac				#
 #									#
 #########################################################################
 
@@ -75,7 +79,7 @@ libswoccommon_la_SOURCES += version.c
 AM_LDFLAGS = $(PTHREAD_CFLAGS) $(LDFLAGS) $(PTHREAD_LIBS) $(LIBS)
 AM_LDFLAGS += $(LIBMGEC_LIBS) $(LIBMGESYSUTILS_LIBS)
 AM_LDFLAGS += $(LIBSSH_LIBS)
-AM_LDFLAGS += -version-info 2:0:0
+AM_LDFLAGS += -version-info @lib_version_info@
 
 
 libswoccommon_la_LIBADD = $(tmplibraries)
