@@ -63,6 +63,8 @@
 #				Makefile.am's.				#
 # 23/06/2018	MG	1.0.19	AC_DEFINE SOURCE_VERSION for use in	#
 #				version.c via config.h			#
+#				Remove no longer needed AC_SUBST	#
+#				variable pkgversion.			#
 #									#
 #########################################################################
 
@@ -84,8 +86,6 @@ AC_INIT(Server Wait On Client Server side library, v1.1.4,
 
 AC_DEFINE(SOURCE_VERSION, "1.1.4", \
 	Define to the version of source code in this package.)
-
-AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
 
 ########################
@@ -228,7 +228,6 @@ fi
 ########################
 
 AC_SUBST([edit], ["sed \
-		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
 		-e 's|@bindir[@]|\$(bindir)|g' \
