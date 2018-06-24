@@ -78,13 +78,15 @@
 #				and passing a suitable variable to the	#
 #				Makefile.am's.				#
 # 10/05/2018	MG	1.1.11	Add check for stdbool.h			#
-# 23/06/2018	MG	1.1.12	Build setup.sh in AC_CONFIG_FILES.	#
+# 24/06/2018	MG	1.1.12	Build setup.sh in AC_CONFIG_FILES.	#
 #				Build swocserverd.conf in		#
 #				AC_CONFIG_FILES.			#
 #				Build swocserverd.service in		#
 #				AC_CONFIG_FILES.			#
 #				Remove no longer needed AC_SUBST	#
 #				variable pkgversion.			#
+#				AC_DEFINE SWOCSERVER_SOURCE_VERSION for	#
+#				use in version.c via config.h		#
 #									#
 #########################################################################
 
@@ -102,6 +104,9 @@ AC_PREREQ(2.69)
 
 AC_INIT(Server Wait On Client Server Package, v1.1.4,
 	m.grant.prg@gmail.com, swocserver)
+
+AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.3", \
+	Define to the version of source code in this package.)
 
 
 ########################

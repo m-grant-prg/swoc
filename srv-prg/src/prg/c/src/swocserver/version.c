@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.4 ==== 05/06/2018_
+ * @version _v1.0.5 ==== 24/06/2018_
  */
 
 /* **********************************************************************
@@ -22,6 +22,8 @@
  * 17/11/2017	MG	1.0.3	Add Doxygen comments.			*
  *				Add SPDX license tags.			*
  * 05/06/2018	MG	1.0.4	Make this ChangeLog for this file only.	*
+ * 24/06/2018	MG	1.0.5	Remove SOURCE_CODE define, now uses the	*
+ *				AC_DEFINE'd value in config.h		*
  *									*
  ************************************************************************
  */
@@ -31,9 +33,6 @@
 
 #include "internal.h"
 
-
-/** The source code version. */
-#define SOURCE_VERSION "1.1.3"
 
 /**
  * Get the git-describe based package version.
@@ -50,7 +49,7 @@ char *swocserver_get_pkg_version(void)
  */
 char *swocserver_get_src_version(void)
 {
-	return SOURCE_VERSION;
+	return SWOCSERVER_SOURCE_VERSION;
 }
 
 /**
@@ -67,5 +66,6 @@ void swocserver_print_pkg_version(void)
  */
 void swocserver_print_src_version(void)
 {
-	printf("%s %s %s", "swocserver Source version -", SOURCE_VERSION, "\n");
+	printf("%s %s %s", "swocserver Source version -",
+	       SWOCSERVER_SOURCE_VERSION, "\n");
 }
