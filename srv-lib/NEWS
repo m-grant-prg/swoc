@@ -1,3 +1,12 @@
+Release 1.1.5 2018-06-24
+Add informational messages to make srctarball output.
+README: Add N.B. concerning expecting to be in a git environment.
+README: Improve the clarity of the Ubuntu Installation sections.
+Disable sparse variable length array warnings.
+Define SOURCE_VERSION in configure.ac
+Remove no longer needed AC_SUBST pkgversion variable.
+Add lib_version_info, all top level versioning in configure.ac
+
 Release 1.1.4 2018-06-05
 Add server block list.
 Add support for client block and unblock.
