@@ -104,13 +104,13 @@ AC_PREREQ(2.69)
 #
 ########################
 
-AC_INIT(Server Wait On Client Server Package, v1.1.4,
+AC_INIT(Server Wait On Client Server Package, v1.1.5,
 	m.grant.prg@gmail.com, swocserver)
 
-AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.3", \
+AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.4", \
 	Define to the version of source code in this package.)
 
-AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.2", \
+AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.3", \
 	Define to the version of source code in this package.)
 
 
