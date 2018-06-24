@@ -87,6 +87,8 @@
 #				variable pkgversion.			#
 #				AC_DEFINE SWOCSERVER_SOURCE_VERSION for	#
 #				use in version.c via config.h		#
+#				AC_DEFINE SWOCSERVERD_SOURCE_VERSION	#
+#				for use in version.c via config.h	#
 #									#
 #########################################################################
 
@@ -106,6 +108,9 @@ AC_INIT(Server Wait On Client Server Package, v1.1.4,
 	m.grant.prg@gmail.com, swocserver)
 
 AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.3", \
+	Define to the version of source code in this package.)
+
+AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.2", \
 	Define to the version of source code in this package.)
 
 
