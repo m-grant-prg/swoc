@@ -1,3 +1,11 @@
+2018-06-24 v 1.1.5 Mark Grant <m.grant.prg@gmail.com>
+	*  Add informational messages to make srctarball output.
+	README: Add N.B. concerning expecting to be in a git environment.
+	README: Improve the clarity of the Ubuntu Installation sections.
+	Disable sparse variable length array warnings.
+	Define SOURCE_VERSION in configure.ac
+	Remove no longer needed AC_SUBST pkgversion variable.
+
 2018-06-04 v 1.1.4 Mark Grant <m.grant.prg@gmail.com>
 	*  Add support for client blocking.
 	Add server blocking state to status display.
