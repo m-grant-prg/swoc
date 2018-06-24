@@ -1,3 +1,21 @@
+2018-06-24 v 1.1.5 Mark Grant <m.grant.prg@gmail.com>
+	*  Add informational messages to make srctarball output.
+	README: Add N.B. concerning expecting to be in a git environment.
+	README: Improve the clarity of the Ubuntu Installation sections.
+	Add mgebuffer & mgemessage as temporary header file candidates.
+	Allow partial extraction from buffer to msg structs. libmgec/pull_msg
+	now allows for the extraction of partial messages from the buffer struct
+	to the message struct, so eliminate the clear_msg call if the message
+	after pull is incomplete.
+	Disable sparse variable length array warnings.
+	Build setup.sh in AC_CONFIG_FILES.
+	setup.sh: Add SPDX identifier and copyright.
+	Make swocserverd.conf in AC_CONFIG_FILES.
+	Make swocserverd.service in AC_CONFIG_FILES.
+	Remove no longer needed AC_SUBST pkgversion variable.
+	Define SWOCSERVER_SOURCE_VERSION in configure.ac
+	Define SWOCSERVERD_SOURCE_VERSION in configure.ac
+
 2018-06-05 v 1.1.4 Mark Grant <m.grant.prg@gmail.com>
 	*  Add server block list.
 	Add support for client block and unblock.
