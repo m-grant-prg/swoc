@@ -1,3 +1,9 @@
+Release 1.1.6 2018-06-24
+Add informational messages to make srctarball output.
+README: Add N.B. concerning expecting to be in a git environment.
+README: Improve the clarity of the Ubuntu Installation sections.
+Remove pkgversion AC_SUBST as it is available as standard.
+
 Release 1.1.5 2018-06-04
 Add support for client blocking.
 Simplify source directory structure.
