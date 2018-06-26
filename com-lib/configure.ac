@@ -59,10 +59,14 @@
 #				AC_SUBST the lib_version_info so that	#
 #				all top level versioning can be done	#
 #				from configure.ac			#
+# 26/06/2018	MG	1.0.13	Do not use AC_CONFIG_FILES for		#
+#				substitution of Installation Directory	#
+#				Variables. Reverse build of setup.sh to	#
+#				the Makefile.				#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.0.12 $)
+AC_REVISION($Revision: 1.0.13 $)
 
 AC_PREREQ(2.69)
 
@@ -81,6 +85,10 @@ AC_DEFINE(SOURCE_VERSION, "1.1.5", \
 	Define to the version of source code in this package.)
 
 AC_SUBST(lib_version_info, "2:1:0")
+
+# For use in files built in Makefiles because they require Installation
+# Directory Variable substitutions.
+AC_SUBST(package_version, $PACKAGE_VERSION)
 
 
 ########################
@@ -223,6 +231,7 @@ fi
 ########################
 
 AC_SUBST([edit], ["sed \
+		-e 's|@package_version[@]|\$(package_version)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
 		-e 's|@bindir[@]|\$(bindir)|g' \
@@ -419,10 +428,11 @@ PKG_CHECK_MODULES(LIBMGESYSUTILS, libmgesysutils, [], \
 PKG_CHECK_MODULES(LIBSSH, libssh, [], \
 		AC_MSG_ERROR(pkg-config file not found))
 
-# Create setup.sh
-AC_CONFIG_FILES(src/prg/bash/setup.sh, chmod a+x src/prg/bash/setup.sh)
 
-# Create other files.
+# Non-Makefile files to generate.
+# AC_CONFIG_FILES should not be used to substitute AutoConf Installation
+# Directory Variables, (bindir and friends), except im Makefiles and pkg-config
+# files. See GNU AutoConf manual section 4.8.2 Installation Directory Variables.
 AC_CONFIG_FILES(src/conf/etc/swoc.conf)
 
 # Project Makefiles to create.
