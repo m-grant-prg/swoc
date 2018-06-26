@@ -1,3 +1,11 @@
+2018-06-26 v 1.0.8 Mark Grant <m.grant.prg@gmail.com>
+	*  Do not use AC_CONFIG_FILES for substitution of Installation Directory
+	Variables. Reverse build of setup.sh to the Makefile.
+	Package now at v1.0.8
+	Software still at v1.1.5
+	Library still at v2:1:0
+	setup.sh now at v1.0.2
+
 2018-06-23 v 1.0.7 Mark Grant <m.grant.prg@gmail.com>
 	*  Add informational messages to make srctarball output.
 	README: Add N.B. concerning expecting to be in a git environment.
