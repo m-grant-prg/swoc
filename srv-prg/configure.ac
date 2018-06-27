@@ -89,10 +89,14 @@
 #				use in version.c via config.h		#
 #				AC_DEFINE SWOCSERVERD_SOURCE_VERSION	#
 #				for use in version.c via config.h	#
+# 27/06/2018	MG	1.0.13	Do not use AC_CONFIG_FILES for		#
+#				substitution of Installation Directory	#
+#				Variables. Reverse build of setup.sh to	#
+#				the Makefile.				#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.1.12 $)
+AC_REVISION($Revision: 1.1.13 $)
 
 AC_PREREQ(2.69)
 
@@ -112,6 +116,10 @@ AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.4", \
 
 AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.3", \
 	Define to the version of source code in this package.)
+
+# For use in files built in Makefiles because they require Installation
+# Directory Variable substitutions.
+AC_SUBST(package_version, $PACKAGE_VERSION)
 
 
 ########################
@@ -275,6 +283,7 @@ fi
 ########################
 
 AC_SUBST([edit], ["sed \
+		-e 's|@package_version[@]|\$(package_version)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
 		-e 's|@bindir[@]|\$(bindir)|g' \
@@ -487,10 +496,11 @@ PKG_CHECK_MODULES(LIBMGEC, libmgec, [], \
 PKG_CHECK_MODULES(LIBSWOCCOMMON, libswoccommon, [], \
 		AC_MSG_ERROR(pkg-config file not found))
 
-# Create setup.sh
-AC_CONFIG_FILES(src/prg/bash/setup.sh, chmod a+x src/prg/bash/setup.sh)
 
-# Create other files.
+# Non-Makefile files to generate.
+# AC_CONFIG_FILES should not be used to substitute AutoConf Installation
+# Directory Variables, (bindir and friends), except im Makefiles and pkg-config
+# files. See GNU AutoConf manual section 4.8.2 Installation Directory Variables.
 AC_CONFIG_FILES(src/conf/etc/swocserverd.conf
 		src/systemd/swocserverd.service)
 

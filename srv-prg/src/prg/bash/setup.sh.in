@@ -53,6 +53,10 @@
 # 23/06/2018	MG	1.0.4	Change package version substitution	#
 #				variable for build in AC_CONFIG_FILES.	#
 #				Add SPDX identifier and copyright.	#
+# 27/06/2018	MG	1.0.5	Reverse first part of 1.0.4 as		#
+#				AC_CONFIG_FILES cannot be used for the	#
+#				substitution of Installation Directory	#
+#				Variables.				#
 #									#
 #########################################################################
 
@@ -61,9 +65,9 @@
 ##################
 script_exit_code=0
 outputprefix="setup.sh: "
-version="1.0.4"				# set version variable
+version="1.0.5"				# set version variable
 etclocation=@sysconfdir@		# Path to etc directory
-packageversion=@PACKAGE_VERSION@	# Version of the complete package
+packageversion=@package_version@	# Version of the complete package
 
 portno=""
 
