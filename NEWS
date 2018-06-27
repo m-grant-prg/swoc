@@ -1,2 +1,15 @@
+Release 1.1.5 2018-06-27
+Modules at:-
+full v1.1.5
+cli-dev v1.1.7
+cli-lib v1.1.7
+cli-prg v1.1.5
+com-dev v1.0.8
+com-lib v1.0.8
+doc v1.0.1-rc9
+srv-dev v1.1.6
+srv-lib v1.1.5
+srv-prg v1.1.6
+
 Release 1.0.1 2018-01-11
 Initial release.
