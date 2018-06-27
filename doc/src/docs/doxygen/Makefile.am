@@ -24,6 +24,9 @@
 # 22/06/2018	MG	1.0.2	Remove make, (leave install), of	#
 #				swoc doc-base file as it is now	built	#
 #				using AC_CONFIG_FILES.			#
+# 27/06/2018	MG	1.0.3	Reverse 1.0.2 as AC_CONFIG_FILES cannot	#
+#				be used for the substitution of		#
+#				Installation Directory Variables.	#
 #									#
 #########################################################################
 
@@ -58,6 +61,12 @@ doxygen.stamp: Doxyfile
 html_DATA = $(docpkg)
 
 
+swoc: Makefile
+	mkdir -p $(@D)
+	rm -f $@
+	$(edit) $(srcdir)/$(@F).in > $@
+swoc: $(srcdir)/swoc.in
+
 docbase_DATA = swoc
 
 
@@ -82,7 +91,7 @@ uninstall-hook:
 	fi
 
 
-EXTRA_DIST = $(docpkg) swoc.in
+EXTRA_DIST = $(docpkg) $(srcdir)/swoc.in
 
 
 CLEANFILES = doxywarn.txt doxygen.stamp $(docpkg) swoc
