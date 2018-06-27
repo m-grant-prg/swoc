@@ -1,3 +1,8 @@
+Release 1.1.6 2018-06-27
+Do not use AC_CONFIG_FILES for substitution of Installation Directory
+Variables so reverse the build of setup.sh and swocserverd.service from
+AC_CONFIG_FILES to the Makefile.
+
 Release 1.1.5 2018-06-24
 Add informational messages to make srctarball output.
 README: Add N.B. concerning expecting to be in a git environment.
