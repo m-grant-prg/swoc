@@ -24,15 +24,28 @@
 # 12/01/2018	MG	1.0.2	Add SPDX license tags to source files.	#
 # 23/06/2018	MG	1.0.3	Build swocserverd.service in		#
 #				AC_CONFIG_FILES.			#
+# 27/06/2018	MG	1.0.4	Reverse 1.0.3 as AC_CONFIG_FILES cannot	#
+#				be used for the substitution of		#
+#				Installation Directory Variables.	#
 #									#
 #########################################################################
 
 systemddir = $(libdir)/systemd/system
+
+swocserverd.service: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).in > $@.tmp
+	mv $@.tmp $@
+swocserverd.service: $(srcdir)/swocserverd.service.in
 
 systemd_DATA = swocserverd.service
 
 install-data-hook:
 	systemctl enable swocserverd.service
 	systemctl start swocserverd.service
+
+EXTRA_DIST = $(srcdir)/swocserverd.service.in
 
 CLEANFILES = *.tmp swocserverd.service

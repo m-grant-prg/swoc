@@ -89,10 +89,11 @@
 #				use in version.c via config.h		#
 #				AC_DEFINE SWOCSERVERD_SOURCE_VERSION	#
 #				for use in version.c via config.h	#
-# 27/06/2018	MG	1.0.13	Do not use AC_CONFIG_FILES for		#
+# 27/06/2018	MG	1.1.13	Do not use AC_CONFIG_FILES for		#
 #				substitution of Installation Directory	#
 #				Variables. Reverse build of setup.sh to	#
-#				the Makefile.				#
+#				the Makefile. Reverse build of		#
+#				swocserverd.service to the Makefile.	#
 #									#
 #########################################################################
 
@@ -501,8 +502,7 @@ PKG_CHECK_MODULES(LIBSWOCCOMMON, libswoccommon, [], \
 # AC_CONFIG_FILES should not be used to substitute AutoConf Installation
 # Directory Variables, (bindir and friends), except im Makefiles and pkg-config
 # files. See GNU AutoConf manual section 4.8.2 Installation Directory Variables.
-AC_CONFIG_FILES(src/conf/etc/swocserverd.conf
-		src/systemd/swocserverd.service)
+AC_CONFIG_FILES(src/conf/etc/swocserverd.conf)
 
 # Project Makefiles to create.
 AC_CONFIG_FILES(Makefile
