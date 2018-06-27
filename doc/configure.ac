@@ -49,7 +49,7 @@ AC_PREREQ(2.69)
 #
 ########################
 
-AC_INIT(Server Wait On Clients system documentation, v1.0.1-rc8,
+AC_INIT(Server Wait On Clients system documentation, v1.0.1-rc9,
 	m.grant.prg@gmail.com, swocdoc)
 
 
