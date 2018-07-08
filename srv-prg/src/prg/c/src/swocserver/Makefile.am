@@ -54,6 +54,9 @@
 # 22/05/2018	MG	1.1.6	Change from swocserver.h to internal.h	#
 # 23/06/2018	MG	1.1.7	Disable sparse variable length array	#
 #				warnings.				#
+# 08/07/2018	MG	1.1.8	Improve debug flags used. Use gdb	#
+#				orientated level 3 (includes		#
+#				pre-processor macros).			#
 #									#
 #########################################################################
 
@@ -68,7 +71,7 @@ AM_CFLAGS = -Wall
 AM_CFLAGS += $(LIBSWOCSERVER_CFLAGS) $(LIBMGEC_CFLAGS)
 
 if DEBUG
-AM_CFLAGS += -g -Og
+AM_CFLAGS += -ggdb3 -Og
 else
 AM_CFLAGS += -O2
 endif
