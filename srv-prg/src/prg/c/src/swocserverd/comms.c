@@ -52,7 +52,8 @@
  *				message after pull is incomplete.	*
  * 05/08/2018	MG	1.0.13	Correct mgebuffer initialisation.	*
  *				Change mgemessage initialisation after	*
- *				fiel complete changed to type bool.	*
+ *				field complete changed to type bool.	*
+ *				Add missing includes.			*
  *									*
  ************************************************************************
  */
@@ -68,6 +69,10 @@
 #include <stdbool.h>
 
 #include <mge-errno.h>
+#include <bstree.h>
+#include <mgebuffer.h>
+#include <mgemessage.h>
+#include <libswoccommon.h>
 #include "internal.h"
 
 
