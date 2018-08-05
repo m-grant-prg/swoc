@@ -73,11 +73,13 @@
 #include <syslog.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <limits.h>
 
 #include <configmake.h>
 #include <cmdlineargs.h>
 #include <signalhandle.h>
 #include <mge-errno.h>
+#include <bstree.h>
 #include "internal.h"
 
 
