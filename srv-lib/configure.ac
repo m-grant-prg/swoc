@@ -68,10 +68,11 @@
 #				AC_SUBST the lib_version_info so that	#
 #				all top level versioning can be done	#
 #				from configure.ac			#
+# 05/08/2018	MG	1.0.20	Add check for stdbool.h			#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.0.19 $)
+AC_REVISION($Revision: 1.0.20 $)
 
 AC_PREREQ(2.69)
 
@@ -382,6 +383,7 @@ AC_CHECK_HEADERS(sys/types.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(string.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(unistd.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(syslog.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(stdbool.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(ctype.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(limits.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(portability.h, [], AC_MSG_ERROR(header not found))

@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.7 ==== 10/05/2018_
+ * @version _v1.1.8 ==== 05/08/2018_
  */
 
 /* **********************************************************************
@@ -51,6 +51,9 @@
  *				clients.				*
  *				Add client block and unblock.		*
  *				Add server block and unblock.		*
+ * 05/08/2018	MG	1.1.8	Change mgemessage struct initialisation	*
+ *				following field complete change to type	*
+ *				bool.					*
  *									*
  ************************************************************************
  */
@@ -62,6 +65,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <syslog.h>
+#include <stdbool.h>
 
 #include <mge-errno.h>
 #include <mgemessage.h>
@@ -90,7 +94,7 @@ int sws_show_status(void)
 	char *end;
 	char *out_msg = "swocserver,status;";
 	size_t om_length = strlen(out_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
 
@@ -145,7 +149,7 @@ int sws_show_block_status(void)
 	char *end;
 	char *out_msg = "swocserver,blockstatus;";
 	size_t om_length = strlen(out_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
 
@@ -197,7 +201,7 @@ int sws_srv_block(void)
 	char *end;
 	char *out_msg = "swocserver,disallow;";
 	size_t om_length = strlen(out_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
 
@@ -246,7 +250,7 @@ int sws_srv_unblock(void)
 	char *end;
 	char *out_msg = "swocserver,allow;";
 	size_t om_length = strlen(out_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
 
@@ -297,7 +301,7 @@ int sws_show_cli_blocklist(void)
 	char *end;
 	char *out_msg = "swocserver,blocklist;";
 	size_t om_length = strlen(out_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
 
@@ -352,7 +356,7 @@ int sws_server_wait(void)
 	char *end;
 	char *out_msg = "swocserver,status;";
 	size_t om_length = strlen(out_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
 
@@ -410,7 +414,7 @@ int sws_release(char *lockname)
 	char *end;
 	char out_msg[20 + strlen(lockname) + 1];
 	size_t om_length;
-	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
 	sprintf(out_msg, "swocserver,release,%s;", lockname);
@@ -463,7 +467,7 @@ int sws_cli_block(char *blockname)
 	char *end;
 	char out_msg[18 + strlen(blockname) + 1];
 	size_t om_length;
-	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
 	sprintf(out_msg, "swocserver,block,%s;", blockname);
@@ -516,7 +520,7 @@ int sws_cli_unblock(char *blockname)
 	char *end;
 	char out_msg[20 + strlen(blockname) + 1];
 	size_t om_length;
-	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
 	sprintf(out_msg, "swocserver,unblock,%s;", blockname);
@@ -570,7 +574,7 @@ int sws_end_daemon(void)
 	char *end;
 	char *out_msg = "swocserver,end;";
 	size_t om_length = strlen(out_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
 
@@ -621,7 +625,7 @@ int sws_reload_config(void)
 	char *end;
 	char *out_msg = "swocserver,reload;";
 	size_t om_length = strlen(out_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
 
