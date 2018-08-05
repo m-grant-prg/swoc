@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.12 ==== 17/06/2018_
+ * @version _v1.0.13 ==== 05/08/2018_
  */
 
 /* **********************************************************************
@@ -50,6 +50,7 @@
  *				buffer struct to the message struct, so	*
  *				eliminate the clear_msg call if the	*
  *				message after pull is incomplete.	*
+ * 05/08/2018	MG	1.0.13	Correct mgebuffer initialisation.	*
  *									*
  ************************************************************************
  */
@@ -271,7 +272,7 @@ static int proc_events(int n_events, struct epoll_event *pevents)
 
 	for (i = 0; i < n_events; i++) {
 		swsd_err = 0;
-		msg_buf1 = (struct mgebuffer) { NULL, DEF_BUF_SIZE , 0 };
+		msg_buf1 = (struct mgebuffer) { NULL, 0, 0, 0 };
 		msg_buf = &msg_buf1;
 
 		cursockfd = accept(pevents[i].data.fd,
