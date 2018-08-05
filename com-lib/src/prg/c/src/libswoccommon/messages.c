@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.5 ==== 17/06/2018_
+ * @version _v1.1.6 ==== 05/08/2018_
  */
 
 /* **********************************************************************
@@ -36,6 +36,7 @@
  *				buffer struct to the message struct, so	*
  *				eliminate the clear_msg call if the	*
  *				message after pull is incomplete.	*
+ * 05/08/2018	MG	1.1.6	Correct mgebuffer struct initialisation	*
  *									*
  ************************************************************************
  */
@@ -154,7 +155,7 @@ int exch_msg(char *outgoing_msg, size_t om_length, struct mgemessage *msg)
 	ssize_t n;
 	char serv[strlen(server)];
 	char sock_buf[SOCK_BUF_SIZE];
-	struct mgebuffer msg_buf1 = { NULL, DEF_BUF_SIZE , 0 };
+	struct mgebuffer msg_buf1 = { NULL, 0, 0, 0 };
 	struct mgebuffer *msg_buf = &msg_buf1;
 
 	strcpy(serv, server);
