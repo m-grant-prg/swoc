@@ -51,6 +51,8 @@
  *				eliminate the clear_msg call if the	*
  *				message after pull is incomplete.	*
  * 05/08/2018	MG	1.0.13	Correct mgebuffer initialisation.	*
+ *				Change mgemessage initialisation after	*
+ *				fiel complete changed to type bool.	*
  *									*
  ************************************************************************
  */
@@ -63,6 +65,7 @@
 #include <syslog.h>
 #include <unistd.h>
 #include <sys/epoll.h>
+#include <stdbool.h>
 
 #include <mge-errno.h>
 #include "internal.h"
@@ -265,7 +268,7 @@ static int proc_events(int n_events, struct epoll_event *pevents)
 	char sock_buf[SOCK_BUF_SIZE];
 	struct mgebuffer msg_buf1;
 	struct mgebuffer *msg_buf;
-	struct mgemessage msg1 = { NULL, 0, 0, 0, ';', ',', 0, NULL };
+	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
 	struct mgemessage *msg = &msg1;
 
 	clilen = sizeof(cli_addr);
