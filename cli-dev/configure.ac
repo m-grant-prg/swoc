@@ -65,7 +65,7 @@ AC_PREREQ(2.69)
 #
 ########################
 
-AC_INIT(Server Wait On Clients client side library dev files, v1.1.7,
+AC_INIT(Server Wait On Clients client side library dev files, v1.1.7-rc1,
 	m.grant.prg@gmail.com, libswocclient-dev)
 
 
