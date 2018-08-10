@@ -59,7 +59,7 @@ AC_PREREQ(2.69)
 #
 ########################
 
-AC_INIT(SWOC Common Library dev files, v1.0.8,
+AC_INIT(SWOC Common Library dev files, v1.0.8-rc1,
 	m.grant.prg@gmail.com, libswoccommon-dev)
 
 
