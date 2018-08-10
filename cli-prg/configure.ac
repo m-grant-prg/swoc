@@ -85,7 +85,7 @@ AC_PREREQ(2.69)
 #
 ########################
 
-AC_INIT(Server Wait On Client Client Package, v1.1.5,
+AC_INIT(Server Wait On Client Client Package, v1.1.5-rc1,
 	m.grant.prg@gmail.com, swocclient)
 
 AC_DEFINE(SOURCE_VERSION, "1.1.3", \
