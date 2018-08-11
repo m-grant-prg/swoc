@@ -1,0 +1,5 @@
+# This .gitignore file is to ensure that this directory exists even if empty.
+# This is required because otherwise, after cloning, the compiler will emit
+# warnings that the directory does not exist.
+# This directory is part of the standard project structure.
+
