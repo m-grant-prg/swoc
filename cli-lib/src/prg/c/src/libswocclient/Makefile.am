@@ -48,6 +48,9 @@
 # 07/07/2018	MG	1.0.13	Improve debug flags used. Use gdb	#
 #				orientated level 3 (includes		#
 #				pre-processor macros).			#
+# 11/08/2018	MG	1.0.14	Support configure time otion to add -H	#
+#				compiler flag to show included files	#
+#				and their depth in the include stack.	#
 #									#
 #########################################################################
 
@@ -65,6 +68,10 @@ if DEBUG
 AM_CFLAGS += -ggdb3 -Og
 else
 AM_CFLAGS += -O2
+endif
+
+if HEADERCHECK
+AM_CFLAGS += -H
 endif
 
 if SPARSE
