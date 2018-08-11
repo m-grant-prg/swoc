@@ -51,6 +51,8 @@
 # 11/08/2018	MG	1.0.14	Support configure time otion to add -H	#
 #				compiler flag to show included files	#
 #				and their depth in the include stack.	#
+#				Use compiler version dependent CFLAGS	#
+#				assembled in configure.			#
 #									#
 #########################################################################
 
@@ -61,7 +63,7 @@ AM_CPPFLAGS += -I$(top_srcdir)/../cli-dev/src/prg/c/inc
 AM_CPPFLAGS += -I../../gen/inc -I../../gen/lib
 
 
-AM_CFLAGS = -Wall
+AM_CFLAGS = @mg_cflags@
 AM_CFLAGS += $(LIBMGEC_CFLAGS) $(LIBMGESYSUTILS_CFLAGS) $(LIBSWOCCOMMON_CFLAGS)
 
 if DEBUG
