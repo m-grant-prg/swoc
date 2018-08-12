@@ -137,7 +137,7 @@ static int validateconfigfileparams(const struct confsection *ps)
  */
 static int validatepollint(const struct confsection *ps)
 {
-	int x = 0;
+	size_t x = 0;
 
 	if ((strlen(ps->keys[0].value) < (size_t) 1) ||
 		(strlen(ps->keys[0].value) > (size_t) 5))
@@ -165,7 +165,7 @@ poll_error:
  */
 static int validatessh(const struct confsection *ps)
 {
-	int x = 0;
+	size_t x = 0;
 	char tmpanswer[MAX_KEYVAL_LENGTH] = { '\0' };
 
 	while ((tmpanswer[x] = tolower(ps->keys[1].value[x]))
@@ -207,7 +207,7 @@ static int validateserver(const struct confsection *ps)
  */
 static int validatesrvportno(const struct confsection *ps)
 {
-	int x = 0;
+	size_t x = 0;
 
 	if (strlen((ps + 1)->keys[1].value) != (size_t) 5)
 		goto port_error;
@@ -233,7 +233,7 @@ port_error:
  */
 static int validatesshportno(const struct confsection *ps)
 {
-	int x = 0;
+	size_t x = 0;
 
 	if (strlen((ps + 2)->keys[0].value) != (size_t) 5)
 		goto port_error;
