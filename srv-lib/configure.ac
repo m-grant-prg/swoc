@@ -11,6 +11,7 @@
 #									#
 # cmd line syntax:							#
 # ./configure	[--enable-debug=<yes|no> [default: no]]			#
+#		[--enable-headercheck=<yes|no> [default: no]]		#
 #		[--enable-sparse=<yes|no> [default: no]]		#
 #									#
 #########################################################################
@@ -69,10 +70,13 @@
 #				all top level versioning can be done	#
 #				from configure.ac			#
 # 05/08/2018	MG	1.0.20	Add check for stdbool.h			#
+# 13/08/2018	MG	1.0.21	Add support for an enable-headercheck	#
+#				CLA and passing a suitable variable to	#
+#				the Makefile.am's.			#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.0.20 $)
+AC_REVISION($Revision: 1.0.21 $)
 
 AC_PREREQ(2.69)
 
@@ -170,6 +174,27 @@ AM_CONDITIONAL(DEBUG, test x$debug = xtrue)
 
 if test "x${debug}" = xtrue; then
 	AC_MSG_NOTICE(Using compiler debug flags.)
+fi
+
+
+########################
+#
+# The following allows for an enable-headercheck=yes/no command line option.
+# The conditional HEADERCHECK is made available to the makefiles.
+#
+########################
+
+AC_ARG_ENABLE(headercheck,
+	--enable-headercheck    Build to display include stack,
+	[case "${enableval}" in
+		yes) headercheck=true ;;
+		no)  headercheck=false ;;
+		*) AC_MSG_ERROR(bad value ${enableval} in enable-headercheck);;
+	esac],headercheck=false)
+AM_CONDITIONAL(HEADERCHECK, test x$headercheck = xtrue)
+
+if test "x${headercheck}" = xtrue; then
+	AC_MSG_NOTICE(Building to display include stack depth.)
 fi
 
 
