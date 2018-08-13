@@ -104,7 +104,8 @@ exit:
  */
 static int validateportnos(const struct confsection *ps)
 {
-	int k, p = 0, x;
+	int k, p = 0;
+	size_t x;
 
 	if (!(ps->present))
 		return 0;
