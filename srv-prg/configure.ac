@@ -98,6 +98,8 @@
 # 13/08/2018	MG	1.1.14	Add support for an enable-headercheck	#
 #				CLA and passing a suitable variable to	#
 #				the Makefile.am's.			#
+#				Build suitable CFLAGS based on compiler	#
+#				version.				#
 #									#
 #########################################################################
 
@@ -364,6 +366,21 @@ AC_C_RESTRICT
 # Checks the c pre-processor to use, stores it in the cpp variable and checks
 # its capabilities.
 AC_PROG_CPP
+
+# Build a suitable CFLAGS list depending on compiler version.
+# This has been checked up to gcc v8.2
+AC_SUBST(mg_cflags)
+AX_COMPILER_VENDOR
+AX_COMPILER_VERSION
+# The following 2 options seem fairly universal.
+mg_cflags="-Wall -Wextra"
+if test "$ax_cv_c_compiler_vendor" = "gnu"; then
+	mg_cflags+=" -Wmissing-include-dirs -Wshadow -Wstrict-prototypes"
+	AX_COMPARE_VERSION($ax_cv_c_compiler_version, ge, "7")
+	if test "x${ax_compare_version}" = xtrue; then
+		mg_cflags+=" -Wimplicit-fallthrough"
+	fi
+fi
 
 # Checks the c++ compiler to use, stores it in the cxx variable and checks its
 # capabilities. (Required by ltmain.sh).
