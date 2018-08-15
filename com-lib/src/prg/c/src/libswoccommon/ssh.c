@@ -6,12 +6,12 @@
  * Covers tunnel creation and destruction including all authentication. Creates
  * a seperate thread for data relay through the tunnel.
  *
- * @author Copyright (C) 2017  Mark Grant
+ * @author Copyright (C) 2017-2018  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.2 ==== 10/11/2017_
+ * @version _v1.0.3 ==== 15/08/2018_
  */
 
 /* **********************************************************************
@@ -23,6 +23,7 @@
  * 19/10/2017	MG	1.0.1	First release.				*
  * 10/11/2017	MG	1.0.2	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
+ * 15/08/2018	MG	1.0.3	Move ret_buf from stack to heap.	*
  *									*
  ************************************************************************
  */
@@ -39,6 +40,7 @@
 #include <libssh/libssh.h>
 
 #include <mge-errno.h>
+#include <mgememory.h>
 #include <libswoccommon.h>
 
 
@@ -433,6 +435,7 @@ static void *relay_data(void *arg)
 	int *retval;
 	ssize_t n, r;
 	char sock_buf[SOCK_BUF_SIZE];
+	char *ret_buf;
 
 	int accsockfd;
 	struct sockaddr_in cli_addr;
@@ -462,17 +465,25 @@ static void *relay_data(void *arg)
 		if(n == SSH_ERROR)
 			goto err_exit_1;
 
-		char ret_buf[n];
+		ret_buf = mg_realloc(NULL, (size_t) n);
+		if (ret_buf == NULL)
+			goto err_exit_1;
+
 		r = ssh_channel_read(fwd_chan, ret_buf, n, 0);
 		if(r == SSH_ERROR)
-			goto err_exit_1;
+			goto err_exit_2;
 
 		n = send(accsockfd, ret_buf, r, 0);
 		if (n < 0)
-			goto err_exit_1;
+			goto err_exit_2;
+
+		free(ret_buf);
 	}
 	*retval = close_sock(&accsockfd);
 	return retval;
+
+err_exit_2:
+	free(ret_buf);
 
 err_exit_1:
 	close_sock(&accsockfd);
