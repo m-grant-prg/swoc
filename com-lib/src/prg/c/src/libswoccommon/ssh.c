@@ -24,6 +24,9 @@
  * 10/11/2017	MG	1.0.2	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
  * 15/08/2018	MG	1.0.3	Move ret_buf from stack to heap.	*
+ *				Apply unused attribute to relay_data	*
+ *				parameter which is only required	*
+ *				because of pthread_create.		*
  *									*
  ************************************************************************
  */
@@ -49,7 +52,7 @@ static int try_auth_methods_seq(void);
 static int authenticate_kbdint(void);
 static int authenticate_password(void);
 static int direct_forwarding(void);
-static void *relay_data(void *arg);
+static void *relay_data(__attribute__((unused)) void *arg);
 
 
 static ssh_session ssh_sess;
@@ -429,7 +432,7 @@ err_exit:
  * Relay data from local port through the tunnel and back.
  * @param arg Required argument using pthread_create. Here it is always NULL.
  */
-static void *relay_data(void *arg)
+static void *relay_data(__attribute__((unused)) void *arg)
 {
 	int res;
 	int *retval;
