@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.2 ==== 06/03/2018_
+ * @version _v1.1.3 ==== 15/08/2018_
  */
 
 /* **********************************************************************
@@ -26,6 +26,7 @@
  *				could be taking place. Therefore allow	*
  *				bind and connect 10 tries if the	*
  *				address is in use.			*
+ * 15/08/2018	MG	1.1.3	Change parameter name to prevent shadow.*
  *									*
  ************************************************************************
  */
@@ -88,10 +89,10 @@ int prep_recv_sock(int *sockfd, int *portno)
  * On error mge_errno is set.
  * @param sockfd The socket file descriptor.
  * @param portno The port number.
- * @param server The server name.
+ * @param srv The server name.
  * @return 0 on success, non-zero on failure.
  */
-int init_conn(int *sockfd, int *portno, char *server)
+int init_conn(int *sockfd, int *portno, char *srv)
 {
 	struct addrinfo hints;
 	enum comms_mode mode = send_mode;
@@ -105,7 +106,7 @@ int init_conn(int *sockfd, int *portno, char *server)
 	hints.ai_addr = NULL;
 	hints.ai_next = NULL;
 
-	mge_errno = est_connect(sockfd, server, portno, &hints, &mode);
+	mge_errno = est_connect(sockfd, srv, portno, &hints, &mode);
 
 	return mge_errno;
 }

@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.6 ==== 10/05/2018_
+ * @version _v1.0.7 ==== 15/08/2018_
  */
 
 /* **********************************************************************
@@ -29,6 +29,7 @@
  *				Improve function name consistency,	*
  *				unlock -> release.			*
  *				Add support for server blocking.	*
+ * 15/08/2018	MG	1.0.7	Change parameter name to prevent shadow.*
  *									*
  ************************************************************************
  */
@@ -83,7 +84,7 @@ int swcom_validate_config(void);
 
 int prep_recv_sock(int *sockfd, int *portno);
 
-int init_conn(int *sockfd, int *portno, char *server);
+int init_conn(int *sockfd, int *portno, char *srv);
 
 int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 	enum comms_mode *mode);
