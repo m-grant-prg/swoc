@@ -69,10 +69,11 @@
 #				the Makefile.am's.			#
 #				Build suitable CFLAGS based on compiler	#
 #				version.				#
+# 15/08/2018	MG	1.0.15	Add header check for mgememory.h	#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.0.14 $)
+AC_REVISION($Revision: 1.0.15 $)
 
 AC_PREREQ(2.69)
 
@@ -446,6 +447,7 @@ AC_CHECK_HEADERS(libssh/libssh.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(mgebuffer.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(mgemessage.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(mge-errno.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(mgememory.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(configfile.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(libswoccommon.h, [], AC_MSG_ERROR(header not found))
 
