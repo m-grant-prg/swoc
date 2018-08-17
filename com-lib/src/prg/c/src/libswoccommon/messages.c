@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.6 ==== 05/08/2018_
+ * @version _v1.1.7 ==== 17/08/2018_
  */
 
 /* **********************************************************************
@@ -37,6 +37,7 @@
  *				eliminate the clear_msg call if the	*
  *				message after pull is incomplete.	*
  * 05/08/2018	MG	1.1.6	Correct mgebuffer struct initialisation	*
+ * 17/08/2018	MG	1.1.7	Correct sizing of local serv variable.	*
  *									*
  ************************************************************************
  */
@@ -153,7 +154,8 @@ int exch_msg(char *outgoing_msg, size_t om_length, struct mgemessage *msg)
 	int sockfd;
 	int portno;
 	ssize_t n;
-	char serv[strlen(server)];
+	/* serv must be large enough to hold either server or localhost. */
+	char serv[strlen(server) > 9 ? strlen(server) + 1 : 10];
 	char sock_buf[SOCK_BUF_SIZE];
 	struct mgebuffer msg_buf1 = { NULL, 0, 0, 0 };
 	struct mgebuffer *msg_buf = &msg_buf1;
