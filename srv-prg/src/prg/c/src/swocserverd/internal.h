@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.12 ==== 05/08/2018_
+ * @version _v1.0.13 ==== 25/08/2018_
  */
 
 /* **********************************************************************
@@ -39,6 +39,7 @@
  * 18/05/2018	MG	1.0.10	Add client show server block status.	*
  * 22/05/2018	MG	1.0.11	Change from swocserverd.h to internal.h	*
  * 05/08/2018	MG	1.0.12	Remove spurious include of sys/types.h	*
+ * 25/08/2018	MG	1.0.13	Add prototype for swsd_reload_config.	*
  *									*
  ************************************************************************
  */
@@ -118,6 +119,8 @@ int cli_lock_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 int cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
 int srv_reload_req(struct mgemessage *msg, enum msg_arguments *msg_args);
+
+int swsd_reload_config(void);
 
 int cli_status_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 

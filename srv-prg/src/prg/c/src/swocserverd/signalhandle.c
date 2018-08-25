@@ -20,7 +20,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.4 ==== 03/06/2018_
+ * @version _v1.0.5 ==== 25/08/2018_
  */
 
 /* **********************************************************************
@@ -34,6 +34,8 @@
  * 18/11/2017	MG	1.0.3	Add Doxygen comments.			*
  *				Add SPDX license tag.			*
  * 03/06/2018	MG	1.0.4	Use standard signal handling method.	*
+ * 25/08/2018	MG	1.0.5	Add support for normal daemon reload	*
+ *				config file on receipt of SIGHUP.	*
  *									*
  ************************************************************************
  */
@@ -167,6 +169,7 @@ void init_sig_handle(void)
  */
 void termination_handler(int signum)
 {
+	int err;
 	struct sigaction cur_action;
 
 	/*
@@ -206,6 +209,17 @@ void termination_handler(int signum)
 	 */
 	if (signum == SIGCONT)
 		return;
+
+	/*
+	 * As a daemon, SIGHUP means reload the configuration file which, if
+	 * successful just requires a return but on failure exit.
+	 */
+	if (signum == SIGHUP) {
+		err = swsd_reload_config();
+		if (err)
+			exit(err);
+		return;
+	}
 
 	/*
 	 * Now re-raise the signal using the signal’s default handling. If the

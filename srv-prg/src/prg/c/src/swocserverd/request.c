@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.16 ==== 03/06/2018_
+ * @version _v1.0.17 ==== 25/08/2018_
  */
 
 /* **********************************************************************
@@ -52,6 +52,10 @@
  * 03/06/2018	MG	1.0.16	Log number of clients and locks		*
  *				existing when an end request is		*
  *				processed.				*
+ * 25/08/2018	MG	1.0.17	Extract a core config reload function	*
+ *				from srv_reload_req so that it can be	*
+ *				used by the signal handler on receipt	*
+ *				of SIGHUP, (which is a convention).	*
  *									*
  ************************************************************************
  */
@@ -121,6 +125,26 @@ int srv_reload_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		return swsd_err;
 	}
 
+	swsd_err = swsd_reload_config();
+	if (swsd_err) {
+		sprintf(out_msg, "swocserverd,reload,err,%i;", mge_errno);
+		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+		exit(swsd_err);
+	}
+	sprintf(out_msg, "swocserverd,reload,ok;");
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+	swsd_err = mge_errno;
+	return swsd_err;
+}
+
+/**
+ * Reload the config file.
+ * This function should only ever be called by srv_reload_req or the signal
+ * handler on receipt of SIGHUP which is a convention for daemons.
+ * @return 0 on success, non-zero on failure.
+ */
+int swsd_reload_config(void)
+{
 	swsd_err = swsd_validate_config();
 	if (swsd_err) {
 		if (debug)
@@ -128,16 +152,11 @@ int srv_reload_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 				mge_errno);
 		syslog((int) (LOG_USER | LOG_NOTICE), "Validate config errored "
 			"with %i.", mge_errno);
-		sprintf(out_msg, "swocserverd,reload,err,%i;", mge_errno);
-		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
-		exit(swsd_err);
+		return swsd_err;
 	}
 	if (debug)
 		printf("Config file reloaded.\n");
 	syslog((int) (LOG_USER | LOG_NOTICE), "Config file reloaded.");
-	sprintf(out_msg, "swocserverd,reload,ok;");
-	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
-	swsd_err = mge_errno;
 	return swsd_err;
 }
 
