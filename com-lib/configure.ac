@@ -85,13 +85,13 @@ AC_PREREQ(2.69)
 #
 ########################
 
-AC_INIT(Server Wait On Client Common library, v1.0.8-rc2,
+AC_INIT(Server Wait On Client Common library, v1.0.9,
 	m.grant.prg@gmail.com, libswoccommon)
 
-AC_DEFINE(SOURCE_VERSION, "1.1.5", \
+AC_DEFINE(SOURCE_VERSION, "1.1.6", \
 	Define to the version of source code in this package.)
 
-AC_SUBST(lib_version_info, "2:1:0")
+AC_SUBST(lib_version_info, "2:1:1")
 
 # For use in files built in Makefiles because they require Installation
 # Directory Variable substitutions.
