@@ -61,7 +61,7 @@ AC_PREREQ(2.69)
 #
 ########################
 
-AC_INIT(SWOC Server Library dev files, v1.1.6-rc1,
+AC_INIT(SWOC Server Library dev files, v1.1.7,
 	m.grant.prg@gmail.com, libswocserver-dev)
 
 
