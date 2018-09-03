@@ -1,3 +1,17 @@
+Release 1.1.7 2018-09-03
+Correct mgebuffer struct initialisation.
+Change mgemessage struct initialisation.
+Remove a spurious include.
+Add missing include directives.
+Correct the types of some local variables.
+Make daemon reload it's config file when it receives a SIGHUP. This is the usual
+convention for daemons.
+Use gdb level 3 flags when debugging.
+Support gcc -H for header file checks.
+Ensure project standard include directory exists.
+Use compiler version dependent CFLAGS.
+Update bootstrap.sh to version 1.3.7.
+
 Release 1.1.6 2018-06-27
 Do not use AC_CONFIG_FILES for substitution of Installation Directory
 Variables so reverse the build of setup.sh and swocserverd.service from
