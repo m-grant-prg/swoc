@@ -1,3 +1,11 @@
+2018-09-03 v 1.1.6 Mark Grant <m.grant.prg@gmail.com>
+	*  Use gdb level 3 flags when debugging.
+	Change megemessage struct initialisation.
+	Support gcc -H for header file checks.
+	Ensure project standard include directory exists.
+	Use compiler version dependent CFLAGS.
+	Update bootstrap.sh to version 1.3.7.
+
 2018-06-24 v 1.1.5 Mark Grant <m.grant.prg@gmail.com>
 	*  Add informational messages to make srctarball output.
 	README: Add N.B. concerning expecting to be in a git environment.
