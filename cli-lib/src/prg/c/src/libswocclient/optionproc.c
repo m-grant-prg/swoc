@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.8 ==== 05/08/2018_
+ * @version _v1.1.9 ==== 07/09/2018_
  */
 
 /* **********************************************************************
@@ -50,6 +50,7 @@
  * 05/08/2018	MG	1.1.8	Change mgemessage struct initialisation	*
  *				following .complete field change to	*
  *				type bool.				*
+ * 07/09/2018	MG	1.1.9	Use new mgemessage struct initialiser.	*
  *									*
  ************************************************************************
  */
@@ -89,7 +90,7 @@ int swc_show_status(void)
 	char *end;
 	char *outgoing_msg = "swocclient,status;";
 	size_t om_length = strlen(outgoing_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
+	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
 
@@ -141,7 +142,7 @@ int swc_show_srv_block_status(void)
 	char *end;
 	char *out_msg = "swocclient,blockstatus;";
 	size_t om_length = strlen(out_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
+	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
 
@@ -193,7 +194,7 @@ int swc_block(void)
 	char *end;
 	char *outgoing_msg = "swocclient,block;";
 	size_t om_length = strlen(outgoing_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
+	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
 
@@ -241,7 +242,7 @@ int swc_unblock(void)
 	char *end;
 	char *outgoing_msg = "swocclient,unblock;";
 	size_t om_length = strlen(outgoing_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
+	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
 
@@ -289,7 +290,7 @@ int swc_set_lock(void)
 	char *end;
 	char *outgoing_msg = "swocclient,lock;";
 	size_t om_length = strlen(outgoing_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
+	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
 
@@ -337,7 +338,7 @@ int swc_rel_lock(void)
 	char *end;
 	char *outgoing_msg = "swocclient,release;";
 	size_t om_length = strlen(outgoing_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
+	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
 
@@ -390,7 +391,7 @@ int swc_client_wait(char *cnumlocks)
 	long int locks, numlocks;
 	char *outgoing_msg = "swocclient,status;";
 	size_t om_length = strlen(outgoing_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
+	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
 
@@ -458,7 +459,7 @@ int swc_reset(void)
 	char *end;
 	char *outgoing_msg = "swocclient,reset;";
 	size_t om_length = strlen(outgoing_msg);
-	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
+	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
 
