@@ -29,10 +29,11 @@
 # 12/01/2018	MG	1.0.2	Add SPDX license tags to source files.	#
 # 16/01/2018	MG	1.0.3	Change to include headers from relevant	#
 #				-dev projects.				#
+# 07/09/2018	MG	1.0.4	Add mgemessage.h as a candidate.	#
 #									#
 #########################################################################
 
 
 noinst_HEADERS = $(tmpheaders)
 
-EXTRA_HEADERS = mge-errno.h
+EXTRA_HEADERS = mge-errno.h mgemessage.h
