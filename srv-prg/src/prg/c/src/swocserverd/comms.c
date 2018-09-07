@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.13 ==== 05/08/2018_
+ * @version _v1.0.14 ==== 07/09/2018_
  */
 
 /* **********************************************************************
@@ -54,6 +54,7 @@
  *				Change mgemessage initialisation after	*
  *				field complete changed to type bool.	*
  *				Add missing includes.			*
+ * 07/09/2018	MG	1.0.14	Use new mgemessage struct initialiser.	*
  *									*
  ************************************************************************
  */
@@ -273,7 +274,7 @@ static int proc_events(int n_events, struct epoll_event *pevents)
 	char sock_buf[SOCK_BUF_SIZE];
 	struct mgebuffer msg_buf1;
 	struct mgebuffer *msg_buf;
-	struct mgemessage msg1 = { NULL, 0, 0, false, ';', ',', 0, NULL };
+	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
 	clilen = sizeof(cli_addr);
