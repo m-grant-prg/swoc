@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.17 ==== 25/08/2018_
+ * @version _v1.0.18 ==== 12/09/2018_
  */
 
 /* **********************************************************************
@@ -56,6 +56,9 @@
  *				from srv_reload_req so that it can be	*
  *				used by the signal handler on receipt	*
  *				of SIGHUP, (which is a convention).	*
+ * 12/09/2018	MG	1.0.18	Remove use of no longer available	*
+ *				DEF_MSG_SIZE macro, (it is not part of	*
+ *				the API).				*
  *									*
  ************************************************************************
  */
@@ -169,7 +172,7 @@ int swsd_reload_config(void)
 int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 {
 	char *out_msg, *t_out_msg = NULL;
-	size_t out_msg_size = DEF_MSG_SIZE;
+	size_t out_msg_size = 30;	/* Large enough for an error message. */
 	char tmp_msg[_POSIX_HOST_NAME_MAX + 100] = "";
 	char *client_lu = "";
 	int counter;
@@ -180,8 +183,6 @@ int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		return swsd_err;
 	}
 
-	if ((int) out_msg_size < 23)
-		out_msg_size = 23;
 	out_msg = mg_realloc(NULL, out_msg_size);
 	if (out_msg == NULL) {
 		swsd_err = errno;
@@ -241,7 +242,7 @@ int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 int srv_cli_blocklist_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 {
 	char *out_msg, *t_out_msg = NULL;
-	size_t out_msg_size = DEF_MSG_SIZE;
+	size_t out_msg_size = 30;
 	char tmp_msg[_POSIX_HOST_NAME_MAX + 100] = "";
 	char *client_lu = "";
 	swsd_err = 0;
@@ -251,8 +252,6 @@ int srv_cli_blocklist_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		return swsd_err;
 	}
 
-	if ((int) out_msg_size < 26)
-		out_msg_size = 26;
 	out_msg = mg_realloc(NULL, out_msg_size);
 	if (out_msg == NULL) {
 		swsd_err = errno;
