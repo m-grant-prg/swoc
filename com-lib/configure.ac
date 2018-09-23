@@ -70,10 +70,12 @@
 #				Build suitable CFLAGS based on compiler	#
 #				version.				#
 # 15/08/2018	MG	1.0.15	Add header check for mgememory.h	#
+# 23/09/2018	MG	1.0.16	Remove check for deprecated and		#
+#				replaced bzero().			#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.0.15 $)
+AC_REVISION($Revision: 1.0.16 $)
 
 AC_PREREQ(2.69)
 
@@ -462,7 +464,7 @@ AC_TYPE_SSIZE_T
 AC_MSG_NOTICE(checking for GNU compatible library functions required by this \
 application)
 AC_FUNC_MALLOC
-AC_CHECK_FUNCS(bzero getpass memset socket strchr strncasecmp)
+AC_CHECK_FUNCS(getpass memset socket strchr strncasecmp)
 
 # Checks for pkg-config files.
 PKG_CHECK_MODULES(LIBMGEC, libmgec, [], \

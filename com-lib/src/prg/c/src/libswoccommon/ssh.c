@@ -11,7 +11,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.3 ==== 15/08/2018_
+ * @version _v1.0.4 ==== 23/09/2018_
  */
 
 /* **********************************************************************
@@ -27,6 +27,8 @@
  *				Apply unused attribute to relay_data	*
  *				parameter which is only required	*
  *				because of pthread_create.		*
+ * 23/09/2018	MG	1.0.4	Replace use of deprecated bzero() with	*
+ *				memset().				*
  *									*
  ************************************************************************
  */
@@ -453,7 +455,7 @@ static void *relay_data(__attribute__((unused)) void *arg)
 	if (accsockfd < 0)
 		goto err_exit_0;
 
-	bzero(sock_buf, sizeof(sock_buf));
+	memset(sock_buf, '\0', sizeof(sock_buf));
 
 	while ((n = recv(accsockfd, sock_buf, sizeof(sock_buf), 0)) != 0) {
 		if (n < 0)
