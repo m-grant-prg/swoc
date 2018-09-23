@@ -100,10 +100,12 @@
 #				the Makefile.am's.			#
 #				Build suitable CFLAGS based on compiler	#
 #				version.				#
+# 23/09/2018	MG	1.1.15	Remove check for deprecated and		#
+#				replaced bzero().			#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.1.14 $)
+AC_REVISION($Revision: 1.1.15 $)
 
 AC_PREREQ(2.69)
 
@@ -527,7 +529,7 @@ AC_MSG_NOTICE(checking for GNU compatible library functions required by this \
 application)
 AC_FUNC_FORK
 AC_FUNC_MALLOC
-AC_CHECK_FUNCS(bzero memset socket strerror)
+AC_CHECK_FUNCS(memset socket strerror)
 
 # Checks for pkg-config files.
 PKG_CHECK_MODULES(LIBSWOCSERVER, libswocserver, [], \

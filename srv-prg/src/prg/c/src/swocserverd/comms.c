@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.14 ==== 07/09/2018_
+ * @version _v1.0.15 ==== 23/09/2018_
  */
 
 /* **********************************************************************
@@ -55,6 +55,8 @@
  *				field complete changed to type bool.	*
  *				Add missing includes.			*
  * 07/09/2018	MG	1.0.14	Use new mgemessage struct initialiser.	*
+ * 23/09/2018	MG	1.0.15	Replace use of deprecated bzero() with	*
+ *				memset().				*
  *									*
  ************************************************************************
  */
@@ -244,7 +246,7 @@ static int init_epoll(int *pepfd, struct epoll_event *pevent,
 			"- %s", strerror(swsd_err));
 		return swsd_err;
 	}
-	bzero(pevent, sizeof(*pevent));
+	memset(pevent, '\0', sizeof(*pevent));
 	pevent->events = EPOLLIN;
 	while ((pt_ps = find_next_bst_node(port_sock, pt_ps)) != NULL) {
 		pevent->data.fd = pt_ps->socketfd;
@@ -301,7 +303,7 @@ static int proc_events(int n_events, struct epoll_event *pevents)
 		if (debug)
 			printf("Client hostname %s\n", client);
 
-		bzero(sock_buf, sizeof(sock_buf));
+		memset(sock_buf, '\0', sizeof(sock_buf));
 
 		while ((n = recv(cursockfd, sock_buf, sizeof(sock_buf), 0))
 			!= 0) {
@@ -341,7 +343,7 @@ static int proc_events(int n_events, struct epoll_event *pevents)
 			if (end || swsd_err)
 				break;
 
-			bzero(sock_buf, sizeof(sock_buf));
+			memset(sock_buf, '\0', sizeof(sock_buf));
 		}
 		clear_msg(msg, ';', ',');
 		free(msg_buf1.buffer);
