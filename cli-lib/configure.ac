@@ -411,7 +411,7 @@ fi
 
 AC_CHECK_PROG(BASH, bash, yes, no)
 if test "x$BASH" = "xno" ; then
-   	AC_MSG_ERROR(bash not found)
+	AC_MSG_ERROR(bash not found)
 fi
 
 AC_CHECK_PROG(PKGCONFIG, pkg-config, yes, no)
