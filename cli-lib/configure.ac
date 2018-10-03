@@ -77,10 +77,11 @@
 #				the Makefile.am's.			#
 #				Build suitable CFLAGS based on compiler	#
 #				version.				#
+# 03/10/2018	MG	1.0.18	Add program check for pkg-config.	#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.0.17 $)
+AC_REVISION($Revision: 1.0.18 $)
 
 AC_PREREQ(2.69)
 
@@ -411,6 +412,11 @@ fi
 AC_CHECK_PROG(BASH, bash, yes, no)
 if test "x$BASH" = "xno" ; then
    	AC_MSG_ERROR(bash not found)
+fi
+
+AC_CHECK_PROG(PKGCONFIG, pkg-config, yes, no)
+if test "x$PKGCONFIG" = "xno" ; then
+	AC_MSG_ERROR(pkg-config not found)
 fi
 
 
