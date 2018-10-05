@@ -102,10 +102,11 @@
 #				version.				#
 # 23/09/2018	MG	1.1.15	Remove check for deprecated and		#
 #				replaced bzero().			#
+# 05/10/2018	MG	1.1.16	Add program check for pkg-config.	#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.1.15 $)
+AC_REVISION($Revision: 1.1.16 $)
 
 AC_PREREQ(2.69)
 
@@ -480,7 +481,11 @@ if test "x$TXT2MANWRAP" = "xno" ; then
 	AC_MSG_ERROR(txt2manwrap not found)
 fi
 
-# Example programmer written m4 macro.
+AC_CHECK_PROG(PKGCONFIG, pkg-config, yes, no)
+if test "x$PKGCONFIG" = "xno" ; then
+	AC_MSG_ERROR(pkg-config not found)
+fi
+
 
 # Checks for libraries.
 AC_SEARCH_LIBS(sws_show_status, swocserver, , \
