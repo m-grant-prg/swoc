@@ -76,10 +76,11 @@
 #				the Makefile.am's.			#
 #				Build suitable CFLAGS based on compiler	#
 #				version.				#
+# 05/10/2018	MG	1.0.24	Add program check for pkg-config.	#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.0.23 $)
+AC_REVISION($Revision: 1.0.24 $)
 
 AC_PREREQ(2.69)
 
@@ -416,6 +417,12 @@ AC_CHECK_PROG(TXT2MANWRAP, txt2manwrap, yes, no)
 if test "x$TXT2MANWRAP" = "xno" ; then
 	AC_MSG_ERROR(txt2manwrap not found)
 fi
+
+AC_CHECK_PROG(PKGCONFIG, pkg-config, yes, no)
+if test "x$PKGCONFIG" = "xno" ; then
+	AC_MSG_ERROR(pkg-config not found)
+fi
+
 
 # Checks for libraries.
 AC_SEARCH_LIBS(swc_show_status, swocclient, , \
