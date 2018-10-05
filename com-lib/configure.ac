@@ -72,10 +72,11 @@
 # 15/08/2018	MG	1.0.15	Add header check for mgememory.h	#
 # 23/09/2018	MG	1.0.16	Remove check for deprecated and		#
 #				replaced bzero().			#
+# 05/10/2018	MG	1.0.17	Add program check for pkg-config.	#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.0.16 $)
+AC_REVISION($Revision: 1.0.17 $)
 
 AC_PREREQ(2.69)
 
@@ -422,6 +423,11 @@ fi
 AC_CHECK_PROG(TXT2MANWRAP, txt2manwrap, yes, no)
 if test "x$TXT2MANWRAP" = "xno" ; then
    	AC_MSG_ERROR(txt2manwrap not found)
+fi
+
+AC_CHECK_PROG(PKGCONFIG, pkg-config, yes, no)
+if test "x$PKGCONFIG" = "xno" ; then
+	AC_MSG_ERROR(pkg-config not found)
 fi
 
 
