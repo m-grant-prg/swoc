@@ -93,7 +93,7 @@ AC_PREREQ(2.69)
 #
 ########################
 
-AC_INIT(Server Wait On Client client side library, v1.1.8-rc1,
+AC_INIT(Server Wait On Client client side library, v1.1.9,
 	m.grant.prg@gmail.com, libswocclient)
 
 AC_DEFINE(SOURCE_VERSION, "1.1.4", \
