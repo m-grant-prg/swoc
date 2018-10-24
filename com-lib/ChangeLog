@@ -1,3 +1,11 @@
+2018-10-24 v 1.0.10 Mark Grant <m.grant.prg@gmail.com>
+	*  Use new mgebuffer struct initialiser
+	Use new mgemessage struct initialiser
+	Replace deprecated bzero() with memset()
+	Add pkg-config Autoconf program check
+	Update README to refer to new wiki
+	srctarball to include -src- in filename
+
 2018-09-02 v 1.0.9 Mark Grant <m.grant.prg@gmail.com>
 	*  Use gdb level 3 flags when debugging.
 	Correct the initialisation of the mgebuffer struct.
