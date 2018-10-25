@@ -1,3 +1,8 @@
+2018-10-25 v 1.1.7 Mark Grant <m.grant.prg@gmail.com>
+	*  Add pkg-config Autoconf program check
+	Update README to refer to the new wiki
+	srctarball to include -src- in filename
+
 2018-09-03 v 1.1.6 Mark Grant <m.grant.prg@gmail.com>
 	*  Use gdb level 3 flags when debugging.
 	Support gcc -H for header file checks.
