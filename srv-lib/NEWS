@@ -1,3 +1,9 @@
+Release 1.1.7 2018-10-25
+Use new mgemessage struct initialiser
+Add pkg-config Autoconf program check
+Update README to refer to the new wiki
+srctarball to include -src- in filename
+
 Release 1.1.6 2018-09-03
 Use gdb level 3 flags when debugging.
 Change megemessage struct initialisation.
