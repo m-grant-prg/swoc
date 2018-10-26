@@ -1,3 +1,6 @@
+-----------------------------
+Server Wait On Clients System
+=============================
 --------
 Contents
 ========
@@ -6,11 +9,9 @@ Contents
 
 2 ... AutoTools (configure and make) Installation
 
-3 ... Ubuntu Installation
+3 ... Ubuntu, Debian and Raspbian Installation
 
-4 ... Debian and Raspbian Installation
-
-5 ... Utility Scripts
+4 ... Utility Scripts
 
 
 
@@ -29,31 +30,37 @@ Overnight, clients want to perform crontab work as a user and root, then do a
 backup and then shutdown enabling the server to initiate its own shutdown.
 
 So an example root crontab on the client:-
-# This line adds a lock, performs some work of unknown duration and releases the
-# lock.
-10 00 * * 0,1,2,3,4,5,6 date ; swocclient -l ; apt-get update -qq ; \
-apt-get upgrade -d -q -y ; apt-get dist-upgrade -d -q -y ; swocclient -r ; date
 
-# This line adds a lock of its own, waits until this client has one lock
-# outstanding, ie its own, then performs a backup, releases the lock and shuts
-# down.
-15 00 * * 0,1,2,3,4,6 date ; swocclient -l ; swocclient -w1 ; date ; \
-netbckup -d ; swocclient -r ; date ; at -f shutdown now
+This line adds a lock, performs some work of unknown duration and releases the
+lock.
+
+	10 00 * * 0,1,2,3,4,5,6 date ; swocclient -l ; apt-get update -qq ; \
+	apt-get upgrade -d -q -y ; apt-get dist-upgrade -d -q -y ; \
+	swocclient -r ; date
+
+This line adds a lock of its own, waits until this client has one lock
+outstanding, ie its own, then performs a backup, releases the lock and shuts
+down.
+
+	15 00 * * 0,1,2,3,4,6 date ; swocclient -l ; swocclient -w1 ; date ; \
+	netbckup -d ; swocclient -r ; date ; at -f shutdown now
 
 At the same time, a user crontab on the client is using two crontab entries to
 run some jobs each taking its own lock at the start and releasing it at the
 end. Both of these lines are of unknown and variable duration:-
-10 00 * * 0,1,2,3,4,6 swocclient -l ; \
-get_iplayer --pvr 2>/home/mgrant/Videos/iPlayer/VideosErr.log ; date ; \
-swocclient -r
 
-10 00 * * 0,1,2,3,4,6 swocclient -l ; \
-mget --quiet --sourcefile /home/mgrant/Downloads/MultiGetSource.txt \
---targetdir /home/mgrant/Downloads ; date ; swocclient -r
+	10 00 * * 0,1,2,3,4,6 swocclient -l ; \
+	get_iplayer --pvr 2>/home/mgrant/Videos/iPlayer/VideosErr.log ; date ; \
+	swocclient -r
+
+	10 00 * * 0,1,2,3,4,6 swocclient -l ; \
+	mget --quiet --sourcefile /home/mgrant/Downloads/MultiGetSource.txt \
+	--targetdir /home/mgrant/Downloads ; date ; swocclient -r
 
 Meanwhile on the server, it waits until it has no more registered locks and then
 initiates a shutdown.
-20 00 * * 0,1,2,3,4,5,6 date ; swocserver -w ; date ; at -f shutdown now
+
+	20 00 * * 0,1,2,3,4,5,6 date ; swocserver -w ; date ; at -f shutdown now
 
 This Project
 ------------
@@ -70,23 +77,24 @@ These individual elements are contained in 9 subdirectories of the project root
 and they are all AutoTools sub-projects in their own right. These sub-projects
 are:-
 
-com-dev		The development files for the common library libswoccommon.
-com-lib		The common library libswoccommon.
-cli-dev		The development files for the client library libswocclient.
-cli-lib		The client library libswocclient.
-cli-prg		The command line client program.
-srv-dev		The development files for the server library libswocserver.
-srv-lib		The server library libswocserver.
-srv-prg		The command line server program and the server daemon.
-doc		Doxygen documentation on the entire project.
+	com-dev		Development files for the common library libswoccommon.
+	com-lib		The common library libswoccommon.
+	cli-dev		Development files for the client library libswocclient.
+	cli-lib		The client library libswocclient.
+	cli-prg		The command line client program.
+	srv-dev		Development files for the server library libswocserver.
+	srv-lib		The server library libswocserver.
+	srv-prg		The command line server program and the server daemon.
+	doc		Doxygen documentation on the entire project.
 
 The development files generally consist of c header files, pkg-config files and
 man pages.
 
 This system depends on other libraries. Two definite requirements are libmgec
 and libmgesystutils. They can be found here:-
-https://github.com/m-grant-prg/libmgec.git
-https://github.com/m-grant-prg/libmgesysutils.git
+
+	https://github.com/m-grant-prg/libmgec.git
+	https://github.com/m-grant-prg/libmgesysutils.git
 
 Any other dependencies not installed on your system will be identified by the
 configure script. Any of these produced by this author can be found in a
@@ -112,6 +120,7 @@ a git environment. This manifests itself in 3 places:-
 
 a) ... Download either the source or distribution tarball (the .tar.gz file)
 	from:-
+
 	https://github.com/m-grant-prg/swoc/releases
 
 b) ... Extract the tarball preserving the directory structure.
@@ -136,67 +145,16 @@ To uninstall the package:
 2 ... As root or sudo, type 'make uninstall clean'
 
 
--------------------------
-3 ... Ubuntu Installation
-=========================
-This system is available as a series of Ubuntu packages hosted in a Personal
-Package Archive (PPA). If you add this PPA to your software sources then you can
-easily install, update and remove the packages.
+----------------------------------------------
+3 ... Ubuntu, Debian and Raspbian Installation
+==============================================
+Please refer to the relevant installation section on the wiki at:-
 
-To view the details of this PPA please follow the link below:-
-	https://code.launchpad.net/~m-grant-prg/+archive/ubuntu/utils
-
-To add this PPA to your system please type the following:-
-	sudo add-apt-repository ppa:m-grant-prg/utils
-	sudo apt-get update
-
-All 9 sub-projects are available as packages with the proper dependencies set
-up, so each package can be addressed individually, however, most commonly only
-the top level packages will be handled.
-The packages are:-
-libswoccommon-dev	The development files for the common library.
-libswoccommon-lib	The common library libswoccommon.
-libswocclient-dev	The development files for the client library.
-libswocclient-lib	The client library libswocclient.
-swocclient		The command line client program.
-libswocserver-dev	The development files for the server library.
-libswocserver-lib	The server library libswocserver.
-swocserver		The command line server program and the server daemon.
-swocdoc			Doxygen documentation on the entire project.
-
-To install the server package on your system please type the following:-
-	sudo apt-get update
-	sudo apt-get install swocserver
-	After installation please follow section "2 ... AutoTools (configure
-	and make) Installation" from item (g) onwards above.
-
-To uninstall this package at any time please type:-
-	sudo apt-get remove swocserver
-
-To install the client package on your system please type the following:-
-	sudo apt-get update
-	sudo apt-get install swocclient
-	After installation please follow section "2 ... AutoTools (configure
-	and make) Installation" from item (g) onwards as detailed in the
-	com-lib/README file.
-
-To uninstall this package at any time please type:-
-	sudo apt-get remove swocclient
-
-
---------------------------------------
-4 ... Debian and Raspbian Installation
-======================================
-Debian and Raspbian '.deb' packages can be downloaded from:-
-	https://github.com/m-grant-prg/swoc/releases
-
-They can then be installed using a utility such as GDebi which is available in
-the standard repos. After installation please follow the relevant
-post-installation instructions in section "3 ... Ubuntu Installation".
+https://github.com/m-grant-prg/swoc/wiki
 
 
 ---------------------
-5 ... Utility Scripts
+4 ... Utility Scripts
 =====================
 In the project root directory there is a helper script; bootstrap.sh
 
@@ -213,10 +171,12 @@ work from there, (.gitignore is already set to ignore such a directory).
 
 Assuming you adopt the preceding paragraph then a typical invocation of the
 script would be:-
+
 ../bootstrap.sh --build ..
 The last '..' points the way to project root.
 
 The full list of arguments to bootstrap.sh are:-
+
 	-b, --build make the project.
 
 	-c, --config configure the project.
@@ -249,3 +209,4 @@ mutually exclusive.
 
 Options d debug, F distcheckfake and s sparse are enabled by configure so
 require option c config.
+
