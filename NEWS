@@ -1,3 +1,8 @@
+Release 1.1.7 2018-10-26
+srctarball to include -src- in filename
+Add markdown symlink to README for GitHub
+Update README to refer to new project wiki
+
 Release 1.1.6 2018-09-03
 Add vim .swp files to project root gitignore.
 Adopt latest standard project root gitignore.

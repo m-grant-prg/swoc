@@ -1,3 +1,18 @@
+2018-10-26 v 1.1.7 Mark Grant <m.grant.prg@gmail.com>
+	*  srctarball to include -src- in filename
+	Add markdown symlink to README for GitHub
+	Update README to refer to new project wiki
+	full now at v1.1.7
+	cli-dev now at v1.1.9
+	cli-lib now at v1.1.9
+	cli-prg now at v1.1.7
+	com-dev now at v1.0.10
+	com-lib now at v1.0.10
+	doc now at v1.0.1-rc12
+	srv-dev now at v1.1.8
+	srv-lib now at v1.1.7
+	srv-prg now at v1.1.8
+
 2018-09-03 v 1.1.6 Mark Grant <m.grant.prg@gmail.com>
 	*  Add vim .swp files to project root gitignore.
 	Adopt latest standard project root gitignore.
