@@ -15,12 +15,29 @@
 #		[--enable-sparse=<yes|no> [default: no]]		#
 #		[--enable-systemd=yes|no> [default: no]]		#
 #									#
+# Layout: (Only relevant sections will exist).				#
+# ChangeLog : High level ChangeLog					#
+# SECTION  1: Initialisation & Setup					#
+# SECTION  2: Architecture, target and host checks			#
+# SECTION  3: Command line arguments					#
+# SECTION  4: Compiler setup						#
+# SECTION  5: Check for programs					#
+# SECTION  6: Check for libraries					#
+# SECTION  7: Check for header files					#
+# SECTION  8: Check for types						#
+# SECTION  9: Check for structures					#
+# SECTION 10: Check for compiler characteristics			#
+# SECTION 11: Check for library functions				#
+# SECTION 12: Check for pkg-config files				#
+# SECTION 13: Check for system services					#
+# SECTION 14: Additional checks & variables				#
+# SECTION 15: Specify the output files					#
 #									#
 #########################################################################
 
 #########################################################################
 #									#
-# Changelog								#
+# ChangeLog								#
 #									#
 # Date		Author	Version	Description				#
 #									#
@@ -103,23 +120,33 @@
 # 23/09/2018	MG	1.1.15	Remove check for deprecated and		#
 #				replaced bzero().			#
 # 05/10/2018	MG	1.1.16	Add program check for pkg-config.	#
+# 19/12/2018	MG	1.1.17	Re-vamp to new standard layout.		#
 #									#
 #########################################################################
 
-AC_REVISION($Revision: 1.1.16 $)
+
+#########################################
+#					#
+# SECTION  1: Initialisation & Setup	#
+#					#
+#########################################
+
+AC_REVISION($Revision: 1.1.17 $)
 
 AC_PREREQ(2.69)
 
+LT_PREREQ(2.4.6)
 
-########################
 #
 # The following macros set all top level versioning for this project. All
 # information can be propagated via AC_CONFIG_HEADERS and AC_CONFIG_FILES.
 #
-########################
-
 AC_INIT(Server Wait On Client Server Package, v1.1.8,
 	m.grant.prg@gmail.com, swocserver)
+
+AC_MSG_NOTICE(initialisation and setup)
+
+AC_SUBST(package_version, $PACKAGE_VERSION)
 
 AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.4", \
 	Define to the version of source code in this package.)
@@ -127,12 +154,385 @@ AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.4", \
 AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.5", \
 	Define to the version of source code in this package.)
 
-# For use in files built in Makefiles because they require Installation
-# Directory Variable substitutions.
-AC_SUBST(package_version, $PACKAGE_VERSION)
+#
+# Passes the options to all am files. Puts objects in the sub-directory
+# containing the source. Forces tar to use --format=posix in make dist.
+# This also checks :-	BSD install	make variable set	mkdir -p
+#			gawk
+#
+AM_INIT_AUTOMAKE(-Wall -Werror subdir-objects tar-pax)
+
+#
+# Standard macros will be automatically placed in m4.
+# Programmer defined macros should be placed in, say, m4extra which allows us
+# to exclude the standard macros from being git tracked. This other directory
+# must be specified as an include option in the Makefile.am ACLOCAL_AMFLAGS
+# e.g.
+# ACLOCAL_AMFLAGS = -I m4 -I m4extra
+#
+AC_CONFIG_MACRO_DIR(m4)
+
+# Check a source file to ensure no command line --srcdir typo.
+AC_CONFIG_SRCDIR(src/prg/c/src/swocserver/main.c)
 
 
-########################
+#########################################
+#					#
+# SECTION  3: Command line arguments	#
+#					#
+#########################################
+
+AC_MSG_NOTICE(processing command line arguments)
+
+#
+# The following allows for an enable-debug=yes/no command line option. The
+# conditional DEBUG is made available to the makefiles.
+#
+AC_ARG_ENABLE(debug,
+	--enable-debug    Compile for debugging,
+	[case "${enableval}" in
+		yes) debug=true ;;
+		no)  debug=false ;;
+		*) AC_MSG_ERROR(bad value ${enableval} for --enable-debug) ;;
+	esac],debug=false)
+AM_CONDITIONAL(DEBUG, test x$debug = xtrue)
+
+#
+# CFLAGS is usually set to -g -O2, but for debugging we will probably
+# want -g -Og and for production we will probably want -O2. So empty CFLAGS here
+# and leave the selection to the Makefile.am's.
+#
+: ${CFLAGS=""}
+
+if test "x${debug}" = xtrue; then
+	AC_MSG_NOTICE(Using compiler debug flags.)
+fi
+
+#
+# The following allows for an enable-headercheck=yes/no command line option.
+# The conditional HEADERCHECK is made available to the makefiles.
+#
+AC_ARG_ENABLE(headercheck,
+	--enable-headercheck    Build to display include stack,
+	[case "${enableval}" in
+		yes) headercheck=true ;;
+		no)  headercheck=false ;;
+		*) AC_MSG_ERROR(bad value ${enableval} in enable-headercheck);;
+	esac],headercheck=false)
+AM_CONDITIONAL(HEADERCHECK, test x$headercheck = xtrue)
+
+if test "x${headercheck}" = xtrue; then
+	AC_MSG_NOTICE(Building to display include stack depth.)
+fi
+
+#
+# The following allows for an enable-sparse=yes/no command line option. The
+# conditional SPARSE is made available to the makefiles.
+#
+AC_ARG_ENABLE(sparse,
+	--enable-sparse    Build with sparse,
+	[case "${enableval}" in
+		yes) sparse=true ;;
+		no)  sparse=false ;;
+		*) AC_MSG_ERROR(bad value ${enableval} for --enable-sparse);;
+	esac],sparse=false)
+AM_CONDITIONAL(SPARSE, test x$sparse = xtrue)
+
+if test "x${sparse}" = xtrue; then
+	AC_MSG_NOTICE(Building using sparse.)
+fi
+
+#
+# The following allows for an enable-systemd=yes/no command line option. The
+# conditional SYSD is made available to the makefiles.
+#
+AC_ARG_ENABLE(systemd,
+	--enable-systemd    Build for systemd,
+	[case "${enableval}" in
+		yes) systemd=true ;;
+		no)  systemd=false ;;
+		*) AC_MSG_ERROR(bad value ${enableval} for --enable-systemd);;
+	esac],systemd=false)
+AM_CONDITIONAL(SYSD, test x$systemd = xtrue)
+
+if test "x${systemd}" = xtrue; then
+	AC_MSG_NOTICE(Building for systemd.)
+fi
+
+
+#################################
+#				#
+# SECTION  4: Compiler setup	#
+#				#
+#################################
+
+AC_MSG_NOTICE(compiler setup)
+
+# Set language for compilation tests.
+AC_LANG(C)
+
+#
+# Checks the compiler to use from either a standard list or one to use for
+# sparse, stores it in the CC variable and checks its capabilities.
+#
+if test "x$sparse" = "xtrue" ; then
+	compiler_list="cgcc gcc cc"
+else
+	compiler_list="gcc cc"
+fi
+AC_PROG_CC($compiler_list)
+
+#
+# GNULIB macro. Place just after AC_PROG_CC.
+# Also checks for ar, grep, egrep, ranlib and how to run the cpp.
+#
+gl_EARLY
+
+#
+# Checks the c pre-processor to use, stores it in the cpp variable and checks
+# its capabilities.
+#
+AC_PROG_CPP
+
+#
+# Checks the c++ compiler to use, stores it in the cxx variable and checks its
+# capabilities. (Required by ltmain.sh).
+#
+AC_PROG_CXX
+
+
+#########################################
+#					#
+# SECTION  5: Check for programs	#
+#					#
+#########################################
+
+AC_MSG_NOTICE(checking for basic programs that have AutoConf checks)
+
+#
+# The small set of tools you can expect to find on any machine.
+#
+# awk		date		grep		od
+# basename	diff		join		rm
+# cat		dirname		ln		rmdir
+# cc		egrep		ls		sed
+# chgrp		expr		mkdir		sleep
+# chown		expr (‘|’)	mkfifo		sort
+# chmod		expr (‘:’)	mknod		tar
+# cmp		fgrep		mktemp		touch
+# cp		find		mv		tr
+#
+# (For further information including limitations to the above, see Section 11.15
+# in the GNU AutoConf Manual).
+#
+# If using am init automake, gl early or lt init the following programs are
+# automatically checked:-
+#
+# am init automake
+#	BSD install	mkdir -p	gawk
+#
+# gl early
+#	ar	grep	egrep	ranlib
+#
+# lt init
+#	fgrep	ranlib	sed
+#
+# Basic and AutoTools program checks.
+#
+AC_PROG_AWK
+AC_PROG_EGREP
+AC_PROG_FGREP
+AC_PROG_GREP
+AC_PROG_LN_S
+AC_PROG_MKDIR_P
+AC_PROG_SED
+
+AC_MSG_NOTICE(checking for some standard AutoTools required programs)
+AM_PROG_AR
+AC_PROG_INSTALL
+AC_PROG_RANLIB
+
+AC_MSG_NOTICE(checking for particular programs required by this build)
+AC_CHECK_PROG(TAR, tar, yes, no)
+if test "x$TAR" = "xno" ; then
+	AC_MSG_ERROR(tar not found)
+fi
+
+AC_CHECK_PROG(TXT2MAN, txt2man, yes, no)
+if test "x$TXT2MAN" = "xno" ; then
+   	AC_MSG_ERROR(txt2man not found)
+fi
+
+AC_CHECK_PROG(TXT2MANWRAP, txt2manwrap, yes, no)
+if test "x$TXT2MANWRAP" = "xno" ; then
+   	AC_MSG_ERROR(txt2manwrap not found)
+fi
+
+AC_CHECK_PROG(PKGCONFIG, pkg-config, yes, no)
+if test "x$PKGCONFIG" = "xno" ; then
+	AC_MSG_ERROR(pkg-config not found)
+fi
+
+AC_MSG_NOTICE(checking for particular programs required at build and run time)
+AC_CHECK_PROG(BASH, bash, yes, no)
+if test "x$BASH" = "xno" ; then
+   	AC_MSG_ERROR(bash not found)
+fi
+
+AC_MSG_NOTICE(checking for particular programs required at run time)
+AC_CHECK_PROG(GETOPT, getopt, yes, no)
+if test "x$GETOPT" = "xno" ; then
+	AC_MSG_WARN(getopt not found)
+fi
+
+
+#########################################
+#					#
+# SECTION  6: Check for libraries	#
+#					#
+#########################################
+
+AC_MSG_NOTICE(checking for libraries required by this application)
+
+AC_SEARCH_LIBS(sws_show_status, swocserver, , \
+	AC_MSG_ERROR(function sws_show_status not found in libswocserver))
+AC_SEARCH_LIBS(parsefile, mgesysutils, , \
+	AC_MSG_ERROR(function parsefile not found in libmgesysutils))
+AC_SEARCH_LIBS(add_bst_node, mgec, , \
+	AC_MSG_ERROR(function add_bst_node not found in libmgec))
+AC_SEARCH_LIBS(prep_recv_sock, swoccommon, , \
+	AC_MSG_ERROR(function prep_recv_sock not found in libswoccommon))
+
+
+#########################################
+#					#
+# SECTION  7: Check for header files	#
+#					#
+#########################################
+
+AC_MSG_NOTICE(checking for header files required by this application)
+
+AC_CHECK_HEADERS(stdio.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(stdarg.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(stdbool.h, , AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(sysexits.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(signal.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(limits.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(sys/stat.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(sys/types.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(string.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(unistd.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(syslog.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(errno.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(getopt.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(portability.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(libswocserver.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(libswoccommon.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(mgebuffer.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(mgememory.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(mgemessage.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(bstree.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(mge-errno.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(configfile.h, [], AC_MSG_ERROR(header not found))
+
+
+#################################
+#				#
+# SECTION  8: Check for types	#
+#				#
+#################################
+
+AC_MSG_NOTICE(checking for types required by this application)
+
+AC_TYPE_PID_T
+AC_TYPE_SIZE_T
+AC_TYPE_SSIZE_T
+
+
+#########################################################
+#							#
+# SECTION 10: Check for compiler characteristics	#
+#							#
+#########################################################
+
+AC_MSG_NOTICE(checking for compiler characteristics)
+
+# Check that the compiler recognizes the restrict keyword.
+AC_C_RESTRICT
+
+#
+# Build a suitable CFLAGS list depending on compiler version.
+# This has been checked up to gcc v8.2
+#
+AC_SUBST(mg_cflags)
+AX_COMPILER_VENDOR
+AX_COMPILER_VERSION
+# The following 2 options seem fairly universal.
+mg_cflags="-Wall -Wextra"
+if test "$ax_cv_c_compiler_vendor" = "gnu"; then
+	mg_cflags+=" -Wmissing-include-dirs -Wshadow -Wstrict-prototypes"
+	AX_COMPARE_VERSION($ax_cv_c_compiler_version, ge, "7")
+	if test "x${ax_compare_version}" = xtrue; then
+		mg_cflags+=" -Wimplicit-fallthrough"
+	fi
+fi
+
+
+#################################################
+#						#
+# SECTION 11: Check for library functions	#
+#						#
+#################################################
+
+AC_MSG_NOTICE(checking for GNU compatible library functions required)
+
+AC_FUNC_FORK
+AC_FUNC_MALLOC
+AC_CHECK_FUNCS(memset socket strerror)
+
+
+#################################################
+#						#
+# SECTION 12: Check for pkg-config files	#
+#						#
+#################################################
+
+AC_MSG_NOTICE(checking for pkg-config files)
+
+PKG_CHECK_MODULES(LIBSWOCSERVER, libswocserver, [], \
+		AC_MSG_ERROR(pkg-config file not found))
+PKG_CHECK_MODULES(LIBMGESYSUTILS, libmgesysutils, [], \
+		AC_MSG_ERROR(pkg-config file not found))
+PKG_CHECK_MODULES(LIBMGEC, libmgec, [], \
+		AC_MSG_ERROR(pkg-config file not found))
+PKG_CHECK_MODULES(LIBSWOCCOMMON, libswoccommon, [], \
+		AC_MSG_ERROR(pkg-config file not found))
+
+
+#################################################
+#						#
+# SECTION 14: Additional checks and variables	#
+#						#
+#################################################
+
+AC_MSG_NOTICE(processing additional checks and variables)
+
+#
+# GNULIB macro. Must appear after other checks which may affect the compiler
+# invocation.
+#
+gl_INIT
+
+#
+# Turn on shared libraries.
+# Also checks for fgrep, linker capabilities, ranlib, sed.
+# Also checks for:-	ANSI C header files	sys/types.h	sys/stat.h
+#			stdlib.h	string.h	memory.h
+#			strings.h	inttypes.h	stdint.h
+#			unistd.h	dlfcn.h
+#
+LT_INIT
+
 #
 # This creates an AutoConf substitution variable for temporary header files.
 # Temporary headers might be copies of -dev package header files brought into a
@@ -144,8 +544,6 @@ AC_SUBST(package_version, $PACKAGE_VERSION)
 # for parallel builds and make distcheck as the relative path always stays the
 # same but configure may be invoked from different directories.
 #
-########################
-
 AC_SUBST(tmpheaders)
 
 for entry in `dirname $0`/src/prg/c/inc-tmp/*.h
@@ -155,8 +553,6 @@ do
 	fi
 done
 
-
-########################
 #
 # This creates an AutoConf substitution variable for temporary libraries.
 # Temporary libraries are development copies of libraries from other packages
@@ -166,8 +562,6 @@ done
 # for parallel builds and make distcheck as the relative path always stays the
 # same but configure may be invoked from different directories.
 #
-########################
-
 AC_SUBST(tmplibraries)
 
 for direntry in `dirname $0`/src/prg/c/lib-tmp/*
@@ -184,98 +578,6 @@ do
 	fi
 done
 
-
-########################
-#
-# The following allows for an enable-debug=yes/no command line option. The
-# conditional DEBUG is made available to the makefiles.
-#
-########################
-
-AC_ARG_ENABLE(debug,
-	--enable-debug    Compile for debugging,
-	[case "${enableval}" in
-		yes) debug=true ;;
-		no)  debug=false ;;
-		*) AC_MSG_ERROR(bad value ${enableval} for --enable-debug) ;;
-	esac],debug=false)
-AM_CONDITIONAL(DEBUG, test x$debug = xtrue)
-
-# CFLAGS is usually set to -g -O2, but for debugging we will probably
-# want -g -Og and for production we will probably want -O2. So empty CFLAGS here
-# and leave the selection to the Makefile.am's.
-
-: ${CFLAGS=""}
-
-if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE(Using compiler debug flags.)
-fi
-
-
-########################
-#
-# The following allows for an enable-headercheck=yes/no command line option.
-# The conditional HEADERCHECK is made available to the makefiles.
-#
-########################
-
-AC_ARG_ENABLE(headercheck,
-	--enable-headercheck    Build to display include stack,
-	[case "${enableval}" in
-		yes) headercheck=true ;;
-		no)  headercheck=false ;;
-		*) AC_MSG_ERROR(bad value ${enableval} in enable-headercheck);;
-	esac],headercheck=false)
-AM_CONDITIONAL(HEADERCHECK, test x$headercheck = xtrue)
-
-if test "x${headercheck}" = xtrue; then
-	AC_MSG_NOTICE(Building to display include stack depth.)
-fi
-
-
-#########################
-#
-# The following allows for an enable-sparse=yes/no command line option. The
-# conditional SPARSE is made available to the makefiles.
-#
-########################
-
-AC_ARG_ENABLE(sparse,
-	--enable-sparse    Build with sparse,
-	[case "${enableval}" in
-		yes) sparse=true ;;
-		no)  sparse=false ;;
-		*) AC_MSG_ERROR(bad value ${enableval} for --enable-sparse);;
-	esac],sparse=false)
-AM_CONDITIONAL(SPARSE, test x$sparse = xtrue)
-
-if test "x${sparse}" = xtrue; then
-	AC_MSG_NOTICE(Building using sparse.)
-fi
-
-
-########################
-#
-# The following allows for an enable-systemd=yes/no command line option. The
-# conditional SYSD is made available to the makefiles.
-#
-########################
-
-AC_ARG_ENABLE(systemd,
-	--enable-systemd    Build for systemd,
-	[case "${enableval}" in
-		yes) systemd=true ;;
-		no)  systemd=false ;;
-		*) AC_MSG_ERROR(bad value ${enableval} for --enable-systemd);;
-	esac],systemd=false)
-AM_CONDITIONAL(SYSD, test x$systemd = xtrue)
-
-if test "x${systemd}" = xtrue; then
-	AC_MSG_NOTICE(Building for systemd.)
-fi
-
-
-########################
 #
 # Now set up a sed sequence to substitute bookmarks in script files with either
 # standard GNU Directory Variables, or with programmer-defined variables set up
@@ -311,9 +613,7 @@ fi
 #	pkglibdir	${libdir}/${PACKAGE}
 #	pkglibexecdir	${libexecdir}/${PACKAGE}
 #
-########################
-
-AC_SUBST([edit], ["sed \
+AC_SUBST([edit], ["$SED \
 		-e 's|@package_version[@]|\$(package_version)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
@@ -344,213 +644,26 @@ AC_SUBST([edit], ["sed \
 		-e 's|@pkglibexecdir[@]|\$(pkglibexecdir)|g'"])
 
 
-# Passes the options to all am files. Puts objects in the sub-directory
-# containing the source. Forces tar to use --format=posix in make dist.
-# This also checks :-	BSD install	make variable set	mkdir -p
-#			gawk
-AM_INIT_AUTOMAKE(-Wall -Werror subdir-objects tar-pax)
+#########################################
+#					#
+# SECTION 15: Specify the output files	#
+#					#
+#########################################
 
-# Set language for compilation tests.
-AC_LANG(C)
+AC_MSG_NOTICE(processing output files)
 
-# Checks the compiler to use from either a standard list or one to use for
-# sparse, stores it in the CC variable and checks its capabilities.
-if test "x$sparse" = "xtrue" ; then
-	compiler_list="cgcc gcc cc"
-else
-	compiler_list="gcc cc"
-fi
-
-AC_PROG_CC($compiler_list)
-
-# Check that the compiler recognizes the restrict keyword.
-AC_C_RESTRICT
-
-# Checks the c pre-processor to use, stores it in the cpp variable and checks
-# its capabilities.
-AC_PROG_CPP
-
-# Build a suitable CFLAGS list depending on compiler version.
-# This has been checked up to gcc v8.2
-AC_SUBST(mg_cflags)
-AX_COMPILER_VENDOR
-AX_COMPILER_VERSION
-# The following 2 options seem fairly universal.
-mg_cflags="-Wall -Wextra"
-if test "$ax_cv_c_compiler_vendor" = "gnu"; then
-	mg_cflags+=" -Wmissing-include-dirs -Wshadow -Wstrict-prototypes"
-	AX_COMPARE_VERSION($ax_cv_c_compiler_version, ge, "7")
-	if test "x${ax_compare_version}" = xtrue; then
-		mg_cflags+=" -Wimplicit-fallthrough"
-	fi
-fi
-
-# Checks the c++ compiler to use, stores it in the cxx variable and checks its
-# capabilities. (Required by ltmain.sh).
-AC_PROG_CXX
-
-# Checks that there is an installation program or script.
-AC_PROG_INSTALL
-
-# Check a source file to ensure no command line --srcdir typo.
-AC_CONFIG_SRCDIR(src/prg/c/src/swocserver/main.c)
-
-# GNULIB macros.
-# Also checks for ar, grep, egrep, ranlib and how to run the cpp.
-gl_EARLY
-gl_INIT
-
-# Must use this macro if the ar archiver is used. ar is mostly now used for
-# static libraries.
-AM_PROG_AR
-
-# Check for libtool minimum version.
-LT_PREREQ(2.4.6)
-
-# Turn on shared libraries.
-# Also checks for fgrep, linker capabilities, ranlib, sed.
-# Also checks for:-	ANSI C header files	sys/types.h	sys/stat.h
-#			stdlib.h	string.h	memory.h
-#			strings.h	inttypes.h	stdint.h
-#			unistd.h	dlfcn.h
-LT_INIT
-
+#
 # Causes AC_OUTPUT to create a c preprocessor file with #define statements about
 # the configuration.
+#
 AC_CONFIG_HEADERS(src/prg/c/gen/inc/config.h)
 
-
-########################
 #
-# Standard macros will be automatically placed in m4.
-# Programmer defined macros should be placed in, say, m4extra which allows us
-# to exclude the standard macros from being git tracked. This other directory
-# must be specified as an include option in the Makefile.am ACLOCAL_AMFLAGS
-# e.g.
-# ACLOCAL_AMFLAGS = -I m4 -I m4extra
-#
-########################
-
-AC_CONFIG_MACRO_DIR(m4)
-
-
-########################
-#
-# Checks for programs.
-# If using am init automake, gl early or lt init the following programs are
-# automatically checked:-
-#
-# am init automake
-#	BSD install	mkdir -p	gawk
-#
-# gl early
-#	ar	grep	egrep	ranlib
-#
-# lt init
-#	fgrep	ranlib	sed
-#
-# Particular and generic program checks follow:
-#
-########################
-
-AC_MSG_NOTICE(checking for generic programs required by this application)
-AC_PROG_SED
-AC_CHECK_PROG(TAR, tar, yes, no)
-if test "x$TAR" = "xno" ; then
-	AC_MSG_ERROR(tar not found)
-fi
-
-AC_CHECK_PROG(GETOPT, getopt, yes, no)
-if test "x$GETOPT" = "xno" ; then
-	AC_MSG_ERROR(getopt not found)
-fi
-
-AC_CHECK_PROG(BASH, bash, yes, no)
-if test "x$BASH" = "xno" ; then
-   	AC_MSG_ERROR(bash not found)
-fi
-
-AC_MSG_NOTICE(checking for particular programs required by this application)
-AC_CHECK_PROG(TXT2MAN, txt2man, yes, no)
-if test "x$TXT2MAN" = "xno" ; then
-   	AC_MSG_ERROR(txt2man not found)
-fi
-
-AC_CHECK_PROG(TXT2MANWRAP, txt2manwrap, yes, no)
-if test "x$TXT2MANWRAP" = "xno" ; then
-	AC_MSG_ERROR(txt2manwrap not found)
-fi
-
-AC_CHECK_PROG(PKGCONFIG, pkg-config, yes, no)
-if test "x$PKGCONFIG" = "xno" ; then
-	AC_MSG_ERROR(pkg-config not found)
-fi
-
-
-# Checks for libraries.
-AC_SEARCH_LIBS(sws_show_status, swocserver, , \
-	AC_MSG_ERROR(function sws_show_status not found in libswocserver))
-AC_SEARCH_LIBS(parsefile, mgesysutils, , \
-	AC_MSG_ERROR(function parsefile not found in libmgesysutils))
-AC_SEARCH_LIBS(add_bst_node, mgec, , \
-	AC_MSG_ERROR(function add_bst_node not found in libmgec))
-AC_SEARCH_LIBS(prep_recv_sock, swoccommon, , \
-	AC_MSG_ERROR(function prep_recv_sock not found in libswoccommon))
-
-# Checks for C header files.
-AC_CHECK_HEADERS(stdio.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(stdarg.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(stdbool.h, , AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(sysexits.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(signal.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(limits.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(sys/stat.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(sys/types.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(string.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(unistd.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(syslog.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(errno.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(getopt.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(portability.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(libswocserver.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(libswoccommon.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(mgebuffer.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(mgememory.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(mgemessage.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(bstree.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(mge-errno.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(configfile.h, [], AC_MSG_ERROR(header not found))
-
-# Checks for C++ header files.
-
-# Checks for typedefs, structures, and compiler characteristics.
-AC_MSG_NOTICE(checking for typedefs required by this application)
-AC_TYPE_PID_T
-AC_TYPE_SIZE_T
-AC_TYPE_SSIZE_T
-
-# Checks for library functions.
-AC_MSG_NOTICE(checking for GNU compatible library functions required by this \
-application)
-AC_FUNC_FORK
-AC_FUNC_MALLOC
-AC_CHECK_FUNCS(memset socket strerror)
-
-# Checks for pkg-config files.
-PKG_CHECK_MODULES(LIBSWOCSERVER, libswocserver, [], \
-		AC_MSG_ERROR(pkg-config file not found))
-PKG_CHECK_MODULES(LIBMGESYSUTILS, libmgesysutils, [], \
-		AC_MSG_ERROR(pkg-config file not found))
-PKG_CHECK_MODULES(LIBMGEC, libmgec, [], \
-		AC_MSG_ERROR(pkg-config file not found))
-PKG_CHECK_MODULES(LIBSWOCCOMMON, libswoccommon, [], \
-		AC_MSG_ERROR(pkg-config file not found))
-
-
 # Non-Makefile files to generate.
 # AC_CONFIG_FILES should not be used to substitute AutoConf Installation
 # Directory Variables, (bindir and friends), except in Makefiles and pkg-config
 # files. See GNU AutoConf manual section 4.8.2 Installation Directory Variables.
+#
 AC_CONFIG_FILES(src/conf/etc/swocserverd.conf)
 
 # Project Makefiles to create.
@@ -568,3 +681,4 @@ AC_CONFIG_FILES(Makefile
 		src/systemd/Makefile)
 
 AC_OUTPUT
+
