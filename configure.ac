@@ -120,7 +120,8 @@
 # 23/09/2018	MG	1.1.15	Remove check for deprecated and		#
 #				replaced bzero().			#
 # 05/10/2018	MG	1.1.16	Add program check for pkg-config.	#
-# 18/05/2019	MG	1.2.1	Re-vamp to new standard layout.		#
+# 19/05/2019	MG	1.2.1	Re-vamp to new standard layout.		#
+#				Remove v from package version number.	#
 #									#
 #########################################################################
 
@@ -139,7 +140,7 @@ AC_PREREQ(2.69)
 # The following macros set all top level versioning for this project. All
 # information can be propagated via AC_CONFIG_HEADERS and AC_CONFIG_FILES.
 #
-AC_INIT(Server Wait On Client Package, v1.1.9+rc1, m.grant.prg@gmail.com, swoc)
+AC_INIT(Server Wait On Client Package, 1.1.9+rc1, m.grant.prg@gmail.com, swoc)
 
 AC_MSG_NOTICE(initialisation and setup)
 
