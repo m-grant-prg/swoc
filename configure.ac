@@ -148,7 +148,7 @@ AC_SUBST(package_version, $PACKAGE_VERSION)
 AC_DEFINE(COMMON_SOURCE_VERSION, "1.1.6+rc1", \
 	Define to the version of source code for the common library.)
 
-AC_SUBST(common_lib_version_info, "2:1:1")
+AC_SUBST(common_lib_version_info, "3:0:0")
 
 AC_DEFINE(CLIENT_SOURCE_VERSION, "1.1.4+rc1", \
 	Define to the version of source code for the client library.)
