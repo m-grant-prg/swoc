@@ -52,6 +52,8 @@
 #				filename.				#
 # 19/05/2019	MG	1.1.9	Merge sub-projects into one.		#
 #				Make source tarball name == GitHub.	#
+#				Add install of standard GNU files such	#
+#				as AUTHORS etc.				#
 #									#
 #########################################################################
 
@@ -107,7 +109,13 @@ endif
 SUBDIRS += doc/doxygen
 
 
-EXTRA_DIST  = m4/gnulib-cache.m4
+doc_DATA = AUTHORS ChangeLog COPYING NEWS README
+
+
+EXTRA_DIST = $(srcdir)/AUTHORS $(srcdir)/ChangeLog $(srcdir)/COPYING \
+		$(srcdir)/NEWS $(srcdir)/README
+
+EXTRA_DIST += m4/gnulib-cache.m4
 
 
 srctarball:
