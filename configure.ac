@@ -153,7 +153,7 @@ AC_SUBST(common_lib_version_info, "2:1:1")
 AC_DEFINE(CLIENT_SOURCE_VERSION, "1.1.4+rc1", \
 	Define to the version of source code for the client library.)
 
-AC_SUBST(client_lib_version_info, "1:1:1")
+AC_SUBST(client_lib_version_info, "2:0:0")
 
 AC_DEFINE(SERVER_SOURCE_VERSION, "1.1.6+rc1", \
 	Define to the version of source code for the server library.)
