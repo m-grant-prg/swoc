@@ -1,6 +1,3 @@
------------------------------
-Server Wait On Clients System
-=============================
 --------
 Contents
 ========
@@ -30,88 +27,61 @@ Overnight, clients want to perform crontab work as a user and root, then do a
 backup and then shutdown enabling the server to initiate its own shutdown.
 
 So an example root crontab on the client:-
+# This line adds a lock, performs some work of unknown duration and releases the
+# lock.
+10 00 * * 0,1,2,3,4,5,6 date ; swocclient -l ; apt-get update -qq ; \
+apt-get upgrade -d -q -y ; apt-get dist-upgrade -d -q -y ; swocclient -r ; date
 
-This line adds a lock, performs some work of unknown duration and releases the
-lock.
-
-	10 00 * * 0,1,2,3,4,5,6 date ; swocclient -l ; apt-get update -qq ; \
-	apt-get upgrade -d -q -y ; apt-get dist-upgrade -d -q -y ; \
-	swocclient -r ; date
-
-This line adds a lock of its own, waits until this client has one lock
-outstanding, ie its own, then performs a backup, releases the lock and shuts
-down.
-
-	15 00 * * 0,1,2,3,4,6 date ; swocclient -l ; swocclient -w1 ; date ; \
-	netbckup -d ; swocclient -r ; date ; at -f shutdown now
+# This line adds a lock of its own, waits until this client has one lock
+# outstanding, ie its own, then performs a backup, releases the lock and shuts
+# down.
+15 00 * * 0,1,2,3,4,6 date ; swocclient -l ; swocclient -w1 ; date ; \
+netbckup -d ; swocclient -r ; date ; at -f shutdown now
 
 At the same time, a user crontab on the client is using two crontab entries to
 run some jobs each taking its own lock at the start and releasing it at the
 end. Both of these lines are of unknown and variable duration:-
+10 00 * * 0,1,2,3,4,6 swocclient -l ; \
+get_iplayer --pvr 2>/home/mgrant/Videos/iPlayer/VideosErr.log ; date ; \
+swocclient -r
 
-	10 00 * * 0,1,2,3,4,6 swocclient -l ; \
-	get_iplayer --pvr 2>/home/mgrant/Videos/iPlayer/VideosErr.log ; date ; \
-	swocclient -r
-
-	10 00 * * 0,1,2,3,4,6 swocclient -l ; \
-	mget --quiet --sourcefile /home/mgrant/Downloads/MultiGetSource.txt \
-	--targetdir /home/mgrant/Downloads ; date ; swocclient -r
+10 00 * * 0,1,2,3,4,6 swocclient -l ; \
+mget --quiet --sourcefile /home/mgrant/Downloads/MultiGetSource.txt \
+--targetdir /home/mgrant/Downloads ; date ; swocclient -r
 
 Meanwhile on the server, it waits until it has no more registered locks and then
 initiates a shutdown.
-
-	20 00 * * 0,1,2,3,4,5,6 date ; swocserver -w ; date ; at -f shutdown now
+20 00 * * 0,1,2,3,4,5,6 date ; swocserver -w ; date ; at -f shutdown now
 
 This Project
 ------------
-This AutoTools project contains the entire Server Wait On Clients System.
+This AutoTools project contains the swocserver Server Wait On Clients Server
+Programs.
 
-Whilst this project can be treated as a single entity, (build, install,
-uninstall, etc), it is designed so that only the desired elements, the client
-parts, the server parts, or both, can be installed on a system. Indeed, by the
-time this system is packaged downstream, it is split into 9 packages although
-the user would only handle the client and / or server packages and the others
-would be installed as required as dependencies.
+This comprises of the command line program swocserver.
 
-These individual elements are contained in 9 subdirectories of the project root
-and they are all AutoTools sub-projects in their own right. These sub-projects
-are:-
-
-	com-dev		Development files for the common library libswoccommon.
-	com-lib		The common library libswoccommon.
-	cli-dev		Development files for the client library libswocclient.
-	cli-lib		The client library libswocclient.
-	cli-prg		The command line client program.
-	srv-dev		Development files for the server library libswocserver.
-	srv-lib		The server library libswocserver.
-	srv-prg		The command line server program and the server daemon.
-	doc		Doxygen documentation on the entire project.
-
-The development files generally consist of c header files, pkg-config files and
-man pages.
-
-This system depends on other libraries. Two definite requirements are libmgec
-and libmgesystutils. They can be found here:-
-
-	https://github.com/m-grant-prg/libmgec.git
-	https://github.com/m-grant-prg/libmgesysutils.git
-
-Any other dependencies not installed on your system will be identified by the
-configure script. Any of these produced by this author can be found in a
-repository located here:-
+If you are going to build this swocserver SWOC Server Programs then you must
+install the development files from libswocserver-dev. Other required
+dependencies not installed on your system will be identified by the configure
+script. Any of these produced by this author can be found in a repository
+located here:-
 https://github.com/m-grant-prg
+
+Related packages in this system are the dev and lib packages for libswoccommon
+SWOC Common Library, equivalent packages for the libswocserver Server Library,
+equivalent packages for the libswocclient Client Library, a package swocclient
+for the client application, a package swocserver for the server application and
+a documentation project swocdoc. There is also a parent project, swoc-full.
+
+So please refer also to the README files of these projects.
 
 N.B.
 ----
 At a source modification / development level, this project expects to reside in
-a git environment. This manifests itself in 3 places:-
+a git environment. This manifests itself in 2 places:-
 1) ... .gitignore files are included in the source.
 2) ... The make target, 'srctarball', relies on the command 'git am' so it will
 	fail if git is not installed or it is not in a git repository.
-3) ... Package building for the full project relies on the command
-	'git describe' so it will fail if git is not installed or it is not in
-	a git repository. (As said before, building the full package is not a
-	particularly meaningful task.)
 
 
 -------------------------------------------------
@@ -120,7 +90,6 @@ a git environment. This manifests itself in 3 places:-
 
 a) ... Download either the source or distribution tarball (the .tar.gz file)
 	from:-
-
 	https://github.com/m-grant-prg/swoc/releases
 
 b) ... Extract the tarball preserving the directory structure.
@@ -133,8 +102,8 @@ e) ... Type './configure'
 
 f) ... As root or sudo, type 'make install clean'
 
-g) ... Edit the config files, please refer to the com-lib/README file and the
-	srv-prg/README file. Both need to be followed.
+g) ... Edit the sysconfdir/swocserverd.conf, (usually /etc/swocserverd.conf), as
+	required.
 
 (Quote marks are for textual clarity only).
 
@@ -156,7 +125,8 @@ https://github.com/m-grant-prg/swoc/wiki
 ---------------------
 4 ... Utility Scripts
 =====================
-In the project root directory there is a helper script; bootstrap.sh
+In the project root directory there are 2 helper scripts; bootstrap.sh and
+gen-gnulib.sh.
 
 bootstrap.sh
 ------------
@@ -171,12 +141,10 @@ work from there, (.gitignore is already set to ignore such a directory).
 
 Assuming you adopt the preceding paragraph then a typical invocation of the
 script would be:-
-
 ../bootstrap.sh --build ..
 The last '..' points the way to project root.
 
 The full list of arguments to bootstrap.sh are:-
-
 	-b, --build make the project.
 
 	-c, --config configure the project.
@@ -209,4 +177,28 @@ mutually exclusive.
 
 Options d debug, F distcheckfake and s sparse are enabled by configure so
 require option c config.
+
+gen-gnulib.sh
+-------------
+This script generates or re-generates the gnulib requirements, I shan't go into
+detail here.
+
+It is useful when setting up the project initially, when you are actually
+building in what is required and thinking about it, thereafter it is best to use
+../bootstrap.sh --gnulib ..
+as it determines whether to do a re-generate based on whether the cache file
+exists, i.e. it has been wanted before.
+
+setup.sh
+--------
+If the sysconfdir/swocserverd.conf configuration file is deleted, or, if
+corrupted then delete it, and run setup.sh from the pkglibexec directory. To
+find the script location on your system:-
+	type 'find / -path */swocserver/setup.sh 2>/dev/null'.
+Typically in an AutoTools build pkglibexec is /usr/local/libexec/PACKAGE
+so as root or sudo you would type:-
+	'/usr/local/libexec/swocserver/setup.sh'.
+Answer the prompts from the setup script.
+Subsequent to running this script, config files can only be modified with an
+editor, setup.sh will not work unless the config file is deleted.
 

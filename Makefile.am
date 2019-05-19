@@ -2,14 +2,14 @@
 #########################################################################
 #									#
 # Script ID: ./Makefile.am						#
-# Author: Copyright (C) 2018  Mark Grant				#
+# Author: Copyright (C) 2015-2019  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
 #									#
 # Purpose:								#
-#	AutoMake script file to generate Server Wait on Clients - all	#
-# projects from source.							#
+#	AutoMake script file to generate SWOCServer-C project from	#
+# source.								#
 #									#
 #########################################################################
 
@@ -19,26 +19,94 @@
 #									#
 # Date		Author	Version	Description				#
 #									#
-# 11/01/2018	MG	1.0.1	First release.				#
-# 05/02/2018	MG	1.0.2	Add  -I m4extra as a template for the	#
-#				project.				#
-# 07/05/2018	MG	1.0.3	Add srctarball target to build a source	#
+# 22/06/2015	MG	1.0.1	First release.				#
+# 24/10/2015	MG	1.0.2	Restructure and change to conform to	#
+#				AutoTools General Template v1.0.6.	#
+# 10/05/2016	MG	1.0.3	Move header files to include directory.	#
+# 28/05/2016	MG	1.0.4	Modified following libswocserver	#
+#				library introduction.			#
+# 20/09/2016	MG	1.0.5	Add swocserverd daemon directory.	#
+# 23/09/2016	MG	1.0.6	Add bash directory following move from	#
+#				libswocserver package.			#
+# 10/01/2017	MG	1.1.0	Move bash config file setup script back	#
+#				to libswocserver package as that	#
+#				library can exist without this server	#
+#				package.				#
+#				Add systemd service build. This only	#
+#				gets executed if configure is run with	#
+#				--enable-systemd=yes.	 		#
+# 19/05/2017	MG	1.1.1	Add support for temporary header	#
+#				directory.				#
+#				Add Make locations for man 5 pages and	#
+#				bash.					#
+# 07/06/2017	MG	1.1.2	Add support for temporary libraries.	#
+# 12/01/2018	MG	1.1.3	Add SPDX license tags to source files.	#
+# 16/01/2018	MG	1.1.4	Correct generation of config.h		#
+# 05/02/2018	MG	1.1.5	Remove unnecessary -I m4extra.		#
+# 26/04/2018	MG	1.1.6	Add srctarball target to build a source	#
 #				tarball in the build directory. Uses	#
 #				git archive to archive HEAD.		#
-# 08/06/2018	MG	1.0.4	Add info messages to srctarball target.	#
-# 22/06/2018	MG	1.0.5	Remove macro directory entries as not	#
-#				required in this project.		#
-# 26/10/2018	MG	1.0.6	Change srctarball target to build with	#
+# 08/06/2018	MG	1.1.7	Add info messages to srctarball target.	#
+# 26/10/2018	MG	1.1.8	Change srctarball target to build with	#
 #				src between package name and version in	#
 #				filename.				#
+# 18/05/2019	MG	1.1.9	Merge sub-projects into one.		#
 #									#
 #########################################################################
 
+ACLOCAL_AMFLAGS = -I m4 -I m4extra
 
-SUBDIRS = com-dev com-lib
-SUBDIRS += cli-dev cli-lib cli-prg
-SUBDIRS += srv-dev srv-lib srv-prg
-SUBDIRS += doc
+# The sequence of the build below is important in so far as this sequence
+# means that the service start-up is done by a hook at the end of systemd
+# service file installation.
+# It also means that the service is stopped by a local target in swocserver
+# uninstall (swocserver -e is used as ExecStop).
+
+SUBDIRS = src/conf/etc/com-lib
+SUBDIRS += src/conf/etc/srv-prg
+SUBDIRS += src/man/3/cli-dev
+SUBDIRS += src/man/3/com-dev/messages
+SUBDIRS += src/man/3/com-dev/ssh
+SUBDIRS += src/man/3/com-dev/tcp
+SUBDIRS += src/man/3/com-dev/validateconfig
+SUBDIRS += src/man/3/srv-dev
+SUBDIRS += src/man/5/com-lib
+SUBDIRS += src/man/5/srv-prg
+SUBDIRS += src/man/8/cli-prg
+SUBDIRS += src/man/8/srv-prg
+SUBDIRS += src/prg/bash/com-lib
+SUBDIRS += src/prg/bash/srv-prg
+SUBDIRS += src/prg/c/inc-tmp
+SUBDIRS += src/prg/c/lib-tmp
+SUBDIRS += src/prg/c/gen/lib
+SUBDIRS += src/prg/c/inc/com-dev
+SUBDIRS += src/prg/c/pkg-config/com-dev
+SUBDIRS += src/prg/c/src/com-lib/libswoccommon
+SUBDIRS += src/prg/c/src/com-lib/test-messages
+SUBDIRS += src/prg/c/src/com-lib/test-ssh
+SUBDIRS += src/prg/c/src/com-lib/test-tcp
+SUBDIRS += src/prg/c/src/com-lib/test-validate
+SUBDIRS += src/prg/c/inc/cli-dev
+SUBDIRS += src/prg/c/pkg-config/cli-dev
+SUBDIRS += src/prg/c/src/cli-lib/libswocclient
+SUBDIRS += src/prg/c/src/cli-lib/test-optionproc
+SUBDIRS += src/prg/c/inc/srv-dev
+SUBDIRS += src/prg/c/pkg-config/srv-dev
+SUBDIRS += src/prg/c/src/srv-lib/libswocserver
+SUBDIRS += src/prg/c/src/srv-lib/test-optionproc
+SUBDIRS += src/prg/c/src/cli-prg
+SUBDIRS += src/prg/c/inc/srv-prg
+SUBDIRS += src/prg/c/src/srv-prg/swocserver
+SUBDIRS += src/prg/c/src/srv-prg/swocserverd
+
+if SYSD
+SUBDIRS += src/systemd/srv-prg
+endif
+
+SUBDIRS += doc/doxygen
+
+
+EXTRA_DIST  = m4/gnulib-cache.m4
 
 
 srctarball:
