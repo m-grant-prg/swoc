@@ -50,7 +50,8 @@
 # 26/10/2018	MG	1.1.8	Change srctarball target to build with	#
 #				src between package name and version in	#
 #				filename.				#
-# 18/05/2019	MG	1.1.9	Merge sub-projects into one.		#
+# 19/05/2019	MG	1.1.9	Merge sub-projects into one.		#
+#				Make source tarball name == GitHub.	#
 #									#
 #########################################################################
 
@@ -111,7 +112,7 @@ EXTRA_DIST  = m4/gnulib-cache.m4
 
 srctarball:
 	@cwd="$${PWD}" && \
-	targ="$${cwd}/@PACKAGE_TARNAME@-src-@PACKAGE_VERSION@.tar.gz" && \
+	targ="$${cwd}/@PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz" && \
 	cd @srcdir@ && \
 	echo "making srctarball from @srcdir@" && \
 	echo "GA	$${targ}" && \
