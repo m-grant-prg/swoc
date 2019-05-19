@@ -1,4 +1,3 @@
-#! /usr/bin/env bash
 #########################################################################
 #									#
 # Script ID: src/prg/c/src/cli-lib/test-optionproc/Makefile.am		#
@@ -34,7 +33,8 @@
 # 07/07/2018	MG	1.0.8	Improve debug flags used. Use gdb	#
 #				orientated level 3 (includes		#
 #				pre-processor macros).			#
-# 18/05/2019	MG	1.0.9	Merge sub-projects into one.		#
+# 19/05/2019	MG	1.0.9	Merge sub-projects into one.		#
+#				Remove shebang.				#
 #									#
 #########################################################################
 

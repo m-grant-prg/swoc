@@ -1,4 +1,3 @@
-#! /usr/bin/env bash
 #########################################################################
 #									#
 # Script ID: src/prg/c/src/srv-prg/swocserverd/Makefile.am		#
@@ -46,7 +45,8 @@
 #				and their depth in the include stack.	#
 #				Use compiler version dependent CFLAGS	#
 #				assembled in configure.			#
-# 18/05/2019	MG	1.0.13	Merge sub-projects into one.		#
+# 19/05/2019	MG	1.0.13	Merge sub-projects into one.		#
+#				Remove shebang.				#
 #									#
 #########################################################################
 

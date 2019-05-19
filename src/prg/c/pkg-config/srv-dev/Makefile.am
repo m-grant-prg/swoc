@@ -1,4 +1,3 @@
-#! /usr/bin/env bash
 #########################################################################
 #									#
 # Script ID: src/prg/c/pkg-config/srv-dev/Makefile.am			#
@@ -22,6 +21,8 @@
 #									#
 # 27/05/2016	MG	1.0.1	First release.				#
 # 12/01/2018	MG	1.0.2	Add SPDX license tags to source files.	#
+# 19/05/2019	MG	1.0.3	Merge sub-projects into one.		#
+#				Remove shebang.				#
 #									#
 #########################################################################
 

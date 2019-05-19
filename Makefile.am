@@ -1,4 +1,3 @@
-#! /usr/bin/env bash
 #########################################################################
 #									#
 # Script ID: ./Makefile.am						#
@@ -54,6 +53,7 @@
 #				Make source tarball name == GitHub.	#
 #				Add install of standard GNU files such	#
 #				as AUTHORS etc.				#
+#				Remove shebang.				#
 #									#
 #########################################################################
 

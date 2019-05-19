@@ -1,4 +1,3 @@
-#! /usr/bin/env bash
 #########################################################################
 #									#
 # Script ID: src/man/3/com-dev/messages/Makefile.am			#
@@ -28,7 +27,8 @@
 #				target suffix. If the suffix is blank	#
 #				(foo.) or if there is no suffix (foo)	#
 #				then error out.				#
-# 18/05/2019	MG	1.0.5	Merge sub-projects into one.		#
+# 19/05/2019	MG	1.0.5	Merge sub-projects into one.		#
+#				Remove shebang.				#
 #									#
 #########################################################################
 

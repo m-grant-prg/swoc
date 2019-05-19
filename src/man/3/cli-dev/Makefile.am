@@ -1,4 +1,3 @@
-#! /usr/bin/env bash
 #########################################################################
 #									#
 # Script ID: src/man/3/cli-dev/Makefile.am				#
@@ -33,7 +32,8 @@
 #				then error out.				#
 # 02/05/2018	MG	1.0.7	Add support for client block list.	#
 # 18/05/2018	MG	1.0.8	Add swc_show_srv_block_status.3		#
-# 18/05/2019	MG	1.0.9	Merge sub-projects into one.		#
+# 19/05/2019	MG	1.0.9	Merge sub-projects into one.		#
+#				Remove shebang.				#
 #									#
 #########################################################################
 

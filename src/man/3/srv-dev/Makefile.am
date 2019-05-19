@@ -1,4 +1,3 @@
-#! /usr/bin/env bash
 #########################################################################
 #									#
 # Script ID: src/man/3/srv-dev/Makefile.am				#
@@ -36,7 +35,8 @@
 #				Add show_cli_blocklist man page.	#
 #				Add client block and unblock man pages.	#
 #				Add server block and unblock man pages.	#
-# 18/05/2019	MG	1.0.10	Merge sub-projects into one.		#
+# 19/05/2019	MG	1.0.10	Merge sub-projects into one.		#
+#				Remove shebang.				#
 #									#
 #########################################################################
 

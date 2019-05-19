@@ -1,4 +1,3 @@
-#! /usr/bin/env bash
 #########################################################################
 #									#
 # Script ID: src/prg/c/inc/srv-prg/Makefile.am				#
@@ -24,7 +23,8 @@
 # 12/01/2018	MG	1.1.1	Add SPDX license tags to source files.	#
 # 22/05/2018	MG	1.1.2	Change swocserver(d).h files to		#
 #				internal.h				#
-# 18/05/2019	MG	1.1.3	Merge sub-projects into one.		#
+# 19/05/2019	MG	1.1.3	Merge sub-projects into one.		#
+#				Remove shebang.				#
 #									#
 #########################################################################
 

@@ -1,4 +1,3 @@
-#! /usr/bin/env bash
 #########################################################################
 #									#
 # Script ID: doc/doxygen/Makefile.am					#
@@ -27,7 +26,8 @@
 # 27/06/2018	MG	1.0.3	Reverse 1.0.2 as AC_CONFIG_FILES cannot	#
 #				be used for the substitution of		#
 #				Installation Directory Variables.	#
-# 18/05/2019	MG	1.0.4	Merge sub-projects into one.		#
+# 19/05/2019	MG	1.0.4	Merge sub-projects into one.		#
+#				Remove shebang.				#
 #									#
 #########################################################################
 
