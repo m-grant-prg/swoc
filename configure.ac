@@ -163,7 +163,7 @@ AC_SUBST(server_lib_version_info, "2:1:1")
 AC_DEFINE(SWOCCLIENT_SOURCE_VERSION, "1.1.3", \
 	Define to the version of source code for the client program.)
 
-AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.4", \
+AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.4+rc1", \
 	Define to the version of source code for the server program.)
 
 AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.5+rc1", \
