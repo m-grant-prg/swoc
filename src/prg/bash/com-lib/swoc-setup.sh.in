@@ -1,15 +1,15 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-#	setup.sh is automatically generated,				#
+#	swoc-setup.sh is automatically generated,			#
 #		please do not modify!					#
 #									#
 #########################################################################
 
 #########################################################################
 #									#
-# Script ID: setup.sh							#
-# Author: Copyright (C) 2017-2018  Mark Grant				#
+# Script ID: swoc-setup.sh						#
+# Author: Copyright (C) 2017-2019  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -17,7 +17,7 @@
 # Purpose:								#
 #	To setup the config files for the swoc client and server.	#
 #									#
-# Syntax:	setup.sh [-h || -V ]					#
+# Syntax:	swoc-setup.sh [-h || -V ]				#
 #									#
 # Exit Codes:	0 & 64 - 113 as per C/C++ standard			#
 #		0 - success						#
@@ -52,6 +52,12 @@
 #				AC_CONFIG_FILES cannot be used for the	#
 #				substitution of Installation Directory	#
 #				Variables.				#
+# 22/05/2019	MG	1.0.3	Change script name as following the	#
+#				collapse of all sub-projects into one,	#
+#				the setup script names must be unique.	#
+#				(This is more a requirement for		#
+#				downstream packaging but sensible	#
+#				none-the-less).				#
 #									#
 #########################################################################
 
@@ -59,8 +65,8 @@
 # Init variables #
 ##################
 script_exit_code=0
-outputprefix="setup.sh: "
-version="1.0.2"				# set version variable
+outputprefix="swoc-setup.sh: "
+version="1.0.3"				# set version variable
 etclocation=@sysconfdir@		# Path to etc directory
 packageversion=@package_version@	# Version of the complete package
 
@@ -251,3 +257,4 @@ std_cmd_err_handler $?
 script_exit_code=0
 output "Files set up." 0
 script_exit
+

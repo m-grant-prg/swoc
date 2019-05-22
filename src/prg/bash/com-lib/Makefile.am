@@ -26,22 +26,28 @@
 #				Installation Directory Variables.	#
 # 19/05/2019	MG	1.0.4	Merge sub-projects into one.		#
 #				Remove shebang.				#
+# 22/05/2019	MG	1.0.5	Change script name as following the	#
+#				collapse of all sub-projects into one,	#
+#				the setup script names must be unique.	#
+#				(This is more a requirement for		#
+#				downstream packaging but sensible	#
+#				none-the-less).				#
 #									#
 #########################################################################
 
 
-setup.sh: Makefile
+swoc-setup.sh: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	test -f ./$@.in || srcdir=$(srcdir)/; \
 	$(edit) $${srcdir}$(@F).in >$@.tmp
 	mv $@.tmp $@
 	chmod a+x $@
-setup.sh: $(srcdir)/setup.sh.in
+swoc-setup.sh: $(srcdir)/swoc-setup.sh.in
 
-pkglibexec_SCRIPTS = setup.sh
+pkglibexec_SCRIPTS = swoc-setup.sh
 
-EXTRA_DIST = $(srcdir)/setup.sh.in
+EXTRA_DIST = $(srcdir)/swoc-setup.sh.in
 
-CLEANFILES = *.tmp setup.sh
+CLEANFILES = *.tmp swoc-setup.sh
 
