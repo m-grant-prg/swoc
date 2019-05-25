@@ -120,8 +120,9 @@
 # 23/09/2018	MG	1.1.15	Remove check for deprecated and		#
 #				replaced bzero().			#
 # 05/10/2018	MG	1.1.16	Add program check for pkg-config.	#
-# 19/05/2019	MG	1.2.1	Re-vamp to new standard layout.		#
+# 25/05/2019	MG	1.2.1	Re-vamp to new standard layout.		#
 #				Remove v from package version number.	#
+#				Pass bash path to scripts and Makefiles	#
 #									#
 #########################################################################
 
@@ -419,9 +420,9 @@ if test "x$PKGCONFIG" = "xno" ; then
 fi
 
 AC_MSG_NOTICE(checking for particular programs required at build and run time)
-AC_CHECK_PROG(BASH, bash, yes, no)
+AC_PATH_PROG([BASH], [bash], [no])
 if test "x$BASH" = "xno" ; then
-   	AC_MSG_ERROR(bash not found)
+	AC_MSG_ERROR([bash not found])
 fi
 
 AC_MSG_NOTICE(checking for particular programs required at run time)
@@ -587,6 +588,7 @@ AC_MSG_NOTICE(processing additional checks and variables)
 #	pkglibexecdir	${libexecdir}/${PACKAGE}
 #
 AC_SUBST([edit], ["$SED \
+		-e 's|@bashlocation[@]|\$(BASH)|g' \
 		-e 's|@package_version[@]|\$(package_version)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \

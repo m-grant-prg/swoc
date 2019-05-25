@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#! @bashlocation@
 #########################################################################
 #									#
 #	swoc-setup.sh is automatically generated,			#
@@ -52,12 +52,14 @@
 #				AC_CONFIG_FILES cannot be used for the	#
 #				substitution of Installation Directory	#
 #				Variables.				#
-# 22/05/2019	MG	1.0.3	Change script name as following the	#
+# 25/05/2019	MG	1.0.3	Change script name as following the	#
 #				collapse of all sub-projects into one,	#
 #				the setup script names must be unique.	#
 #				(This is more a requirement for		#
 #				downstream packaging but sensible	#
 #				none-the-less).				#
+#				Use configure generated bash location	#
+#				for shebang.				#
 #									#
 #########################################################################
 
