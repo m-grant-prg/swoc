@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.16 ==== 18/05/2019_
+ * @version _v1.0.16 ==== 26/05/2019_
  */
 
 /* **********************************************************************
@@ -57,7 +57,9 @@
  * 07/09/2018	MG	1.0.14	Use new mgemessage struct initialiser.	*
  * 23/09/2018	MG	1.0.15	Replace use of deprecated bzero() with	*
  *				memset().				*
- * 18/05/2019	MG	1.0.16	Merge sub-projects into one.		*
+ * 26/05/2019	MG	1.0.16	Merge sub-projects into one.		*
+ *				Cast ssize_t to size_t to avoid sign	*
+ *				warning.				*
  *									*
  ************************************************************************
  */
@@ -317,7 +319,7 @@ static int proc_events(int n_events, struct epoll_event *pevents)
 					strerror(swsd_err));
 				return swsd_err;
 			}
-			msg_buf = concat_buf(sock_buf, n, msg_buf);
+			msg_buf = concat_buf(sock_buf, (size_t)n, msg_buf);
 			if (msg_buf1.buffer == NULL) {
 				swsd_err = mge_errno;
 				return swsd_err;

@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.10 ==== 18/05/2019_
+ * @version _v1.1.10 ==== 26/05/2019_
  */
 
 /* **********************************************************************
@@ -41,7 +41,9 @@
  * 07/09/2018	MG	1.1.8	Use new mgebuffer struct initialiser.	*
  * 23/09/2018	MG	1.1.9	Replace use of deprecated bzero() with	*
  *				memset().				*
- * 18/05/2019	MG	1.1.10	Merge sub-projects into one.		*
+ * 26/05/2019	MG	1.1.10	Merge sub-projects into one.		*
+ *				Cast ssize_t to size_t to avoid sign	*
+ *				warning.				*
  *									*
  ************************************************************************
  */
@@ -195,7 +197,7 @@ int exch_msg(char *outgoing_msg, size_t om_length, struct mgemessage *msg)
 				"from socket - %s", mge_strerror(mge_errno));
 			goto err_exit_1;
 		}
-		msg_buf = concat_buf(sock_buf, n, msg_buf);
+		msg_buf = concat_buf(sock_buf, (size_t)n, msg_buf);
 		if (msg_buf1.buffer == NULL)
 			goto err_exit_1;
 
