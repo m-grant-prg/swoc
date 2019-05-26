@@ -147,7 +147,7 @@ AC_MSG_NOTICE(initialisation and setup)
 
 AC_SUBST(package_version, $PACKAGE_VERSION)
 
-AC_DEFINE(COMMON_SOURCE_VERSION, "1.1.6+rc1", \
+AC_DEFINE(COMMON_SOURCE_VERSION, "1.1.6+rc2", \
 	Define to the version of source code for the common library.)
 
 AC_SUBST(common_lib_version_info, "3:0:0")
