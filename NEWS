@@ -1,3 +1,28 @@
+Release 1.2.1 2019-05-30
+Swocserverd source v1.0.6
+Swocserver source v1.1.5
+Swocclient source v1.1.4
+Server source v1.1.7
+Client source v1.1.5
+Common source v1.1.7
+Common library v3:0:0
+Client library v2:0:0
+Server library v3:0:0
+Cast ssize_t to size_t to avoid sign warning
+Use configure generated bash location for shebangs
+Make setup script names unique
+Update Copyright statement to new standard
+Update bootstrap.sh to v1.4.3
+README: Add mark down link
+README: Add title and Copyright statement
+README: Make package install references generic
+Remove shebangs from Makefile.ams
+Add install of standard GNU files such as AUTHORS
+Make source tarball name == GitHub
+Remove v from package version number
+Collapse all AT sub-projects into one
+configure.ac: Adopt new standard layout
+
 Release 1.1.8 2018-10-26
 Use new mgemessage struct initialiser
 request.c: Remove use of DEF_MSG_SIZE
