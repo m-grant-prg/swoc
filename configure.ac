@@ -123,6 +123,7 @@
 # 25/05/2019	MG	1.2.1	Re-vamp to new standard layout.		#
 #				Remove v from package version number.	#
 #				Pass bash path to scripts and Makefiles	#
+# 31/05/2019	MG	1.2.2	Add AC_CHECK_DECLS([sys_siglist]).	#
 #									#
 #########################################################################
 
@@ -133,7 +134,7 @@
 #					#
 #########################################
 
-AC_REVISION($Revision: 1.2.1 $)
+AC_REVISION($Revision: 1.2.2 $)
 
 AC_PREREQ(2.69)
 
@@ -691,6 +692,11 @@ srv_pc_requires_private="libswoccommon"
 
 # Check a source file to ensure no command line --srcdir typo.
 AC_CONFIG_SRCDIR(src/prg/c/src/srv-prg/swocserver/version.c)
+
+# Check for an r-value of sys_siglist
+AC_CHECK_DECLS([sys_siglist], [], [], [AC_INCLUDES_DEFAULT
+					#include <signal.h>
+					])
 
 
 #########################################
