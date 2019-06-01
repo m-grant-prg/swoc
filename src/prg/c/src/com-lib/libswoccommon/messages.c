@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.10 ==== 26/05/2019_
+ * @version _v1.1.11 ==== 01/06/2019_
  */
 
 /* **********************************************************************
@@ -44,6 +44,7 @@
  * 26/05/2019	MG	1.1.10	Merge sub-projects into one.		*
  *				Cast ssize_t to size_t to avoid sign	*
  *				warning.				*
+ * 01/06/2019	MG	1.1.11	Trivial improvements to type safety.	*
  *									*
  ************************************************************************
  */
@@ -131,7 +132,7 @@ void parse_msg(struct mgemessage *msg, enum msg_arguments *msg_args,
 int send_outgoing_msg(char *outgoing_msg, size_t outgoing_msg_length,
 			int *newsockfd)
 {
-	int n;
+	ssize_t n;
 	mge_errno = 0;
 
 	n = send(*newsockfd, outgoing_msg, outgoing_msg_length, 0);

@@ -11,7 +11,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.5 ==== 18/05/2019_
+ * @version _v1.0.6 ==== 01/06/2019_
  */
 
 /* **********************************************************************
@@ -30,6 +30,7 @@
  * 23/09/2018	MG	1.0.4	Replace use of deprecated bzero() with	*
  *				memset().				*
  * 18/05/2019	MG	1.0.5	Merge sub-projects into one.		*
+ * 01/06/2019	MG	1.0.6	Trivial type safety improvements.	*
  *									*
  ************************************************************************
  */
@@ -356,7 +357,8 @@ err_exit:
  */
 static int authenticate_kbdint(void)
 {
-	int iprompt, nprompts, res;
+	unsigned int iprompt;
+	int nprompts, res;
 	const char *inst, *name, *prompt;
 	char ans[128], echo, *ptr;
 
@@ -369,7 +371,7 @@ static int authenticate_kbdint(void)
 			printf("%s\n", name);
 		if (strlen(inst) > 0)
 			printf("%s\n", inst);
-		for (iprompt = 0; iprompt < nprompts; iprompt++) {
+		for (iprompt = 0; iprompt < (unsigned int)nprompts; iprompt++) {
 			prompt = ssh_userauth_kbdint_getprompt(ssh_sess,
 					iprompt, &echo);
 			if (echo) {
@@ -437,9 +439,9 @@ err_exit:
  */
 static void *relay_data(__attribute__((unused)) void *arg)
 {
-	int res;
+	int r, res;
 	int *retval;
-	ssize_t n, r;
+	ssize_t n;
 	char sock_buf[SOCK_BUF_SIZE];
 	char *ret_buf;
 
@@ -462,7 +464,7 @@ static void *relay_data(__attribute__((unused)) void *arg)
 		if (n < 0)
 			goto err_exit_1;
 
-		res = ssh_channel_write (fwd_chan, sock_buf, n);
+		res = ssh_channel_write (fwd_chan, sock_buf, (unsigned int)n);
 		if ( res == SSH_ERROR )
 			goto err_exit_1;
 
@@ -475,11 +477,11 @@ static void *relay_data(__attribute__((unused)) void *arg)
 		if (ret_buf == NULL)
 			goto err_exit_1;
 
-		r = ssh_channel_read(fwd_chan, ret_buf, n, 0);
+		r = ssh_channel_read(fwd_chan, ret_buf, (unsigned int)n, 0);
 		if(r == SSH_ERROR)
 			goto err_exit_2;
 
-		n = send(accsockfd, ret_buf, r, 0);
+		n = send(accsockfd, ret_buf, (size_t)r, 0);
 		if (n < 0)
 			goto err_exit_2;
 
