@@ -125,6 +125,7 @@
 #				Pass bash path to scripts and Makefiles	#
 # 01/06/2019	MG	1.2.2	Add AC_CHECK_DECLS([sys_siglist]).	#
 #				Add missing function checks.		#
+#				Add missing check for sys/socket.h	#
 #									#
 #########################################################################
 
@@ -467,6 +468,7 @@ AC_CHECK_HEADERS(signal.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(limits.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(netinet/in.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(netdb.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(sys/socket.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(sys/stat.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(sys/types.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(string.h, [], AC_MSG_ERROR(header not found))
