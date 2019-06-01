@@ -123,7 +123,8 @@
 # 25/05/2019	MG	1.2.1	Re-vamp to new standard layout.		#
 #				Remove v from package version number.	#
 #				Pass bash path to scripts and Makefiles	#
-# 31/05/2019	MG	1.2.2	Add AC_CHECK_DECLS([sys_siglist]).	#
+# 01/06/2019	MG	1.2.2	Add AC_CHECK_DECLS([sys_siglist]).	#
+#				Add missing function checks.		#
 #									#
 #########################################################################
 
@@ -526,7 +527,7 @@ AC_MSG_NOTICE(checking for GNU compatible library functions required)
 
 AC_FUNC_FORK
 AC_FUNC_MALLOC
-AC_CHECK_FUNCS(memset socket strerror)
+AC_CHECK_FUNCS(getpass memset socket strchr strerror strncasecmp strtol)
 
 
 #################################################
