@@ -126,6 +126,8 @@
 # 01/06/2019	MG	1.2.2	Add AC_CHECK_DECLS([sys_siglist]).	#
 #				Add missing function checks.		#
 #				Add missing check for sys/socket.h	#
+#				Use standard macro AC_HEADER_STDBOOL 	#
+#				in preference to AC_CHECK_HEADERS.	#
 #									#
 #########################################################################
 
@@ -462,7 +464,6 @@ AC_MSG_NOTICE(checking for header files required by this application)
 AC_CHECK_HEADERS(stdio.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(stdlib.h, , AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(stdarg.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(stdbool.h, , AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(sysexits.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(signal.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(limits.h, [], AC_MSG_ERROR(header not found))
@@ -486,6 +487,8 @@ AC_CHECK_HEADERS(bstree.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(mge-errno.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(configfile.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(remsyslog.h, , AC_MSG_ERROR(header not found))
+
+AC_HEADER_STDBOOL
 
 
 #################################

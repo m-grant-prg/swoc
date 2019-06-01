@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.16 ==== 18/05/2019_
+ * @version _v1.0.17 ==== 01/06/2019_
  */
 
 /* **********************************************************************
@@ -60,6 +60,8 @@
  *				Add support for server locking.		*
  * 22/05/2018	MG	1.0.15	Change from swocserverd.h to internal.h	*
  * 18/05/2019	MG	1.0.16	Merge sub-projects into one.		*
+ * 01/06/2019	MG	1.0.17	Use standard GNU ifdeffery around use	*
+ *				of AC_HEADER_STDBOOL.			*
  *									*
  ************************************************************************
  */
@@ -73,8 +75,24 @@
 #include <errno.h>
 #include <syslog.h>
 #include <unistd.h>
-#include <stdbool.h>
 #include <limits.h>
+
+/* Standard GNU AC_HEADER_STDBOOL ifdeffery. */
+#ifdef HAVE_STDBOOL_H
+	# include <stdbool.h>
+#else
+	# ifndef HAVE__BOOL
+		# ifdef __cplusplus
+			typedef bool _Bool;
+		# else
+			# define _Bool signed char
+		# endif
+	# endif
+	# define bool _Bool
+	# define false 0
+	# define true 1
+	# define __bool_true_false_are_defined 1
+#endif
 
 #include <configmake.h>
 #include <cmdlineargs.h>
