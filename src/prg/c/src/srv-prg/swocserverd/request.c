@@ -61,6 +61,7 @@
  *				the API).				*
  * 18/05/2019	MG	1.0.19	Merge sub-projects into one.		*
  * 02/06/2019	MG	1.0.20	Remove 2 incorrect casts.		*
+ *				Correct cut & paste error in param msg.	*
  *									*
  ************************************************************************
  */
@@ -82,7 +83,7 @@
 
 /**
  * swocserver requesting the daemon to terminate.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -116,7 +117,7 @@ int srv_end_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 /**
  * swocserver request to reload config file.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -167,7 +168,7 @@ int swsd_reload_config(void)
 
 /**
  * Server status request.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -237,7 +238,7 @@ int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 /**
  * Server client block list request.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -293,7 +294,7 @@ int srv_cli_blocklist_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 /**
  * Server requests client lock release.
  * Exactly 1 argument, the client lock to be released.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -336,7 +337,7 @@ int srv_cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 /**
  * Server requests client to be blocked.
  * Exactly 1 argument, the client to be blocked.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -384,7 +385,7 @@ int srv_cli_block_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 /**
  * Server requests client to be unblocked.
  * Exactly 1 argument, the client to be unblocked.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -430,7 +431,7 @@ int srv_cli_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 /**
  * Server requests server level blocking.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -458,7 +459,7 @@ int srv_block_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 /**
  * Server requests removal of server level blocking.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -487,7 +488,7 @@ int srv_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 /**
  * Server requests status of server level blocking.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -517,7 +518,7 @@ int srv_block_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
  * Set a block on this client so that it cannot instantiate any more locks until
  * the client is unblocked. The client can release locks while blocked.
  * If the client is already blocked the function succedes.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -566,7 +567,7 @@ int cli_block_req(struct mgemessage *msg, enum msg_arguments *msg_args)
  * No parameters allowed.
  * Remove a block on this client so that it can instantiate locks again.
  * If the client is already unblocked the function succedes.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -611,7 +612,7 @@ int cli_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 /**
  * Client requests status of server level blocking.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -624,7 +625,7 @@ int cli_srv_block_status_req(struct mgemessage *msg,
 /**
  * Client lock request.
  * No parameters allowed, add client lock.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -676,7 +677,7 @@ int cli_lock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 /**
  * Release request from client.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -717,7 +718,7 @@ int cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 /**
  * Status request from client.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
@@ -772,7 +773,7 @@ int cli_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 /**
  * Reset request from client.
  * Remove all locks and any block.
- * @param mgemessage The message being processed.
+ * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, non-zero on failure.
  */
