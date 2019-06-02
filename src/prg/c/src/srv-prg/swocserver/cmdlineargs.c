@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.6 ==== 18/05/2019_
+ * @version _v1.1.7 ==== 02/06/2019_
  */
 
 /* **********************************************************************
@@ -52,6 +52,7 @@
  *				Add server block and unblock.		*
  * 22/05/2018	MG	1.1.5	Change from swocserver.h to internal.h	*
  * 18/05/2019	MG	1.1.6	Merge sub-projects into one.		*
+ * 02/06/2019	MG	1.1.7	Remove duplicated if statements.	*
  *									*
  ************************************************************************
  */
@@ -262,9 +263,6 @@ int process_cla(int argc, char **argv, ...)
 	} else if (block_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options b and w are mutually exclusive.\n");
 		sws_err = EX_USAGE;
-	} else if (block_flag->is_set && disallow_flag->is_set) {
-		fprintf(stderr, "Options b and d are mutually exclusive.\n");
-		sws_err = EX_USAGE;
 	} else if (disallow_flag->is_set && end_flag->is_set) {
 		fprintf(stderr, "Options d and e are mutually exclusive.\n");
 		sws_err = EX_USAGE;
@@ -279,12 +277,6 @@ int process_cla(int argc, char **argv, ...)
 		sws_err = EX_USAGE;
 	} else if (disallow_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options d and w are mutually exclusive.\n");
-		sws_err = EX_USAGE;
-	} else if (end_flag->is_set && release_flag->is_set) {
-		fprintf(stderr, "Options e and r are mutually exclusive.\n");
-		sws_err = EX_USAGE;
-	} else if (end_flag->is_set && release_flag->is_set) {
-		fprintf(stderr, "Options e and r are mutually exclusive.\n");
 		sws_err = EX_USAGE;
 	} else if (end_flag->is_set && release_flag->is_set) {
 		fprintf(stderr, "Options e and r are mutually exclusive.\n");
