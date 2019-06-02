@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.19 ==== 18/05/2019_
+ * @version _v1.0.20 ==== 02/06/2019_
  */
 
 /* **********************************************************************
@@ -60,6 +60,7 @@
  *				DEF_MSG_SIZE macro, (it is not part of	*
  *				the API).				*
  * 18/05/2019	MG	1.0.19	Merge sub-projects into one.		*
+ * 02/06/2019	MG	1.0.20	Remove 2 incorrect casts.		*
  *									*
  ************************************************************************
  */
@@ -212,7 +213,7 @@ int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		sprintf(tmp_msg, ",%s,%i", client_lu, counter);
 		if (((int) out_msg_size - (int) strlen(out_msg))
 				< ((int) strlen(tmp_msg) + 2)) {
-			out_msg_size += (int) strlen(tmp_msg) + 2;
+			out_msg_size += strlen(tmp_msg) + 2;
 			t_out_msg = out_msg;
 			out_msg = mg_realloc(t_out_msg, out_msg_size);
 			if (out_msg == NULL) {
@@ -267,7 +268,7 @@ int srv_cli_blocklist_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		sprintf(tmp_msg, ",%s", client_lu);
 		if (((int) out_msg_size - (int) strlen(out_msg))
 				< ((int) strlen(tmp_msg) + 2)) {
-			out_msg_size += (int) strlen(tmp_msg) + 2;
+			out_msg_size += strlen(tmp_msg) + 2;
 			t_out_msg = out_msg;
 			out_msg = mg_realloc(t_out_msg, out_msg_size);
 			if (out_msg == NULL) {
