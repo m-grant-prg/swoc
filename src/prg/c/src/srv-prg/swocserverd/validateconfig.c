@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.9 ==== 18/05/2019_
+ * @version _v1.0.10 ==== 02/06/2019_
  */
 
 /* **********************************************************************
@@ -34,6 +34,7 @@
  *				code, (fixes sparse warning).		*
  * 22/05/2018	MG	1.0.8	Change from swocserverd.h to internal.h	*
  * 18/05/2019	MG	1.0.9	Merge sub-projects into one.		*
+ * 02/06/2019	MG	1.0.10	Trivial type safety improvements.	*
  *									*
  ************************************************************************
  */
@@ -72,7 +73,7 @@ int swsd_validate_config(void)
 
 	/* Set up config file parameters. */
 	nsections = 1;
-	psections = malloc((sizeof(struct confsection)) * nsections);
+	psections = malloc((sizeof(struct confsection)) * (size_t)nsections);
 	if (psections == NULL) {
 		sav_errno = errno;
 		mge_errno = MGE_ERRNO;
