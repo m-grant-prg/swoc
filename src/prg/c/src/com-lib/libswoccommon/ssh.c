@@ -250,7 +250,7 @@ static int verify_knownhost(void)
 		fprintf(stderr, "Could not find known host file.\n");
 		fprintf(stderr, "If you accept the host key here, the file "
 			"will be automatically created.\n");
-		/* fallthru deliberate. */
+		/* fallthrough */
 	case SSH_SERVER_NOT_KNOWN:
 		hexa = ssh_get_hexa(hash, hlen);
 		if (hexa == NULL) {
