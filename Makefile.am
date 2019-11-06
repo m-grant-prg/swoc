@@ -54,10 +54,20 @@
 #				Add install of standard GNU files such	#
 #				as AUTHORS etc.				#
 #				Remove shebang.				#
+# 06/11/2019	MG	1.1.10	To enable make distcheck to work, any	#
+#				hard-coded paths requiring permissions	#
+#				such as /etc or fixed locations such as	#
+#				/usr/share/java must be accommodated,	#
+#				so set the configure flags to be used	#
+#				by make distcheck.			#
 #									#
 #########################################################################
 
 ACLOCAL_AMFLAGS = -I m4 -I m4extra
+
+
+AM_DISTCHECK_CONFIGURE_FLAGS = --enable-distcheckfake=yes
+
 
 # The sequence of the build below is important in so far as this sequence
 # means that the service start-up is done by a hook at the end of systemd
@@ -114,7 +124,6 @@ doc_DATA = AUTHORS ChangeLog COPYING NEWS README
 
 EXTRA_DIST = $(srcdir)/AUTHORS $(srcdir)/ChangeLog $(srcdir)/COPYING \
 		$(srcdir)/NEWS $(srcdir)/README
-
 EXTRA_DIST += m4/gnulib-cache.m4
 
 

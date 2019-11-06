@@ -11,6 +11,7 @@
 #									#
 # cmd line syntax:							#
 # ./configure	[--enable-debug=<yes|no> [default: no]]			#
+#		[--enable-distcheckfake=<yes|no> [default: no]]		#
 #		[--enable-headercheck=<yes|no> [default: no]]		#
 #		[--enable-sparse=<yes|no> [default: no]]		#
 #		[--enable-systemd=yes|no> [default: no]]		#
@@ -128,6 +129,7 @@
 #				Add missing check for sys/socket.h	#
 #				Use standard macro AC_HEADER_STDBOOL 	#
 #				in preference to AC_CHECK_HEADERS.	#
+# 06/11/2019	MG	1.2.3	Add enable-distcheckfake option.	#
 #									#
 #########################################################################
 
@@ -138,7 +140,7 @@
 #					#
 #########################################
 
-AC_REVISION($Revision: 1.2.2 $)
+AC_REVISION($Revision: 1.2.3 $)
 
 AC_PREREQ(2.69)
 
@@ -225,6 +227,30 @@ AM_CONDITIONAL(DEBUG, test x$debug = xtrue)
 
 if test "x${debug}" = xtrue; then
 	AC_MSG_NOTICE(Using compiler debug flags.)
+fi
+
+#
+# If a file location has to be fixed, e.g. /etc/foo.conf and never
+# /usr/local/etc/foo.conf, then make distcheck will fail. Setting this flag
+# allows make distcheck to locate the file in an AT standard directory-based
+# location.
+# eg /usr/local/etc/foo.conf.
+# and hence succeed.
+#
+AC_ARG_ENABLE([distcheckfake],
+	AS_HELP_STRING([--enable-distcheckfake], [enable running of distcheck]),
+	[case "${enableval}" in
+		yes) distcheckfake=true ;;
+		no)  distcheckfake=false ;;
+		*) AC_MSG_ERROR([bad value ${enableval} for \
+			--enable-distcheckfake]) ;;
+	esac],[distcheckfake=false])
+AM_CONDITIONAL([DISTCHECKFAKE], [test x$distcheckfake = xtrue])
+
+if test "x${distcheckfake}" = xtrue; then
+	AC_MSG_NOTICE([using workarounds to facilitate distcheck])
+else
+	AC_MSG_NOTICE([using distcheck incompatible setup])
 fi
 
 #
