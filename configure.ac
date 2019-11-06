@@ -16,6 +16,22 @@
 #		[--enable-sparse=<yes|no> [default: no]]		#
 #		[--enable-systemd=yes|no> [default: no]]		#
 #									#
+# Parameters generic description. For specifics to this configure.ac	#
+# please see inline comments at the point of definition:-		#
+# --enable-debug							#
+#	Used to set things like compiler debug flags.			#
+# --enable-distcheckfake						#
+#	Enables the replacement of an absolute directory path specified	#
+#	in a variable, with a value based on AutoTools standard		#
+#	directories. This enables the Makefile.am to use the AT		#
+#	variable based value when running distcheck and the absolute	#
+#	path for all else. Hence distcheck can now succeed when it	#
+#	would normally fail.						#
+# --enable-headercheck							#
+#	Used to set a flag to output the header file nesting.		#
+# --enable-sparse							#
+#	Used to compile with the sparse static analyser.		#
+#									#
 # Layout: (Only relevant sections will exist).				#
 # ChangeLog : High level ChangeLog					#
 # SECTION  1: Initialisation & Setup					#
@@ -130,6 +146,8 @@
 #				Use standard macro AC_HEADER_STDBOOL 	#
 #				in preference to AC_CHECK_HEADERS.	#
 # 06/11/2019	MG	1.2.3	Add enable-distcheckfake option.	#
+#				Add enable option descriptions in this	#
+#				file's header.				#
 #									#
 #########################################################################
 
