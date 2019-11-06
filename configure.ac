@@ -228,7 +228,7 @@ AC_MSG_NOTICE(processing command line arguments)
 # conditional DEBUG is made available to the makefiles.
 #
 AC_ARG_ENABLE(debug,
-	--enable-debug    Compile for debugging,
+	AS_HELP_STRING([--enable-debug], [compile for debugging]),
 	[case "${enableval}" in
 		yes) debug=true ;;
 		no)  debug=false ;;
@@ -244,7 +244,7 @@ AM_CONDITIONAL(DEBUG, test x$debug = xtrue)
 : ${CFLAGS=""}
 
 if test "x${debug}" = xtrue; then
-	AC_MSG_NOTICE(Using compiler debug flags.)
+	AC_MSG_NOTICE(build in debug mode)
 fi
 
 #
@@ -276,7 +276,7 @@ fi
 # The conditional HEADERCHECK is made available to the makefiles.
 #
 AC_ARG_ENABLE(headercheck,
-	--enable-headercheck    Build to display include stack,
+	AS_HELP_STRING([--enable-headercheck], [build to display header stack]),
 	[case "${enableval}" in
 		yes) headercheck=true ;;
 		no)  headercheck=false ;;
@@ -285,7 +285,7 @@ AC_ARG_ENABLE(headercheck,
 AM_CONDITIONAL(HEADERCHECK, test x$headercheck = xtrue)
 
 if test "x${headercheck}" = xtrue; then
-	AC_MSG_NOTICE(Building to display include stack depth.)
+	AC_MSG_NOTICE(building to display include stack depth)
 fi
 
 #
@@ -293,7 +293,7 @@ fi
 # conditional SPARSE is made available to the makefiles.
 #
 AC_ARG_ENABLE(sparse,
-	--enable-sparse    Build with sparse,
+	AS_HELP_STRING([--enable-sparse], [build with sparse]),
 	[case "${enableval}" in
 		yes) sparse=true ;;
 		no)  sparse=false ;;
@@ -302,7 +302,7 @@ AC_ARG_ENABLE(sparse,
 AM_CONDITIONAL(SPARSE, test x$sparse = xtrue)
 
 if test "x${sparse}" = xtrue; then
-	AC_MSG_NOTICE(Building using sparse.)
+	AC_MSG_NOTICE(building using sparse)
 fi
 
 #
@@ -310,7 +310,7 @@ fi
 # conditional SYSD is made available to the makefiles.
 #
 AC_ARG_ENABLE(systemd,
-	--enable-systemd    Build for systemd,
+	AS_HELP_STRING([--enable-systemd], [build for systemd]),
 	[case "${enableval}" in
 		yes) systemd=true ;;
 		no)  systemd=false ;;
@@ -319,7 +319,7 @@ AC_ARG_ENABLE(systemd,
 AM_CONDITIONAL(SYSD, test x$systemd = xtrue)
 
 if test "x${systemd}" = xtrue; then
-	AC_MSG_NOTICE(Building for systemd.)
+	AC_MSG_NOTICE(building for systemd)
 fi
 
 
