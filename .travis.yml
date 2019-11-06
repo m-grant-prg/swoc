@@ -36,7 +36,7 @@ before_install:
     - sudo apt-get install -y autoconf-archive libtool-bin
     - sudo apt-get install -y dia doxygen graphviz
     - sudo apt-get install -y libssh-gcrypt-dev libssh-gcrypt-4
-    - sudo apt-get install -y libmgec libmgesysutils
+    - sudo apt-get install -y libmgec2 libmgesysutils1
     - sudo apt-get install -y txt2man txt2manwrap
 
 script:
