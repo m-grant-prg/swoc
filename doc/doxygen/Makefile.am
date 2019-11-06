@@ -30,6 +30,8 @@
 #				Remove shebang.				#
 # 06/11/2019	MG	1.0.5	Do not register with doc-base or	#
 #				dochelp when running make distcheck.	#
+#				Reduce Doxygen output when silent	#
+#				rules are enabled.			#
 #									#
 #########################################################################
 
@@ -47,7 +49,11 @@ $(docpkg): doxygen.stamp
 	tar -chz --format=posix -f $@ html
 
 doxygen.stamp: Doxyfile
-	doxygen $<
+	if $(AM_V_P); then \
+		DOXYGEN_QUIET=NO doxygen $< ; \
+	else \
+		DOXYGEN_QUIET=YES doxygen $< ; \
+	fi
 	echo Timestamp > $@
 
 
