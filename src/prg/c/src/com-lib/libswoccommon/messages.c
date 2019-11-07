@@ -49,19 +49,17 @@
  ************************************************************************
  */
 
-
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
-#include <errno.h>
 #include <syslog.h>
 
-#include <mgemessage.h>
-#include <mgebuffer.h>
-#include <mge-errno.h>
 #include <libswoccommon.h>
-
+#include <mge-errno.h>
+#include <mgebuffer.h>
+#include <mgemessage.h>
 
 /**
  * Parse a message.
@@ -72,7 +70,7 @@
  * @param msg_req The request contained in the message.
  */
 void parse_msg(struct mgemessage *msg, enum msg_arguments *msg_args,
-	enum msg_source *msg_src, enum msg_request *msg_req)
+	       enum msg_source *msg_src, enum msg_request *msg_req)
 {
 	*msg_args = args_ok;
 
@@ -130,7 +128,7 @@ void parse_msg(struct mgemessage *msg, enum msg_arguments *msg_args,
  * @return 0 on success, non-zero on error.
  */
 int send_outgoing_msg(char *outgoing_msg, size_t outgoing_msg_length,
-			int *newsockfd)
+		      int *newsockfd)
 {
 	ssize_t n;
 	mge_errno = 0;
@@ -139,8 +137,10 @@ int send_outgoing_msg(char *outgoing_msg, size_t outgoing_msg_length,
 	if (n < 0) {
 		sav_errno = errno;
 		mge_errno = MGE_ERRNO;
-		syslog((int) (LOG_USER | LOG_NOTICE), "ERROR writing to socket "
-			"- %s", mge_strerror(mge_errno));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "ERROR writing to socket "
+		       "- %s",
+		       mge_strerror(mge_errno));
 	}
 	return mge_errno;
 }
@@ -194,8 +194,10 @@ int exch_msg(char *outgoing_msg, size_t om_length, struct mgemessage *msg)
 		if (n < 0) {
 			sav_errno = errno;
 			mge_errno = MGE_ERRNO;
-			syslog((int) (LOG_USER | LOG_NOTICE), "ERROR reading "
-				"from socket - %s", mge_strerror(mge_errno));
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "ERROR reading "
+			       "from socket - %s",
+			       mge_strerror(mge_errno));
 			goto err_exit_1;
 		}
 		msg_buf = concat_buf(sock_buf, (size_t)n, msg_buf);

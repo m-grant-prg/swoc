@@ -18,14 +18,13 @@
 
 #include <libswoccommon.h>
 
-
 /*
  * tcp test program.
  */
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
 	int prog_error = 0;
-	int recv_socket,send_socket;
+	int recv_socket, send_socket;
 	char *server = "localhost";
 	int portno = 62523;
 

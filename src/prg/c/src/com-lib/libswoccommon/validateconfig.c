@@ -29,23 +29,21 @@
  ************************************************************************
  */
 
-
+#include <ctype.h>
+#include <errno.h>
+#include <limits.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/stat.h>
-#include <stdarg.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <syslog.h>
-#include <ctype.h>
-#include <limits.h>
-#include <errno.h>
 
 #include <configmake.h>
 
-#include <mge-errno.h>
 #include <configfile.h>
 #include <libswoccommon.h>
-
+#include <mge-errno.h>
 
 static int validateconfigfileparams(const struct confsection *);
 static int validatepollint(const struct confsection *);
@@ -55,14 +53,12 @@ static int validatesrvportno(const struct confsection *);
 static int validatesshportno(const struct confsection *);
 static int validatesshuser(const struct confsection *ps);
 
-
-int pollint;				/**< Polling interval. */
-int ssh;				/**< Use SSH false == 0, true == 1 */
-char server[_POSIX_HOST_NAME_MAX];	/**< Server name. */
-int srvportno;				/**< Server port number. */
-int sshportno;				/**< Local port to use if using SSH. */
-char sshuser[_POSIX_LOGIN_NAME_MAX];	/**< Server username for SSH. */
-
+int pollint;			     /**< Polling interval. */
+int ssh;			     /**< Use SSH false == 0, true == 1 */
+char server[_POSIX_HOST_NAME_MAX];   /**< Server name. */
+int srvportno;			     /**< Server port number. */
+int sshportno;			     /**< Local port to use if using SSH. */
+char sshuser[_POSIX_LOGIN_NAME_MAX]; /**< Server username for SSH. */
 
 /**
  * Parse and validate the config file.
@@ -73,7 +69,7 @@ int swcom_validate_config(void)
 {
 	int swscom_err = 0;
 	/* Expand config file full path. */
-	char *configfile = SYSCONFDIR"/swoc.conf";
+	char *configfile = SYSCONFDIR "/swoc.conf";
 	struct confsection *psections;
 
 	/* Set up config file parameters. */
@@ -85,20 +81,23 @@ int swcom_validate_config(void)
 		return mge_errno;
 	}
 
-	psections[0] = (struct confsection) {"General", 1, 0, {
-			{"pollint", 1, 0, ""},
-			{"ssh", 1, 0, ""}
-			}};
+	psections[0] = (struct confsection){ "General",
+					     1,
+					     0,
+					     { { "pollint", 1, 0, "" },
+					       { "ssh", 1, 0, "" } } };
 
-	psections[1] = (struct confsection) {"Server", 1, 0, {
-			{"server", 1, 0, ""},
-			{"srvportno", 1, 0, ""}
-			}};
+	psections[1] = (struct confsection){ "Server",
+					     1,
+					     0,
+					     { { "server", 1, 0, "" },
+					       { "srvportno", 1, 0, "" } } };
 
-	psections[2] = (struct confsection) {"SSH", 1, 0, {
-			{"sshportno", 1, 0, ""},
-			{"sshuser", 1, 0, ""}
-			}};
+	psections[2] = (struct confsection){ "SSH",
+					     1,
+					     0,
+					     { { "sshportno", 1, 0, "" },
+					       { "sshuser", 1, 0, "" } } };
 
 	/* Parse config file. */
 	swscom_err = parsefile(psections, nsections, configfile);
@@ -141,11 +140,11 @@ static int validatepollint(const struct confsection *ps)
 {
 	size_t x = 0;
 
-	if ((strlen(ps->keys[0].value) < (size_t) 1) ||
-		(strlen(ps->keys[0].value) > (size_t) 5))
+	if ((strlen(ps->keys[0].value) < (size_t)1)
+	    || (strlen(ps->keys[0].value) > (size_t)5))
 		goto poll_error;
-	while ((isdigit(ps->keys[0].value[x])) &&
-		(x < strlen(ps->keys[0].value)))
+	while ((isdigit(ps->keys[0].value[x]))
+	       && (x < strlen(ps->keys[0].value)))
 		x++;
 	if (x != strlen(ps->keys[0].value))
 		goto poll_error;
@@ -156,9 +155,10 @@ static int validatepollint(const struct confsection *ps)
 
 poll_error:
 	mge_errno = MGE_CONFIG_PARAM;
-	syslog((int) (LOG_USER | LOG_NOTICE), "Config param pollint does not "
-		"contain a valid polling interval - %s",
-		ps->keys[0].value);
+	syslog((int)(LOG_USER | LOG_NOTICE),
+	       "Config param pollint does not "
+	       "contain a valid polling interval - %s",
+	       ps->keys[0].value);
 	return mge_errno;
 }
 
@@ -171,7 +171,7 @@ static int validatessh(const struct confsection *ps)
 	char tmpanswer[MAX_KEYVAL_LENGTH] = { '\0' };
 
 	while ((tmpanswer[x] = (char)tolower(ps->keys[1].value[x]))
-		&& (x < strlen(ps->keys[1].value)))
+	       && (x < strlen(ps->keys[1].value)))
 		x++;
 	if (strcmp(tmpanswer, "yes") && strcmp(tmpanswer, "no"))
 		goto ssh_error;
@@ -183,8 +183,10 @@ static int validatessh(const struct confsection *ps)
 
 ssh_error:
 	mge_errno = MGE_CONFIG_PARAM;
-	syslog((int) (LOG_USER | LOG_NOTICE), "Config param ssh does not "
-		"contain yes or no - %s", ps->keys[1].value);
+	syslog((int)(LOG_USER | LOG_NOTICE),
+	       "Config param ssh does not "
+	       "contain yes or no - %s",
+	       ps->keys[1].value);
 	return mge_errno;
 }
 
@@ -193,11 +195,12 @@ ssh_error:
  */
 static int validateserver(const struct confsection *ps)
 {
-	if ((strlen((ps + 1)->keys[0].value) < (size_t) 1) ||
-		(strlen((ps + 1)->keys[0].value) > sizeof(server))) {
+	if ((strlen((ps + 1)->keys[0].value) < (size_t)1)
+	    || (strlen((ps + 1)->keys[0].value) > sizeof(server))) {
 		mge_errno = MGE_CONFIG_PARAM;
-		syslog((int) (LOG_USER | LOG_NOTICE), "Config param server "
-			"does not contain a valid server name.");
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Config param server "
+		       "does not contain a valid server name.");
 		return mge_errno;
 	}
 	strcpy(server, (ps + 1)->keys[0].value);
@@ -211,10 +214,10 @@ static int validatesrvportno(const struct confsection *ps)
 {
 	size_t x = 0;
 
-	if (strlen((ps + 1)->keys[1].value) != (size_t) 5)
+	if (strlen((ps + 1)->keys[1].value) != (size_t)5)
 		goto port_error;
-	while ((isdigit((ps + 1)->keys[1].value[x])) &&
-		(x < strlen((ps + 1)->keys[1].value)))
+	while ((isdigit((ps + 1)->keys[1].value[x]))
+	       && (x < strlen((ps + 1)->keys[1].value)))
 		x++;
 	if (x != strlen((ps + 1)->keys[1].value))
 		goto port_error;
@@ -225,8 +228,10 @@ static int validatesrvportno(const struct confsection *ps)
 
 port_error:
 	mge_errno = MGE_CONFIG_PARAM;
-	syslog((int) (LOG_USER | LOG_NOTICE), "Config param srvportno does not "
-		"contain a valid port number - %s", (ps + 1)->keys[1].value);
+	syslog((int)(LOG_USER | LOG_NOTICE),
+	       "Config param srvportno does not "
+	       "contain a valid port number - %s",
+	       (ps + 1)->keys[1].value);
 	return mge_errno;
 }
 
@@ -237,23 +242,25 @@ static int validatesshportno(const struct confsection *ps)
 {
 	size_t x = 0;
 
-	if (strlen((ps + 2)->keys[0].value) != (size_t) 5)
+	if (strlen((ps + 2)->keys[0].value) != (size_t)5)
 		goto port_error;
-	while ((isdigit((ps + 2)->keys[0].value[x])) &&
-		(x < strlen((ps + 2)->keys[0].value)))
+	while ((isdigit((ps + 2)->keys[0].value[x]))
+	       && (x < strlen((ps + 2)->keys[0].value)))
 		x++;
 	if (x != strlen((ps + 2)->keys[0].value))
 		goto port_error;
 	sshportno = atoi((ps + 2)->keys[0].value);
 	if ((sshportno < 49152) || (sshportno > 65535)
-		|| (sshportno == srvportno))
+	    || (sshportno == srvportno))
 		goto port_error;
 	return 0;
 
 port_error:
 	mge_errno = MGE_CONFIG_PARAM;
-	syslog((int) (LOG_USER | LOG_NOTICE), "Config param sshportno does not "
-		"contain a valid port number - %s", (ps + 2)->keys[0].value);
+	syslog((int)(LOG_USER | LOG_NOTICE),
+	       "Config param sshportno does not "
+	       "contain a valid port number - %s",
+	       (ps + 2)->keys[0].value);
 	return mge_errno;
 }
 
@@ -262,11 +269,12 @@ port_error:
  */
 static int validatesshuser(const struct confsection *ps)
 {
-	if ((strlen((ps + 2)->keys[1].value) < (size_t) 1) ||
-		(strlen((ps + 2)->keys[1].value) > sizeof(sshuser))) {
+	if ((strlen((ps + 2)->keys[1].value) < (size_t)1)
+	    || (strlen((ps + 2)->keys[1].value) > sizeof(sshuser))) {
 		mge_errno = MGE_CONFIG_PARAM;
-		syslog((int) (LOG_USER | LOG_NOTICE), "Config param sshuser "
-			"does not contain a valid user name.");
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Config param sshuser "
+		       "does not contain a valid user name.");
 		return mge_errno;
 	}
 	strcpy(sshuser, (ps + 2)->keys[1].value);

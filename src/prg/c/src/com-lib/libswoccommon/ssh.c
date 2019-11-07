@@ -35,21 +35,19 @@
  ************************************************************************
  */
 
-
+#include <errno.h>
+#include <libssh/libssh.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 #include <string.h>
-#include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/types.h>
 #include <syslog.h>
-#include <pthread.h>
-#include <libssh/libssh.h>
 
+#include <libswoccommon.h>
 #include <mge-errno.h>
 #include <mgememory.h>
-#include <libswoccommon.h>
-
 
 static int verify_knownhost(void);
 static int try_auth_methods_seq(void);
@@ -58,12 +56,10 @@ static int authenticate_password(void);
 static int direct_forwarding(void);
 static void *relay_data(__attribute__((unused)) void *arg);
 
-
 static ssh_session ssh_sess;
 static ssh_channel fwd_chan;
 static int ssh_sock;
 static pthread_t relay_thread;
-
 
 /**
  * Establish SSH connection.
@@ -80,8 +76,8 @@ int open_ssh_tunnel(void)
 	ssh_sess = ssh_new();
 	if (ssh_sess == NULL) {
 		mge_errno = MGE_SSH;
-		syslog((int) (LOG_USER | LOG_NOTICE), "Error creating SSH "
-			"session.");
+		syslog((int)(LOG_USER | LOG_NOTICE), "Error creating SSH "
+						     "session.");
 		return -1;
 	}
 
@@ -91,8 +87,10 @@ int open_ssh_tunnel(void)
 	res = ssh_connect(ssh_sess);
 	if (res != SSH_OK) {
 		mge_errno = MGE_SSH;
-		syslog((int) (LOG_USER | LOG_NOTICE), "Error connecting to %s: "
-			"%s", server, ssh_get_error(ssh_sess));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Error connecting to %s: "
+		       "%s",
+		       server, ssh_get_error(ssh_sess));
 		goto err_exit_0;
 	}
 	res = verify_knownhost();
@@ -114,8 +112,10 @@ int open_ssh_tunnel(void)
 	sav_errno = pthread_create(&relay_thread, NULL, relay_data, arg);
 	if (sav_errno) {
 		mge_errno = MGE_ERRNO;
-		syslog((int) (LOG_USER | LOG_NOTICE), "Error creating thread. "
-			"%s", mge_strerror(mge_errno));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Error creating thread. "
+		       "%s",
+		       mge_strerror(mge_errno));
 		goto err_exit_3;
 	}
 
@@ -146,22 +146,28 @@ int close_ssh_tunnel(void)
 	sav_errno = pthread_join(relay_thread, &retval);
 	if (sav_errno) {
 		mge_errno = MGE_ERRNO;
-		syslog((int) (LOG_USER | LOG_NOTICE), "Error joining thread. "
-			"%s.", mge_strerror(mge_errno));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Error joining thread. "
+		       "%s.",
+		       mge_strerror(mge_errno));
 		res = -1;
 		goto err_exit_1;
 	}
 	if (retval == NULL) {
 		mge_errno = MGE_SSH;
-		syslog((int) (LOG_USER | LOG_NOTICE), "Error allocating memory "
-			"in relay_data - %s.", mge_strerror(mge_errno));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Error allocating memory "
+		       "in relay_data - %s.",
+		       mge_strerror(mge_errno));
 		res = -1;
 		goto err_exit_1;
 	}
 	mge_errno = *(int *)retval;
 	if (mge_errno) {
-		syslog((int) (LOG_USER | LOG_NOTICE), "Error relaying data - "
-			"%s.", mge_strerror(mge_errno));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Error relaying data - "
+		       "%s.",
+		       mge_strerror(mge_errno));
 		res = -1;
 		goto err_exit_1;
 	}
@@ -201,8 +207,10 @@ static int verify_knownhost(void)
 	res = ssh_get_publickey(ssh_sess, &serv_key);
 	if (res == SSH_ERROR) {
 		mge_errno = MGE_SSH;
-		syslog((int) (LOG_USER | LOG_NOTICE), "Error retrieving server "
-			"public key - %s", ssh_get_error(ssh_sess));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Error retrieving server "
+		       "public key - %s",
+		       ssh_get_error(ssh_sess));
 		return -1;
 	}
 
@@ -218,17 +226,17 @@ static int verify_knownhost(void)
 	}
 	 */
 
-
-	res = ssh_get_publickey_hash(serv_key, SSH_PUBLICKEY_HASH_SHA1,
-			&hash, &hlen);
+	res = ssh_get_publickey_hash(serv_key, SSH_PUBLICKEY_HASH_SHA1, &hash,
+				     &hlen);
 	if (res) {
 		res = -1;
 		mge_errno = MGE_SSH;
-		syslog((int) (LOG_USER | LOG_NOTICE), "Error retrieving server "
-			"public key hash - %s", ssh_get_error(ssh_sess));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Error retrieving server "
+		       "public key hash - %s",
+		       ssh_get_error(ssh_sess));
 		goto exit_0;
 	}
-
 
 	switch (state) {
 	case SSH_SERVER_KNOWN_OK:
@@ -236,67 +244,72 @@ static int verify_knownhost(void)
 	case SSH_SERVER_KNOWN_CHANGED:
 		res = -1;
 		mge_errno = MGE_SSH;
-		syslog((int) (LOG_USER | LOG_NOTICE), "Host key for server "
-			"changed. Stopping for security reasons.");
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Host key for server "
+		       "changed. Stopping for security reasons.");
 		goto exit_1;
 	case SSH_SERVER_FOUND_OTHER:
 		res = -1;
 		mge_errno = MGE_SSH;
-		syslog((int) (LOG_USER | LOG_NOTICE), "The host key for this "
-			"server was not found but another type of key exists. "
-			"Stopping for security reasons.");
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "The host key for this "
+		       "server was not found but another type of key exists. "
+		       "Stopping for security reasons.");
 		goto exit_1;
 	case SSH_SERVER_FILE_NOT_FOUND:
 		fprintf(stderr, "Could not find known host file.\n");
 		fprintf(stderr, "If you accept the host key here, the file "
-			"will be automatically created.\n");
+				"will be automatically created.\n");
 		/* fallthrough */
 	case SSH_SERVER_NOT_KNOWN:
 		hexa = ssh_get_hexa(hash, hlen);
 		if (hexa == NULL) {
 			res = -1;
 			mge_errno = MGE_SSH;
-			syslog((int) (LOG_USER | LOG_NOTICE), "Error retrieving"
-				" hex key.");
+			syslog((int)(LOG_USER | LOG_NOTICE), "Error retrieving"
+							     " hex key.");
 			goto exit_1;
 		}
-		fprintf(stderr,"The server is unknown. Do you trust the host "
-			"key?\n");
+		fprintf(stderr, "The server is unknown. Do you trust the host "
+				"key?\n");
 		fprintf(stderr, "Public key hash: %s\n", hexa);
 
 		if (fgets(buf, sizeof(buf), stdin) == NULL) {
 			res = -1;
 			mge_errno = MGE_SSH;
 			fprintf(stderr, "Invalid input.\n");
-			syslog((int) (LOG_USER | LOG_NOTICE), "Invalid input.");
+			syslog((int)(LOG_USER | LOG_NOTICE), "Invalid input.");
 			goto exit_2;
 		}
 		if (strncasecmp(buf, "yes", 3) != 0) {
 			res = -1;
 			mge_errno = MGE_SSH;
-			syslog((int) (LOG_USER | LOG_NOTICE), "User did not "
-				"answer yes to trust this key question");
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "User did not "
+			       "answer yes to trust this key question");
 			goto exit_2;
 		}
 		res = ssh_write_knownhost(ssh_sess);
 		if (res == SSH_ERROR) {
 			res = -1;
 			mge_errno = MGE_SSH;
-			syslog((int) (LOG_USER | LOG_NOTICE), "Error writing "
-			"known hosts - %s", ssh_get_error(ssh_sess));
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "Error writing "
+			       "known hosts - %s",
+			       ssh_get_error(ssh_sess));
 			goto exit_2;
 		}
 		break;
 	case SSH_SERVER_ERROR:
 		res = -1;
 		mge_errno = MGE_SSH;
-		syslog((int) (LOG_USER | LOG_NOTICE), "Error - %s",
-			ssh_get_error(ssh_sess));
+		syslog((int)(LOG_USER | LOG_NOTICE), "Error - %s",
+		       ssh_get_error(ssh_sess));
 		goto exit_2;
 	default:
 		res = -1;
 		mge_errno = MGE_SSH;
-		syslog((int) (LOG_USER | LOG_NOTICE), "Unknown SSH error.");
+		syslog((int)(LOG_USER | LOG_NOTICE), "Unknown SSH error.");
 		goto exit_2;
 	}
 	res = 0;
@@ -341,14 +354,14 @@ static int try_auth_methods_seq(void)
 		if (res == SSH_AUTH_SUCCESS)
 			return 0;
 	}
-	if (method & SSH_AUTH_METHOD_NONE){
+	if (method & SSH_AUTH_METHOD_NONE) {
 		res = ssh_userauth_none(ssh_sess, NULL);
 		if (res == SSH_AUTH_SUCCESS)
 			return 0;
 	}
 err_exit:
 	mge_errno = MGE_SSH;
-	syslog((int) (LOG_USER | LOG_NOTICE), "SSH authentication error.");
+	syslog((int)(LOG_USER | LOG_NOTICE), "SSH authentication error.");
 	return -1;
 }
 
@@ -373,7 +386,7 @@ static int authenticate_kbdint(void)
 			printf("%s\n", inst);
 		for (iprompt = 0; iprompt < (unsigned int)nprompts; iprompt++) {
 			prompt = ssh_userauth_kbdint_getprompt(ssh_sess,
-					iprompt, &echo);
+							       iprompt, &echo);
 			if (echo) {
 				printf("%s", prompt);
 				if (fgets(ans, sizeof(ans), stdin) == NULL)
@@ -382,12 +395,14 @@ static int authenticate_kbdint(void)
 				if ((ptr = strchr(ans, '\n')) != NULL)
 					*ptr = '\0';
 				if (ssh_userauth_kbdint_setanswer(ssh_sess,
-					iprompt, ans) < 0)
+								  iprompt, ans)
+				    < 0)
 					return -1;
 			} else {
 				ptr = getpass(prompt);
 				if (ssh_userauth_kbdint_setanswer(ssh_sess,
-					iprompt, ptr) < 0)
+								  iprompt, ptr)
+				    < 0)
 					return -1;
 			}
 		}
@@ -420,7 +435,7 @@ static int direct_forwarding(void)
 		goto err_exit;
 
 	res = ssh_channel_open_forward(fwd_chan, server, srvportno, "localhost",
-			sshportno);
+				       sshportno);
 	if (res == SSH_OK)
 		return 0;
 
@@ -428,8 +443,8 @@ static int direct_forwarding(void)
 
 err_exit:
 	mge_errno = MGE_SSH;
-	syslog((int) (LOG_USER | LOG_NOTICE), "SSH tunnel authentication "
-		"error.");
+	syslog((int)(LOG_USER | LOG_NOTICE), "SSH tunnel authentication "
+					     "error.");
 	return -1;
 }
 
@@ -454,7 +469,7 @@ static void *relay_data(__attribute__((unused)) void *arg)
 	if (retval == NULL)
 		return retval;
 
-	accsockfd = accept(ssh_sock, (struct sockaddr *) &cli_addr, &clilen);
+	accsockfd = accept(ssh_sock, (struct sockaddr *)&cli_addr, &clilen);
 	if (accsockfd < 0)
 		goto err_exit_0;
 
@@ -464,21 +479,21 @@ static void *relay_data(__attribute__((unused)) void *arg)
 		if (n < 0)
 			goto err_exit_1;
 
-		res = ssh_channel_write (fwd_chan, sock_buf, (unsigned int)n);
-		if ( res == SSH_ERROR )
+		res = ssh_channel_write(fwd_chan, sock_buf, (unsigned int)n);
+		if (res == SSH_ERROR)
 			goto err_exit_1;
 
 		n = ssh_channel_poll_timeout(fwd_chan, SSH_CHAN_POLL_TIMEOUT,
-				0);
-		if(n == SSH_ERROR)
+					     0);
+		if (n == SSH_ERROR)
 			goto err_exit_1;
 
-		ret_buf = mg_realloc(NULL, (size_t) n);
+		ret_buf = mg_realloc(NULL, (size_t)n);
 		if (ret_buf == NULL)
 			goto err_exit_1;
 
 		r = ssh_channel_read(fwd_chan, ret_buf, (unsigned int)n, 0);
-		if(r == SSH_ERROR)
+		if (r == SSH_ERROR)
 			goto err_exit_2;
 
 		n = send(accsockfd, ret_buf, (size_t)r, 0);
@@ -498,7 +513,7 @@ err_exit_1:
 
 err_exit_0:
 	*retval = -1;
-	syslog((int) (LOG_USER | LOG_NOTICE), "SSH tunnel data relay error.");
+	syslog((int)(LOG_USER | LOG_NOTICE), "SSH tunnel data relay error.");
 	return retval;
 }
 

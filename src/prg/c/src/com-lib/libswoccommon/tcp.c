@@ -32,20 +32,18 @@
  ************************************************************************
  */
 
-
+#include <errno.h>
+#include <netdb.h>
+#include <netinet/in.h>
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
-#include <errno.h>
-#include <syslog.h>
 #include <sys/types.h>
+#include <syslog.h>
+#include <unistd.h>
 
-#include <mge-errno.h>
 #include <libswoccommon.h>
-
+#include <mge-errno.h>
 
 /**
  * Prepare TCP socket to receive connections.
@@ -66,10 +64,10 @@ int prep_recv_sock(int *sockfd, int *portno)
 	 * "Internet".
 	 */
 	memset(&hints, 0, sizeof(struct addrinfo));
-	hints.ai_family = AF_UNSPEC;		/* Allow IPv4 or IPv6 */
-	hints.ai_socktype = SOCK_STREAM;	/* TCP stream socket */
-	hints.ai_flags = AI_PASSIVE;		/* For wildcard IP address */
-	hints.ai_protocol = IPPROTO_TCP;	/* Only TCP protocol */
+	hints.ai_family = AF_UNSPEC;	 /* Allow IPv4 or IPv6 */
+	hints.ai_socktype = SOCK_STREAM; /* TCP stream socket */
+	hints.ai_flags = AI_PASSIVE;	 /* For wildcard IP address */
+	hints.ai_protocol = IPPROTO_TCP; /* Only TCP protocol */
 	hints.ai_canonname = NULL;
 	hints.ai_addr = NULL;
 	hints.ai_next = NULL;
@@ -100,9 +98,9 @@ int init_conn(int *sockfd, int *portno, char *srv)
 
 	/* PF_ prefix vs AF_ - see comment in prep_recv_sock(). */
 	memset(&hints, 0, sizeof(struct addrinfo));
-	hints.ai_family = AF_UNSPEC;		/* Allow IPv4 or IPv6 */
-	hints.ai_socktype = SOCK_STREAM;	/* TCP stream socket */
-	hints.ai_protocol = IPPROTO_TCP;	/* Only TCP protocol */
+	hints.ai_family = AF_UNSPEC;	 /* Allow IPv4 or IPv6 */
+	hints.ai_socktype = SOCK_STREAM; /* TCP stream socket */
+	hints.ai_protocol = IPPROTO_TCP; /* Only TCP protocol */
 	hints.ai_canonname = NULL;
 	hints.ai_addr = NULL;
 	hints.ai_next = NULL;
@@ -124,7 +122,7 @@ int init_conn(int *sockfd, int *portno, char *srv)
  * @return 0 on success, non-zero on failure.
  */
 int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
-	enum comms_mode *mode)
+		enum comms_mode *mode)
 {
 	struct addrinfo *result, *rp;
 	int i, r, s;
@@ -137,15 +135,14 @@ int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 	if (s) {
 		sav_errno = s;
 		mge_errno = MGE_GAI;
-		syslog((int) (LOG_USER | LOG_NOTICE), "getaddrinfo error - %s",
-			mge_strerror(mge_errno));
+		syslog((int)(LOG_USER | LOG_NOTICE), "getaddrinfo error - %s",
+		       mge_strerror(mge_errno));
 		return mge_errno;
 	}
 
 	/* getaddrinfo() returns a list of address structures. */
 	for (rp = result; rp != NULL; rp = rp->ai_next) {
-		*sfd = socket(rp->ai_family, rp->ai_socktype,
-			rp->ai_protocol);
+		*sfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
 		if (*sfd == -1)
 			continue;
 
@@ -157,7 +154,7 @@ int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 			 * this happening set the flag to say re-use the socket.
 			 */
 			i = setsockopt(*sfd, SOL_SOCKET, SO_REUSEADDR, &r,
-				sizeof r);
+				       sizeof r);
 			if (!i) {
 				do {
 					/*
@@ -165,11 +162,11 @@ int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 					 * other error, allow 10 tries.
 					 */
 					i = bind(*sfd, rp->ai_addr,
-							rp->ai_addrlen);
+						 rp->ai_addrlen);
 					if (i == -1 && errno == EADDRINUSE)
 						sleep(1);
-				  } while (x++ < 10 && i == -1
-						&& errno == EADDRINUSE);
+				} while (x++ < 10 && i == -1
+					 && errno == EADDRINUSE);
 			}
 		} else {
 			do {
@@ -180,17 +177,17 @@ int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 				i = connect(*sfd, rp->ai_addr, rp->ai_addrlen);
 				if (i == -1 && errno == EADDRINUSE)
 					sleep(1);
-			  } while (x++ < 10 && i == -1 && errno == EADDRINUSE);
+			} while (x++ < 10 && i == -1 && errno == EADDRINUSE);
 		}
 		if (!i)
 			break;
 
 		close(*sfd);
 	}
-	if (rp == NULL) {	/* No address succeeded */
+	if (rp == NULL) { /* No address succeeded */
 		mge_errno = MGE_GAI_BIND;
-		syslog((int) (LOG_USER | LOG_NOTICE), "%s",
-				mge_strerror(mge_errno));
+		syslog((int)(LOG_USER | LOG_NOTICE), "%s",
+		       mge_strerror(mge_errno));
 	}
 
 	freeaddrinfo(result);
@@ -212,8 +209,8 @@ int listen_sock(const int *sfd)
 	if (listen(*sfd, SOCK_Q_LEN) < 0) {
 		sav_errno = errno;
 		mge_errno = MGE_ERRNO;
-		syslog((int) (LOG_USER | LOG_NOTICE), "ERROR on listen - %s",
-			mge_strerror(mge_errno));
+		syslog((int)(LOG_USER | LOG_NOTICE), "ERROR on listen - %s",
+		       mge_strerror(mge_errno));
 	}
 	return mge_errno;
 }
@@ -232,8 +229,10 @@ int close_sock(const int *sockfd)
 	if (close(*sockfd) < 0) {
 		sav_errno = errno;
 		mge_errno = MGE_ERRNO;
-		syslog((int) (LOG_USER | LOG_NOTICE), "ERROR closing socket "
-			"- %s", mge_strerror(mge_errno));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "ERROR closing socket "
+		       "- %s",
+		       mge_strerror(mge_errno));
 	}
 	return mge_errno;
 }

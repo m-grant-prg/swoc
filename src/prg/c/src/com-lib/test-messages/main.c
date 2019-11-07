@@ -16,14 +16,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <mge-errno.h>
 #include <libswoccommon.h>
-
+#include <mge-errno.h>
 
 /*
  * messages test program.
  */
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
 	int prog_error = 0;
 	char *outgoing_msg = "swocserver,status;";

@@ -28,12 +28,11 @@
  ************************************************************************
  */
 
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <libswoccommon.h>
-#include <config.h>
 
+#include <config.h>
+#include <libswoccommon.h>
 
 /**
  * Get the git-describe based package version.
@@ -59,7 +58,7 @@ char *libswoccommon_get_src_version(void)
 void libswoccommon_print_pkg_version(void)
 {
 	printf("%s %s %s", "libswoccommon Package version -", PACKAGE_VERSION,
-		"\n");
+	       "\n");
 }
 
 /**
@@ -68,6 +67,6 @@ void libswoccommon_print_pkg_version(void)
 void libswoccommon_print_src_version(void)
 {
 	printf("%s %s %s", "libswoccommon Source version -",
-		COMMON_SOURCE_VERSION, "\n");
+	       COMMON_SOURCE_VERSION, "\n");
 }
 
