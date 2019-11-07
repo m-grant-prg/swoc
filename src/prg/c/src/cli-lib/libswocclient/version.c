@@ -36,9 +36,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <libswocclient.h>
-#include <config.h>
 
+#include <config.h>
+#include <libswocclient.h>
 
 /**
  * Get the git-describe based package version.
@@ -64,7 +64,7 @@ char *libswocclient_get_src_version(void)
 void libswocclient_print_pkg_version(void)
 {
 	printf("%s %s %s", "libswocclient Package version -", PACKAGE_VERSION,
-		"\n");
+	       "\n");
 }
 
 /**
@@ -73,6 +73,6 @@ void libswocclient_print_pkg_version(void)
 void libswocclient_print_src_version(void)
 {
 	printf("%s %s %s", "libswocclient Source version -",
-		CLIENT_SOURCE_VERSION, "\n");
+	       CLIENT_SOURCE_VERSION, "\n");
 }
 

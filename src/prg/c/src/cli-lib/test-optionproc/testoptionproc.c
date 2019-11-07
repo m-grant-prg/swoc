@@ -12,12 +12,10 @@
  ************************************************************************
  */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <libswocclient.h>
-
 
 /*
  * Main
@@ -40,7 +38,8 @@ int main(int argc, char **argv)
 	swc_show_status();
 
 	prg_err = swc_client_wait("0");
-	printf("prg_err after swc_client_wait(0) with no locks is %i\n", prg_err);
+	printf("prg_err after swc_client_wait(0) with no locks is %i\n",
+	       prg_err);
 
 	/* Set, block, set, release, unblock */
 	prg_err = swc_set_lock();
@@ -77,7 +76,8 @@ int main(int argc, char **argv)
 	swc_show_status();
 
 	prg_err = swc_client_wait("0");
-	printf("prg_err after swc_client_wait(0) with 2 locks is %i\n", prg_err);
+	printf("prg_err after swc_client_wait(0) with 2 locks is %i\n",
+	       prg_err);
 
 	swc_show_status();
 
@@ -90,7 +90,6 @@ int main(int argc, char **argv)
 	prg_err = swc_reset();
 	printf("prg_err after swc_reset is %i\n", prg_err);
 	swc_show_status();
-
 
 	libswocclient_print_pkg_version();
 	libswocclient_print_src_version();
