@@ -35,19 +35,14 @@
  ************************************************************************
  */
 
-
 #ifndef LIBSWOCCLIENT_H
 #define LIBSWOCCLIENT_H
 
-
 #include <portability.h>
-
 
 BEGIN_C_DECLS
 
-
 extern char locks_held[];
-
 
 int swc_show_status(void);
 

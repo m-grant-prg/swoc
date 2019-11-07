@@ -47,18 +47,14 @@
  ************************************************************************
  */
 
-
 #ifndef LIBSWOCSERVER_H
 #define LIBSWOCSERVER_H
 
-
 #include <portability.h>
-
 
 BEGIN_C_DECLS
 
 extern char locks_held[];
-
 
 int sws_show_status(void);
 

@@ -32,10 +32,8 @@
  ************************************************************************
  */
 
-
 #ifndef CMDLINEARGS_H
 #define CMDLINEARGS_H
-
 
 #include <limits.h>
 
@@ -51,8 +49,8 @@ BEGIN_C_DECLS
 
 /** Command line argument. */
 struct cla {
-	int is_set;			/**< Is this option set on the CL. */
-	char argument[ARG_BUF];		/**< Argument to the option. */
+	int is_set;		/**< Is this option set on the CL. */
+	char argument[ARG_BUF]; /**< Argument to the option. */
 };
 
 int process_cla(int argc, char **argv, ...);

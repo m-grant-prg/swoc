@@ -29,10 +29,8 @@
  ************************************************************************
  */
 
-
 #ifndef SIGNALHANDLE_H
 #define SIGNALHANDLE_H
-
 
 #include <portability.h>
 

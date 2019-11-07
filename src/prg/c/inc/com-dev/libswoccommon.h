@@ -35,17 +35,15 @@
  ************************************************************************
  */
 
-
 #ifndef LIBSWOCCOMMON_H
 #define LIBSWOCCOMMON_H
 
-
-#include <portability.h>
-#include <sys/types.h>
-#include <netinet/in.h>
 #include <netdb.h>
-#include <mgemessage.h>
+#include <netinet/in.h>
+#include <sys/types.h>
 
+#include <mgemessage.h>
+#include <portability.h>
 
 BEGIN_C_DECLS
 
@@ -55,7 +53,6 @@ extern char server[];
 extern int srvportno;
 extern int sshportno;
 extern char sshuser[];
-
 
 /** Socket buffer size. */
 #define SOCK_BUF_SIZE 256
@@ -67,19 +64,30 @@ extern char sshuser[];
 #define SSH_CHAN_POLL_TIMEOUT 10000
 
 /** enum identifying the source of a message. */
-enum msg_source {swocclient, swocserver, swocserverd, src_err};
+enum msg_source { swocclient, swocserver, swocserverd, src_err };
 
 /** enum identifying the message request. */
-enum msg_request {swocallow, swocblock, swocblocklist, swocblockstatus, swocend,
-	swocdisallow, swoclock, swocrelease, swocreload, swocreset, swocstatus,
-	swocunblock, req_err};
+enum msg_request {
+	swocallow,
+	swocblock,
+	swocblocklist,
+	swocblockstatus,
+	swocend,
+	swocdisallow,
+	swoclock,
+	swocrelease,
+	swocreload,
+	swocreset,
+	swocstatus,
+	swocunblock,
+	req_err
+};
 
 /** enum specifying error status of arguments. */
-enum msg_arguments {args_ok, args_err};
+enum msg_arguments { args_ok, args_err };
 
 /** enum indentify send or receive mode. */
-enum comms_mode {recv_mode, send_mode};
-
+enum comms_mode { recv_mode, send_mode };
 
 int swcom_validate_config(void);
 
@@ -88,17 +96,17 @@ int prep_recv_sock(int *sockfd, int *portno);
 int init_conn(int *sockfd, int *portno, char *srv);
 
 int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
-	enum comms_mode *mode);
+		enum comms_mode *mode);
 
 int listen_sock(const int *sfd);
 
 int close_sock(const int *sockfd);
 
 void parse_msg(struct mgemessage *msg, enum msg_arguments *msg_args,
-	enum msg_source *msg_src, enum msg_request *msg_req);
+	       enum msg_source *msg_src, enum msg_request *msg_req);
 
 int send_outgoing_msg(char *outgoing_msg, size_t outgoing_msg_length,
-			int *newsockfd);
+		      int *newsockfd);
 
 int exch_msg(char *outgoing_msg, size_t om_length, struct mgemessage *msg);
 
@@ -113,7 +121,6 @@ char *libswoccommon_get_src_version(void);
 void libswoccommon_print_pkg_version(void);
 
 void libswoccommon_print_src_version(void);
-
 
 END_C_DECLS
 
