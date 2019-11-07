@@ -45,34 +45,29 @@
  ************************************************************************
  */
 
-
 #ifndef SWOCSERVERD_INTERNAL_H
 #define SWOCSERVERD_INTERNAL_H
-
 
 #include <limits.h>
 #include <stdbool.h>
 
-#include <portability.h>
 #include <bstree.h>
-#include <mgemessage.h>
 #include <libswoccommon.h>
-
+#include <mgemessage.h>
+#include <portability.h>
 
 BEGIN_C_DECLS
 
-#define MAX_LISTEN_PORTS 10	/**< Max number of listening ports. */
-#define MAX_EPOLL_EVENTS 64	/**< Max num events for EPOLL. */
-
+#define MAX_LISTEN_PORTS 10 /**< Max number of listening ports. */
+#define MAX_EPOLL_EVENTS 64 /**< Max num events for EPOLL. */
 
 /**
  * Map sockets to ports.
  */
 struct comm_spec {
-	int portno;	/**< Port number. */
-	int socketfd;	/**< Socket file descriptor. */
+	int portno;   /**< Port number. */
+	int socketfd; /**< Socket file descriptor. */
 };
-
 
 extern int swsd_err;
 extern char client[_POSIX_HOST_NAME_MAX];
@@ -82,7 +77,6 @@ extern int cursockfd;
 extern struct comm_spec *port_spec;
 extern bool srv_blocked;
 extern struct bstree *cli_locks, *cli_blocked, *port_sock;
-
 
 int swsd_validate_config(void);
 

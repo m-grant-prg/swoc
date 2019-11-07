@@ -29,14 +29,13 @@
  ************************************************************************
  */
 
+#include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sysexits.h>
-#include <getopt.h>
 
 #include "internal.h"
 #include <cmdlineargs.h>
-
 
 /**
  * Process command line arguments using getopt_long.
@@ -53,16 +52,13 @@ int process_cla(int argc, char **argv, ...)
 	int option_index = 0;
 	int c;
 
-	struct option long_options[] = {
-		{"debug",		no_argument,		NULL,	'D'},
-		{"help",		no_argument,		NULL,	'h'},
-		{"version",		no_argument,		NULL,	'V'},
-		{NULL,			0,			NULL,	0}
-	};
+	struct option long_options[] = { { "debug", no_argument, NULL, 'D' },
+					 { "help", no_argument, NULL, 'h' },
+					 { "version", no_argument, NULL, 'V' },
+					 { NULL, 0, NULL, 0 } };
 
-	while ((c = getopt_long(argc, argv, "DhV",
-		long_options, &option_index)) != -1) {
-
+	while ((c = getopt_long(argc, argv, "DhV", long_options, &option_index))
+	       != -1) {
 		switch (c) {
 		case 'D':
 			debug = 1;
@@ -71,22 +67,22 @@ int process_cla(int argc, char **argv, ...)
 		case 'h':
 			printf("%s %s", argv[0], " - Help option.\n");
 			printf("\tLong and short options can be mixed on the "
-				"command line but if an option\ntakes an "
-				"optional argument it is best to enter "
-				"-o\"argument\" or\n--option=argument.\n");
+			       "command line but if an option\ntakes an "
+			       "optional argument it is best to enter "
+			       "-o\"argument\" or\n--option=argument.\n");
 			printf("-D | --debug\tDon't daemonise. Output "
-				"information to stdout and stderr.\n");
+			       "information to stdout and stderr.\n");
 			printf("-V | --version\tDisplay version "
-				"information.\n");
+			       "information.\n");
 			if (!swsd_err)
 				swsd_err = -1;
 			break;
 
 		case 'V':
 			printf("%s %s %s %s", argv[0], "Source version -",
-				swocserverd_get_src_version(), "\n");
+			       swocserverd_get_src_version(), "\n");
 			printf("%s %s %s %s", argv[0], "Package version -",
-				swocserverd_get_pkg_version(), "\n");
+			       swocserverd_get_pkg_version(), "\n");
 			if (!swsd_err)
 				swsd_err = -1;
 			break;

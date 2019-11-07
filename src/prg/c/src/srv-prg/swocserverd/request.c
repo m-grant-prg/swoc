@@ -66,20 +66,18 @@
  ************************************************************************
  */
 
-
-#include <stdio.h>
-#include <string.h>
-#include <syslog.h>
-#include <stdlib.h>
 #include <errno.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <syslog.h>
 
-#include <mgememory.h>
-#include <mge-errno.h>
-#include <mgemessage.h>
 #include "internal.h"
 #include <bstree.h>
-
+#include <mge-errno.h>
+#include <mgememory.h>
+#include <mgemessage.h>
 
 /**
  * swocserver requesting the daemon to terminate.
@@ -100,14 +98,16 @@ int srv_end_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 	if (debug)
 		printf("Termination request received - exiting.\n");
-	syslog((int) (LOG_USER | LOG_NOTICE), "Termination request received - "
-		"exiting.");
+	syslog((int)(LOG_USER | LOG_NOTICE), "Termination request received - "
+					     "exiting.");
 	if (debug) {
 		printf("%i clients have %i locks on this server.\n",
 		       cli_locks->node_total, cli_locks->count_total);
 	}
-	syslog((int) (LOG_USER | LOG_NOTICE), "%i clients have %i locks on "
-		"this server.", cli_locks->node_total, cli_locks->count_total);
+	syslog((int)(LOG_USER | LOG_NOTICE),
+	       "%i clients have %i locks on "
+	       "this server.",
+	       cli_locks->node_total, cli_locks->count_total);
 
 	sprintf(out_msg, "swocserverd,end,ok;");
 	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
@@ -156,13 +156,15 @@ int swsd_reload_config(void)
 		if (debug)
 			fprintf(stderr, "Validate config errored with %i.\n",
 				mge_errno);
-		syslog((int) (LOG_USER | LOG_NOTICE), "Validate config errored "
-			"with %i.", mge_errno);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Validate config errored "
+		       "with %i.",
+		       mge_errno);
 		return swsd_err;
 	}
 	if (debug)
 		printf("Config file reloaded.\n");
-	syslog((int) (LOG_USER | LOG_NOTICE), "Config file reloaded.");
+	syslog((int)(LOG_USER | LOG_NOTICE), "Config file reloaded.");
 	return swsd_err;
 }
 
@@ -175,7 +177,7 @@ int swsd_reload_config(void)
 int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 {
 	char *out_msg, *t_out_msg = NULL;
-	size_t out_msg_size = 30;	/* Large enough for an error message. */
+	size_t out_msg_size = 30; /* Large enough for an error message. */
 	char tmp_msg[_POSIX_HOST_NAME_MAX + 100] = "";
 	char *client_lu = "";
 	int counter;
@@ -194,16 +196,17 @@ int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 	*out_msg = '\0';
 	strcat(out_msg, "swocserverd,status,ok");
 
-	while((client_lu = (char *) find_next_bst_node(cli_locks, client_lu))
-	      != NULL) {
-
+	while ((client_lu = (char *)find_next_bst_node(cli_locks, client_lu))
+	       != NULL) {
 		counter = get_counter_bst_node(cli_locks, client_lu);
 		if (counter < 0) {
 			if (debug)
 				fprintf(stderr, "Node count errored with %i.\n",
 					mge_errno);
-			syslog((int) (LOG_USER | LOG_NOTICE), "Node count "
-				"errored with %i.", mge_errno);
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "Node count "
+			       "errored with %i.",
+			       mge_errno);
 			sprintf(out_msg, "swocserverd,status,err,%i;",
 				mge_errno);
 			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
@@ -212,8 +215,8 @@ int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		}
 
 		sprintf(tmp_msg, ",%s,%i", client_lu, counter);
-		if (((int) out_msg_size - (int) strlen(out_msg))
-				< ((int) strlen(tmp_msg) + 2)) {
+		if (((int)out_msg_size - (int)strlen(out_msg))
+		    < ((int)strlen(tmp_msg) + 2)) {
 			out_msg_size += strlen(tmp_msg) + 2;
 			t_out_msg = out_msg;
 			out_msg = mg_realloc(t_out_msg, out_msg_size);
@@ -263,12 +266,11 @@ int srv_cli_blocklist_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 	*out_msg = '\0';
 	strcat(out_msg, "swocserverd,blocklist,ok");
 
-	while((client_lu = (char *) find_next_bst_node(cli_blocked, client_lu))
-		!= NULL) {
-
+	while ((client_lu = (char *)find_next_bst_node(cli_blocked, client_lu))
+	       != NULL) {
 		sprintf(tmp_msg, ",%s", client_lu);
-		if (((int) out_msg_size - (int) strlen(out_msg))
-				< ((int) strlen(tmp_msg) + 2)) {
+		if (((int)out_msg_size - (int)strlen(out_msg))
+		    < ((int)strlen(tmp_msg) + 2)) {
 			out_msg_size += strlen(tmp_msg) + 2;
 			t_out_msg = out_msg;
 			out_msg = mg_realloc(t_out_msg, out_msg_size);
@@ -314,8 +316,10 @@ int srv_cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		if (debug)
 			fprintf(stderr, "Node removal errored with %i.\n",
 				mge_errno);
-		syslog((int) (LOG_USER | LOG_NOTICE), "Node removal errored "
-			"with %i.", mge_errno);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Node removal errored "
+		       "with %i.",
+		       mge_errno);
 		/* Change to more user informational error. */
 		if (mge_errno == MGE_NODE_NOT_FOUND)
 			mge_errno = MGE_LOCK_NOT_FOUND;
@@ -324,9 +328,11 @@ int srv_cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		cli_locks = plocks;
 		if (debug)
 			printf("Lock %s removed by server.\n",
-				*(msg->argv + 2));
-		syslog((int) (LOG_USER | LOG_NOTICE), "Client %s lock removed "
-			"by server.", *(msg->argv + 2));
+			       *(msg->argv + 2));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Client %s lock removed "
+		       "by server.",
+		       *(msg->argv + 2));
 		sprintf(out_msg, "swocserverd,release,ok;");
 	}
 	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
@@ -360,8 +366,10 @@ int srv_cli_block_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 			if (debug)
 				fprintf(stderr, "Node add errored with %i.\n",
 					mge_errno);
-			syslog((int) (LOG_USER | LOG_NOTICE), "Node add errored"
-			" with %i.", mge_errno);
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "Node add errored"
+			       " with %i.",
+			       mge_errno);
 			sprintf(out_msg, "swocserverd,block,err,%i;",
 				mge_errno);
 			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
@@ -373,7 +381,7 @@ int srv_cli_block_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 	if (debug)
 		printf("Client %s blocked.\n", *(msg->argv + 2));
-	syslog((int) (LOG_USER | LOG_NOTICE), "Client %s blocked.",
+	syslog((int)(LOG_USER | LOG_NOTICE), "Client %s blocked.",
 	       *(msg->argv + 2));
 	sprintf(out_msg, "swocserverd,block,ok;");
 
@@ -407,8 +415,10 @@ int srv_cli_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 			if (debug)
 				fprintf(stderr, "Node del errored with %i.\n",
 					mge_errno);
-			syslog((int) (LOG_USER | LOG_NOTICE), "Node del errored"
-			" with %i.", mge_errno);
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "Node del errored"
+			       " with %i.",
+			       mge_errno);
 			sprintf(out_msg, "swocserverd,unblock,err,%i;",
 				mge_errno);
 			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
@@ -420,7 +430,7 @@ int srv_cli_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 	if (debug)
 		printf("Client %s unblocked.\n", *(msg->argv + 2));
-	syslog((int) (LOG_USER | LOG_NOTICE), "Client %s unblocked.",
+	syslog((int)(LOG_USER | LOG_NOTICE), "Client %s unblocked.",
 	       *(msg->argv + 2));
 	sprintf(out_msg, "swocserverd,unblock,ok;");
 
@@ -449,7 +459,7 @@ int srv_block_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 	if (debug)
 		printf("Server blocked.\n");
-	syslog((int) (LOG_USER | LOG_NOTICE), "Server blocked.");
+	syslog((int)(LOG_USER | LOG_NOTICE), "Server blocked.");
 
 	sprintf(out_msg, "swocserverd,disallow,ok;");
 	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
@@ -477,7 +487,7 @@ int srv_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 	if (debug)
 		printf("Server unblocked.\n");
-	syslog((int) (LOG_USER | LOG_NOTICE), "Server unblocked.");
+	syslog((int)(LOG_USER | LOG_NOTICE), "Server unblocked.");
 
 	sprintf(out_msg, "swocserverd,allow,ok;");
 
@@ -535,14 +545,16 @@ int cli_block_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 	pblocked = find_bst_node(cli_blocked, client);
 
 	if (pblocked == NULL) {
-		pblocked = add_bst_node(cli_blocked, client,
-					strlen(client) + 1);
+		pblocked
+			= add_bst_node(cli_blocked, client, strlen(client) + 1);
 		if (pblocked == NULL) {
 			if (debug)
 				fprintf(stderr, "Node add errored with %i.\n",
 					mge_errno);
-			syslog((int) (LOG_USER | LOG_NOTICE), "Node add errored"
-			" with %i.", mge_errno);
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "Node add errored"
+			       " with %i.",
+			       mge_errno);
 			sprintf(out_msg, "swocserverd,block,err,%i;",
 				mge_errno);
 			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
@@ -554,7 +566,7 @@ int cli_block_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 	if (debug)
 		printf("Client %s blocked.\n", client);
-	syslog((int) (LOG_USER | LOG_NOTICE), "Client %s blocked.", client);
+	syslog((int)(LOG_USER | LOG_NOTICE), "Client %s blocked.", client);
 	sprintf(out_msg, "swocserverd,block,ok;");
 
 	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
@@ -589,8 +601,10 @@ int cli_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 			if (debug)
 				fprintf(stderr, "Node del errored with %i.\n",
 					mge_errno);
-			syslog((int) (LOG_USER | LOG_NOTICE), "Node del errored"
-			" with %i.", mge_errno);
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "Node del errored"
+			       " with %i.",
+			       mge_errno);
 			sprintf(out_msg, "swocserverd,unblock,err,%i;",
 				mge_errno);
 			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
@@ -602,7 +616,7 @@ int cli_unblock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 
 	if (debug)
 		printf("Client %s unblocked.\n", client);
-	syslog((int) (LOG_USER | LOG_NOTICE), "Client %s unblocked.", client);
+	syslog((int)(LOG_USER | LOG_NOTICE), "Client %s unblocked.", client);
 	sprintf(out_msg, "swocserverd,unblock,ok;");
 
 	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
@@ -644,9 +658,8 @@ int cli_lock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 	if (pblocked != NULL || srv_blocked) {
 		mge_errno = MGE_CLIENT_BLOCKED;
 		if (debug)
-			fprintf(stderr, "Client blocked - %i.\n",
-				mge_errno);
-		syslog((int) (LOG_USER | LOG_NOTICE), "Client blocked - %i.",
+			fprintf(stderr, "Client blocked - %i.\n", mge_errno);
+		syslog((int)(LOG_USER | LOG_NOTICE), "Client blocked - %i.",
 		       mge_errno);
 		sprintf(out_msg, "swocserverd,lock,err,%i;", mge_errno);
 		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
@@ -659,15 +672,17 @@ int cli_lock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		if (debug)
 			fprintf(stderr, "Node add errored with %i.\n",
 				mge_errno);
-		syslog((int) (LOG_USER | LOG_NOTICE), "Node add errored "
-			"with %i.", mge_errno);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Node add errored "
+		       "with %i.",
+		       mge_errno);
 		sprintf(out_msg, "swocserverd,lock,err,%i;", mge_errno);
 	} else {
 		cli_locks = plocks;
 		if (debug)
 			printf("Lock %s added.\n", client);
-		syslog((int) (LOG_USER | LOG_NOTICE), "Client %s lock added.",
-			client);
+		syslog((int)(LOG_USER | LOG_NOTICE), "Client %s lock added.",
+		       client);
 		sprintf(out_msg, "swocserverd,lock,ok;");
 	}
 	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
@@ -697,8 +712,10 @@ int cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		if (debug)
 			fprintf(stderr, "Node delete errored with %i.\n",
 				mge_errno);
-		syslog((int) (LOG_USER | LOG_NOTICE), "Node delete errored "
-			"with %i.", mge_errno);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Node delete errored "
+		       "with %i.",
+		       mge_errno);
 		/* Change to more user informational error. */
 		if (mge_errno == MGE_NODE_NOT_FOUND)
 			mge_errno = MGE_LOCK_NOT_FOUND;
@@ -707,8 +724,8 @@ int cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		cli_locks = plocks;
 		if (debug)
 			printf("Lock %s removed.\n", client);
-		syslog((int) (LOG_USER | LOG_NOTICE), "Client %s lock removed.",
-			client);
+		syslog((int)(LOG_USER | LOG_NOTICE), "Client %s lock removed.",
+		       client);
 		sprintf(out_msg, "swocserverd,release,ok;");
 	}
 	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
@@ -739,8 +756,10 @@ int cli_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		if (debug)
 			fprintf(stderr, "Node count errored with %i.\n",
 				mge_errno);
-		syslog((int) (LOG_USER | LOG_NOTICE), "Node count errored "
-			"with %i.", mge_errno);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Node count errored "
+		       "with %i.",
+		       mge_errno);
 		sprintf(out_msg, "swocserverd,status,err,%i;", mge_errno);
 		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 		swsd_err = mge_errno;
@@ -752,8 +771,10 @@ int cli_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		if (debug)
 			fprintf(stderr, "Node count errored with %i.\n",
 				mge_errno);
-		syslog((int) (LOG_USER | LOG_NOTICE), "Node count errored "
-			"with %i.", mge_errno);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Node count errored "
+		       "with %i.",
+		       mge_errno);
 		sprintf(out_msg, "swocserverd,status,err,%i;", mge_errno);
 		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 		swsd_err = mge_errno;
@@ -804,8 +825,10 @@ int cli_reset_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		printf("%i locks removed.\n", l);
 		printf("%i blocks removed.\n", b);
 	}
-	syslog((int) (LOG_USER | LOG_NOTICE), "Client %s, %i locks removed and "
-			"%i blocks removed.", client, l, b);
+	syslog((int)(LOG_USER | LOG_NOTICE),
+	       "Client %s, %i locks removed and "
+	       "%i blocks removed.",
+	       client, l, b);
 	sprintf(out_msg, "swocserverd,reset,ok,%i,%i;", l, b);
 	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 	swsd_err = mge_errno;

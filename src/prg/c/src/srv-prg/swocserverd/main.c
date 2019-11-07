@@ -66,57 +66,53 @@
  ************************************************************************
  */
 
-
+#include <errno.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
 #include <sys/stat.h>
-#include <errno.h>
+#include <sys/types.h>
 #include <syslog.h>
 #include <unistd.h>
-#include <limits.h>
 
 /* Standard GNU AC_HEADER_STDBOOL ifdeffery. */
 #ifdef HAVE_STDBOOL_H
-	# include <stdbool.h>
+	#include <stdbool.h>
 #else
-	# ifndef HAVE__BOOL
-		# ifdef __cplusplus
-			typedef bool _Bool;
-		# else
-			# define _Bool signed char
-		# endif
-	# endif
-	# define bool _Bool
-	# define false 0
-	# define true 1
-	# define __bool_true_false_are_defined 1
+	#ifndef HAVE__BOOL
+		#ifdef __cplusplus
+typedef bool _Bool;
+		#else
+			#define _Bool signed char
+		#endif
+	#endif
+	#define bool _Bool
+	#define false 0
+	#define true 1
+	#define __bool_true_false_are_defined 1
 #endif
 
-#include <configmake.h>
-#include <cmdlineargs.h>
-#include <signalhandle.h>
-#include <mge-errno.h>
-#include <bstree.h>
 #include "internal.h"
+#include <bstree.h>
+#include <cmdlineargs.h>
+#include <configmake.h>
+#include <mge-errno.h>
+#include <signalhandle.h>
 
-
-int swsd_err;				/**< swoc daemon error number. */
-char client[_POSIX_HOST_NAME_MAX];	/**< Client name. */
-int debug;				/**< Debug - 0 false, 1 true. */
-int end;				/**< End pending. */
-int cursockfd;				/**< Socket file descriptor in use. */
-struct comm_spec *port_spec;		/**< Port / socket config mappings. */
-bool srv_blocked;			/**< Server is blocked? */
-struct bstree *cli_locks;		/**< Clients and locks. */
-struct bstree *cli_blocked;		/**< Blocked client list. */
-struct bstree *port_sock;		/**< Port / socket actual mappings. */
-
+int swsd_err;			   /**< swoc daemon error number. */
+char client[_POSIX_HOST_NAME_MAX]; /**< Client name. */
+int debug;			   /**< Debug - 0 false, 1 true. */
+int end;			   /**< End pending. */
+int cursockfd;			   /**< Socket file descriptor in use. */
+struct comm_spec *port_spec;	   /**< Port / socket config mappings. */
+bool srv_blocked;		   /**< Server is blocked? */
+struct bstree *cli_locks;	   /**< Clients and locks. */
+struct bstree *cli_blocked;	   /**< Blocked client list. */
+struct bstree *port_sock;	   /**< Port / socket actual mappings. */
 
 static void daemonise(void);
 static int csscmp(const struct comm_spec *first, const struct comm_spec *last);
-
 
 /**
  * Program entry point.
@@ -126,7 +122,7 @@ static int csscmp(const struct comm_spec *first, const struct comm_spec *last);
  */
 int main(int argc, char **argv)
 {
-	char *pidfile = RUNSTATEDIR"/swocserverd.pid";
+	char *pidfile = RUNSTATEDIR "/swocserverd.pid";
 	FILE *fp;
 
 	swsd_err = 0;
@@ -139,8 +135,8 @@ int main(int argc, char **argv)
 	/* Check not already running. */
 	fp = fopen(pidfile, "r");
 	if (fp != NULL) {
-		syslog((int) (LOG_USER | LOG_NOTICE), "Daemon already "
-				"running.");
+		syslog((int)(LOG_USER | LOG_NOTICE), "Daemon already "
+						     "running.");
 		fclose(fp);
 		exit(EXIT_FAILURE);
 	}
@@ -151,8 +147,10 @@ int main(int argc, char **argv)
 		swsd_err = errno;
 		if (debug)
 			perror("ERROR allocating port_spec");
-		syslog((int) (LOG_USER | LOG_NOTICE), "ERROR allocating "
-			"port_spec - %s", strerror(swsd_err));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "ERROR allocating "
+		       "port_spec - %s",
+		       strerror(swsd_err));
 		exit(EXIT_FAILURE);
 	}
 	swsd_err = swsd_validate_config();
@@ -171,37 +169,42 @@ int main(int argc, char **argv)
 	srv_blocked = false;
 
 	cli_locks = cre_bst(BST_NODES_DUPLICATES,
-			(int (*)(const void *, const void *))strcmp);
+			    (int (*)(const void *, const void *))strcmp);
 	if (cli_locks == NULL) {
 		if (debug)
 			fprintf(stderr, "BST creation errored with %i.\n",
 				mge_errno);
-		syslog((int) (LOG_USER | LOG_NOTICE), "BST creation errored "
-			"with %i.", mge_errno);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "BST creation errored "
+		       "with %i.",
+		       mge_errno);
 		goto b4_cli_locks;
 	}
 
 	cli_blocked = cre_bst(BST_NODES_UNIQUE,
-			(int (*)(const void *, const void *))strcmp);
+			      (int (*)(const void *, const void *))strcmp);
 	if (cli_blocked == NULL) {
 		if (debug)
 			fprintf(stderr, "BST creation errored with %i.\n",
 				mge_errno);
-		syslog((int) (LOG_USER | LOG_NOTICE), "BST creation errored "
-			"with %i.", mge_errno);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "BST creation errored "
+		       "with %i.",
+		       mge_errno);
 		goto b4_cli_blocked;
 	}
 
-
 	/* Prepare sockets. */
 	port_sock = cre_bst(BST_NODES_UNIQUE,
-			(int (*)(const void *, const void *))csscmp);
+			    (int (*)(const void *, const void *))csscmp);
 	if (port_sock == NULL) {
 		if (debug)
 			fprintf(stderr, "BST creation errored with %i.\n",
 				mge_errno);
-		syslog((int) (LOG_USER | LOG_NOTICE), "BST creation errored "
-			"with %i.", mge_errno);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "BST creation errored "
+		       "with %i.",
+		       mge_errno);
 		goto b4_port_sock;
 	}
 	swsd_err = prepare_sockets();
@@ -235,11 +238,11 @@ b4_cli_locks:
 static void daemonise(void)
 {
 	pid_t pid, sid;
-	char *pidfile = RUNSTATEDIR"/swocserverd.pid";
+	char *pidfile = RUNSTATEDIR "/swocserverd.pid";
 	char spid[256];
 	FILE *fp;
 
-	syslog((int) (LOG_USER | LOG_NOTICE), "Starting daemon.");
+	syslog((int)(LOG_USER | LOG_NOTICE), "Starting daemon.");
 
 	/*
 	 * Fork off the parent process.
@@ -249,18 +252,20 @@ static void daemonise(void)
 	 */
 	pid = fork();
 	if (pid < 0) {
-		syslog((int) (LOG_USER | LOG_NOTICE),"Error forking.");
+		syslog((int)(LOG_USER | LOG_NOTICE), "Error forking.");
 		exit(EXIT_FAILURE);
 	}
 	/* This is the parent process, so exit after creating pid file. */
 	if (pid > 0) {
 		/* Create pid file. */
 		if ((fp = fopen(pidfile, "w")) == NULL) {
-			syslog((int) (LOG_USER | LOG_NOTICE), "Cannot create "
-					"pid file - %s", pidfile);
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "Cannot create "
+			       "pid file - %s",
+			       pidfile);
 			exit(EXIT_FAILURE);
 		}
-		sprintf(spid, "%i\n", (int) pid);
+		sprintf(spid, "%i\n", (int)pid);
 		fputs(spid, fp);
 		fclose(fp);
 		exit(EXIT_SUCCESS);
@@ -274,13 +279,13 @@ static void daemonise(void)
 	 * in new process group.
 	 */
 	if ((sid = setsid()) < 0) {
-		syslog((int) (LOG_USER | LOG_NOTICE), "setsid error.");
+		syslog((int)(LOG_USER | LOG_NOTICE), "setsid error.");
 		exit(EXIT_FAILURE);
 	}
 
 	/* Change the current working directory. */
 	if ((chdir("/")) < 0) {
-		syslog((int) (LOG_USER | LOG_NOTICE), "Error on cd /.");
+		syslog((int)(LOG_USER | LOG_NOTICE), "Error on cd /.");
 		exit(EXIT_FAILURE);
 	}
 
@@ -289,10 +294,10 @@ static void daemonise(void)
 	 * re-direct them to /dev/null. This is because epoll_wait silently
 	 * does not work as intended if these file descriptors are re-used.
 	 */
-	freopen ("/dev/null", "r", stdin);
-	freopen ("/dev/null", "w", stdout);
-	freopen ("/dev/null", "w", stderr);
-	syslog((int) (LOG_USER | LOG_NOTICE), "Daemon started successfully.");
+	freopen("/dev/null", "r", stdin);
+	freopen("/dev/null", "w", stdout);
+	freopen("/dev/null", "w", stderr);
+	syslog((int)(LOG_USER | LOG_NOTICE), "Daemon started successfully.");
 }
 
 /*

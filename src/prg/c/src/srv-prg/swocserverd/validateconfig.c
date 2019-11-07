@@ -39,23 +39,20 @@
  ************************************************************************
  */
 
-
+#include <ctype.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <syslog.h>
-#include <ctype.h>
-#include <errno.h>
 
 #include <configmake.h>
 
-#include <mge-errno.h>
-#include <configfile.h>
 #include "internal.h"
-
+#include <configfile.h>
+#include <mge-errno.h>
 
 static int validateportnos(const struct confsection *ps);
-
 
 /**
  * Parse and validate the config file.
@@ -65,7 +62,7 @@ static int validateportnos(const struct confsection *ps);
 int swsd_validate_config(void)
 {
 	/* Expand config file full path. */
-	char *configfile = SYSCONFDIR"/swocserverd.conf";
+	char *configfile = SYSCONFDIR "/swocserverd.conf";
 	struct confsection *psections;
 	int nsections;
 
@@ -80,13 +77,14 @@ int swsd_validate_config(void)
 		return mge_errno;
 	}
 
-	psections[0] = (struct confsection) {"Ports", 1, 0, {
-			{"portno-0", 1, 0, ""},
-			{"portno-1", 0, 0, ""},
-			{"portno-2", 0, 0, ""},
-			{"portno-3", 0, 0, ""},
-			{"portno-4", 0, 0, ""}
-			}};
+	psections[0] = (struct confsection){ "Ports",
+					     1,
+					     0,
+					     { { "portno-0", 1, 0, "" },
+					       { "portno-1", 0, 0, "" },
+					       { "portno-2", 0, 0, "" },
+					       { "portno-3", 0, 0, "" },
+					       { "portno-4", 0, 0, "" } } };
 
 	/* Parse config file. */
 	swsd_err = parsefile(psections, nsections, configfile);
@@ -115,16 +113,16 @@ static int validateportnos(const struct confsection *ps)
 		if (!(ps->keys[k].present))
 			continue;
 		x = 0;
-		if (strlen(ps->keys[k].value) != (size_t) 5)
+		if (strlen(ps->keys[k].value) != (size_t)5)
 			goto port_error;
-		while ((isdigit(ps->keys[k].value[x])) &&
-			(x < strlen(ps->keys[k].value)))
+		while ((isdigit(ps->keys[k].value[x]))
+		       && (x < strlen(ps->keys[k].value)))
 			x++;
 		if (x != strlen(ps->keys[k].value))
 			goto port_error;
 		(port_spec + p)->portno = atoi(ps->keys[k].value);
 		if (((port_spec + p)->portno < 49152)
-			|| ((port_spec + p)->portno > 65535))
+		    || ((port_spec + p)->portno > 65535))
 			goto port_error;
 		p++;
 	}
@@ -132,8 +130,10 @@ static int validateportnos(const struct confsection *ps)
 
 port_error:
 	mge_errno = MGE_CONFIG_PARAM;
-	syslog((int) (LOG_USER | LOG_NOTICE), "Config param portno does not "
-		"contain a valid port number - %s", ps->keys[k].value);
+	syslog((int)(LOG_USER | LOG_NOTICE),
+	       "Config param portno does not "
+	       "contain a valid port number - %s",
+	       ps->keys[k].value);
 	return mge_errno;
 }
 

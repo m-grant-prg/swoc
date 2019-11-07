@@ -64,30 +64,27 @@
  ************************************************************************
  */
 
-
+#include <errno.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <errno.h>
+#include <sys/epoll.h>
 #include <syslog.h>
 #include <unistd.h>
-#include <sys/epoll.h>
-#include <stdbool.h>
 
-#include <mge-errno.h>
+#include "internal.h"
 #include <bstree.h>
+#include <libswoccommon.h>
+#include <mge-errno.h>
 #include <mgebuffer.h>
 #include <mgemessage.h>
-#include <libswoccommon.h>
-#include "internal.h"
-
 
 static int bind_ports(int *sfd, int *portno, struct addrinfo *hints);
 static int init_epoll(int *pepfd, struct epoll_event *pevent,
-		struct comm_spec *pt_ps);
+		      struct comm_spec *pt_ps);
 static int proc_events(int n_events, struct epoll_event *pevents);
 static void proc_msg(struct mgemessage *message);
-
 
 /**
  * Prepare all sockets.
@@ -107,10 +104,10 @@ int prepare_sockets(void)
 	 * "Internet".
 	 */
 	memset(&hints, 0, sizeof(struct addrinfo));
-	hints.ai_family = AF_UNSPEC;		/* Allow IPv4 or IPv6 */
-	hints.ai_socktype = SOCK_STREAM;	/* TCP stream socket */
-	hints.ai_flags = AI_PASSIVE;		/* For wildcard IP address */
-	hints.ai_protocol = IPPROTO_TCP;	/* Only TCP protocol */
+	hints.ai_family = AF_UNSPEC;	 /* Allow IPv4 or IPv6 */
+	hints.ai_socktype = SOCK_STREAM; /* TCP stream socket */
+	hints.ai_flags = AI_PASSIVE;	 /* For wildcard IP address */
+	hints.ai_protocol = IPPROTO_TCP; /* Only TCP protocol */
 	hints.ai_canonname = NULL;
 	hints.ai_addr = NULL;
 	hints.ai_next = NULL;
@@ -119,12 +116,12 @@ int prepare_sockets(void)
 		if ((port_spec + i)->portno == 0)
 			continue;
 		mge_errno = bind_ports(&((port_spec + i)->socketfd),
-			&((port_spec + i)->portno), &hints);
+				       &((port_spec + i)->portno), &hints);
 		if (mge_errno)
 			return mge_errno;
 
 		tmp_p_sock = add_bst_node(port_sock, (port_spec + i),
-					sizeof(*port_spec));
+					  sizeof(*port_spec));
 		if (tmp_p_sock == NULL)
 			return mge_errno;
 		port_sock = tmp_p_sock;
@@ -151,15 +148,14 @@ static int bind_ports(int *sfd, int *portno, struct addrinfo *hints)
 	if (s) {
 		sav_errno = s;
 		mge_errno = MGE_GAI;
-		syslog((int) (LOG_USER | LOG_NOTICE), "getaddrinfo error - %s",
-			mge_strerror(mge_errno));
+		syslog((int)(LOG_USER | LOG_NOTICE), "getaddrinfo error - %s",
+		       mge_strerror(mge_errno));
 		return mge_errno;
 	}
 
 	/* getaddrinfo() returns a list of address structures. */
 	for (rp = result; rp != NULL; rp = rp->ai_next) {
-		*sfd = socket(rp->ai_family, rp->ai_socktype,
-			rp->ai_protocol);
+		*sfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
 		if (*sfd == -1)
 			continue;
 
@@ -169,8 +165,7 @@ static int bind_ports(int *sfd, int *portno, struct addrinfo *hints)
 		 * 60 second timeframe, a bind error may occur. To stop
 		 * this happening set the flag to say re-use the socket.
 		 */
-		i = setsockopt(*sfd, SOL_SOCKET, SO_REUSEADDR, &r,
-			sizeof r);
+		i = setsockopt(*sfd, SOL_SOCKET, SO_REUSEADDR, &r, sizeof r);
 		if (!i)
 			i = bind(*sfd, rp->ai_addr, rp->ai_addrlen);
 
@@ -179,10 +174,10 @@ static int bind_ports(int *sfd, int *portno, struct addrinfo *hints)
 
 		close(*sfd);
 	}
-	if (rp == NULL) {	/* No address succeeded */
+	if (rp == NULL) { /* No address succeeded */
 		mge_errno = MGE_GAI_BIND;
-		syslog((int) (LOG_USER | LOG_NOTICE), "%s",
-				mge_strerror(mge_errno));
+		syslog((int)(LOG_USER | LOG_NOTICE), "%s",
+		       mge_strerror(mge_errno));
 	}
 	freeaddrinfo(result);
 	return mge_errno;
@@ -209,8 +204,10 @@ int process_comms(void)
 		swsd_err = errno;
 		if (debug)
 			perror("ERROR allocating events");
-		syslog((int) (LOG_USER | LOG_NOTICE), "ERROR allocating "
-			"events - %s", strerror(swsd_err));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "ERROR allocating "
+		       "events - %s",
+		       strerror(swsd_err));
 		return swsd_err;
 	}
 
@@ -238,15 +235,17 @@ err_exit:
  * Initialise the epoll instance.
  */
 static int init_epoll(int *pepfd, struct epoll_event *pevent,
-		struct comm_spec *pt_ps)
+		      struct comm_spec *pt_ps)
 {
 	*pepfd = epoll_create1(0);
 	if (*pepfd < 0) {
 		swsd_err = errno;
 		if (debug)
 			perror("ERROR on epoll_create1");
-		syslog((int) (LOG_USER | LOG_NOTICE), "ERROR on epoll_create1 "
-			"- %s", strerror(swsd_err));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "ERROR on epoll_create1 "
+		       "- %s",
+		       strerror(swsd_err));
 		return swsd_err;
 	}
 	memset(pevent, '\0', sizeof(*pevent));
@@ -254,13 +253,15 @@ static int init_epoll(int *pepfd, struct epoll_event *pevent,
 	while ((pt_ps = find_next_bst_node(port_sock, pt_ps)) != NULL) {
 		pevent->data.fd = pt_ps->socketfd;
 		swsd_err = epoll_ctl(*pepfd, EPOLL_CTL_ADD, pt_ps->socketfd,
-				pevent);
+				     pevent);
 		if (swsd_err) {
 			swsd_err = errno;
 			if (debug)
 				perror("ERROR on epoll_ctl");
-			syslog((int) (LOG_USER | LOG_NOTICE), "ERROR on "
-				"epoll_ctl - %s", strerror(swsd_err));
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "ERROR on "
+			       "epoll_ctl - %s",
+			       strerror(swsd_err));
 			return swsd_err;
 		}
 	}
@@ -286,37 +287,41 @@ static int proc_events(int n_events, struct epoll_event *pevents)
 
 	for (i = 0; i < n_events; i++) {
 		swsd_err = 0;
-		msg_buf1 = (struct mgebuffer) { NULL, 0, 0, 0 };
+		msg_buf1 = (struct mgebuffer){ NULL, 0, 0, 0 };
 		msg_buf = &msg_buf1;
 
 		cursockfd = accept(pevents[i].data.fd,
-				(struct sockaddr *) &cli_addr, &clilen);
+				   (struct sockaddr *)&cli_addr, &clilen);
 		if (cursockfd < 0) {
 			swsd_err = errno;
 			if (debug)
 				perror("ERROR on accept");
-			syslog((int) (LOG_USER | LOG_NOTICE), "ERROR on accept "
-				"- %s", strerror(swsd_err));
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "ERROR on accept "
+			       "- %s",
+			       strerror(swsd_err));
 			return swsd_err;
 		}
 		/* Get client hostname. */
-		getnameinfo((struct sockaddr *) &cli_addr,
-			(socklen_t) sizeof(cli_addr), (char * restrict) &client,
-			(socklen_t) sizeof(client), NULL, (socklen_t) 0, 0);
+		getnameinfo((struct sockaddr *)&cli_addr,
+			    (socklen_t)sizeof(cli_addr),
+			    (char *restrict) & client,
+			    (socklen_t)sizeof(client), NULL, (socklen_t)0, 0);
 		if (debug)
 			printf("Client hostname %s\n", client);
 
 		memset(sock_buf, '\0', sizeof(sock_buf));
 
 		while ((n = recv(cursockfd, sock_buf, sizeof(sock_buf), 0))
-			!= 0) {
+		       != 0) {
 			if (n < 0) {
 				swsd_err = errno;
 				if (debug)
 					perror("ERROR reading from socket");
-				syslog((int) (LOG_USER | LOG_NOTICE), "ERROR "
-					"reading from socket - %s",
-					strerror(swsd_err));
+				syslog((int)(LOG_USER | LOG_NOTICE),
+				       "ERROR "
+				       "reading from socket - %s",
+				       strerror(swsd_err));
 				return swsd_err;
 			}
 			msg_buf = concat_buf(sock_buf, (size_t)n, msg_buf);
@@ -372,10 +377,14 @@ static void proc_msg(struct mgemessage *msg)
 
 	if (msg_args == args_err) {
 		if (debug)
-			fprintf(stderr, "Invalid arguments from %s in "
-				"message %s\n", client, msg->message);
-		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid arguments "
-			"from %s in message %s", client, msg->message);
+			fprintf(stderr,
+				"Invalid arguments from %s in "
+				"message %s\n",
+				client, msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Invalid arguments "
+		       "from %s in message %s",
+		       client, msg->message);
 		sprintf(out_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
 		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 		swsd_err = mge_errno;
@@ -439,15 +448,19 @@ static void proc_msg(struct mgemessage *msg)
 			break;
 		default:
 			if (debug)
-				fprintf(stderr, "Invalid request from %s in "
-					"message %s\n", client, msg->message);
-			syslog((int) (LOG_USER | LOG_NOTICE), "Invalid request "
-				"from %s in message %s", client, msg->message);
+				fprintf(stderr,
+					"Invalid request from %s in "
+					"message %s\n",
+					client, msg->message);
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "Invalid request "
+			       "from %s in message %s",
+			       client, msg->message);
 			sprintf(out_msg, "swocserverd, ,err,%i;",
 				MGE_INVAL_MSG);
 			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 			swsd_err = mge_errno;
-		return;
+			return;
 		}
 		break;
 	case swocclient:
@@ -491,23 +504,31 @@ static void proc_msg(struct mgemessage *msg)
 			break;
 		default:
 			if (debug)
-				fprintf(stderr, "Invalid request from %s in "
-					"message %s\n", client, msg->message);
-			syslog((int) (LOG_USER | LOG_NOTICE), "Invalid request "
-				"from %s in message %s", client, msg->message);
+				fprintf(stderr,
+					"Invalid request from %s in "
+					"message %s\n",
+					client, msg->message);
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "Invalid request "
+			       "from %s in message %s",
+			       client, msg->message);
 			sprintf(out_msg, "swocserverd, ,err,%i;",
 				MGE_INVAL_MSG);
 			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 			swsd_err = mge_errno;
-		return;
+			return;
 		}
 		break;
 	default:
 		if (debug)
-			fprintf(stderr, "Invalid message source from %s in "
-				"message %s\n", client, msg->message);
-		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message source "
-			"from %s in message %s", client, msg->message);
+			fprintf(stderr,
+				"Invalid message source from %s in "
+				"message %s\n",
+				client, msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Invalid message source "
+		       "from %s in message %s",
+		       client, msg->message);
 		sprintf(out_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
 		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 		swsd_err = mge_errno;
@@ -516,10 +537,14 @@ static void proc_msg(struct mgemessage *msg)
 
 	if (msg_args == args_err) {
 		if (debug)
-			fprintf(stderr, "Invalid arguments from %s in "
-				"message %s\n", client, msg->message);
-		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid arguments "
-			"from %s in message %s", client, msg->message);
+			fprintf(stderr,
+				"Invalid arguments from %s in "
+				"message %s\n",
+				client, msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Invalid arguments "
+		       "from %s in message %s",
+		       client, msg->message);
 		sprintf(out_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
 		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 		swsd_err = mge_errno;

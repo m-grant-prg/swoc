@@ -44,17 +44,15 @@
  ************************************************************************
  */
 
-
-#include <stdio.h>
-#include <signal.h>
-#include <string.h>
 #include <errno.h>
+#include <signal.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
-#include <signalhandle.h>
 #include <libswocserver.h>
-
+#include <signalhandle.h>
 
 /**
  * Initialise signal handler.
@@ -166,7 +164,7 @@ void init_sig_handle(void)
 void termination_handler(int signum)
 {
 	struct sigaction cur_action;
-	char msg[45] ="Currently ";
+	char msg[45] = "Currently ";
 
 	/*
 	 * Reset signal handlers for any non-terminating but default re-raising

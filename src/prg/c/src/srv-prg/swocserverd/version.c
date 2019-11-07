@@ -28,12 +28,10 @@
  ************************************************************************
  */
 
-
-#include <stdio.h>
 #include <config.h>
+#include <stdio.h>
 
 #include "internal.h"
-
 
 /**
  * Get the git-describe based package version.
@@ -59,7 +57,7 @@ char *swocserverd_get_src_version(void)
 void swocserverd_print_pkg_version(void)
 {
 	printf("%s %s %s", "swocserverd Package version -", PACKAGE_VERSION,
-		"\n");
+	       "\n");
 }
 
 /**

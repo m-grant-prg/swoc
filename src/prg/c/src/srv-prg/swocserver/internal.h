@@ -33,13 +33,11 @@
  ************************************************************************
  */
 
-
 #ifndef SWOCSERVER_INTERNAL_H
 #define SWOCSERVER_INTERNAL_H
 
-
-#include <portability.h>
 #include <libswocserver.h>
+#include <portability.h>
 
 BEGIN_C_DECLS
 

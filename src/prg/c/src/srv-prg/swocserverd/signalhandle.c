@@ -41,15 +41,14 @@
  ************************************************************************
  */
 
-
-#include <stdio.h>
 #include <signal.h>
-#include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <syslog.h>
 
-#include <signalhandle.h>
 #include "internal.h"
+#include <signalhandle.h>
 
 /**
  * Initialise signal handler.
@@ -79,66 +78,66 @@ void init_sig_handle(void)
 	 * process explicitly did this and we should not change it.
 	 */
 	if (sigaction(SIGINT, NULL, &old_action)) {
-		syslog((int) (LOG_USER | LOG_NOTICE), "Cannot retrieve old "
-			"SIGINT action");
+		syslog((int)(LOG_USER | LOG_NOTICE), "Cannot retrieve old "
+						     "SIGINT action");
 		exit(EXIT_FAILURE);
 	}
 	if (old_action.sa_handler != SIG_IGN) {
 		if (sigaction(SIGINT, &new_action, NULL)) {
-			syslog((int) (LOG_USER | LOG_NOTICE), "Cannot set new "
-				"SIGINT action");
+			syslog((int)(LOG_USER | LOG_NOTICE), "Cannot set new "
+							     "SIGINT action");
 			exit(EXIT_FAILURE);
 		}
 	}
 
 	if (sigaction(SIGQUIT, NULL, &old_action)) {
-		syslog((int) (LOG_USER | LOG_NOTICE), "Cannot retrieve old "
-			"SIGQUIT action");
+		syslog((int)(LOG_USER | LOG_NOTICE), "Cannot retrieve old "
+						     "SIGQUIT action");
 		exit(EXIT_FAILURE);
 	}
 	if (old_action.sa_handler != SIG_IGN) {
 		if (sigaction(SIGQUIT, &new_action, NULL)) {
-			syslog((int) (LOG_USER | LOG_NOTICE), "Cannot set new "
-				"SIGQUIT action");
+			syslog((int)(LOG_USER | LOG_NOTICE), "Cannot set new "
+							     "SIGQUIT action");
 			exit(EXIT_FAILURE);
 		}
 	}
 
 	if (sigaction(SIGTERM, NULL, &old_action)) {
-		syslog((int) (LOG_USER | LOG_NOTICE), "Cannot retrieve old "
-			"SIGTERM action");
+		syslog((int)(LOG_USER | LOG_NOTICE), "Cannot retrieve old "
+						     "SIGTERM action");
 		exit(EXIT_FAILURE);
 	}
 	if (old_action.sa_handler != SIG_IGN) {
 		if (sigaction(SIGTERM, &new_action, NULL)) {
-			syslog((int) (LOG_USER | LOG_NOTICE), "Cannot set new "
-				"SIGTERM action");
+			syslog((int)(LOG_USER | LOG_NOTICE), "Cannot set new "
+							     "SIGTERM action");
 			exit(EXIT_FAILURE);
 		}
 	}
 
 	if (sigaction(SIGHUP, NULL, &old_action)) {
-		syslog((int) (LOG_USER | LOG_NOTICE), "Cannot retrieve old "
-			"SIGHUP action");
+		syslog((int)(LOG_USER | LOG_NOTICE), "Cannot retrieve old "
+						     "SIGHUP action");
 		exit(EXIT_FAILURE);
 	}
 	if (old_action.sa_handler != SIG_IGN) {
 		if (sigaction(SIGHUP, &new_action, NULL)) {
-			syslog((int) (LOG_USER | LOG_NOTICE), "Cannot set new "
-				"SIGHUP action");
+			syslog((int)(LOG_USER | LOG_NOTICE), "Cannot set new "
+							     "SIGHUP action");
 			exit(EXIT_FAILURE);
 		}
 	}
 
 	if (sigaction(SIGCONT, &new_action, NULL)) {
-		syslog((int) (LOG_USER | LOG_NOTICE), "Cannot set new SIGCONT "
-			"action");
+		syslog((int)(LOG_USER | LOG_NOTICE), "Cannot set new SIGCONT "
+						     "action");
 		exit(EXIT_FAILURE);
 	}
 
 	if (sigaction(SIGTSTP, &new_action, NULL)) {
-		syslog((int) (LOG_USER | LOG_NOTICE), "Cannot set new SIGTSTP "
-			"action");
+		syslog((int)(LOG_USER | LOG_NOTICE), "Cannot set new SIGTSTP "
+						     "action");
 		exit(EXIT_FAILURE);
 	}
 }
@@ -178,31 +177,38 @@ void termination_handler(int signum)
 	 * signals which may have fired.
 	 */
 	if (sigaction(SIGTSTP, NULL, &cur_action)) {
-		syslog((int) (LOG_USER | LOG_NOTICE), "Cannot retrieve old "
-			"action : %s", sys_siglist[SIGTSTP]);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Cannot retrieve old "
+		       "action : %s",
+		       sys_siglist[SIGTSTP]);
 		raise(SIGKILL);
 	}
 	if (cur_action.sa_handler != termination_handler) {
 		cur_action.sa_handler = termination_handler;
 		if (sigaction(SIGTSTP, &cur_action, NULL)) {
-			syslog((int) (LOG_USER | LOG_NOTICE), "Cannot set new "
-				"action : %s", sys_siglist[SIGTSTP]);
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "Cannot set new "
+			       "action : %s",
+			       sys_siglist[SIGTSTP]);
 			raise(SIGKILL);
 		}
 	}
 
 	if (sigaction(signum, NULL, &cur_action)) {
-		syslog((int) (LOG_USER | LOG_NOTICE), "Cannot retrieve old "
-			"action : %s", sys_siglist[signum]);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Cannot retrieve old "
+		       "action : %s",
+		       sys_siglist[signum]);
 		raise(SIGKILL);
 	}
 
 	/* Log the signal and the number of locks being held. */
-	syslog((int) (LOG_USER | LOG_NOTICE), "Signal Received : %s",
+	syslog((int)(LOG_USER | LOG_NOTICE), "Signal Received : %s",
 	       sys_siglist[signum]);
-	syslog((int) (LOG_USER | LOG_NOTICE), "%i clients have %i locks on "
-		"this server.", cli_locks->node_total, cli_locks->count_total);
-
+	syslog((int)(LOG_USER | LOG_NOTICE),
+	       "%i clients have %i locks on "
+	       "this server.",
+	       cli_locks->node_total, cli_locks->count_total);
 
 	/*
 	 * If the default signal should not be raised as the handler exits then
@@ -230,8 +236,10 @@ void termination_handler(int signum)
 	 */
 	cur_action.sa_handler = SIG_DFL;
 	if (sigaction(signum, &cur_action, NULL)) {
-		syslog((int) (LOG_USER | LOG_NOTICE), "Cannot run default "
-			"signal handler : %s", sys_siglist[signum]);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Cannot run default "
+		       "signal handler : %s",
+		       sys_siglist[signum]);
 		raise(SIGKILL);
 	}
 	raise(signum);

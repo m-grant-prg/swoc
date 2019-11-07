@@ -60,16 +60,15 @@
  ************************************************************************
  */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <mge-errno.h>
-#include <cmdlineargs.h>
-#include <signalhandle.h>
 #include "internal.h"
+#include <cmdlineargs.h>
+#include <mge-errno.h>
+#include <signalhandle.h>
 
-static char *prog_name;	/**< This program's name. */
+static char *prog_name; /**< This program's name. */
 int sws_err;		/**< Global swocserver error flag. */
 
 /**
@@ -124,7 +123,7 @@ int main(int argc, char **argv)
 		sws_err = sws_release(release_flag.argument);
 		if (!sws_err)
 			printf("Lock removed manually from server - %s.\n",
-				release_flag.argument);
+			       release_flag.argument);
 	} else if (reload_flag.is_set) {
 		sws_err = sws_reload_config();
 		if (!sws_err)
@@ -157,7 +156,7 @@ int main(int argc, char **argv)
 
 	if (sws_err)
 		fprintf(stderr, "%s failed with error - %s\n", prog_name,
-				mge_strerror(mge_errno));
+			mge_strerror(mge_errno));
 
 	if (sws_err)
 		exit(EXIT_FAILURE);
