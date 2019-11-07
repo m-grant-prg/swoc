@@ -47,20 +47,17 @@
  ************************************************************************
  */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <mge-errno.h>
+#include "cmdlineargs.h"
 #include "internal.h"
 #include "signalhandle.h"
-#include "cmdlineargs.h"
 #include <libswocclient.h>
-
+#include <mge-errno.h>
 
 /** The name of this program. */
 static char *prog_name;
-
 
 /**
  * Program entry point.
@@ -118,16 +115,16 @@ int main(int argc, char **argv)
 			printf("Client blocking removed on server.\n");
 	} else if (wait_flag.is_set) {
 		printf("Waiting for maximum of %s lock flags on server.\n",
-			wait_flag.argument);
+		       wait_flag.argument);
 		prog_error = swc_client_wait(wait_flag.argument);
 		if (!prog_error)
 			printf("Maximum of %s lock flags set on server.\n",
-				wait_flag.argument);
+			       wait_flag.argument);
 	}
 
 	if (prog_error) {
 		fprintf(stderr, "%s failed with error - %s\n", prog_name,
-				mge_strerror(mge_errno));
+			mge_strerror(mge_errno));
 		exit(EXIT_FAILURE);
 	}
 

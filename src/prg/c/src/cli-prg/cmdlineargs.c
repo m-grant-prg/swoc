@@ -43,15 +43,14 @@
  ************************************************************************
  */
 
+#include <getopt.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
 #include <string.h>
-#include <getopt.h>
 
-#include "internal.h"
 #include "cmdlineargs.h"
-
+#include "internal.h"
 
 /**
  * Process command line arguments using getopt_long.
@@ -80,18 +79,17 @@ int process_cla(int argc, char **argv, ...)
 	int c;
 	int x;
 
-	struct option long_options[] = {
-		{"block",	no_argument,		NULL,	'b'},
-		{"help",	no_argument,		NULL,	'h'},
-		{"lock",	no_argument,		NULL,	'l'},
-		{"release",	no_argument,		NULL,	'r'},
-		{"reset",	no_argument,		NULL,	'i'},
-		{"status",	no_argument,		NULL,	's'},
-		{"unblock",	no_argument,		NULL,	'u'},
-		{"version",	no_argument,		NULL,	'V'},
-		{"wait",	optional_argument,	NULL,	'w'},
-		{NULL,		0,			NULL,	0}
-	};
+	struct option long_options[]
+		= { { "block", no_argument, NULL, 'b' },
+		    { "help", no_argument, NULL, 'h' },
+		    { "lock", no_argument, NULL, 'l' },
+		    { "release", no_argument, NULL, 'r' },
+		    { "reset", no_argument, NULL, 'i' },
+		    { "status", no_argument, NULL, 's' },
+		    { "unblock", no_argument, NULL, 'u' },
+		    { "version", no_argument, NULL, 'V' },
+		    { "wait", optional_argument, NULL, 'w' },
+		    { NULL, 0, NULL, 0 } };
 
 	va_start(ap, argv);
 	block_flag = va_arg(ap, struct cla *);
@@ -103,16 +101,16 @@ int process_cla(int argc, char **argv, ...)
 	wait_flag = va_arg(ap, struct cla *);
 	va_end(ap);
 
-	while ((c = getopt_long(argc, argv, "bhilrsuVw::",
-		long_options, &option_index)) != -1) {
-
+	while ((c = getopt_long(argc, argv, "bhilrsuVw::", long_options,
+				&option_index))
+	       != -1) {
 		switch (c) {
 		case 'b':
 			if (lock_flag->is_set || release_flag->is_set
 			    || reset_flag->is_set || status_flag->is_set
 			    || unblock_flag->is_set || wait_flag->is_set) {
 				fprintf(stderr, "Options b, i, l, r, s, u and "
-					"w are mutually exclusive.\n");
+						"w are mutually exclusive.\n");
 				return 64;
 			}
 			block_flag->is_set = 1;
@@ -122,7 +120,7 @@ int process_cla(int argc, char **argv, ...)
 			    || release_flag->is_set || status_flag->is_set
 			    || unblock_flag->is_set || wait_flag->is_set) {
 				fprintf(stderr, "Options b, i, l, r, s, u and "
-					"w are mutually exclusive.\n");
+						"w are mutually exclusive.\n");
 				return 64;
 			}
 			reset_flag->is_set = 1;
@@ -130,21 +128,21 @@ int process_cla(int argc, char **argv, ...)
 		case 'h':
 			printf("%s %s", argv[0], " - Help option.\n");
 			printf("\tLong and short options can be mixed on the "
-				"command line but if an option takes an "
-				"optional argument it is best to enter "
-				"-o\"argument\" or --option=argument.\n");
+			       "command line but if an option takes an "
+			       "optional argument it is best to enter "
+			       "-o\"argument\" or --option=argument.\n");
 			printf("-b | --block\tBlock client on server.\n");
 			printf("-i | --reset\tSet locks to 0 and unblock "
 			       "client on server.\n");
 			printf("-l | --lock\tSet client lock on server.\n");
 			printf("-r | --release\tRelease client lock on "
-				"server.\n");
+			       "server.\n");
 			printf("-u | --unblock\tUnblock client on server.\n");
 			printf("-s | --status\tShow the locking status.\n");
 			printf("-V | --version\tDisplay version "
-				"information.\n");
+			       "information.\n");
 			printf("-w[NumLocks] | --wait[=NumLocks]\tWait until "
-				"this client has NumLocks or fewer locks.\n");
+			       "this client has NumLocks or fewer locks.\n");
 			exit(0);
 			break;
 		case 'l':
@@ -152,7 +150,7 @@ int process_cla(int argc, char **argv, ...)
 			    || reset_flag->is_set || status_flag->is_set
 			    || unblock_flag->is_set || wait_flag->is_set) {
 				fprintf(stderr, "Options b, i, l, r, s, u and "
-					"w are mutually exclusive.\n");
+						"w are mutually exclusive.\n");
 				return 64;
 			}
 			lock_flag->is_set = 1;
@@ -163,7 +161,7 @@ int process_cla(int argc, char **argv, ...)
 			    || reset_flag->is_set || status_flag->is_set
 			    || unblock_flag->is_set || wait_flag->is_set) {
 				fprintf(stderr, "Options b, i, l, r, s, u and "
-					"w are mutually exclusive.\n");
+						"w are mutually exclusive.\n");
 				return 64;
 			}
 			release_flag->is_set = 1;
@@ -173,7 +171,7 @@ int process_cla(int argc, char **argv, ...)
 			    || release_flag->is_set || reset_flag->is_set
 			    || status_flag->is_set || wait_flag->is_set) {
 				fprintf(stderr, "Options b, i, l, r, s, u and "
-					"w are mutually exclusive.\n");
+						"w are mutually exclusive.\n");
 				return 64;
 			}
 			unblock_flag->is_set = 1;
@@ -183,16 +181,16 @@ int process_cla(int argc, char **argv, ...)
 			    || release_flag->is_set || reset_flag->is_set
 			    || unblock_flag->is_set || wait_flag->is_set) {
 				fprintf(stderr, "Options b, i, l, r, s, u and "
-					"w are mutually exclusive.\n");
+						"w are mutually exclusive.\n");
 				return 64;
 			}
 			status_flag->is_set = 1;
 			break;
 		case 'V':
 			printf("%s %s %s %s", argv[0], "Source version -",
-				swocclient_get_src_version(), "\n");
+			       swocclient_get_src_version(), "\n");
 			printf("%s %s %s %s", argv[0], "Package version -",
-				swocclient_get_pkg_version(), "\n");
+			       swocclient_get_pkg_version(), "\n");
 			exit(0);
 			break;
 		case 'w':
@@ -200,7 +198,7 @@ int process_cla(int argc, char **argv, ...)
 			    || release_flag->is_set || reset_flag->is_set
 			    || status_flag->is_set || unblock_flag->is_set) {
 				fprintf(stderr, "Options b, i, l, r, s, u and "
-					"w are mutually exclusive.\n");
+						"w are mutually exclusive.\n");
 				return 64;
 			}
 			wait_flag->is_set = 1;
@@ -231,7 +229,7 @@ int process_cla(int argc, char **argv, ...)
 	      || reset_flag->is_set || status_flag->is_set
 	      || unblock_flag->is_set || wait_flag->is_set)) {
 		fprintf(stderr, "Either b, i, l, r, s, u or w must be "
-			       "specified.\n");
+				"specified.\n");
 		return 64;
 	}
 	return 0;
@@ -245,8 +243,7 @@ int cpyarg(char *flagarg, char *srcarg)
 	int e = 0;
 	if (ARG_BUF > strlen(srcarg))
 		strcpy(flagarg, srcarg);
-	else
-	{
+	else {
 		fprintf(stderr, "Option argument '%s' too long.\n", srcarg);
 		e = 64;
 	}

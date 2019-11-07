@@ -33,10 +33,8 @@
  ************************************************************************
  */
 
-
 #ifndef SWOCCLIENT_INTERNAL_H
 #define SWOCCLIENT_INTERNAL_H
-
 
 #include <portability.h>
 
