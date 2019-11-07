@@ -63,27 +63,24 @@
  ************************************************************************
  */
 
-
+#include <limits.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
 #include <string.h>
-#include <unistd.h>
 #include <syslog.h>
-#include <stdbool.h>
+#include <unistd.h>
 
-#include <mge-errno.h>
-#include <mgemessage.h>
 #include <libswoccommon.h>
 #include <libswocserver.h>
-
+#include <mge-errno.h>
+#include <mgemessage.h>
 
 /**
  * Holds the number of clients currently holding locks during sws_server_wait().
  * This value can be accessed in a handler if a signal is received.
  */
 char locks_held[10] = "0";
-
 
 /**
  * Display clients with active locks to stdout.
@@ -102,7 +99,6 @@ int sws_show_status(void)
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
-
 	prg_err = swcom_validate_config();
 	if (prg_err)
 		return prg_err;
@@ -114,17 +110,17 @@ int sws_show_status(void)
 	if (strncmp(msg->message, "swocserverd,status,ok", 21)) {
 		mge_errno = MGE_INVAL_MSG;
 		if (msg->argc == 4) {
-			if (!(strcmp(msg->argv[0], "swocserverd")) &&
-				!(strcmp(msg->argv[1], "status")) &&
-			    	!(strcmp(msg->argv[2], "err"))) {
+			if (!(strcmp(msg->argv[0], "swocserverd"))
+			    && !(strcmp(msg->argv[1], "status"))
+			    && !(strcmp(msg->argv[2], "err"))) {
 				x = strtol(msg->argv[3], &end, 10);
-				if ((*end == '\0') && x <= INT_MAX &&
-					x >= INT_MIN)
+				if ((*end == '\0') && x <= INT_MAX
+				    && x >= INT_MIN)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
-			msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
+		       msg->message);
 		clear_msg(msg, ';', ',');
 		return -1;
 	}
@@ -132,7 +128,7 @@ int sws_show_status(void)
 	for (i = 3; i < msg->argc; i += 2) {
 		c++;
 		printf("Client %s has %s locks.\n", *(msg->argv + i),
-			*(msg->argv + i + 1));
+		       *(msg->argv + i + 1));
 	}
 	printf("%i clients have locks on this server.\n", c);
 
@@ -157,7 +153,6 @@ int sws_show_block_status(void)
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
-
 	prg_err = swcom_validate_config();
 	if (prg_err)
 		return prg_err;
@@ -169,17 +164,17 @@ int sws_show_block_status(void)
 	if (strncmp(msg->message, "swocserverd,blockstatus,ok", 26)) {
 		mge_errno = MGE_INVAL_MSG;
 		if (msg->argc == 4) {
-			if (!(strcmp(msg->argv[0], "swocserverd")) &&
-				!(strcmp(msg->argv[1], "blockstatus")) &&
-			    	!(strcmp(msg->argv[2], "err"))) {
+			if (!(strcmp(msg->argv[0], "swocserverd"))
+			    && !(strcmp(msg->argv[1], "blockstatus"))
+			    && !(strcmp(msg->argv[2], "err"))) {
 				x = strtol(msg->argv[3], &end, 10);
-				if ((*end == '\0') && x <= INT_MAX &&
-					x >= INT_MIN)
+				if ((*end == '\0') && x <= INT_MAX
+				    && x >= INT_MIN)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
-			msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
+		       msg->message);
 		clear_msg(msg, ';', ',');
 		return -1;
 	}
@@ -209,7 +204,6 @@ int sws_srv_block(void)
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
-
 	prg_err = swcom_validate_config();
 	if (prg_err)
 		return prg_err;
@@ -221,22 +215,22 @@ int sws_srv_block(void)
 	if (strcmp(msg->message, "swocserverd,disallow,ok;")) {
 		mge_errno = MGE_INVAL_MSG;
 		if (msg->argc == 4) {
-			if (!(strcmp(msg->argv[0], "swocserverd")) &&
-				!(strcmp(msg->argv[1], "disallow")) &&
-			    	!(strcmp(msg->argv[2], "err"))) {
+			if (!(strcmp(msg->argv[0], "swocserverd"))
+			    && !(strcmp(msg->argv[1], "disallow"))
+			    && !(strcmp(msg->argv[2], "err"))) {
 				x = strtol(msg->argv[3], &end, 10);
-				if ((*end == '\0') && x <= INT_MAX &&
-					x >= INT_MIN)
+				if ((*end == '\0') && x <= INT_MAX
+				    && x >= INT_MIN)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
-			msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
+		       msg->message);
 		clear_msg(msg, ';', ',');
 		return -1;
 	}
 
-	syslog((int) (LOG_USER | LOG_NOTICE), "Server is blocked.");
+	syslog((int)(LOG_USER | LOG_NOTICE), "Server is blocked.");
 
 	clear_msg(msg, ';', ',');
 
@@ -258,7 +252,6 @@ int sws_srv_unblock(void)
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
-
 	prg_err = swcom_validate_config();
 	if (prg_err)
 		return prg_err;
@@ -270,22 +263,22 @@ int sws_srv_unblock(void)
 	if (strcmp(msg->message, "swocserverd,allow,ok;")) {
 		mge_errno = MGE_INVAL_MSG;
 		if (msg->argc == 4) {
-			if (!(strcmp(msg->argv[0], "swocserverd")) &&
-				!(strcmp(msg->argv[1], "disallow")) &&
-			    	!(strcmp(msg->argv[2], "err"))) {
+			if (!(strcmp(msg->argv[0], "swocserverd"))
+			    && !(strcmp(msg->argv[1], "disallow"))
+			    && !(strcmp(msg->argv[2], "err"))) {
 				x = strtol(msg->argv[3], &end, 10);
-				if ((*end == '\0') && x <= INT_MAX &&
-					x >= INT_MIN)
+				if ((*end == '\0') && x <= INT_MAX
+				    && x >= INT_MIN)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
-			msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
+		       msg->message);
 		clear_msg(msg, ';', ',');
 		return -1;
 	}
 
-	syslog((int) (LOG_USER | LOG_NOTICE), "Server is unblocked.");
+	syslog((int)(LOG_USER | LOG_NOTICE), "Server is unblocked.");
 
 	clear_msg(msg, ';', ',');
 
@@ -309,7 +302,6 @@ int sws_show_cli_blocklist(void)
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
-
 	prg_err = swcom_validate_config();
 	if (prg_err)
 		return prg_err;
@@ -321,17 +313,17 @@ int sws_show_cli_blocklist(void)
 	if (strncmp(msg->message, "swocserverd,blocklist,ok", 24)) {
 		mge_errno = MGE_INVAL_MSG;
 		if (msg->argc == 4) {
-			if (!(strcmp(msg->argv[0], "swocserverd")) &&
-				!(strcmp(msg->argv[1], "blocklist")) &&
-			    	!(strcmp(msg->argv[2], "err"))) {
+			if (!(strcmp(msg->argv[0], "swocserverd"))
+			    && !(strcmp(msg->argv[1], "blocklist"))
+			    && !(strcmp(msg->argv[2], "err"))) {
 				x = strtol(msg->argv[3], &end, 10);
-				if ((*end == '\0') && x <= INT_MAX &&
-					x >= INT_MIN)
+				if ((*end == '\0') && x <= INT_MAX
+				    && x >= INT_MIN)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
-			msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
+		       msg->message);
 		clear_msg(msg, ';', ',');
 		return -1;
 	}
@@ -364,9 +356,8 @@ int sws_server_wait(void)
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
-
-	syslog((int) (LOG_USER | LOG_NOTICE), "Waiting for any client locks to "
-		"be released.\n");
+	syslog((int)(LOG_USER | LOG_NOTICE), "Waiting for any client locks to "
+					     "be released.\n");
 
 	prg_err = swcom_validate_config();
 	if (prg_err)
@@ -380,29 +371,31 @@ int sws_server_wait(void)
 		if (strncmp(msg->message, "swocserverd,status,ok", 21)) {
 			mge_errno = MGE_INVAL_MSG;
 			if (msg->argc == 4) {
-				if (!(strcmp(msg->argv[0], "swocserverd")) &&
-					!(strcmp(msg->argv[1], "status")) &&
-				    	!(strcmp(msg->argv[2], "err"))) {
+				if (!(strcmp(msg->argv[0], "swocserverd"))
+				    && !(strcmp(msg->argv[1], "status"))
+				    && !(strcmp(msg->argv[2], "err"))) {
 					x = strtol(msg->argv[3], &end, 10);
-					if ((*end == '\0') && x <= INT_MAX &&
-						x >= INT_MIN)
+					if ((*end == '\0') && x <= INT_MAX
+					    && x >= INT_MIN)
 						mge_errno = (int)x;
 				}
 			}
-			syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message "
-				"- %s", msg->message);
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "Invalid message "
+			       "- %s",
+			       msg->message);
 			clear_msg(msg, ';', ',');
 			return mge_errno;
 		}
 		if (msg->argc > 3)
-			sprintf(locks_held, "%i", ((msg->argc -3) / 2));
+			sprintf(locks_held, "%i", ((msg->argc - 3) / 2));
 		empty = strcmp(msg->message, "swocserverd,status,ok;");
 		clear_msg(msg, ';', ',');
 	} while (empty);
 	/* Allow one more sleep as a buffer, maybe client is shutting down. */
 	sleep((unsigned int)pollint);
-	syslog((int) (LOG_USER | LOG_NOTICE), "No outstanding client locks on "
-		"this server.");
+	syslog((int)(LOG_USER | LOG_NOTICE), "No outstanding client locks on "
+					     "this server.");
 	return 0;
 }
 
@@ -436,23 +429,25 @@ int sws_release(char *lockname)
 	if (strcmp(msg->message, "swocserverd,release,ok;")) {
 		mge_errno = MGE_INVAL_MSG;
 		if (msg->argc == 4) {
-			if (!(strcmp(msg->argv[0], "swocserverd")) &&
-				!(strcmp(msg->argv[1], "release")) &&
-			    	!(strcmp(msg->argv[2], "err"))) {
+			if (!(strcmp(msg->argv[0], "swocserverd"))
+			    && !(strcmp(msg->argv[1], "release"))
+			    && !(strcmp(msg->argv[2], "err"))) {
 				x = strtol(msg->argv[3], &end, 10);
-				if ((*end == '\0') && x <= INT_MAX &&
-					x >= INT_MIN)
+				if ((*end == '\0') && x <= INT_MAX
+				    && x >= INT_MIN)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
-			msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
+		       msg->message);
 		clear_msg(msg, ';', ',');
 		return mge_errno;
 	}
 
-	syslog((int) (LOG_USER | LOG_NOTICE), "Lock removed manually from "
-		"server - %s.", lockname);
+	syslog((int)(LOG_USER | LOG_NOTICE),
+	       "Lock removed manually from "
+	       "server - %s.",
+	       lockname);
 
 	clear_msg(msg, ';', ',');
 
@@ -478,7 +473,6 @@ int sws_cli_block(char *blockname)
 	sprintf(out_msg, "swocserver,block,%s;", blockname);
 	om_length = strlen(out_msg);
 
-
 	prg_err = swcom_validate_config();
 	if (prg_err)
 		return prg_err;
@@ -490,22 +484,22 @@ int sws_cli_block(char *blockname)
 	if (strcmp(msg->message, "swocserverd,block,ok;")) {
 		mge_errno = MGE_INVAL_MSG;
 		if (msg->argc == 4) {
-			if (!(strcmp(msg->argv[0], "swocserverd")) &&
-				!(strcmp(msg->argv[1], "block")) &&
-			    	!(strcmp(msg->argv[2], "err"))) {
+			if (!(strcmp(msg->argv[0], "swocserverd"))
+			    && !(strcmp(msg->argv[1], "block"))
+			    && !(strcmp(msg->argv[2], "err"))) {
 				x = strtol(msg->argv[3], &end, 10);
-				if ((*end == '\0') && x <= INT_MAX &&
-					x >= INT_MIN)
+				if ((*end == '\0') && x <= INT_MAX
+				    && x >= INT_MIN)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
-			msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
+		       msg->message);
 		clear_msg(msg, ';', ',');
 		return mge_errno;
 	}
 
-	syslog((int) (LOG_USER | LOG_NOTICE), "Client %s blocked.", blockname);
+	syslog((int)(LOG_USER | LOG_NOTICE), "Client %s blocked.", blockname);
 
 	clear_msg(msg, ';', ',');
 
@@ -531,7 +525,6 @@ int sws_cli_unblock(char *blockname)
 	sprintf(out_msg, "swocserver,unblock,%s;", blockname);
 	om_length = strlen(out_msg);
 
-
 	prg_err = swcom_validate_config();
 	if (prg_err)
 		return prg_err;
@@ -543,23 +536,22 @@ int sws_cli_unblock(char *blockname)
 	if (strcmp(msg->message, "swocserverd,unblock,ok;")) {
 		mge_errno = MGE_INVAL_MSG;
 		if (msg->argc == 4) {
-			if (!(strcmp(msg->argv[0], "swocserverd")) &&
-				!(strcmp(msg->argv[1], "unblock")) &&
-			    	!(strcmp(msg->argv[2], "err"))) {
+			if (!(strcmp(msg->argv[0], "swocserverd"))
+			    && !(strcmp(msg->argv[1], "unblock"))
+			    && !(strcmp(msg->argv[2], "err"))) {
 				x = strtol(msg->argv[3], &end, 10);
-				if ((*end == '\0') && x <= INT_MAX &&
-					x >= INT_MIN)
+				if ((*end == '\0') && x <= INT_MAX
+				    && x >= INT_MIN)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
-			msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
+		       msg->message);
 		clear_msg(msg, ';', ',');
 		return mge_errno;
 	}
 
-	syslog((int) (LOG_USER | LOG_NOTICE), "Client %s unblocked.",
-	       blockname);
+	syslog((int)(LOG_USER | LOG_NOTICE), "Client %s unblocked.", blockname);
 
 	clear_msg(msg, ';', ',');
 
@@ -582,7 +574,6 @@ int sws_end_daemon(void)
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
-
 	prg_err = swcom_validate_config();
 	if (prg_err)
 		return prg_err;
@@ -594,23 +585,23 @@ int sws_end_daemon(void)
 	if (strcmp(msg->message, "swocserverd,end,ok;")) {
 		mge_errno = MGE_INVAL_MSG;
 		if (msg->argc == 4) {
-			if (!(strcmp(msg->argv[0], "swocserverd")) &&
-				!(strcmp(msg->argv[1], "end")) &&
-			    	!(strcmp(msg->argv[2], "err"))) {
+			if (!(strcmp(msg->argv[0], "swocserverd"))
+			    && !(strcmp(msg->argv[1], "end"))
+			    && !(strcmp(msg->argv[2], "err"))) {
 				x = strtol(msg->argv[3], &end, 10);
-				if ((*end == '\0') && x <= INT_MAX &&
-					x >= INT_MIN)
+				if ((*end == '\0') && x <= INT_MAX
+				    && x >= INT_MIN)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
-			msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
+		       msg->message);
 		clear_msg(msg, ';', ',');
 		return mge_errno;
 	}
 
-	syslog((int) (LOG_USER | LOG_NOTICE), "Request to end daemon "
-		"acknowledged.");
+	syslog((int)(LOG_USER | LOG_NOTICE), "Request to end daemon "
+					     "acknowledged.");
 
 	clear_msg(msg, ';', ',');
 
@@ -633,7 +624,6 @@ int sws_reload_config(void)
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
-
 	prg_err = swcom_validate_config();
 	if (prg_err)
 		return prg_err;
@@ -645,22 +635,22 @@ int sws_reload_config(void)
 	if (strcmp(msg->message, "swocserverd,reload,ok;")) {
 		mge_errno = MGE_INVAL_MSG;
 		if (msg->argc == 4) {
-			if (!(strcmp(msg->argv[0], "swocserverd")) &&
-				!(strcmp(msg->argv[1], "reload")) &&
-			    	!(strcmp(msg->argv[2], "err"))) {
+			if (!(strcmp(msg->argv[0], "swocserverd"))
+			    && !(strcmp(msg->argv[1], "reload"))
+			    && !(strcmp(msg->argv[2], "err"))) {
 				x = strtol(msg->argv[3], &end, 10);
-				if ((*end == '\0') && x <= INT_MAX &&
-					x >= INT_MIN)
+				if ((*end == '\0') && x <= INT_MAX
+				    && x >= INT_MIN)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int) (LOG_USER | LOG_NOTICE), "Invalid message - %s",
-			msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
+		       msg->message);
 		clear_msg(msg, ';', ',');
 		return mge_errno;
 	}
 
-	syslog((int) (LOG_USER | LOG_NOTICE), "Config file reloaded.");
+	syslog((int)(LOG_USER | LOG_NOTICE), "Config file reloaded.");
 
 	clear_msg(msg, ';', ',');
 

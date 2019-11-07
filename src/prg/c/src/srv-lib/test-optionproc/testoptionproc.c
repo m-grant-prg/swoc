@@ -12,12 +12,10 @@
  ************************************************************************
  */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <libswocserver.h>
-
 
 /*
  * Main
@@ -59,7 +57,6 @@ int main(int argc, char **argv)
 	retval = sws_srv_unblock();
 	printf("retval after sws_srv_unblock is %i\n", retval);
 	retval = sws_show_block_status();
-
 
 	//retval = sws_end_daemon();
 
