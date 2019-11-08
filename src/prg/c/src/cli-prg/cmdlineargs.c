@@ -56,13 +56,7 @@
  * Process command line arguments using getopt_long.
  * @param argc The standard CLA argc.
  * @param argv The standard CLA argv.
- * @param block_flag Struct for the block flag.
- * @param lock_flag Struct for the lock flag.
- * @param release_flag Struct for the release flag.
- * @param reset_flag Struct for the reset flag.
- * @param status_flag Struct for the status flag.
- * @param unblock_flag Struct for the unblock flag.
- * @param wait_flag Struct for the wait flag.
+ * @param ... Variable number of flag structs.
  * @return 0 on success, on failure standard EX_USAGE (64) command line  usage
  * error.
  */
