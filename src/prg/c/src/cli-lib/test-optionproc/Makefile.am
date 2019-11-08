@@ -35,6 +35,7 @@
 #				pre-processor macros).			#
 # 19/05/2019	MG	1.0.9	Merge sub-projects into one.		#
 #				Remove shebang.				#
+# 08/11/2019	MG	1.0.10	Move under check target.		#
 #									#
 #########################################################################
 
@@ -54,7 +55,7 @@ AM_CFLAGS += -O2
 endif
 
 
-noinst_PROGRAMS = testoptionproc
+check_PROGRAMS = testoptionproc
 testoptionproc_SOURCES = testoptionproc.c
 
 
