@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.11 ==== 02/06/2019_
+ * @version _v1.1.12 ==== 08/11/2019_
  */
 
 /* **********************************************************************
@@ -59,17 +59,35 @@
  * 02/06/2019	MG	1.1.11	Add explicit cast to pollint for sign	*
  *				conversion. It has already been		*
  *				validated > 0.				*
+ * 08/11/2019	MG	1.1.12	Use standard GNU ifdeffery around use	*
+ *				of AC_HEADER_STDBOOL.			*
  *									*
  ************************************************************************
  */
 
 #include <limits.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <syslog.h>
 #include <unistd.h>
+
+/* Standard GNU AC_HEADER_STDBOOL ifdeffery. */
+#ifdef HAVE_STDBOOL_H
+	#include <stdbool.h>
+#else
+	#ifndef HAVE__BOOL
+		#ifdef __cplusplus /* clang-format off */
+			typedef bool _Bool; /* clang-format on */
+		#else
+			#define _Bool signed char
+		#endif
+	#endif
+	#define bool _Bool
+	#define false 0
+	#define true 1
+	#define __bool_true_false_are_defined 1
+#endif
 
 #include <libswoccommon.h>
 #include <libswocserver.h>
