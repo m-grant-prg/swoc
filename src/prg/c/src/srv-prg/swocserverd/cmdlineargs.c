@@ -39,10 +39,9 @@
 
 /**
  * Process command line arguments using getopt_long.
- * Variable length argument list comprising of the flag structs. In this program
- * there are none.
  * @param argc The standard CLA argc.
  * @param argv The standard CLA argv.
+ * @param ... No further args. Here due to shared prototype.
  * @return 0 on success, on failure standard EX_USAGE (64) command line  usage
  * error.
  */
