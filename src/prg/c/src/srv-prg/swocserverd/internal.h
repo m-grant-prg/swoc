@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.14 ==== 18/05/2019_
+ * @version _v1.0.15 ==== 08/11/2019_
  */
 
 /* **********************************************************************
@@ -41,6 +41,8 @@
  * 05/08/2018	MG	1.0.12	Remove spurious include of sys/types.h	*
  * 25/08/2018	MG	1.0.13	Add prototype for swsd_reload_config.	*
  * 18/05/2019	MG	1.0.14	Merge sub-projects into one.		*
+ * 08/11/2019	MG	1.0.15	Use standard GNU ifdeffery around use	*
+ *				of AC_HEADER_STDBOOL.			*
  *									*
  ************************************************************************
  */
@@ -49,7 +51,23 @@
 #define SWOCSERVERD_INTERNAL_H
 
 #include <limits.h>
-#include <stdbool.h>
+
+/* Standard GNU AC_HEADER_STDBOOL ifdeffery. */
+#ifdef HAVE_STDBOOL_H
+	#include <stdbool.h>
+#else
+	#ifndef HAVE__BOOL
+		#ifdef __cplusplus /* clang-format off */
+			typedef bool _Bool; /* clang-format on */
+		#else
+			#define _Bool signed char
+		#endif
+	#endif
+	#define bool _Bool
+	#define false 0
+	#define true 1
+	#define __bool_true_false_are_defined 1
+#endif
 
 #include <bstree.h>
 #include <libswoccommon.h>

@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.16 ==== 26/05/2019_
+ * @version _v1.0.17 ==== 08/11/2019_
  */
 
 /* **********************************************************************
@@ -60,18 +60,36 @@
  * 26/05/2019	MG	1.0.16	Merge sub-projects into one.		*
  *				Cast ssize_t to size_t to avoid sign	*
  *				warning.				*
+ * 08/11/2019	MG	1.0.17	Use standard GNU ifdeffery around use	*
+ *				of AC_HEADER_STDBOOL.			*
  *									*
  ************************************************************************
  */
 
 #include <errno.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/epoll.h>
 #include <syslog.h>
 #include <unistd.h>
+
+/* Standard GNU AC_HEADER_STDBOOL ifdeffery. */
+#ifdef HAVE_STDBOOL_H
+	#include <stdbool.h>
+#else
+	#ifndef HAVE__BOOL
+		#ifdef __cplusplus /* clang-format off */
+			typedef bool _Bool; /* clang-format on */
+		#else
+			#define _Bool signed char
+		#endif
+	#endif
+	#define bool _Bool
+	#define false 0
+	#define true 1
+	#define __bool_true_false_are_defined 1
+#endif
 
 #include "internal.h"
 #include <bstree.h>
