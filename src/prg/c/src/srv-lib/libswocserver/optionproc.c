@@ -61,6 +61,8 @@
  *				validated > 0.				*
  * 08/11/2019	MG	1.1.12	Use standard GNU ifdeffery around use	*
  *				of AC_HEADER_STDBOOL.			*
+ *				Increase size of locks_held to allow	*
+ *				for terminating nul.			*
  *									*
  ************************************************************************
  */
@@ -98,7 +100,7 @@
  * Holds the number of clients currently holding locks during sws_server_wait().
  * This value can be accessed in a handler if a signal is received.
  */
-char locks_held[10] = "0";
+char locks_held[11] = "0";
 
 /**
  * Display clients with active locks to stdout.
