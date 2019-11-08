@@ -32,6 +32,7 @@
 #				pre-processor macros).			#
 # 19/05/2019	MG	1.0.6	Merge sub-projects into one.		#
 #				Remove shebang.				#
+# 08/11/2019	MG	1.0.7	Move under check target.		#
 #									#
 #########################################################################
 
@@ -50,7 +51,7 @@ AM_CFLAGS += -O2
 endif
 
 
-noinst_PROGRAMS = sshtest
+check_PROGRAMS = sshtest
 sshtest_SOURCES = main.c
 
 
