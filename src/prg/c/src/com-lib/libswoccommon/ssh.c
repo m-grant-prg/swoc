@@ -11,7 +11,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.6 ==== 01/06/2019_
+ * @version _v1.0.7 ==== 09/11/2019_
  */
 
 /* **********************************************************************
@@ -31,6 +31,8 @@
  *				memset().				*
  * 18/05/2019	MG	1.0.5	Merge sub-projects into one.		*
  * 01/06/2019	MG	1.0.6	Trivial type safety improvements.	*
+ * 09/11/2019	MG	1.0.7	Use ssh_get_server_publickey() AOT	*
+ *				deprecated ssh_get_publickey().		*
  *									*
  ************************************************************************
  */
@@ -204,27 +206,14 @@ static int verify_knownhost(void)
 
 	state = ssh_is_server_known(ssh_sess);
 
-	res = ssh_get_publickey(ssh_sess, &serv_key);
+	res = ssh_get_server_publickey(ssh_sess, &serv_key);
 	if (res == SSH_ERROR) {
 		mge_errno = MGE_SSH;
 		syslog((int)(LOG_USER | LOG_NOTICE),
-		       "Error retrieving server "
-		       "public key - %s",
+		       "Error retrieving server public key - %s",
 		       ssh_get_error(ssh_sess));
 		return -1;
 	}
-
-	/*
-	 * The following code snippet would be a replacement for the above
-	 * snippet and appears to be valid for version 0.7.6. At least it is in
-	 * the master branch after the 0.7.5 tag and before any 0.7.6 tag.
-	ssh_errno = ssh_get_server_publickey(ssh_sess, &serv_key);
-	if (ssh_errno == SSH_ERROR) {
-		fprintf(stderr, "Error retrieving server public key.\n");
-		mge_errno = MGE_SSH;
-		return mge_errno;
-	}
-	 */
 
 	res = ssh_get_publickey_hash(serv_key, SSH_PUBLICKEY_HASH_SHA1, &hash,
 				     &hlen);
