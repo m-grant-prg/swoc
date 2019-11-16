@@ -1,3 +1,41 @@
+2019-11-16 v1.3.0 Mark Grant <m.grant.prg@gmail.com>
+	*  The v1.3.y releases are now pinned to Debian stretch.
+	swocserverd source v1.0.7
+	swocserver source v1.1.6
+	swocclient source v1.1.5
+	Server library source v1.1.8
+	Client library source v1.1.6
+	Common library source v1.1.8
+	Server library v3:1:0
+	Client library v2:1:0
+	Common library v3:1:0
+	srv-lib: locks_held allow for terminating nul
+	at: README: Make bootstrap.sh reference more generic
+	at: Move tests under check target
+	Use AC_HEADER_STDBOOL and GNU ifdeffery
+	Correct Doxygen params for variadic
+	Setup and apply clang-format
+	doc: Respect verbosity under enable-silent-rules
+	at: Correct AC_ARG_ENABLE help text
+	at: Add enable option descriptions in TOF comments
+	travis: Initial setup for Travis CI test build farm
+	at: Fix make distcheck
+	at: Update c-compiler.m4 macros to v1.0.4
+	git: Update project root gitignore to v1.0.2
+	at: Update bootstrap.sh to v1.4.6
+	com-lib: Correct fallthrough comment
+	m4: Update to tooling packages
+	srv-prg: Fix copy and paste error in @param msg
+	srv-prg: Remove 2 incorrect casts
+	srv-prg: Trivial type safety improvements
+	srv-prg: Remove duplicated if statements
+	srv-lib: Add explicit pollint cast for sign conv
+	cli-lib: Add explicit pollint cast for sign conv
+	com-lib: Trivial type safety improvements
+	at: Add missing check for sys/socket.h
+	at: Add missing function checks
+	at: Check for declaration of sys_siglist
+
 2019-05-30 v 1.2.1 Mark Grant <m.grant.prg@gmail.com>
 	*  Swocserverd source v1.0.6
 	Swocserver source v1.1.5

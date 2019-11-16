@@ -1,3 +1,8 @@
+Release 1.3.0 2019-11-16
+The v1.3.y releases are now pinned to Debian stretch.
+No user-visiible changes.
+For technical change information please look at the ChangeLog.
+
 Release 1.2.1 2019-05-30
 Swocserverd source v1.0.6
 Swocserver source v1.1.5
