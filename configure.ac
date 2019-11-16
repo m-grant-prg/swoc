@@ -166,34 +166,34 @@ AC_PREREQ(2.69)
 # The following macros set all top level versioning for this project. All
 # information can be propagated via AC_CONFIG_HEADERS and AC_CONFIG_FILES.
 #
-AC_INIT(Server Wait On Client Package, 1.2.1+rca1, m.grant.prg@gmail.com, swoc)
+AC_INIT(Server Wait On Client Package, 1.3.0, m.grant.prg@gmail.com, swoc)
 
 AC_MSG_NOTICE(initialisation and setup)
 
 AC_SUBST(package_version, $PACKAGE_VERSION)
 
-AC_DEFINE(COMMON_SOURCE_VERSION, "1.1.7", \
+AC_DEFINE(COMMON_SOURCE_VERSION, "1.1.8", \
 	Define to the version of source code for the common library.)
 
-AC_SUBST(common_lib_version_info, "3:0:0")
+AC_SUBST(common_lib_version_info, "3:1:0")
 
-AC_DEFINE(CLIENT_SOURCE_VERSION, "1.1.5", \
+AC_DEFINE(CLIENT_SOURCE_VERSION, "1.1.6", \
 	Define to the version of source code for the client library.)
 
-AC_SUBST(client_lib_version_info, "2:0:0")
+AC_SUBST(client_lib_version_info, "2:1:0")
 
-AC_DEFINE(SERVER_SOURCE_VERSION, "1.1.7", \
+AC_DEFINE(SERVER_SOURCE_VERSION, "1.1.8", \
 	Define to the version of source code for the server library.)
 
-AC_SUBST(server_lib_version_info, "3:0:0")
+AC_SUBST(server_lib_version_info, "3:1:0")
 
-AC_DEFINE(SWOCCLIENT_SOURCE_VERSION, "1.1.4", \
+AC_DEFINE(SWOCCLIENT_SOURCE_VERSION, "1.1.5", \
 	Define to the version of source code for the client program.)
 
-AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.5", \
+AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.6", \
 	Define to the version of source code for the server program.)
 
-AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.6", \
+AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.7", \
 	Define to the version of source code for the server daemon.)
 
 #
