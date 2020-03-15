@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: src/prg/c/src/cli-prg/Makefile.am				#
-# Author: Copyright (C) 2015-2019  Mark Grant				#
+# Author: Copyright (C) 2015-2020  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -56,6 +56,9 @@
 #				assembled in configure.			#
 # 19/05/2019	MG	1.0.21	Merge sub-projects into one.		#
 #				Remove shebang.				#
+# 15/03/2020	MG	1.0.22	Add libswoccommon.la to LDADD for	#
+#				testing and debugging with libtool	#
+#				mode=execute.				#
 #									#
 #########################################################################
 
@@ -95,5 +98,6 @@ AM_LDFLAGS = $(LIBMGEC_LIBS)
 
 
 LDADD = $(tmplibraries)
+LDADD += ../com-lib/libswoccommon/libswoccommon.la
 LDADD += ../cli-lib/libswocclient/libswocclient.la
 
