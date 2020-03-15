@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: src/prg/c/src/srv-prg/swocserver/Makefile.am		#
-# Author: Copyright (C) 2015-2019  Mark Grant				#
+# Author: Copyright (C) 2015-2020  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -63,6 +63,9 @@
 #				assembled in configure.			#
 # 19/05/2019	MG	1.1.10	Merge sub-projects into one.		#
 #				Remove shebang.				#
+# 15/03/2020	MG	1.1.11	Add libswoccommon.la to LDADD for	#
+#				testing and debugging with libtool	#
+#				mode=execute.				#
 #									#
 #########################################################################
 
@@ -103,7 +106,9 @@ AM_LDFLAGS = $(LIBMGEC_LIBS)
 
 
 LDADD = $(tmplibraries)
+LDADD += ../../com-lib/libswoccommon/libswoccommon.la
 LDADD += ../../srv-lib/libswocserver/libswocserver.la
+
 
 if SYSD
 uninstall-local:
