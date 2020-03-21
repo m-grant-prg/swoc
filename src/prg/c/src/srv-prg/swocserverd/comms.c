@@ -3,12 +3,12 @@
  *
  * Comms functions associated with the swocserverd daemon.
  *
- * @author Copyright (C) 2017-2019  Mark Grant
+ * @author Copyright (C) 2017-2020  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.17 ==== 08/11/2019_
+ * @version _v1.0.18 ==== 14/03/2020_
  */
 
 /* **********************************************************************
@@ -62,6 +62,7 @@
  *				warning.				*
  * 08/11/2019	MG	1.0.17	Use standard GNU ifdeffery around use	*
  *				of AC_HEADER_STDBOOL.			*
+ * 14/03/2020	MG	1.0.18	Add id request type.			*
  *									*
  ************************************************************************
  */
@@ -320,16 +321,8 @@ static int proc_events(int n_events, struct epoll_event *pevents)
 			       strerror(swsd_err));
 			return swsd_err;
 		}
-		/* Get client hostname. */
-		getnameinfo((struct sockaddr *)&cli_addr,
-			    (socklen_t)sizeof(cli_addr),
-			    (char *restrict) & client,
-			    (socklen_t)sizeof(client), NULL, (socklen_t)0, 0);
-		if (debug)
-			printf("Client hostname %s\n", client);
 
 		memset(sock_buf, '\0', sizeof(sock_buf));
-
 		while ((n = recv(cursockfd, sock_buf, sizeof(sock_buf), 0))
 		       != 0) {
 			if (n < 0) {
@@ -391,6 +384,8 @@ static void proc_msg(struct mgemessage *msg)
 	enum msg_arguments msg_args;
 	char out_msg[100];
 
+	swsd_err = 0;
+
 	parse_msg(msg, &msg_args, &msg_src, &msg_req);
 
 	if (msg_args == args_err) {
@@ -409,6 +404,20 @@ static void proc_msg(struct mgemessage *msg)
 		return;
 	}
 
+	/* Must identify before any other message. */
+	if (!*client && msg_req != swocid) {
+		mge_errno = MGE_ID;
+		if (debug)
+			fprintf(stderr, "Host not identified for message %s\n",
+				msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Host not identified for message %s\n", msg->message);
+		sprintf(out_msg, "swocserverd,%s,err,%i;", msg->argv[1],
+			MGE_ID);
+		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+		mge_errno = MGE_ID;
+		return;
+	}
 	switch (msg_src) {
 	case swocserver:
 		if (debug)
@@ -443,6 +452,11 @@ static void proc_msg(struct mgemessage *msg)
 			if (debug)
 				printf("request = end\n");
 			srv_end_req(msg, &msg_args);
+			break;
+		case swocid:
+			if (debug)
+				printf("request = id\n");
+			id_req(msg, &msg_args);
 			break;
 		case swocrelease:
 			if (debug)
@@ -494,6 +508,11 @@ static void proc_msg(struct mgemessage *msg)
 			if (debug)
 				printf("request = blockstatus\n");
 			cli_srv_block_status_req(msg, &msg_args);
+			break;
+		case swocid:
+			if (debug)
+				printf("request = id\n");
+			id_req(msg, &msg_args);
 			break;
 		case swoclock:
 			if (debug)

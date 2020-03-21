@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: ./configure.ac						#
-# Author: Copyright (C) 2015-2019  Mark Grant				#
+# Author: Copyright (C) 2015-2020  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -148,6 +148,8 @@
 # 06/11/2019	MG	1.2.3	Add enable-distcheckfake option.	#
 #				Add enable option descriptions in this	#
 #				file's header.				#
+# 10/03/2020	MG	1.2.4	Add check for arpa/inet.h for use with	#
+#				inet_ntop().				#
 #									#
 #########################################################################
 
@@ -158,7 +160,7 @@
 #					#
 #########################################
 
-AC_REVISION($Revision: 1.2.3 $)
+AC_REVISION($Revision: 1.2.4 $)
 
 AC_PREREQ(2.69)
 
@@ -514,6 +516,7 @@ AC_CHECK_HEADERS(limits.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(netinet/in.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(netdb.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(sys/socket.h, [], AC_MSG_ERROR(header not found))
+AC_CHECK_HEADERS(arpa/inet.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(sys/stat.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(sys/types.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(string.h, [], AC_MSG_ERROR(header not found))
