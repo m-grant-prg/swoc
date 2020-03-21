@@ -3,12 +3,12 @@
  *
  * Message processing functions common to swoc programs.
  *
- * @author Copyright (C) 2017-2019  Mark Grant
+ * @author Copyright (C) 2017-2020  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.11 ==== 01/06/2019_
+ * @version _v1.1.12 ==== 21/03/2020_
  */
 
 /* **********************************************************************
@@ -45,11 +45,15 @@
  *				Cast ssize_t to size_t to avoid sign	*
  *				warning.				*
  * 01/06/2019	MG	1.1.11	Trivial improvements to type safety.	*
+ * 21/03/2020	MG	1.1.12	Add support for sending an id message	*
+ *				before the requested message.		*
  *									*
  ************************************************************************
  */
 
 #include <errno.h>
+#include <ifaddrs.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -60,6 +64,9 @@
 #include <mge-errno.h>
 #include <mgebuffer.h>
 #include <mgemessage.h>
+
+static int get_reply_msg(int sockfd, struct mgemessage *recv_msg);
+static int host_id(int sockfd, char *orig_outgoing_msg);
 
 /**
  * Parse a message.
@@ -99,10 +106,12 @@ void parse_msg(struct mgemessage *msg, enum msg_arguments *msg_args,
 		*msg_req = swocblocklist;
 	else if (!strcmp(*(msg->argv + 1), "blockstatus"))
 		*msg_req = swocblockstatus;
-	else if (!strcmp(*(msg->argv + 1), "end"))
-		*msg_req = swocend;
 	else if (!strcmp(*(msg->argv + 1), "disallow"))
 		*msg_req = swocdisallow;
+	else if (!strcmp(*(msg->argv + 1), "end"))
+		*msg_req = swocend;
+	else if (!strcmp(*(msg->argv + 1), "id"))
+		*msg_req = swocid;
 	else if (!strcmp(*(msg->argv + 1), "lock"))
 		*msg_req = swoclock;
 	else if (!strcmp(*(msg->argv + 1), "release"))
@@ -147,8 +156,7 @@ int send_outgoing_msg(char *outgoing_msg, size_t outgoing_msg_length,
 
 /**
  * Exchange messages.
- * Send and receive 1 message.
- * Discard anything in the buffer after the 1st message terminator.
+ * Send and receive 1 requested message after sending ID message.
  * On error mge_errno will be set.
  * @param outgoing_msg The message to send.
  * @param om_length The length of the outgoing message.
@@ -160,12 +168,8 @@ int exch_msg(char *outgoing_msg, size_t om_length, struct mgemessage *msg)
 	int res;
 	int sockfd;
 	int portno;
-	ssize_t n;
 	/* serv must be large enough to hold either server or localhost. */
 	char serv[strlen(server) > 9 ? strlen(server) + 1 : 10];
-	char sock_buf[SOCK_BUF_SIZE];
-	struct mgebuffer msg_buf1 = MGEBUFFER_INIT;
-	struct mgebuffer *msg_buf = &msg_buf1;
 
 	strcpy(serv, server);
 
@@ -183,9 +187,48 @@ int exch_msg(char *outgoing_msg, size_t om_length, struct mgemessage *msg)
 	if (res)
 		goto err_exit_0;
 
+	res = host_id(sockfd, outgoing_msg);
+	if (res)
+		goto err_exit_1;
+
 	res = send_outgoing_msg(outgoing_msg, om_length, &sockfd);
 	if (res)
 		goto err_exit_1;
+
+	res = get_reply_msg(sockfd, msg);
+	if (res)
+		goto err_exit_1;
+
+	res = close_sock(&sockfd);
+	if (res)
+		goto err_exit_0;
+	if (ssh)
+		res = close_ssh_tunnel();
+	return res;
+
+err_exit_1:
+	close_sock(&sockfd);
+err_exit_0:
+	if (ssh)
+		close_ssh_tunnel();
+	return -1;
+}
+
+/*
+ * Get daemon reply message.
+ * Send and receive 1 message.
+ * Discard anything in the buffer after the 1st message terminator.
+ * On error mge_errno will be set.
+ * @param sockfd The socket to use.
+ * @param msg The received message.
+ * @return 0 on success, -1 on error.
+ */
+static int get_reply_msg(int sockfd, struct mgemessage *recv_msg)
+{
+	ssize_t n;
+	char sock_buf[SOCK_BUF_SIZE];
+	struct mgebuffer msg_buf1 = MGEBUFFER_INIT;
+	struct mgebuffer *msg_buf = &msg_buf1;
 
 	/* Get server daemon reply. */
 	memset(sock_buf, '\0', sizeof(sock_buf));
@@ -198,37 +241,144 @@ int exch_msg(char *outgoing_msg, size_t om_length, struct mgemessage *msg)
 			       "ERROR reading "
 			       "from socket - %s",
 			       mge_strerror(mge_errno));
-			goto err_exit_1;
+			return -1;
 		}
 		msg_buf = concat_buf(sock_buf, (size_t)n, msg_buf);
 		if (msg_buf1.buffer == NULL)
-			goto err_exit_1;
+			return -1;
 
 		/*
 		 * Only 1 message can be valid, anything else is erroneous,
 		 * so don't loop emptying the buffer of messages.
 		 */
-		msg = pull_msg(msg_buf, msg);
+		recv_msg = pull_msg(msg_buf, recv_msg);
 
-		if (msg->complete || mge_errno)
+		if (recv_msg->complete || mge_errno)
 			break;
 
 		memset(sock_buf, '\0', sizeof(sock_buf));
 	}
-	res = close_sock(&sockfd);
-	if (res)
-		goto err_exit_0;
 	free(msg_buf1.buffer);
-	if (ssh)
-		res = close_ssh_tunnel();
-	return res;
+	return 0;
+}
 
-err_exit_1:
-	close_sock(&sockfd);
-err_exit_0:
-	free(msg_buf1.buffer);
-	if (ssh)
-		close_ssh_tunnel();
+/*
+ * Server or client submits id.
+ * The host name and IP address are submitted for the daemon to know the
+ * machine identity even if it is coming over SSH (which always appears as
+ * localhost to the daemon).
+ * Daemon is unaffected by errors which are relayed back to the sender.
+ * Exactly 2 arguments, the host name and IP address.
+ * @param sockfd The socket in use.
+ * @param orig_outgoing_msg The original (main) outgoing message.
+ */
+static int host_id(int sockfd, char *orig_outgoing_msg)
+{
+	struct ifaddrs *result, *rp;
+	socklen_t sockaddr_size;
+	char host_name[_POSIX_HOST_NAME_MAX];
+	char host_ip[INET6_ADDRSTRLEN];
+	char om[13 + _POSIX_HOST_NAME_MAX + INET6_ADDRSTRLEN];
+	char oom[strlen(orig_outgoing_msg) + 1];
+	char *end;
+	struct mgemessage ret_msg = MGEMESSAGE_INIT(';', ',');
+	long int x;
+	int s;
+
+	s = getifaddrs(&result);
+	if (s) {
+		sav_errno = errno;
+		mge_errno = MGE_ERRNO;
+		syslog((int)(LOG_USER | LOG_NOTICE), "getifaddrs error - %s",
+		       mge_strerror(mge_errno));
+		return -1;
+	}
+
+	/* getifaddrs() returns a list of address structures. */
+	for (rp = result; rp != NULL; rp = rp->ifa_next) {
+		if (!strcmp(server, "localhost")) {
+			if (strcmp(rp->ifa_name, "lo"))
+				continue;
+		} else if (!strcmp(rp->ifa_name, "lo")) {
+			continue;
+		}
+		switch (rp->ifa_addr->sa_family) {
+		case AF_INET:
+			sockaddr_size = sizeof(struct sockaddr_in);
+			break;
+		case AF_INET6:
+			sockaddr_size = sizeof(struct sockaddr_in6);
+			break;
+		default:
+			continue;
+		}
+		s = getnameinfo(rp->ifa_addr, sockaddr_size, host_ip,
+				INET6_ADDRSTRLEN, NULL, 0, NI_NUMERICHOST);
+		if (s) {
+			sav_errno = s;
+			mge_errno = MGE_GAI;
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "getnameinfo error - %s",
+			       mge_strerror(mge_errno));
+			goto free_exit;
+		}
+		s = getnameinfo(rp->ifa_addr, sockaddr_size, host_name,
+				_POSIX_HOST_NAME_MAX, NULL, 0, NI_NAMEREQD);
+		if (s) {
+			sav_errno = s;
+			mge_errno = MGE_GAI;
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "getnameinfo error - %s",
+			       mge_strerror(mge_errno));
+			goto free_exit;
+		}
+		break;
+	}
+	if (rp == NULL) { /* No address succeeded */
+		mge_errno = MGE_ID;
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Host ID not established - %s", mge_strerror(mge_errno));
+		goto free_exit;
+	}
+	strcpy(oom, orig_outgoing_msg);
+	strcpy(om, strtok(oom, ","));
+	strcat(om, ",id,");
+	strcat(om, host_name);
+	strcat(om, ",");
+	strcat(om, host_ip);
+	strcat(om, ";");
+	send_outgoing_msg(om, strlen(om), &sockfd);
+
+	s = get_reply_msg(sockfd, &ret_msg);
+	if (s)
+		goto msg_free_exit;
+
+	if (strncmp(ret_msg.message, "swocserverd,id,ok", 17)) {
+		mge_errno = MGE_INVAL_MSG;
+		if (ret_msg.argc == 4) {
+			if (!(strcmp(ret_msg.argv[0], "swocserverd"))
+			    && !(strcmp(ret_msg.argv[1], "id"))
+			    && !(strcmp(ret_msg.argv[2], "err"))) {
+				x = strtol(ret_msg.argv[3], &end, 10);
+				if ((*end == '\0') && x <= INT_MAX
+				    && x >= INT_MIN)
+					mge_errno = (int)x;
+			}
+		}
+		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
+		       mge_strerror(mge_errno));
+		goto msg_free_exit;
+	}
+
+	clear_msg(&ret_msg, ';', ',');
+	freeifaddrs(result);
+	return 0;
+
+msg_free_exit:
+	clear_msg(&ret_msg, ';', ',');
+
+free_exit:
+	freeifaddrs(result);
 	return -1;
 }
 

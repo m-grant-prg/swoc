@@ -3,12 +3,12 @@
  *
  * Request processing functions.
  *
- * @author Copyright (C) 2016-2019  Mark Grant
+ * @author Copyright (C) 2016-2020  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.21 ==== 08/11/2019_
+ * @version _v1.0.22 ==== 21/03/2020_
  */
 
 /* **********************************************************************
@@ -64,11 +64,17 @@
  *				Correct cut & paste error in param msg.	*
  * 08/11/2019	MG	1.0.21	Use standard GNU ifdeffery around use	*
  *				of AC_HEADER_STDBOOL.			*
+ * 21/03/2020	MG	1.0.22	Add id request type and use it to set	*
+ *				the client name. Due to always getting	*
+ *				localhost when over an SSH tunnel.	*
  *									*
  ************************************************************************
  */
 
+#include <arpa/inet.h>
 #include <errno.h>
+#include <limits.h>
+#include <netdb.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -851,5 +857,106 @@ int cli_reset_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 	swsd_err = mge_errno;
 	return swsd_err;
+}
+
+/**
+ * Server or client submits id.
+ * The host name and IP address are submitted for the daemon to know the
+ * machine identity even if it is coming over SSH (which always appears as
+ * localhost to the daemon).
+ * Daemon is unaffected by errors which are relayed back to the sender.
+ * Exactly 2 arguments, the host name and IP address.
+ * @param msg The message being processed.
+ * @param msg_args The message arguments.
+ */
+void id_req(struct mgemessage *msg, enum msg_arguments *msg_args)
+{
+	struct addrinfo *result, *rp;
+	struct addrinfo hints;
+	char address[INET6_ADDRSTRLEN];
+	char canonname[_POSIX_HOST_NAME_MAX];
+	char out_msg[100];
+	void *na;
+	int count, s;
+
+	client[0] = '\0';
+
+	if (msg->argc != 4) {
+		*msg_args = args_err;
+		return;
+	}
+
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_protocol = IPPROTO_TCP;
+	hints.ai_flags = AI_CANONNAME;
+	s = getaddrinfo(*(msg->argv + 2), NULL, &hints, &result);
+	if (s) {
+		sav_errno = s;
+		mge_errno = MGE_GAI;
+		syslog((int)(LOG_USER | LOG_NOTICE), "getaddrinfo error - %s",
+		       mge_strerror(mge_errno));
+		sprintf(out_msg, "swocserverd,id,err,%i;", mge_errno);
+		goto send_exit;
+	}
+
+	count = 0;
+	/* getaddrinfo() returns a list of address structures. */
+	for (rp = result; rp != NULL; rp = rp->ai_next) {
+		switch (rp->ai_family) {
+		case AF_INET:
+			na = &((struct sockaddr_in *)rp->ai_addr)->sin_addr;
+			break;
+		case AF_INET6:
+			na = &((struct sockaddr_in6 *)rp->ai_addr)->sin6_addr;
+			break;
+		default:
+			sav_errno = EAI_FAMILY;
+			mge_errno = MGE_GAI;
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "getaddrinfo error - %s",
+			       mge_strerror(mge_errno));
+			sprintf(out_msg, "swocserverd,id,err,%i;", mge_errno);
+			goto free_exit;
+		}
+		if (!count)
+			strcpy(canonname, rp->ai_canonname);
+		inet_ntop(rp->ai_family, na, address, sizeof(address));
+		if (debug) {
+			printf("address is %s\n", address);
+			if (!count)
+				printf("canonname is %s\n", canonname);
+		}
+		if (!strcmp(address, *(msg->argv + 3))
+		    && !strcmp(canonname, *(msg->argv + 2))) {
+			break;
+		}
+		count++;
+	}
+	if (rp == NULL) { /* No address succeeded */
+		mge_errno = MGE_ID;
+		if (debug)
+			fprintf(stderr, "Host and IP not matched - %s %s\n",
+				*(msg->argv + 2), *(msg->argv + 3));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Host and IP not matched - %s %s", *(msg->argv + 2),
+		       *(msg->argv + 3));
+		sprintf(out_msg, "swocserverd,id,err,%i;", mge_errno);
+		goto free_exit;
+	}
+	if (debug)
+		printf("Host and IP matched - %s %s\n", *(msg->argv + 2),
+		       *(msg->argv + 3));
+	syslog((int)(LOG_USER | LOG_NOTICE), "Host and IP matched - %s %s",
+	       *(msg->argv + 2), *(msg->argv + 3));
+	sprintf(out_msg, "swocserverd,id,ok;");
+	strcpy(client, canonname);
+
+free_exit:
+	freeaddrinfo(result);
+send_exit:
+	send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+	return;
 }
 

@@ -5,12 +5,12 @@
  * Daemon to enable a server to manage client locks and wait on the removal of
  * those locks prior to further server processing.
  *
- * @author Copyright (C) 2016-2019  Mark Grant
+ * @author Copyright (C) 2016-2020  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.17 ==== 01/06/2019_
+ * @version _v1.0.18 ==== 09/03/2020_
  */
 
 /* **********************************************************************
@@ -62,6 +62,7 @@
  * 18/05/2019	MG	1.0.16	Merge sub-projects into one.		*
  * 01/06/2019	MG	1.0.17	Use standard GNU ifdeffery around use	*
  *				of AC_HEADER_STDBOOL.			*
+ * 09/03/2020	MG	1.0.18	Initialise client.			*
  *									*
  ************************************************************************
  */
@@ -125,6 +126,7 @@ int main(int argc, char **argv)
 	char *pidfile = RUNSTATEDIR "/swocserverd.pid";
 	FILE *fp;
 
+	client[0] = '\0';
 	swsd_err = 0;
 	debug = 0;
 	end = 0;
