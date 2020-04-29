@@ -148,8 +148,14 @@
 # 06/11/2019	MG	1.2.3	Add enable-distcheckfake option.	#
 #				Add enable option descriptions in this	#
 #				file's header.				#
-# 10/03/2020	MG	1.2.4	Add check for arpa/inet.h for use with	#
+# 27/03/2020	MG	1.2.4	Add check for arpa/inet.h for use with	#
 #				inet_ntop().				#
+#				Move the cli-prg source into the	#
+#				swocclient sub-directory as the		#
+#				directory hierarchy needs to be the	#
+#				same accross the source tree for	#
+#				temporary libraries to work based on	#
+#				the search in configure.ac.		#
 #									#
 #########################################################################
 
@@ -711,7 +717,7 @@ do
 		do
 			if test -f "$entry" ;then
 				tmplibraries=$tmplibraries\
-" \$(srcdir)/../../lib-tmp/"$(basename "$direntry")"/"$(basename "$entry")
+" \$(srcdir)/../../../lib-tmp/"$(basename "$direntry")"/"$(basename "$entry")
 			fi
 		done
 	fi
@@ -807,7 +813,7 @@ AC_CONFIG_FILES(Makefile
 		src/prg/c/pkg-config/srv-dev/Makefile
 		src/prg/c/src/cli-lib/libswocclient/Makefile
 		src/prg/c/src/cli-lib/test-optionproc/Makefile
-		src/prg/c/src/cli-prg/Makefile
+		src/prg/c/src/cli-prg/swocclient/Makefile
 		src/prg/c/src/com-lib/libswoccommon/Makefile
 		src/prg/c/src/com-lib/test-messages/Makefile
 		src/prg/c/src/com-lib/test-ssh/Makefile

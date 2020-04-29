@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Script ID: src/prg/c/src/cli-prg/Makefile.am				#
+# Script ID: src/prg/c/src/cli-prg/swocclient/Makefile.am		#
 # Author: Copyright (C) 2015-2020  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
@@ -59,14 +59,19 @@
 # 15/03/2020	MG	1.0.22	Add libswoccommon.la to LDADD for	#
 #				testing and debugging with libtool	#
 #				mode=execute.				#
+# 27/03/2020	MG	1.0.23	Move into swocclient sub-directory as	#
+#				the directory hierarchy needs to be the	#
+#				same accross the source tree for	#
+#				temporary libraries to work based on	#
+#				the search in configure.ac.		#
 #									#
 #########################################################################
 
 
-AM_CPPFLAGS = -I$(srcdir)/../../inc-tmp
-AM_CPPFLAGS += -I$(srcdir)/../../inc/com-dev
-AM_CPPFLAGS += -I$(srcdir)/../../inc/cli-dev
-AM_CPPFLAGS += -I../../gen/inc -I../../gen/lib
+AM_CPPFLAGS = -I$(srcdir)/../../../inc-tmp
+AM_CPPFLAGS += -I$(srcdir)/../../../inc/com-dev
+AM_CPPFLAGS += -I$(srcdir)/../../../inc/cli-dev
+AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
 
 
 AM_CFLAGS = @mg_cflags@
@@ -98,6 +103,6 @@ AM_LDFLAGS = $(LIBMGEC_LIBS)
 
 
 LDADD = $(tmplibraries)
-LDADD += ../com-lib/libswoccommon/libswoccommon.la
-LDADD += ../cli-lib/libswocclient/libswocclient.la
+LDADD += ../../com-lib/libswoccommon/libswoccommon.la
+LDADD += ../../cli-lib/libswocclient/libswocclient.la
 

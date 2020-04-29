@@ -1,14 +1,14 @@
 /**
- * @file src/prg/c/src/cli-prg/cmdlineargs.c
+ * @file src/prg/c/src/cli-prg/swocclient/cmdlineargs.c
  *
  * Command line argument processing for swocclient using getopt_long.
  *
- * @author Copyright (C) 2015-2019  Mark Grant
+ * @author Copyright (C) 2015-2020  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.7 ==== 18/05/2019_
+ * @version _v1.1.8 ==== 27/03/2020_
  */
 
 /* **********************************************************************
@@ -39,6 +39,11 @@
  *				Simplify src directory structure and	*
  *				header file location.			*
  * 18/05/2019	MG	1.1.7	Merge sub-projects into one.		*
+ * 27/03/2020	MG	1.1.8	Move into swocclient sub-directory as	*
+ *				the directory hierarchy needs to be the	*
+ *				same accross the source tree for	*
+ *				temporary libraries to work based on	*
+ *				the search in configure.ac.		*
  *									*
  ************************************************************************
  */

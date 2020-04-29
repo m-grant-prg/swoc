@@ -1,16 +1,16 @@
 /**
- * @file src/prg/c/src/cli-prg/main.c
+ * @file src/prg/c/src/cli-prg/swocclient/main.c
  *
  * Server Wait On Clients client program.
  * To enable a client to place lock flags on a server which will then wait for
  * them to be cleared before continuing processing, (by use of swocserver -w).
  *
- * @author Copyright (C) 2015-2019  Mark Grant
+ * @author Copyright (C) 2015-2020  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.8 ==== 18/05/2019_
+ * @version _v1.1.9 ==== 27/03/2020_
  */
 
 /* **********************************************************************
@@ -43,6 +43,11 @@
  * 22/05/2018	MG	1.1.7	Simplify src directory structure and	*
  *				header file location.			*
  * 18/05/2019	MG	1.1.8	Merge sub-projects into one.		*
+ * 27/03/2020	MG	1.1.9	Move into swocclient sub-directory as	*
+ *				the directory hierarchy needs to be the	*
+ *				same accross the source tree for	*
+ *				temporary libraries to work based on	*
+ *				the search in configure.ac.		*
  *									*
  ************************************************************************
  */
