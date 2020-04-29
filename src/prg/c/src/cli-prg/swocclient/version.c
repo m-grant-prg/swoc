@@ -1,14 +1,14 @@
 /**
- * @file src/prg/c/src/cli-prg/version.c
+ * @file src/prg/c/src/cli-prg/swocclient/version.c
  *
  * Source for version functions.
  *
- * @author Copyright (C) 2015-2019  Mark Grant
+ * @author Copyright (C) 2015-2020  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.8 ==== 18/05/2019_
+ * @version _v1.0.9 ==== 27/03/2020_
  */
 
 /* **********************************************************************
@@ -28,6 +28,11 @@
  * 23/06/2018	MG	1.0.7	Remove SOURCE_CODE define, now uses the	*
  *				AC_DEFINE'd value in config.h		*
  * 18/05/2019	MG	1.0.8	Merge sub-projects into one.		*
+ * 27/03/2020	MG	1.0.9	Move into swocclient sub-directory as	*
+ *				the directory hierarchy needs to be the	*
+ *				same accross the source tree for	*
+ *				temporary libraries to work based on	*
+ *				the search in configure.ac.		*
  *									*
  ************************************************************************
  */

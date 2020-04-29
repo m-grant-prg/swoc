@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: ./Makefile.am						#
-# Author: Copyright (C) 2015-2019  Mark Grant				#
+# Author: Copyright (C) 2015-2020  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -60,6 +60,12 @@
 #				/usr/share/java must be accommodated,	#
 #				so set the configure flags to be used	#
 #				by make distcheck.			#
+# 27/03/2020	MG	1.1.11	Move the cli-prg source into the	#
+#				swocclient sub-directory as the		#
+#				directory hierarchy needs to be the	#
+#				same accross the source tree for	#
+#				temporary libraries to work based on	#
+#				the search in configure.ac.		#
 #									#
 #########################################################################
 
@@ -107,7 +113,7 @@ SUBDIRS += src/prg/c/inc/srv-dev
 SUBDIRS += src/prg/c/pkg-config/srv-dev
 SUBDIRS += src/prg/c/src/srv-lib/libswocserver
 SUBDIRS += src/prg/c/src/srv-lib/test-optionproc
-SUBDIRS += src/prg/c/src/cli-prg
+SUBDIRS += src/prg/c/src/cli-prg/swocclient
 SUBDIRS += src/prg/c/inc/srv-prg
 SUBDIRS += src/prg/c/src/srv-prg/swocserver
 SUBDIRS += src/prg/c/src/srv-prg/swocserverd
