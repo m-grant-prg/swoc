@@ -3,12 +3,12 @@
  *
  * TCP connection processing functions.
  *
- * @author Copyright (C) 2017-2019  Mark Grant
+ * @author Copyright (C) 2017-2020  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.4 ==== 18/05/2019_
+ * @version _v1.1.5 ==== 16/06/2020_
  */
 
 /* **********************************************************************
@@ -28,6 +28,9 @@
  *				address is in use.			*
  * 15/08/2018	MG	1.1.3	Change parameter name to prevent shadow.*
  * 18/05/2019	MG	1.1.4	Merge sub-projects into one.		*
+ * 16/06/2020	MG	1.1.5	listen() on a socket may race with	*
+ *				other swoc invocations, so allow some	*
+ *				retries if the address is in use.	*
  *									*
  ************************************************************************
  */
@@ -198,15 +201,26 @@ int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 /**
  * Set TCP socket to listen.
  * Equivalent to listen() with error handling.
+ * A race is possible with other swoc invocations to listen on that socket, so
+ * if it is in use do a few retries.
  * On error mge_errno is set.
  * @param sfd The socket file descriptor.
  * @return 0 on success, non-zero on failure.
  */
 int listen_sock(const int *sfd)
 {
+	int i = 0;
+	int status;
+
 	mge_errno = 0;
 
-	if (listen(*sfd, SOCK_Q_LEN) < 0) {
+	do {
+		if (i)
+			sleep(1);
+		status = listen(*sfd, SOCK_Q_LEN);
+	} while ((status < 0) && (errno == EADDRINUSE) && (i++ < 10));
+
+	if (status < 0) {
 		sav_errno = errno;
 		mge_errno = MGE_ERRNO;
 		syslog((int)(LOG_USER | LOG_NOTICE), "ERROR on listen - %s",
