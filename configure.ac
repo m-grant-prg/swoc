@@ -156,7 +156,10 @@
 #				same accross the source tree for	#
 #				temporary libraries to work based on	#
 #				the search in configure.ac.		#
-# 08/06/2020	MG	1.2.5	Remove check for unused program dia.	#
+# 17/06/2020	MG	1.2.5	Remove check for unused program dia.	#
+#				Change libssh check to a new function	#
+#				used in this project which has replaced	#
+#				a function now deprecated.		#
 #									#
 #########################################################################
 
@@ -497,8 +500,8 @@ AC_SEARCH_LIBS(parsefile, mgesysutils, , \
 	AC_MSG_ERROR(function parsefile not found in libmgesysutils))
 AC_SEARCH_LIBS(add_bst_node, mgec, , \
 	AC_MSG_ERROR(function add_bst_node not found in libmgec))
-AC_SEARCH_LIBS(ssh_new, ssh, , \
-	AC_MSG_ERROR(function ssh_new not found in libssh))
+AC_SEARCH_LIBS(ssh_get_server_publickey, ssh, , \
+	AC_MSG_ERROR(function ssh_get_server_publickey not found in libssh))
 
 
 #########################################
