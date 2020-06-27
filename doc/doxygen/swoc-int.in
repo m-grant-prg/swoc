@@ -6,6 +6,6 @@ Abstract: This document describes the library source and the command line
 Section: Programming/C
 
 Format: HTML
-Index: @htmldir@/api/html/index.html
-Files: @htmldir@/api/html/*.html
+Index: @htmldir@/int/html-int/index.html
+Files: @htmldir@/int/html-int/*.html
 
