@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: doc/doxygen/Makefile.am					#
-# Author: Copyright (C) 2018-2019  Mark Grant				#
+# Author: Copyright (C) 2018-2020  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -32,14 +32,15 @@
 #				dochelp when running make distcheck.	#
 #				Reduce Doxygen output when silent	#
 #				rules are enabled.			#
+# 27/06/2020	MG	1.0.6	Split into API and full internal	#
+#				documentation.				#
 #									#
 #########################################################################
 
 
+# Build API documentation.
+
 docpkg = $(PACKAGE_TARNAME)-doxy-$(PACKAGE_VERSION).tar.gz
-
-docbasedir = $(datarootdir)/doc-base
-
 
 # The dependencies below start with Doxyfile which is produced by configure, so
 # thereafter no updates to these documents will happen by make alone. Re-run
@@ -50,32 +51,78 @@ $(docpkg): doxygen.stamp
 
 doxygen.stamp: Doxyfile
 	if $(AM_V_P); then \
-		DOXYGEN_QUIET=NO doxygen $< ; \
+		DOXYGEN_QUIET=NO \
+			DOXYGEN_PROJECT_NAME="Server Wait On Clients System - API Documentation" \
+			DOXYGEN_HTML_OUTPUT=html \
+			DOXYGEN_ENABLED_SECTIONS= \
+			DOXYGEN_EXCLUDE_PATTERNS="*internal*" \
+			doxygen $< ; \
 	else \
-		DOXYGEN_QUIET=YES doxygen $< ; \
+		DOXYGEN_QUIET=YES \
+			DOXYGEN_PROJECT_NAME="Server Wait On Clients System - API Documentation" \
+			DOXYGEN_HTML_OUTPUT=html \
+			DOXYGEN_ENABLED_SECTIONS= \
+			DOXYGEN_EXCLUDE_PATTERNS="*internal*" \
+			doxygen $< ; \
 	fi
 	echo Timestamp > $@
 
 
-html_DATA = $(docpkg)
+# Build full internal documentation.
+
+intdocpkg = $(PACKAGE_TARNAME)-int-doxy-$(PACKAGE_VERSION).tar.gz
+
+$(intdocpkg): doxygen1.stamp
+	tar -chz --format=posix -f $@ html-int
+
+doxygen1.stamp: Doxyfile
+	if $(AM_V_P); then \
+		DOXYGEN_QUIET=NO \
+			DOXYGEN_PROJECT_NAME="Server Wait On Clients System - Full Internal Documentation" \
+			DOXYGEN_HTML_OUTPUT=html-int \
+			DOXYGEN_ENABLED_SECTIONS=INTERNAL \
+			DOXYGEN_EXCLUDE_PATTERNS= \
+			doxygen $< ; \
+	else \
+		DOXYGEN_QUIET=YES \
+			DOXYGEN_PROJECT_NAME="Server Wait On Clients System - Full Internal Documentation" \
+			DOXYGEN_HTML_OUTPUT=html-int \
+			DOXYGEN_ENABLED_SECTIONS=INTERNAL \
+			DOXYGEN_EXCLUDE_PATTERNS= \
+			doxygen $< ; \
+	fi
+	echo Timestamp > $@
 
 
-swoc: Makefile
+apidir = $(htmldir)/api
+intdir = $(htmldir)/int
+
+api_DATA = $(docpkg)
+int_DATA = $(intdocpkg)
+
+
+swoc swoc-int: Makefile
 	mkdir -p $(@D)
 	rm -f $@
 	$(edit) $(srcdir)/$(@F).in > $@
 swoc: $(srcdir)/swoc.in
-
-docbase_DATA = swoc
+swoc-int: $(srcdir)/swoc-int.in
 
 
 # If doc-base is installed register the documents then update dochelp if it is
 # installed.
+
+docbasedir = $(datarootdir)/doc-base
+
+docbase_DATA = swoc swoc-int
+
 install-data-hook:
 if !DISTCHECKFAKE
-	cd $(DESTDIR)$(htmldir) && tar xf $(docpkg)
+	cd $(DESTDIR)$(apidir) && tar xf $(docpkg)
+	cd $(DESTDIR)$(intdir) && tar xf $(intdocpkg)
 	if command -v install-docs >/dev/null 2>&1; then \
-		install-docs -vi $(docbasedir)/libmgesysutils; \
+		install-docs -vi $(docbasedir)/swoc; \
+		install-docs -vi $(docbasedir)/swoc-int; \
 	fi
 	if command -v dochelp >/dev/null 2>&1; then \
 		dochelp update; \
@@ -84,9 +131,11 @@ endif
 
 uninstall-hook:
 if !DISTCHECKFAKE
-	cd $(DESTDIR)$(htmldir) && rm -rf html
+	cd $(DESTDIR)$(apidir) && rm -rf html
+	cd $(DESTDIR)$(intdir) && rm -rf html-int
 	if command -v install-docs >/dev/null 2>&1; then \
-		install-docs -vr libmgesysutils; \
+		install-docs -vr swoc; \
+		install-docs -vr swoc-int; \
 	fi
 	if command -v dochelp >/dev/null 2>&1; then \
 		dochelp update; \
@@ -94,11 +143,12 @@ if !DISTCHECKFAKE
 endif
 
 
-EXTRA_DIST = $(docpkg) $(srcdir)/swoc.in
+EXTRA_DIST = $(docpkg) $(intdocpkg) $(srcdir)/swoc.in $(srcdir)/swoc-int.in
 
 
-CLEANFILES = doxywarn.txt doxygen.stamp $(docpkg) swoc
+CLEANFILES = doxywarn.txt doxygen.stamp doxygen1.stamp $(docpkg) $(intdocpkg) \
+	swoc swoc-int
 
 clean-local:
-	rm -rf html
+	rm -rf html html-int
 
