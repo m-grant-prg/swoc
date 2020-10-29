@@ -183,7 +183,7 @@ AC_PREREQ(2.69)
 # The following macros set all top level versioning for this project. All
 # information can be propagated via AC_CONFIG_HEADERS and AC_CONFIG_FILES.
 #
-AC_INIT(Server Wait On Client Package, 1.4.0+rc6, m.grant.prg@gmail.com, swoc)
+AC_INIT(Server Wait On Client Package, 1.4.1, m.grant.prg@gmail.com, swoc)
 
 AC_MSG_NOTICE(initialisation and setup)
 
@@ -210,7 +210,7 @@ AC_DEFINE(SWOCCLIENT_SOURCE_VERSION, "1.1.5", \
 AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.6", \
 	Define to the version of source code for the server program.)
 
-AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.7", \
+AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.8", \
 	Define to the version of source code for the server daemon.)
 
 #
