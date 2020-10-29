@@ -15,12 +15,12 @@
  * > SIGCONT\n
  * > SIGTSTP (Ctrl-Z)
  *
- * @author Copyright (C) 2016-2019  Mark Grant
+ * @author Copyright (C) 2016-2020  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.6 ==== 18/05/2019_
+ * @version _v1.0.7 ==== 29/10/2020_
  */
 
 /* **********************************************************************
@@ -37,6 +37,10 @@
  * 25/08/2018	MG	1.0.5	Add support for normal daemon reload	*
  *				config file on receipt of SIGHUP.	*
  * 18/05/2019	MG	1.0.6	Merge sub-projects into one.		*
+ * 29/10/2020	MG	1.0.7	Replace use of sys_siglist[] with	*
+ *				strsignal() which is the approved way.	*
+ *				(sys_siglist has been renamed and	*
+ *				hidden in more recent glibc's).		*
  *									*
  ************************************************************************
  */
@@ -180,7 +184,7 @@ void termination_handler(int signum)
 		syslog((int)(LOG_USER | LOG_NOTICE),
 		       "Cannot retrieve old "
 		       "action : %s",
-		       sys_siglist[SIGTSTP]);
+		       strsignal(SIGTSTP));
 		raise(SIGKILL);
 	}
 	if (cur_action.sa_handler != termination_handler) {
@@ -189,7 +193,7 @@ void termination_handler(int signum)
 			syslog((int)(LOG_USER | LOG_NOTICE),
 			       "Cannot set new "
 			       "action : %s",
-			       sys_siglist[SIGTSTP]);
+			       strsignal(SIGTSTP));
 			raise(SIGKILL);
 		}
 	}
@@ -198,13 +202,13 @@ void termination_handler(int signum)
 		syslog((int)(LOG_USER | LOG_NOTICE),
 		       "Cannot retrieve old "
 		       "action : %s",
-		       sys_siglist[signum]);
+		       strsignal(signum));
 		raise(SIGKILL);
 	}
 
 	/* Log the signal and the number of locks being held. */
 	syslog((int)(LOG_USER | LOG_NOTICE), "Signal Received : %s",
-	       sys_siglist[signum]);
+	       strsignal(signum));
 	syslog((int)(LOG_USER | LOG_NOTICE),
 	       "%i clients have %i locks on "
 	       "this server.",
@@ -239,7 +243,7 @@ void termination_handler(int signum)
 		syslog((int)(LOG_USER | LOG_NOTICE),
 		       "Cannot run default "
 		       "signal handler : %s",
-		       sys_siglist[signum]);
+		       strsignal(signum));
 		raise(SIGKILL);
 	}
 	raise(signum);

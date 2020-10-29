@@ -160,6 +160,11 @@
 #				Change libssh check to a new function	#
 #				used in this project which has replaced	#
 #				a function now deprecated.		#
+# 29/10/2020	MG	1.2.6	Replace use of sys_siglist[] with	#
+#				strsignal() which is the approved way.	#
+#				(sys_siglist has been renamed and	#
+#				hidden in more recent glibc's). Add	#
+#				check for the function.			#
 #									#
 #########################################################################
 
@@ -170,7 +175,7 @@
 #					#
 #########################################
 
-AC_REVISION($Revision: 1.2.5 $)
+AC_REVISION($Revision: 1.2.6 $)
 
 AC_PREREQ(2.69)
 
@@ -584,7 +589,8 @@ AC_MSG_NOTICE(checking for GNU compatible library functions required)
 
 AC_FUNC_FORK
 AC_FUNC_MALLOC
-AC_CHECK_FUNCS(getpass memset socket strchr strerror strncasecmp strtol)
+AC_CHECK_FUNCS(getpass memset socket strchr strerror strncasecmp strsignal)
+AC_CHECK_FUNC(strtol)
 
 
 #################################################
@@ -750,11 +756,6 @@ srv_pc_requires_private="libswoccommon"
 
 # Check a source file to ensure no command line --srcdir typo.
 AC_CONFIG_SRCDIR(src/prg/c/src/srv-prg/swocserver/version.c)
-
-# Check for an r-value of sys_siglist
-AC_CHECK_DECLS([sys_siglist], [], [], [AC_INCLUDES_DEFAULT
-					#include <signal.h>
-					])
 
 
 #########################################
