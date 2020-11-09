@@ -1,3 +1,24 @@
+2020-11-09 v1.3.1 Mark Grant <m.grant.prg@gmail.com>
+	*  swocserverd source v1.1.0
+	Common library source v1.2.0
+	Common library v4:0:0
+	swocserverd: Replace sys_siglist[] with strsignal()
+	at: lxcu: Add lxc test build setup
+	travis: Use new libmgec2-dev package
+	doc: Enable documentation of static functions
+	doc: Give docs unique docbase names
+	doc: Correct internal docbase directory
+	doc: Separate API and internal documentation
+	README: Correct git command
+	com-lib: listen_sock() allow retries if in use
+	at: Remove check for unused program dia
+	cli-prg: Correct position in source tree
+	at: Update bootstrap.sh to v1.4.7
+	swocserverd: Reset client between message exchange
+	srv: com: Add id request and use for each request
+	srv-prg: Add common library to LDADD
+	cli-prg: Add common library to LDADD
+
 2019-11-16 v1.3.0 Mark Grant <m.grant.prg@gmail.com>
 	*  The v1.3.y releases are now pinned to Debian stretch.
 	swocserverd source v1.0.7
