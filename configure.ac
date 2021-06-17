@@ -183,7 +183,7 @@ AC_PREREQ(2.69)
 # The following macros set all top level versioning for this project. All
 # information can be propagated via AC_CONFIG_HEADERS and AC_CONFIG_FILES.
 #
-AC_INIT(Server Wait On Client Package, 1.4.1+rc1, m.grant.prg@gmail.com, swoc)
+AC_INIT(Server Wait On Client Package, 1.4.1+rc2, m.grant.prg@gmail.com, swoc)
 
 AC_MSG_NOTICE(initialisation and setup)
 
