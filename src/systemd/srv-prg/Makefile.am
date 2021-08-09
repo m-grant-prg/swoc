@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: src/systemd/srv-prg/Makefile.am				#
-# Author: Copyright (C) 2017-2019  Mark Grant				#
+# Author: Copyright (C) 2017-2019, 2021  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -28,6 +28,7 @@
 #				Installation Directory Variables.	#
 # 19/05/2019	MG	1.0.5	Merge sub-projects into one.		#
 #				Remove shebang.				#
+# 09/08/2021	MG	1.0.6	Add systemd reload command.		#
 #									#
 #########################################################################
 
@@ -46,6 +47,9 @@ systemd_DATA = swocserverd.service
 install-data-hook:
 	systemctl enable swocserverd.service
 	systemctl start swocserverd.service
+
+uninstall-hook:
+	systemctl daemon-reload
 
 EXTRA_DIST = $(srcdir)/swocserverd.service.in
 
