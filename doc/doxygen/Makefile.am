@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: doc/doxygen/Makefile.am					#
-# Author: Copyright (C) 2018-2020  Mark Grant				#
+# Author: Copyright (C) 2018-2021  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -34,6 +34,8 @@
 #				rules are enabled.			#
 # 27/06/2020	MG	1.0.6	Split into API and full internal	#
 #				documentation.				#
+# 09/08/2021	MG	1.0.7	Only register documents if building	#
+#				with ATONLY.				#
 #									#
 #########################################################################
 
@@ -110,9 +112,9 @@ swoc-int: $(srcdir)/swoc-int.in
 
 
 # If doc-base is installed register the documents then update dochelp if it is
-# installed.
+# installed. Registering is dependent on ATONLY.
 
-docbasedir = $(datarootdir)/doc-base
+docbasedir = @docbaseloc@
 
 docbase_DATA = swoc swoc-int
 
@@ -120,6 +122,7 @@ install-data-hook:
 if !DISTCHECKFAKE
 	cd $(DESTDIR)$(apidir) && tar xf $(docpkg)
 	cd $(DESTDIR)$(intdir) && tar xf $(intdocpkg)
+if ATONLY
 	if command -v install-docs >/dev/null 2>&1; then \
 		install-docs -vi $(docbasedir)/swoc; \
 		install-docs -vi $(docbasedir)/swoc-int; \
@@ -128,11 +131,11 @@ if !DISTCHECKFAKE
 		dochelp update; \
 	fi
 endif
+endif
 
-uninstall-hook:
+uninstall-local:
 if !DISTCHECKFAKE
-	cd $(DESTDIR)$(apidir) && rm -rf html
-	cd $(DESTDIR)$(intdir) && rm -rf html-int
+if ATONLY
 	if command -v install-docs >/dev/null 2>&1; then \
 		install-docs -vr swoc; \
 		install-docs -vr swoc-int; \
@@ -140,6 +143,9 @@ if !DISTCHECKFAKE
 	if command -v dochelp >/dev/null 2>&1; then \
 		dochelp update; \
 	fi
+endif
+	cd $(DESTDIR)$(apidir) && rm -rf html
+	cd $(DESTDIR)$(intdir) && rm -rf html-int
 endif
 
 
