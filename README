@@ -2,7 +2,7 @@
 Server Wait On Clients (SWOC) System
 ====================================
 
-Author - Copyright (C) 2018-2020 Mark Grant
+Author - Copyright (C) 2018-2021 Mark Grant
 
 --------
 Contents
@@ -104,7 +104,16 @@ c) ... cd to the directory created.
 
 d) ... If you downloaded the source tarball type 'autoreconf -if'
 
-e) ... Type './configure'
+e) ... Documents can be registered with scrollkeeper but this process will
+	conflict if the documents have already been installed via a package
+	manager. So, if the documents have not been installed by a package
+	manager:-
+
+	Type './configure --enable-atonly'
+
+	and if they have been installed via a package manager:-
+
+	Type './configure'
 
 f) ... As root or sudo, type 'make install clean'
 
