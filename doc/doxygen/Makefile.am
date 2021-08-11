@@ -34,8 +34,10 @@
 #				rules are enabled.			#
 # 27/06/2020	MG	1.0.6	Split into API and full internal	#
 #				documentation.				#
-# 09/08/2021	MG	1.0.7	Only register documents if building	#
+# 11/08/2021	MG	1.0.7	Only register documents if building	#
 #				with ATONLY.				#
+#				Move main source documents into src to	#
+#				enable use of EXTRA_DIST on subdir src.	#
 #									#
 #########################################################################
 
@@ -149,11 +151,12 @@ endif
 endif
 
 
-EXTRA_DIST = $(docpkg) $(intdocpkg) $(srcdir)/swoc.in $(srcdir)/swoc-int.in
+EXTRA_DIST = $(docpkg) $(intdocpkg) $(srcdir)/src $(srcdir)/swoc.in \
+	     $(srcdir)/swoc-int.in
 
 
 CLEANFILES = doxywarn.txt doxygen.stamp doxygen1.stamp $(docpkg) $(intdocpkg) \
-	swoc swoc-int
+	     swoc swoc-int
 
 clean-local:
 	rm -rf html html-int
