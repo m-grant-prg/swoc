@@ -44,6 +44,8 @@ swocserverd.service: $(srcdir)/swocserverd.service.in
 
 systemd_DATA = swocserverd.service
 
+# systemd requires some ordering of it's actions. Please refer to the comment in
+# the top-level Makefile.am
 install-data-hook:
 	systemctl enable swocserverd.service
 	systemctl start swocserverd.service

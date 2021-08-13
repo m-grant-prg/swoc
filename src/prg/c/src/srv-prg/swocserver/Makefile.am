@@ -110,6 +110,8 @@ LDADD += ../../com-lib/libswoccommon/libswoccommon.la
 LDADD += ../../srv-lib/libswocserver/libswocserver.la
 
 
+# systemd requires some ordering of it's actions. Please refer to the comment in
+# the top-level Makefile.am
 if SYSD
 uninstall-local:
 	systemctl stop swocserverd.service

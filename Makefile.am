@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: ./Makefile.am						#
-# Author: Copyright (C) 2015-2020  Mark Grant				#
+# Author: Copyright (C) 2015-2021  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -66,6 +66,7 @@
 #				same accross the source tree for	#
 #				temporary libraries to work based on	#
 #				the search in configure.ac.		#
+# 13/8/2021	MG	1.1.12	Add systemd action ordering comment.	#
 #									#
 #########################################################################
 
@@ -75,11 +76,8 @@ ACLOCAL_AMFLAGS = -I m4 -I m4extra
 AM_DISTCHECK_CONFIGURE_FLAGS = --enable-distcheckfake=yes
 
 
-# The sequence of the build below is important in so far as this sequence
-# means that the service start-up is done by a hook at the end of systemd
-# service file installation.
-# It also means that the service is stopped by a local target in swocserver
-# uninstall (swocserver -e is used as ExecStop).
+# The sequence of the build below is important for systemd, see below.
+
 
 SUBDIRS = src/conf/etc/com-lib
 SUBDIRS += src/conf/etc/srv-prg
@@ -115,13 +113,29 @@ SUBDIRS += src/prg/c/src/srv-lib/libswocserver
 SUBDIRS += src/prg/c/src/srv-lib/test-optionproc
 SUBDIRS += src/prg/c/src/cli-prg/swocclient
 SUBDIRS += src/prg/c/inc/srv-prg
+
+# systemd requires the ordering of certain actions, so:-
+# Install
+#	swocserver
+#	swocserverd
+#	service
+#	service-post (hook)
+#		enable service
+#		start service
+# Uninstall
+# 	swocserver-pre (local)
+# 		stop service
+# 		disable service
+# 	swocserver
+# 	swocserverd
+# 	service
+# 	service-post (hook)
+# 		daemon reload
 SUBDIRS += src/prg/c/src/srv-prg/swocserver
 SUBDIRS += src/prg/c/src/srv-prg/swocserverd
-
 if SYSD
 SUBDIRS += src/systemd/srv-prg
 endif
-
 SUBDIRS += doc/doxygen
 
 

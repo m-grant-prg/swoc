@@ -51,6 +51,10 @@
 #########################################################################
 
 
+# Please note: systemd requires some ordering of it's actions. Please refer to
+# the comment in the top-level Makefile.am
+
+
 AM_CPPFLAGS = -I$(srcdir)/../../../inc-tmp
 AM_CPPFLAGS += -I$(srcdir)/../../../inc/com-dev
 AM_CPPFLAGS += -I$(srcdir)/../../../inc/srv-prg
