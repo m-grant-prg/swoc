@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: src/prg/c/src/srv-lib/libswocserver/Makefile.am		#
-# Author: Copyright (C) 2016-2019  Mark Grant				#
+# Author: Copyright (C) 2016-2019, 2021  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -53,6 +53,8 @@
 #				assembled in configure.			#
 # 19/05/2019	MG	1.0.15	Merge sub-projects into one.		#
 #				Remove shebang.				#
+# 14/08/2021	MG	1.0.16	Run post-install / post-uninstall	#
+#				ldconfig.				#
 #									#
 #########################################################################
 
@@ -93,4 +95,16 @@ AM_LDFLAGS += $(LIBMGEC_LIBS)
 
 libswocserver_la_LIBADD = $(tmplibraries)
 libswocserver_la_LIBADD += ../../com-lib/libswoccommon/libswoccommon.la
+
+
+# The last library in the install sequence needs to run ldconfig.
+install-exec-hook:
+if !DISTCHECKFAKE
+	ldconfig
+endif
+
+uninstall-hook:
+if !DISTCHECKFAKE
+	ldconfig
+endif
 
