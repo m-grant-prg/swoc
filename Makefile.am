@@ -66,17 +66,26 @@
 #				same accross the source tree for	#
 #				temporary libraries to work based on	#
 #				the search in configure.ac.		#
-# 13/8/2021	MG	1.1.12	Add systemd action ordering comment.	#
+# 14/8/2021	MG	1.1.12	Add systemd action ordering comment.	#
+#				Add library install post-processing	#
+#				comments.				#
 #									#
 #########################################################################
+
+#########################################################################
+#									#
+# N.B.									#
+# ====									#
+# The sequence of the build is important for systemd, see below.	#
+# See requirements for library install post-processing below.		#
+#									#
+#########################################################################
+
 
 ACLOCAL_AMFLAGS = -I m4 -I m4extra
 
 
 AM_DISTCHECK_CONFIGURE_FLAGS = --enable-distcheckfake=yes
-
-
-# The sequence of the build below is important for systemd, see below.
 
 
 SUBDIRS = src/conf/etc/com-lib
@@ -109,6 +118,12 @@ SUBDIRS += src/prg/c/src/cli-lib/libswocclient
 SUBDIRS += src/prg/c/src/cli-lib/test-optionproc
 SUBDIRS += src/prg/c/inc/srv-dev
 SUBDIRS += src/prg/c/pkg-config/srv-dev
+
+# The last library installed / uninstalled must perform a ldconfig
+# Install hook
+# 	ldconfig
+# Uninstall hook
+# 	ldconfig
 SUBDIRS += src/prg/c/src/srv-lib/libswocserver
 SUBDIRS += src/prg/c/src/srv-lib/test-optionproc
 SUBDIRS += src/prg/c/src/cli-prg/swocclient
