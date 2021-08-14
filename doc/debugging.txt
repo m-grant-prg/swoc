@@ -1,0 +1,38 @@
+Testing daemon message processing
+=================================
+
+Building should include these flags, -d and -s for debug and sparse. You
+probably do not want to build with the at-only flag as you probably want the
+daemon under manual control, not under systemd.
+
+You may well want to start the daemon with the -D debug flag. This prevents
+daemonisation and prints useful buffer and message information to stdout.
+Depending on what needs to be accomplished the daemon can be started in the
+following ways:-
+Basic
+	./swocserverd -D
+
+Valgrind
+	libtool --mode=execute valgrind --leak-check=yes --track-origins=yes \
+		./swocserverd -D
+
+GDB
+Find the device name of the terminal you want to attach to for program output.
+	tty
+	and use the output below
+	libtool --mode=execute gdb --tui --tty=/dev/pts/2 \
+		--args ./swocserverd --debug
+
+To send messages to the daemon you can telnet into it:
+	telnet localhost 127.0.0.1
+	Ctrl ] to break to command prompt
+	mode character
+	;
+
+The mode character is so that no extraneous CR or LF characters are sent to the
+daemon.
+The final ; is to basically flush stuff already sent to the daemon by
+terminating the message, (which will return an error which can be ignored).
+Now you can just type the message. It is a bit ugly as there is no echo of
+characters typed and it all just appears as one long line, but it works.
+
