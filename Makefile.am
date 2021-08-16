@@ -67,7 +67,7 @@
 #				temporary libraries to work based on	#
 #				the search in configure.ac.		#
 # 14/8/2021	MG	1.1.12	Add systemd action ordering comment.	#
-#				Add doc/var and misc to DIST.		#
+#				Add doc/misc and misc to DIST.		#
 #									#
 #########################################################################
 
@@ -152,7 +152,7 @@ doc_DATA = AUTHORS ChangeLog COPYING NEWS README
 EXTRA_DIST = $(srcdir)/AUTHORS $(srcdir)/ChangeLog $(srcdir)/COPYING \
 		$(srcdir)/NEWS $(srcdir)/README
 EXTRA_DIST += m4/gnulib-cache.m4
-EXTRA_DIST += doc/var misc
+EXTRA_DIST += doc/misc misc
 
 
 srctarball:
