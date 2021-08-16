@@ -120,6 +120,10 @@ f) ... As root or sudo, type 'make install clean'
 g) ... Edit the sysconfdir/swocserverd.conf, (usually /etc/swocserverd.conf), as
 	required.
 
+h) ... Update shared libraries links and cache
+
+	As root or sudo, type 'ldconfig'
+
 (Quote marks are for textual clarity only).
 
 To uninstall the package:
@@ -127,6 +131,8 @@ To uninstall the package:
 1 ... cd to the directory created in the above install process.
 
 2 ... As root or sudo, type 'make uninstall clean'
+
+3 ... As root or sudo, type 'ldconfig'
 
 
 --------------------------------------------
