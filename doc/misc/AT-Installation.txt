@@ -1,0 +1,10 @@
+Some notes pertaining to an AutoTools installation.
+
+ldconfig
+========
+Having installed shared libraries it is necessary to run ldconfig to refresh
+links and cache. This cannot be automatically included in the installation as it
+will cause downstream package builds to fail when trying to access files (/etc)
+outside their chroot. It is easier to ask that this be run manually after 'make
+install'.
+
