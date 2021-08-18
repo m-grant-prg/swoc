@@ -3,14 +3,24 @@ Description=Server Wait On Clients Daemon
 Documentation=man:swocserverd(8)
 After=network.target
 
+
 [Service]
 Type=forking
 PIDFile=@runstatedir@/swocserverd.pid
+
 ExecStart=@sbindir@/swocserverd
 ExecReload=@sbindir@/swocserver -r
 ExecStop=@sbindir@/swocserver -e
 KillMode=process
 Restart=on-failure
+
+PrivateDevices=true
+PrivateTmp=true
+ProtectHome=true
+# Enable the line below for distro packages. For pure AT it must have access to
+# /usr/local/var/run to write it's pid file.
+# ProtectSystem=full
+
 
 [Install]
 WantedBy=multi-user.target
