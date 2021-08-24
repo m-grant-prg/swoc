@@ -66,7 +66,7 @@
 #				same accross the source tree for	#
 #				temporary libraries to work based on	#
 #				the search in configure.ac.		#
-# 14/8/2021	MG	1.1.12	Add systemd action ordering comment.	#
+# 14/08/2021	MG	1.1.12	Add systemd action ordering comment.	#
 #				Add doc/misc and misc to DIST.		#
 #									#
 #########################################################################
