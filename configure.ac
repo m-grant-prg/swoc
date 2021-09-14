@@ -271,6 +271,7 @@ if test "x${atonly}" = xtrue; then
 else
 	AC_SUBST(docbaseloc,"$datarootdir/doc-base")
 fi
+
 #
 # The following allows for an enable-debug=yes/no command line option. The
 # conditional DEBUG is made available to the makefiles.
