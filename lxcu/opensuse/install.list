@@ -1,0 +1,6 @@
+autoconf autoconf-archive automake libtool
+doxygen graphviz graphviz-gd ghostscript-fonts-std
+txt2man txt2manwrap
+libmgec-devel libmgec2 libmgesysutils-devel libmgesysutils1
+libssh-devel libssh4
+
