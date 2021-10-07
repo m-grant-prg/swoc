@@ -1,3 +1,28 @@
+2021-10-07 v1.4.2 Mark Grant <m.grant.prg@gmail.com>
+	* git: Upgrade gitignore to v1.0.5
+	at: Perform gnulib-tool --update
+	doc: Add gnulib setup notes
+	lxcu: Add support for Fedora and openSUSE
+	systemd: Add security hardening
+	doc: Add doc-base installation notes
+	doc: Add AT Installation notes
+	at: README: Add ldconfig instruction
+	doc: Use better directory name misc
+	at: Tidy up comments
+	doc: Add debugging notes
+	at: systemd: Comment the systemd ordering reqs
+	at: docs: Move source files to src
+	at: Update AT install section for enable-atonly
+	at: Register docs with scrollkeeper only if ATONLY
+	docs: Document field DOCID must be lower case
+	systemd: Add daemon reload command
+	doc: Add package version to PROJECT_NUMBER
+	git: Add gitattribites file
+	git: Add git mailmap file
+	at: Upgrade bootstrap.sh to v1.4.9
+	travis: Stop using Travis
+	actions: Initial build action setup
+
 2020-10-29 v1.4.1 Mark Grant <m.grant.prg@gmail.com>
 	*  swocserverd source v1.0.8
 	swocserverd: Replace sys_siglist[] with strsignal()
