@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: src/prg/c/src/srv-lib/libswocserver/Makefile.am		#
-# Author: Copyright (C) 2016-2019  Mark Grant				#
+# Author: Copyright (C) 2016-2019, 2021  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -53,6 +53,7 @@
 #				assembled in configure.			#
 # 19/05/2019	MG	1.0.15	Merge sub-projects into one.		#
 #				Remove shebang.				#
+# 09/10/2021	MG	1.0.16	Capitalise MG_CFLAGS variable.		#
 #									#
 #########################################################################
 
@@ -63,7 +64,7 @@ AM_CPPFLAGS += -I$(srcdir)/../../../inc/srv-dev
 AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
 
 
-AM_CFLAGS = @mg_cflags@
+AM_CFLAGS = $(MG_CFLAGS)
 AM_CFLAGS += $(LIBMGEC_CFLAGS) $(LIBSWOCCOMMON_CFLAGS)
 
 if DEBUG

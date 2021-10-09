@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: src/prg/c/src/srv-prg/swocserver/Makefile.am		#
-# Author: Copyright (C) 2015-2020  Mark Grant				#
+# Author: Copyright (C) 2015-2021  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -66,6 +66,7 @@
 # 15/03/2020	MG	1.1.11	Add libswoccommon.la to LDADD for	#
 #				testing and debugging with libtool	#
 #				mode=execute.				#
+# 09/10/2021	MG	1.1.12	Capitalise MG_CFLAGS variable.		#
 #									#
 #########################################################################
 
@@ -77,7 +78,7 @@ AM_CPPFLAGS += -I$(srcdir)/../../../inc/srv-prg
 AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
 
 
-AM_CFLAGS = @mg_cflags@
+AM_CFLAGS = $(MG_CFLAGS)
 AM_CFLAGS += $(LIBSWOCSERVER_CFLAGS) $(LIBMGEC_CFLAGS)
 
 if DEBUG

@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: src/prg/c/src/cli-prg/swocclient/Makefile.am		#
-# Author: Copyright (C) 2015-2020  Mark Grant				#
+# Author: Copyright (C) 2015-2021  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -64,6 +64,7 @@
 #				same accross the source tree for	#
 #				temporary libraries to work based on	#
 #				the search in configure.ac.		#
+# 09/10/2021	MG	1.0.24	Capitalise MG_CFLAGS variable.		#
 #									#
 #########################################################################
 
@@ -74,7 +75,7 @@ AM_CPPFLAGS += -I$(srcdir)/../../../inc/cli-dev
 AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
 
 
-AM_CFLAGS = @mg_cflags@
+AM_CFLAGS = $(MG_CFLAGS)
 AM_CFLAGS += $(LIBSWOCCLIENT_CFLAGS) $(LIBMGEC_CFLAGS)
 
 if DEBUG
