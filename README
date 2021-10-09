@@ -61,25 +61,18 @@ initiates a shutdown.
 
 This Project
 ------------
-This AutoTools project contains the swocserver Server Wait On Clients Server
-Programs.
+This AutoTools project contains the Server Wait On Clients Server Programs.
 
-This comprises of the command line program swocserver.
-
-If you are going to build this swocserver SWOC Server Programs then you must
-install the development files from libswocserver-dev. Other required
-dependencies not installed on your system will be identified by the configure
-script. Any of these produced by this author can be found in a repository
-located here:-
-https://github.com/m-grant-prg
+If you are going to build against the SWOC Programs then you must install the
+development files from libswocclient-dev, libswoccommon-dev and
+libswocserver-dev.
 
 Related packages in this system are the dev and lib packages for libswoccommon
 SWOC Common Library, equivalent packages for the libswocserver Server Library,
 equivalent packages for the libswocclient Client Library, a package swocclient
-for the client application, a package swocserver for the server application and
-a documentation project swocdoc. There is also a parent project, swoc-full.
-
-So please refer also to the README files of these projects.
+for the client application, a package swocserver for the server application, an
+API  documentation package swoc-doc and a full documentation package
+swoc-int-doc.
 
 N.B.
 ----
