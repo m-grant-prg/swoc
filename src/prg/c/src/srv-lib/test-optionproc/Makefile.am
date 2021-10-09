@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: src/prg/c/src/srv-lib/test-optionproc/Makefile.am		#
-# Author: Copyright (C) 2016-2019  Mark Grant				#
+# Author: Copyright (C) 2016-2019, 2021  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -33,6 +33,7 @@
 # 19/05/2019	MG	1.0.8	Merge sub-projects into one.		#
 #				Remove shebang.				#
 # 08/11/2019	MG	1.0.9	Move under check target.		#
+# 09/10/2021	MG	1.0.10	Use CFLAGS from configure.		#
 #									#
 #########################################################################
 
@@ -43,7 +44,7 @@ AM_CPPFLAGS += -I$(srcdir)/../../../inc/srv-dev
 AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
 
 
-AM_CFLAGS = -Wall
+AM_CFLAGS = $(MG_CFLAGS)
 
 if DEBUG
 AM_CFLAGS += -ggdb3 -Og
