@@ -34,18 +34,18 @@
 #				Remove shebang.				#
 # 08/11/2019	MG	1.0.7	Move under check target.		#
 # 09/10/2021	MG	1.0.8	Use CFLAGS from configure.		#
+#				Use CPPFLAGS prepared by configure.	#
 #									#
 #########################################################################
 
 
-AM_CPPFLAGS = -I$(srcdir)/../../../inc-tmp
+AM_CPPFLAGS = $(MG_CPPFLAGS)
+AM_CPPFLAGS += -I$(srcdir)/../../../inc-tmp
 AM_CPPFLAGS += -I$(srcdir)/../../../inc/com-dev
 AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
 
 
 AM_CFLAGS = $(MG_CFLAGS)
-
-
 if DEBUG
 AM_CFLAGS += -ggdb3 -Og
 else

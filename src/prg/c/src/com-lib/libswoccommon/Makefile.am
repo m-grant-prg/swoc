@@ -51,6 +51,7 @@
 # 19/05/2019	MG	1.0.14	Merge sub-projects into one.		#
 #				Remove shebang.				#
 # 09/10/2021	MG	1.0.15	Capitalise MG_CFLAGS variable.		#
+#				Use CPPFLAGS prepared by configure.	#
 #									#
 #########################################################################
 
@@ -58,7 +59,8 @@
 CC = $(PTHREAD_CC)
 
 
-AM_CPPFLAGS = $(PTHREAD_CFLAGS)
+AM_CPPFLAGS = $(MG_CPPFLAGS)
+AM_CPPFLAGS += $(PTHREAD_CFLAGS)
 AM_CPPFLAGS += -I$(srcdir)/../../../inc-tmp
 AM_CPPFLAGS += -I$(srcdir)/../../../inc/com-dev
 AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
@@ -68,17 +70,14 @@ AM_CFLAGS = $(MG_CFLAGS)
 AM_CFLAGS += $(PTHREAD_CFLAGS)
 AM_CFLAGS += $(LIBMGEC_CFLAGS) $(LIBMGESYSUTILS_CFLAGS)
 AM_CFLAGS += $(LIBSSH_CFLAGS)
-
 if DEBUG
 AM_CFLAGS += -ggdb3 -Og
 else
 AM_CFLAGS += -O2
 endif
-
 if HEADERCHECK
 AM_CFLAGS += -H
 endif
-
 if SPARSE
 AM_CFLAGS += -Wsparse-all -Wno-vla
 endif

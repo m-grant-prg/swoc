@@ -175,6 +175,7 @@
 # 09/08/2021	MG	1.2.7	Add enable-atonly CLA and add support	#
 #				for doc-base.				#
 # 09/10/2021	MG	1.2.8	Capitalise MG_CFLAGS variable.		#
+#				Make use of new CPPFLAGS macro.		#
 #									#
 #########################################################################
 
@@ -609,6 +610,7 @@ AC_C_RESTRICT
 AX_PTHREAD(, AC_MSG_ERROR(thread information not found))
 
 # Build a suitable CFLAGS list depending on compiler version.
+BUILD_COMPILER_VERSION_CPPFLAGS(MG_CPPFLAGS)
 BUILD_COMPILER_VERSION_CFLAGS(MG_CFLAGS)
 
 

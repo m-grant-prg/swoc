@@ -67,11 +67,13 @@
 #				testing and debugging with libtool	#
 #				mode=execute.				#
 # 09/10/2021	MG	1.1.12	Capitalise MG_CFLAGS variable.		#
+#				Use CPPFLAGS prepared by configure.	#
 #									#
 #########################################################################
 
 
-AM_CPPFLAGS = -I$(srcdir)/../../../inc-tmp
+AM_CPPFLAGS = $(MG_CPPFLAGS)
+AM_CPPFLAGS += -I$(srcdir)/../../../inc-tmp
 AM_CPPFLAGS += -I$(srcdir)/../../../inc/com-dev
 AM_CPPFLAGS += -I$(srcdir)/../../../inc/srv-dev
 AM_CPPFLAGS += -I$(srcdir)/../../../inc/srv-prg
@@ -80,17 +82,14 @@ AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
 
 AM_CFLAGS = $(MG_CFLAGS)
 AM_CFLAGS += $(LIBSWOCSERVER_CFLAGS) $(LIBMGEC_CFLAGS)
-
 if DEBUG
 AM_CFLAGS += -ggdb3 -Og
 else
 AM_CFLAGS += -O2
 endif
-
 if HEADERCHECK
 AM_CFLAGS += -H
 endif
-
 if SPARSE
 AM_CFLAGS += -Wsparse-all -Wno-vla
 endif
