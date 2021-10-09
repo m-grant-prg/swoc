@@ -56,6 +56,7 @@
 #				Remove shebang.				#
 # 09/10/2021	MG	1.0.16	Capitalise MG_CFLAGS variable.		#
 #				Use CPPFLAGS prepared by configure.	#
+#				Use LDFLAGS prepared by configure.	#
 #									#
 #########################################################################
 
@@ -88,7 +89,8 @@ libswocclient_la_SOURCES = optionproc.c
 libswocclient_la_SOURCES += version.c
 
 
-AM_LDFLAGS = -version-info @client_lib_version_info@
+AM_LDFLAGS = $(MG_LDFLAGS)
+AM_LDFLAGS += -version-info @client_lib_version_info@
 AM_LDFLAGS += $(LIBMGEC_LIBS) $(LIBMGESYSUTILS_LIBS)
 
 

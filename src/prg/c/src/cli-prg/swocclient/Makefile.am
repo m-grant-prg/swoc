@@ -66,6 +66,7 @@
 #				the search in configure.ac.		#
 # 09/10/2021	MG	1.0.24	Capitalise MG_CFLAGS variable.		#
 #				Use CPPFLAGS prepared by configure.	#
+#				Use LDFLAGS prepared by configure.	#
 #									#
 #########################################################################
 
@@ -99,7 +100,8 @@ sbin_PROGRAMS = swocclient
 swocclient_SOURCES = main.c version.c cmdlineargs.c signalhandle.c
 
 
-AM_LDFLAGS = $(LIBMGEC_LIBS)
+AM_LDFLAGS = $(MG_LDFLAGS)
+AM_LDFLAGS += $(LIBMGEC_LIBS)
 
 
 LDADD = $(tmplibraries)

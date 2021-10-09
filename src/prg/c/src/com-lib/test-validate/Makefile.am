@@ -35,6 +35,7 @@
 # 08/11/2019	MG	1.0.7	Move under check target.		#
 # 09/10/2021	MG	1.0.8	Use CFLAGS from configure.		#
 #				Use CPPFLAGS prepared by configure.	#
+#				Use LDFLAGS prepared by configure.	#
 #									#
 #########################################################################
 
@@ -55,6 +56,9 @@ endif
 
 check_PROGRAMS = testvalidate
 testvalidate_SOURCES = testvalidate.c
+
+
+AM_LDFLAGS = $(MG_LDFLAGS)
 
 
 LDADD = ../libswoccommon/libswoccommon.la

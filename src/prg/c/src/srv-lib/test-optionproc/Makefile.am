@@ -35,6 +35,7 @@
 # 08/11/2019	MG	1.0.9	Move under check target.		#
 # 09/10/2021	MG	1.0.10	Use CFLAGS from configure.		#
 #				Use CPPFLAGS prepared by configure.	#
+#				Use LDFLAGS prepared by configure.	#
 #									#
 #########################################################################
 
@@ -56,6 +57,9 @@ endif
 
 check_PROGRAMS = testoptionproc
 testoptionproc_SOURCES = testoptionproc.c
+
+
+AM_LDFLAGS = $(MG_LDFLAGS)
 
 
 LDADD = ../libswocserver/libswocserver.la

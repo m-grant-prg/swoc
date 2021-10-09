@@ -49,6 +49,7 @@
 #				Remove shebang.				#
 # 09/10/2021	MG	1.0.14	Capitalise MG_CFLAGS variable.		#
 #				Use CPPFLAGS prepared by configure.	#
+#				Use LDFLAGS prepared by configure.	#
 #									#
 #########################################################################
 
@@ -88,7 +89,8 @@ swocserverd_SOURCES = cmdlineargs.c signalhandle.c validateconfig.c version.c
 swocserverd_SOURCES += main.c comms.c request.c
 
 
-AM_LDFLAGS = $(LIBMGEC_LIBS) $(LIBMGESYSUTILS_LIBS)
+AM_LDFLAGS = $(MG_LDFLAGS)
+AM_LDFLAGS += $(LIBMGEC_LIBS) $(LIBMGESYSUTILS_LIBS)
 
 
 LDADD = $(tmplibraries)

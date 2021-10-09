@@ -52,6 +52,7 @@
 #				Remove shebang.				#
 # 09/10/2021	MG	1.0.15	Capitalise MG_CFLAGS variable.		#
 #				Use CPPFLAGS prepared by configure.	#
+#				Use LDFLAGS prepared by configure.	#
 #									#
 #########################################################################
 
@@ -85,11 +86,14 @@ endif
 
 lib_LTLIBRARIES = libswoccommon.la
 
+
 libswoccommon_la_SOURCES = messages.c ssh.c tcp.c
 libswoccommon_la_SOURCES += validateconfig.c
 libswoccommon_la_SOURCES += version.c
 
-AM_LDFLAGS = $(PTHREAD_CFLAGS) $(LDFLAGS) $(PTHREAD_LIBS) $(LIBS)
+
+AM_LDFLAGS = $(MG_LDFLAGS)
+AM_LDFLAGS += $(PTHREAD_CFLAGS) $(LDFLAGS) $(PTHREAD_LIBS) $(LIBS)
 AM_LDFLAGS += $(LIBMGEC_LIBS) $(LIBMGESYSUTILS_LIBS)
 AM_LDFLAGS += $(LIBSSH_LIBS)
 AM_LDFLAGS += -version-info @common_lib_version_info@
