@@ -41,7 +41,6 @@
 #define LIBSWOCCOMMONINTERNAL_H
 
 #include <netdb.h>
-#include <netinet/in.h>
 #include <sys/types.h>
 
 #include <mgemessage.h>
