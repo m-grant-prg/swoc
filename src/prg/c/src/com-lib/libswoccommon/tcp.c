@@ -3,12 +3,12 @@
  *
  * TCP connection processing functions.
  *
- * @author Copyright (C) 2017-2020  Mark Grant
+ * @author Copyright (C) 2017-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.5 ==== 16/06/2020_
+ * @version _v1.1.6 ==== 10/10/2021_
  */
 
 /* **********************************************************************
@@ -31,6 +31,7 @@
  * 16/06/2020	MG	1.1.5	listen() on a socket may race with	*
  *				other swoc invocations, so allow some	*
  *				retries if the address is in use.	*
+ * 10/10/2021	MG	1.1.6	Use newly internalised common header.	*
  *									*
  ************************************************************************
  */
@@ -45,7 +46,7 @@
 #include <syslog.h>
 #include <unistd.h>
 
-#include <libswoccommon.h>
+#include <libswoccommon-internal.h>
 #include <mge-errno.h>
 
 /**

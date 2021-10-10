@@ -3,12 +3,12 @@
  *
  * Header file for Server Wait on Clients server-side daemon.
  *
- * @author Copyright (C) 2016-2020  Mark Grant
+ * @author Copyright (C) 2016-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.16 ==== 14/03/2020_
+ * @version _v1.0.17 ==== 10/10/2021_
  */
 
 /* **********************************************************************
@@ -44,6 +44,7 @@
  * 08/11/2019	MG	1.0.15	Use standard GNU ifdeffery around use	*
  *				of AC_HEADER_STDBOOL.			*
  * 14/03/2020	MG	1.0.16	Add support for id_req.			*
+ * 10/10/2021	MG	1.0.17	Use newly internalised common header.	*
  *									*
  ************************************************************************
  */
@@ -71,7 +72,7 @@
 #endif
 
 #include <bstree.h>
-#include <libswoccommon.h>
+#include <libswoccommon-internal.h>
 #include <mgemessage.h>
 #include <portability.h>
 

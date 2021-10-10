@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: src/prg/c/inc/com-dev/Makefile.am				#
-# Author: Copyright (C) 2016-2019  Mark Grant				#
+# Author: Copyright (C) 2016-2019, 2021  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -22,8 +22,9 @@
 # 12/01/2018	MG	1.0.2	Add SPDX license tags to source files.	#
 # 19/05/2019	MG	1.0.3	Merge sub-projects into one.		#
 #				Remove shebang.				#
+# 10/10/2021	MG	1.0.4	Make newly internalised header noinst.	#
 #									#
 #########################################################################
 
-include_HEADERS = libswoccommon.h
+noinst_HEADERS = libswoccommon-internal.h
 

@@ -3,12 +3,12 @@
  *
  * Functions to process client lock flag options.
  *
- * @author Copyright (C) 2016-2019  Mark Grant
+ * @author Copyright (C) 2016-2019, 2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.12 ==== 08/11/2019_
+ * @version _v1.1.13 ==== 10/10/2021_
  */
 
 /* **********************************************************************
@@ -57,6 +57,7 @@
  *				validated > 0.				*
  * 08/11/2019	MG	1.1.12	Use standard GNU ifdeffery around use	*
  *				of AC_HEADER_STDBOOL.			*
+ * 10/10/2021	MG	1.1.13	Use new internal common header.		*
  *									*
  ************************************************************************
  */
@@ -86,7 +87,7 @@
 #endif
 
 #include <libswocclient.h>
-#include <libswoccommon.h>
+#include <libswoccommon-internal.h>
 #include <mge-errno.h>
 #include <mgemessage.h>
 #include <remsyslog.h>

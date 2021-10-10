@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <libswoccommon.h>
+#include <libswoccommon-internal.h>
 #include <mge-errno.h>
 
 /*

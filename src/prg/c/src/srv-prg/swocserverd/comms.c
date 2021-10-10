@@ -3,12 +3,12 @@
  *
  * Comms functions associated with the swocserverd daemon.
  *
- * @author Copyright (C) 2017-2020  Mark Grant
+ * @author Copyright (C) 2017-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.18 ==== 22/03/2020_
+ * @version _v1.0.19 ==== 10/10/2021_
  */
 
 /* **********************************************************************
@@ -63,6 +63,7 @@
  * 08/11/2019	MG	1.0.17	Use standard GNU ifdeffery around use	*
  *				of AC_HEADER_STDBOOL.			*
  * 22/03/2020	MG	1.0.18	Add id request type.			*
+ * 10/10/2021	MG	1.0.19	Use newly internalised common header.	*
  *									*
  ************************************************************************
  */
@@ -94,7 +95,7 @@
 
 #include "internal.h"
 #include <bstree.h>
-#include <libswoccommon.h>
+#include <libswoccommon-internal.h>
 #include <mge-errno.h>
 #include <mgebuffer.h>
 #include <mgemessage.h>

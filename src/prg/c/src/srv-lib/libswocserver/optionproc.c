@@ -3,12 +3,12 @@
  *
  * Functions to process server lock flag options.
  *
- * @author Copyright (C) 2016-2019  Mark Grant
+ * @author Copyright (C) 2016-2019, 2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.12 ==== 08/11/2019_
+ * @version _v1.1.13 ==== 10/10/2021_
  */
 
 /* **********************************************************************
@@ -63,6 +63,7 @@
  *				of AC_HEADER_STDBOOL.			*
  *				Increase size of locks_held to allow	*
  *				for terminating nul.			*
+ * 10/10/2021	MG	1.1.13	Use newly internalised common header.	*
  *									*
  ************************************************************************
  */
@@ -91,7 +92,7 @@
 	#define __bool_true_false_are_defined 1
 #endif
 
-#include <libswoccommon.h>
+#include <libswoccommon-internal.h>
 #include <libswocserver.h>
 #include <mge-errno.h>
 #include <mgemessage.h>

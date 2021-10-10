@@ -5,12 +5,12 @@
  *
  * Used for swocserver and swocclient not swocserverd.
  *
- * @author Copyright (C) 2017-2019  Mark Grant
+ * @author Copyright (C) 2017-2019, 2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.5 ==== 01/06/2019_
+ * @version _v1.0.6 ==== 10/10/2021_
  */
 
 /* **********************************************************************
@@ -25,6 +25,7 @@
  * 07/03/2018	MG	1.0.3	Remove redundant global variable portno	*
  * 18/05/2019	MG	1.0.4	Merge sub-projects into one.		*
  * 01/06/2019	MG	1.0.5	Trivial type safety improvements.	*
+ * 10/10/2021	MG	1.0.6	Use newly internalised common header.	*
  *									*
  ************************************************************************
  */
@@ -42,7 +43,7 @@
 #include <configmake.h>
 
 #include <configfile.h>
-#include <libswoccommon.h>
+#include <libswoccommon-internal.h>
 #include <mge-errno.h>
 
 static int validateconfigfileparams(const struct confsection *);

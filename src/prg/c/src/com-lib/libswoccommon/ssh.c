@@ -6,12 +6,12 @@
  * Covers tunnel creation and destruction including all authentication. Creates
  * a seperate thread for data relay through the tunnel.
  *
- * @author Copyright (C) 2017-2019  Mark Grant
+ * @author Copyright (C) 2017-2019, 2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.7 ==== 09/11/2019_
+ * @version _v1.0.8 ==== 10/10/2021_
  */
 
 /* **********************************************************************
@@ -33,6 +33,7 @@
  * 01/06/2019	MG	1.0.6	Trivial type safety improvements.	*
  * 09/11/2019	MG	1.0.7	Use ssh_get_server_publickey() AOT	*
  *				deprecated ssh_get_publickey().		*
+ * 10/10/2021	MG	1.0.8	Use newly internalised common header.	*
  *									*
  ************************************************************************
  */
@@ -47,7 +48,7 @@
 #include <sys/types.h>
 #include <syslog.h>
 
-#include <libswoccommon.h>
+#include <libswoccommon-internal.h>
 #include <mge-errno.h>
 #include <mgememory.h>
 

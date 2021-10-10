@@ -3,12 +3,12 @@
  *
  * Source for version functions.
  *
- * @author Copyright (C) 2017-2019  Mark Grant
+ * @author Copyright (C) 2017-2019, 2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.5 ==== 18/05/2019_
+ * @version _v1.0.6 ==== 10/10/2021_
  */
 
 /* **********************************************************************
@@ -24,6 +24,7 @@
  * 22/06/2018	MG	1.0.4	Remove SOURCE_CODE define, now uses the	*
  *				AC_DEFINE'd value in config.h		*
  * 18/05/2019	MG	1.0.5	Merge sub-projects into one.		*
+ * 10/10/2021	MG	1.0.6	Use newly internalised common header.	*
  *									*
  ************************************************************************
  */
@@ -32,7 +33,7 @@
 #include <stdlib.h>
 
 #include <config.h>
-#include <libswoccommon.h>
+#include <libswoccommon-internal.h>
 
 /**
  * Get the git-describe based package version.

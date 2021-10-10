@@ -3,12 +3,12 @@
  *
  * Message processing functions common to swoc programs.
  *
- * @author Copyright (C) 2017-2020  Mark Grant
+ * @author Copyright (C) 2017-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.12 ==== 21/03/2020_
+ * @version _v1.1.13 ==== 10/10/2021_
  */
 
 /* **********************************************************************
@@ -47,6 +47,7 @@
  * 01/06/2019	MG	1.1.11	Trivial improvements to type safety.	*
  * 21/03/2020	MG	1.1.12	Add support for sending an id message	*
  *				before the requested message.		*
+ * 10/10/2021	MG	1.1.13	Use newly internal common header.	*
  *									*
  ************************************************************************
  */
@@ -60,7 +61,7 @@
 #include <sys/types.h>
 #include <syslog.h>
 
-#include <libswoccommon.h>
+#include <libswoccommon-internal.h>
 #include <mge-errno.h>
 #include <mgebuffer.h>
 #include <mgemessage.h>

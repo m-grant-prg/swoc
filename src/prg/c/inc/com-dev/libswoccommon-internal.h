@@ -1,14 +1,14 @@
 /**
- * @file src/prg/c/inc/com-dev/libswoccommon.h
+ * @file src/prg/c/inc/com-dev/libswoccommon-internal.h
  *
- * Header file for Server Wait on Client common library.
+ * Internal header file for Server Wait on Client common library.
  *
- * @author Copyright (C) 2017-2020  Mark Grant
+ * @author Copyright (C) 2017-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.9 ==== 15/03/2020_
+ * @version _v1.1.0 ==== 10/10/2021_
  */
 
 /* **********************************************************************
@@ -32,12 +32,13 @@
  * 15/08/2018	MG	1.0.7	Change parameter name to prevent shadow.*
  * 18/05/2019	MG	1.0.8	Merge sub-projects into one.		*
  * 15/03/2020	MG	1.0.9	Add swocid request type.		*
+ * 10/10/2021	MG	1.1.0	Make file internal, tightening API.	*
  *									*
  ************************************************************************
  */
 
-#ifndef LIBSWOCCOMMON_H
-#define LIBSWOCCOMMON_H
+#ifndef LIBSWOCCOMMONINTERNAL_H
+#define LIBSWOCCOMMONINTERNAL_H
 
 #include <netdb.h>
 #include <netinet/in.h>
@@ -126,5 +127,5 @@ void libswoccommon_print_src_version(void);
 
 END_C_DECLS
 
-#endif /* ndef LIBSWOCCOMMON_H */
+#endif /* ndef LIBSWOCCOMMONINTERNAL_H */
 

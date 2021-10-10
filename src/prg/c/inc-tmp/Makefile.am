@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: src/prg/c/inc-tmp/Makefile.am				#
-# Author: Copyright (C) 2017-2019  Mark Grant				#
+# Author: Copyright (C) 2017-2019, 2021  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0					#
@@ -33,11 +33,13 @@
 # 17/06/2018	MG	1.0.6	Add mgebuffer & mgemessage candidates.	#
 # 19/05/2019	MG	1.0.7	Merge sub-projects into one.		#
 #				Remove shebang.				#
+# 10/10/2021	MG	1.0.8	Use newly internalised common header.	*
 #									#
 #########################################################################
 
 
 noinst_HEADERS = $(tmpheaders)
 
-EXTRA_HEADERS = bstree.h libswoccommon.h mgebuffer.h mge-errno.h mgemessage.h
+EXTRA_HEADERS = bstree.h libswoccommon-internal.h mgebuffer.h mge-errno.h \
+		mgemessage.h
 
