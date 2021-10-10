@@ -127,4 +127,3 @@ void libswoccommon_print_src_version(void);
 END_C_DECLS
 
 #endif /* ndef LIBSWOCCOMMONINTERNAL_H */
-
