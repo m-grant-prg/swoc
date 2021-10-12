@@ -87,7 +87,7 @@
 #endif
 
 #include <libswocclient.h>
-#include <libswoccommon-internal.h>
+#include <libswoccommon.h>
 #include <mge-errno.h>
 #include <mgemessage.h>
 #include <remsyslog.h>

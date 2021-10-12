@@ -5,12 +5,12 @@
  * To enable a client to place lock flags on a server which will then wait for
  * them to be cleared before continuing processing, (by use of swocserver -w).
  *
- * @author Copyright (C) 2015-2020  Mark Grant
+ * @author Copyright (C) 2015-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.9 ==== 27/03/2020_
+ * @version _v1.1.10 ==== 11/10/2021_
  */
 
 /* **********************************************************************
@@ -48,6 +48,7 @@
  *				same accross the source tree for	*
  *				temporary libraries to work based on	*
  *				the search in configure.ac.		*
+ * 11/10/2021	MG	1.1.10	Move cmdlineargs.h to inc directory.	*
  *									*
  ************************************************************************
  */
@@ -55,7 +56,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "cmdlineargs.h"
+#include <cmdlineargs.h>
 #include "internal.h"
 #include "signalhandle.h"
 #include <libswocclient.h>

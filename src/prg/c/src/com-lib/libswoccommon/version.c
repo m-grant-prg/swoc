@@ -33,7 +33,7 @@
 #include <stdlib.h>
 
 #include <config.h>
-#include <libswoccommon-internal.h>
+#include <libswoccommon.h>
 
 /**
  * Get the git-describe based package version.

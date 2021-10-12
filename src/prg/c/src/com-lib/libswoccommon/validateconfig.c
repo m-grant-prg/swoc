@@ -43,7 +43,7 @@
 #include <configmake.h>
 
 #include <configfile.h>
-#include <libswoccommon-internal.h>
+#include <libswoccommon.h>
 #include <mge-errno.h>
 
 static int validateconfigfileparams(const struct confsection *);

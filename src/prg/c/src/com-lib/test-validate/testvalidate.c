@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <libswoccommon-internal.h>
+#include <libswoccommon.h>
 
 /*
  * Main

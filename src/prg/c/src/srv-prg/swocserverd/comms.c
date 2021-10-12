@@ -95,7 +95,7 @@
 
 #include "internal.h"
 #include <bstree.h>
-#include <libswoccommon-internal.h>
+#include <libswoccommon.h>
 #include <mge-errno.h>
 #include <mgebuffer.h>
 #include <mgemessage.h>

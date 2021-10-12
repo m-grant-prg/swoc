@@ -48,7 +48,7 @@
 #include <sys/types.h>
 #include <syslog.h>
 
-#include <libswoccommon-internal.h>
+#include <libswoccommon.h>
 #include <mge-errno.h>
 #include <mgememory.h>
 

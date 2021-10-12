@@ -3,12 +3,12 @@
  *
  * Command line argument processing for swocserver using getopt_long.
  *
- * @author Copyright (C) 2015-2019  Mark Grant
+ * @author Copyright (C) 2015-2019, 2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.7 ==== 02/06/2019_
+ * @version _v1.1.8 ==== 11/10/2021_
  */
 
 /* **********************************************************************
@@ -53,6 +53,7 @@
  * 22/05/2018	MG	1.1.5	Change from swocserver.h to internal.h	*
  * 18/05/2019	MG	1.1.6	Merge sub-projects into one.		*
  * 02/06/2019	MG	1.1.7	Remove duplicated if statements.	*
+ * 11/10/2021	MG	1.1.8	Use tree-wide cmdlineargs.h.		*
  *									*
  ************************************************************************
  */
@@ -66,8 +67,6 @@
 
 #include "internal.h"
 #include <cmdlineargs.h>
-
-static int cpyarg(char *flagarg, char *srcarg);
 
 /**
  * Process command line arguments using getopt_long.
@@ -313,7 +312,7 @@ int process_cla(int argc, char **argv, ...)
 /*
  * Function to copy optarg to the flag struct member argument.
  */
-static int cpyarg(char *flagarg, char *srcarg)
+int cpyarg(char *flagarg, char *srcarg)
 {
 	if (ARG_BUF > strlen(srcarg)) {
 		strcpy(flagarg, srcarg);
@@ -323,4 +322,3 @@ static int cpyarg(char *flagarg, char *srcarg)
 		return EX_USAGE;
 	}
 }
-

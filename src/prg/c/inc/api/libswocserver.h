@@ -1,14 +1,14 @@
 /**
- * @file src/prg/c/inc/srv-dev/libswocserver.h
+ * @file src/prg/c/inc/api/libswocserver.h
  *
  * Header file for Server Wait on Clients server-side library.
  *
- * @author Copyright (C) 2016-2019  Mark Grant
+ * @author Copyright (C) 2016-2019, 2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.12 ==== 18/05/2019_
+ * @version _v1.0.13 ==== 11/10/2021_
  */
 
 /* **********************************************************************
@@ -43,6 +43,7 @@
  *				Add client block and unblock.		*
  *				Add server block and unblock.		*
  * 18/05/2019	MG	1.0.12	Merge sub-projects into one.		*
+ * 11/10/2021	MG	1.0.13	Move to api directory.			*
  *									*
  ************************************************************************
  */

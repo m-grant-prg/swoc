@@ -40,6 +40,5 @@
 
 noinst_HEADERS = $(tmpheaders)
 
-EXTRA_HEADERS = bstree.h libswoccommon-internal.h mgebuffer.h mge-errno.h \
-		mgemessage.h
+EXTRA_HEADERS = bstree.h libswoccommon.h mgebuffer.h mge-errno.h mgemessage.h
 

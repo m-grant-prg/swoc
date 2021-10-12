@@ -177,6 +177,8 @@
 # 09/10/2021	MG	1.2.8	Capitalise MG_CFLAGS variable.		#
 #				Make use of new CPPFLAGS macro.		#
 #				Make use of new linker macro.		#
+# 11/10/2021	MG	1.2.9	Rationalise header directory to API and	#
+#				internal.				#
 #									#
 #########################################################################
 
@@ -187,7 +189,7 @@
 #					#
 #########################################
 
-AC_REVISION($Revision: 1.2.8 $)
+AC_REVISION($Revision: 1.2.9 $)
 
 AC_PREREQ(2.69)
 
@@ -840,10 +842,8 @@ AC_CONFIG_FILES(Makefile
 		src/prg/bash/com-lib/Makefile
 		src/prg/bash/srv-prg/Makefile
 		src/prg/c/gen/lib/Makefile
-		src/prg/c/inc/cli-dev/Makefile
-		src/prg/c/inc/com-dev/Makefile
-		src/prg/c/inc/srv-dev/Makefile
-		src/prg/c/inc/srv-prg/Makefile
+		src/prg/c/inc/api/Makefile
+		src/prg/c/inc/internal/Makefile
 		src/prg/c/inc-tmp/Makefile
 		src/prg/c/lib-tmp/Makefile
 		src/prg/c/pkg-config/cli-dev/Makefile

@@ -68,6 +68,8 @@
 #				the search in configure.ac.		#
 # 14/08/2021	MG	1.1.12	Add systemd action ordering comment.	#
 #				Add doc/misc and misc to DIST.		#
+# 11/10/2021	MG	1.1.13	Rationalise header directory to API and	#
+#				internal.				#
 #									#
 #########################################################################
 
@@ -103,23 +105,21 @@ SUBDIRS += src/prg/bash/srv-prg
 SUBDIRS += src/prg/c/inc-tmp
 SUBDIRS += src/prg/c/lib-tmp
 SUBDIRS += src/prg/c/gen/lib
-SUBDIRS += src/prg/c/inc/com-dev
+SUBDIRS += src/prg/c/inc/api
+SUBDIRS += src/prg/c/inc/internal
 SUBDIRS += src/prg/c/pkg-config/com-dev
 SUBDIRS += src/prg/c/src/com-lib/libswoccommon
 SUBDIRS += src/prg/c/src/com-lib/test-messages
 SUBDIRS += src/prg/c/src/com-lib/test-ssh
 SUBDIRS += src/prg/c/src/com-lib/test-tcp
 SUBDIRS += src/prg/c/src/com-lib/test-validate
-SUBDIRS += src/prg/c/inc/cli-dev
 SUBDIRS += src/prg/c/pkg-config/cli-dev
 SUBDIRS += src/prg/c/src/cli-lib/libswocclient
 SUBDIRS += src/prg/c/src/cli-lib/test-optionproc
-SUBDIRS += src/prg/c/inc/srv-dev
 SUBDIRS += src/prg/c/pkg-config/srv-dev
 SUBDIRS += src/prg/c/src/srv-lib/libswocserver
 SUBDIRS += src/prg/c/src/srv-lib/test-optionproc
 SUBDIRS += src/prg/c/src/cli-prg/swocclient
-SUBDIRS += src/prg/c/inc/srv-prg
 
 # systemd requires the ordering of certain actions, so:-
 # Install

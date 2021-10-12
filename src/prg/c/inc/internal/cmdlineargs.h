@@ -1,14 +1,14 @@
 /**
- * @file src/prg/c/src/cli-prg/swocclient/cmdlineargs.h
+ * @file src/prg/c/inc/internal/cmdlineargs.h
  *
  * Header file for command line processing.
  *
- * @author Copyright (C) 2015-2020  Mark Grant
+ * @author Copyright (C) 2015-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.9 ==== 27/03/2020_
+ * @version _v1.0.10 ==== 11/10/2021_
  */
 
 /* **********************************************************************
@@ -34,6 +34,8 @@
  *				same accross the source tree for	*
  *				temporary libraries to work based on	*
  *				the search in configure.ac.		*
+ * 11/10/2021	MG	1.0.10	Move to internal directory.		*
+ *				Merge server and client versions.	*
  *									*
  ************************************************************************
  */

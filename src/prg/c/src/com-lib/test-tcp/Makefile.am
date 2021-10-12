@@ -36,13 +36,15 @@
 # 09/10/2021	MG	1.0.8	Use CFLAGS from configure.		#
 #				Use CPPFLAGS prepared by configure.	#
 #				Use LDFLAGS prepared by configure.	#
+# 11/10/2021	MG	1.0.9	Use api and internal header directories.#
 #									#
 #########################################################################
 
 
 AM_CPPFLAGS = $(MG_CPPFLAGS)
 AM_CPPFLAGS += -I$(srcdir)/../../../inc-tmp
-AM_CPPFLAGS += -I$(srcdir)/../../../inc/com-dev
+AM_CPPFLAGS += -I$(srcdir)/../../../inc/api
+AM_CPPFLAGS += -I$(srcdir)/../../../inc/internal
 AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
 
 

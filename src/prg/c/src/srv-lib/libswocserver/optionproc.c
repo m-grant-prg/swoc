@@ -92,7 +92,7 @@
 	#define __bool_true_false_are_defined 1
 #endif
 
-#include <libswoccommon-internal.h>
+#include <libswoccommon.h>
 #include <libswocserver.h>
 #include <mge-errno.h>
 #include <mgemessage.h>

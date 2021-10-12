@@ -3,12 +3,12 @@
  *
  * Command line argument processing for swocclient using getopt_long.
  *
- * @author Copyright (C) 2015-2020  Mark Grant
+ * @author Copyright (C) 2015-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.1.8 ==== 27/03/2020_
+ * @version _v1.1.9 ==== 11/10/2021_
  */
 
 /* **********************************************************************
@@ -44,6 +44,7 @@
  *				same accross the source tree for	*
  *				temporary libraries to work based on	*
  *				the search in configure.ac.		*
+ * 11/10/2021	MG	1.1.9	Move cmdlineargs.h to inc directory.	*
  *									*
  ************************************************************************
  */
@@ -54,7 +55,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "cmdlineargs.h"
+#include <cmdlineargs.h>
 #include "internal.h"
 
 /**

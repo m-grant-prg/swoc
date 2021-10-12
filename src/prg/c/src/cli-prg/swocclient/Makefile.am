@@ -67,14 +67,16 @@
 # 09/10/2021	MG	1.0.24	Capitalise MG_CFLAGS variable.		#
 #				Use CPPFLAGS prepared by configure.	#
 #				Use LDFLAGS prepared by configure.	#
+# 11/10/2021	MG	1.0.25	Move cmdlineargs.h to inc directory.	#
+#				Move signalhandle.h to inc directorry.	#
 #									#
 #########################################################################
 
 
 AM_CPPFLAGS = $(MG_CPPFLAGS)
 AM_CPPFLAGS += -I$(srcdir)/../../../inc-tmp
-AM_CPPFLAGS += -I$(srcdir)/../../../inc/com-dev
-AM_CPPFLAGS += -I$(srcdir)/../../../inc/cli-dev
+AM_CPPFLAGS += -I$(srcdir)/../../../inc/api
+AM_CPPFLAGS += -I$(srcdir)/../../../inc/internal
 AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
 
 
@@ -93,7 +95,7 @@ AM_CFLAGS += -Wsparse-all -Wno-vla
 endif
 
 
-noinst_HEADERS = internal.h cmdlineargs.h signalhandle.h
+noinst_HEADERS = internal.h
 
 
 sbin_PROGRAMS = swocclient

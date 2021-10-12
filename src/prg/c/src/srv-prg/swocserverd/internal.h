@@ -72,7 +72,7 @@
 #endif
 
 #include <bstree.h>
-#include <libswoccommon-internal.h>
+#include <libswoccommon.h>
 #include <mgemessage.h>
 #include <portability.h>
 
