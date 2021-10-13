@@ -3,12 +3,12 @@
  *
  * Command line argument processing for swocserverd using getopt_long.
  *
- * @author Copyright (C) 2016-2019  Mark Grant
+ * @author Copyright (C) 2016-2019, 2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.6 ==== 18/05/2019_
+ * @version _v1.0.7 ==== 13/10/2021_
  */
 
 /* **********************************************************************
@@ -25,6 +25,7 @@
  *				with NULL. (fixes sparse warnings).	*
  * 22/05/2018	MG	1.0.5	Change from swocserverd.h to internal.h	*
  * 18/05/2019	MG	1.0.6	Merge sub-projects into one.		*
+ * 13/10/2021	MG	1.0.7	Eliminate a Doxygen warning.		*
  *									*
  ************************************************************************
  */
@@ -41,9 +42,14 @@
  * Process command line arguments using getopt_long.
  * @param argc The standard CLA argc.
  * @param argv The standard CLA argv.
- * @param ... No further args. Here due to shared prototype.
+ * @param ... Variable number of flag structs.
  * @return 0 on success, on failure standard EX_USAGE (64) command line  usage
  * error.
+ */
+/*
+ * The variable number of flag structs parameter above is not used in this
+ * implementation. The Doxygen comment must be present to avoid Doxygen
+ * warnings.
  */
 int process_cla(int argc, char **argv, ...)
 {
