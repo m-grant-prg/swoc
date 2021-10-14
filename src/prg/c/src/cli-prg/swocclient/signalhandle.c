@@ -20,7 +20,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.9 ==== 11/10/2021_
+ * @version _v1.0.10 ==== 14/10//2021_
  */
 
 /* **********************************************************************
@@ -48,6 +48,7 @@
  *				temporary libraries to work based on	*
  *				the search in configure.ac.		*
  * 11/10/2021	MG	1.0.9	Move signalhandle.h to internal inc.	*
+ * 14/10/2021	MG	1.0.10	Eliminate -Wunused-result warnings.	*
  *									*
  ************************************************************************
  */
@@ -203,7 +204,10 @@ void termination_handler(int signum)
 
 	strcat(msg, locks_held);
 	strcat(msg, " locks held.\n");
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-result"
 	write(STDERR_FILENO, msg, strlen(msg));
+#pragma GCC diagnostic pop
 
 	/*
 	 * If the default signal should not be raised as the handler exits then
