@@ -21,7 +21,7 @@
 /*
  * tcp test program.
  */
-int main(int argc, char **argv)
+int main(void)
 {
 	int prog_error = 0;
 	int recv_socket, send_socket;

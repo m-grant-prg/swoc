@@ -22,7 +22,7 @@
 /*
  * ssh test program.
  */
-int main(int argc, char **argv)
+int main(void)
 {
 	int prog_error = 0;
 	char *outgoing_msg = "swocserver,status;";
