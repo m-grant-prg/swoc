@@ -15,12 +15,12 @@
  * > SIGCONT\n
  * > SIGTSTP (Ctrl-Z)
  *
- * @author Copyright (C) 2015-2019  Mark Grant
+ * @author Copyright (C) 2015-2019, 2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.6 ==== 18/05/2019_
+ * @version _v1.0.7 ==== 13/10/2021_
  */
 
 /* **********************************************************************
@@ -40,6 +40,7 @@
  *				Improve error handling.			*
  *				Improve comments.			*
  * 18/05/2019	MG	1.0.6	Merge sub-projects into one.		*
+ * 13/10/2021	MG	1.0.7	Eliminate -Wunused-result warnings.	*
  *									*
  ************************************************************************
  */
@@ -195,8 +196,10 @@ void termination_handler(int signum)
 
 	strcat(msg, locks_held);
 	strcat(msg, " clients have locks.\n");
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-result"
 	write(STDERR_FILENO, msg, strlen(msg));
-
+#pragma GCC diagnostic pop
 	/*
 	 * If the default signal should not be raised as the handler exits then
 	 * return.
