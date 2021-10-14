@@ -280,7 +280,7 @@ static int verify_knownhost(void)
 			       "answer yes to trust this key question");
 			goto exit_2;
 		}
-		res = ssh_write_knownhost(ssh_sess);
+		res = ssh_session_update_known_hosts(ssh_sess);
 		if (res == SSH_ERROR) {
 			res = -1;
 			mge_errno = MGE_SSH;
