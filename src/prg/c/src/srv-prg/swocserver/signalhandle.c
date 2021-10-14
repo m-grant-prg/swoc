@@ -200,6 +200,7 @@ void termination_handler(int signum)
 #pragma GCC diagnostic ignored "-Wunused-result"
 	write(STDERR_FILENO, msg, strlen(msg));
 #pragma GCC diagnostic pop
+
 	/*
 	 * If the default signal should not be raised as the handler exits then
 	 * return.
