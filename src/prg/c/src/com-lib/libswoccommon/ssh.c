@@ -11,7 +11,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.8 ==== 10/10/2021_
+ * @version _v1.0.9 ==== 14/10/2021_
  */
 
 /* **********************************************************************
@@ -34,6 +34,7 @@
  * 09/11/2019	MG	1.0.7	Use ssh_get_server_publickey() AOT	*
  *				deprecated ssh_get_publickey().		*
  * 10/10/2021	MG	1.0.8	Use newly internalised common header.	*
+ * 14/10/2021	MG	1.0.9	Replace deprecated functions.		*
  *									*
  ************************************************************************
  */
@@ -197,15 +198,15 @@ exit_0:
  */
 static int verify_knownhost(void)
 {
-	int res;
-	int state;
-	size_t hlen;
-	ssh_key serv_key;
+	enum ssh_known_hosts_e state;
 	unsigned char *hash = NULL;
 	char *hexa = NULL;
+	ssh_key serv_key;
 	char buf[10];
+	size_t hlen;
+	int res;
 
-	state = ssh_is_server_known(ssh_sess);
+	state = ssh_session_is_known_server(ssh_sess);
 
 	res = ssh_get_server_publickey(ssh_sess, &serv_key);
 	if (res == SSH_ERROR) {
@@ -229,16 +230,16 @@ static int verify_knownhost(void)
 	}
 
 	switch (state) {
-	case SSH_SERVER_KNOWN_OK:
+	case SSH_KNOWN_HOSTS_OK:
 		break; /* ok */
-	case SSH_SERVER_KNOWN_CHANGED:
+	case SSH_KNOWN_HOSTS_CHANGED:
 		res = -1;
 		mge_errno = MGE_SSH;
 		syslog((int)(LOG_USER | LOG_NOTICE),
 		       "Host key for server "
 		       "changed. Stopping for security reasons.");
 		goto exit_1;
-	case SSH_SERVER_FOUND_OTHER:
+	case SSH_KNOWN_HOSTS_OTHER:
 		res = -1;
 		mge_errno = MGE_SSH;
 		syslog((int)(LOG_USER | LOG_NOTICE),
@@ -246,12 +247,12 @@ static int verify_knownhost(void)
 		       "server was not found but another type of key exists. "
 		       "Stopping for security reasons.");
 		goto exit_1;
-	case SSH_SERVER_FILE_NOT_FOUND:
+	case SSH_KNOWN_HOSTS_NOT_FOUND:
 		fprintf(stderr, "Could not find known host file.\n");
 		fprintf(stderr, "If you accept the host key here, the file "
 				"will be automatically created.\n");
 		/* fallthrough */
-	case SSH_SERVER_NOT_KNOWN:
+	case SSH_KNOWN_HOSTS_UNKNOWN:
 		hexa = ssh_get_hexa(hash, hlen);
 		if (hexa == NULL) {
 			res = -1;
@@ -290,7 +291,7 @@ static int verify_knownhost(void)
 			goto exit_2;
 		}
 		break;
-	case SSH_SERVER_ERROR:
+	case SSH_KNOWN_HOSTS_ERROR:
 		res = -1;
 		mge_errno = MGE_SSH;
 		syslog((int)(LOG_USER | LOG_NOTICE), "Error - %s",
@@ -506,4 +507,3 @@ err_exit_0:
 	syslog((int)(LOG_USER | LOG_NOTICE), "SSH tunnel data relay error.");
 	return retval;
 }
-
