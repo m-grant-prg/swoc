@@ -5,12 +5,12 @@
  * Daemon to enable a server to manage client locks and wait on the removal of
  * those locks prior to further server processing.
  *
- * @author Copyright (C) 2016-2020  Mark Grant
+ * @author Copyright (C) 2016-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0
  *
- * @version _v1.0.18 ==== 09/03/2020_
+ * @version _v1.0.19 ==== 13/10/2021_
  */
 
 /* **********************************************************************
@@ -63,6 +63,7 @@
  * 01/06/2019	MG	1.0.17	Use standard GNU ifdeffery around use	*
  *				of AC_HEADER_STDBOOL.			*
  * 09/03/2020	MG	1.0.18	Initialise client.			*
+ * 13/10/2021	MG	1.0.19	Eliminate -Wunused-result warnings.	*
  *									*
  ************************************************************************
  */
@@ -239,8 +240,8 @@ b4_cli_locks:
  */
 static void daemonise(void)
 {
-	pid_t pid, sid;
 	char *pidfile = RUNSTATEDIR "/swocserverd.pid";
+	pid_t pid, sid;
 	char spid[256];
 	FILE *fp;
 
@@ -296,9 +297,12 @@ static void daemonise(void)
 	 * re-direct them to /dev/null. This is because epoll_wait silently
 	 * does not work as intended if these file descriptors are re-used.
 	 */
-	freopen("/dev/null", "r", stdin);
-	freopen("/dev/null", "w", stdout);
-	freopen("/dev/null", "w", stderr);
+	if (freopen("/dev/null", "r", stdin) == NULL)
+		syslog((int)(LOG_USER | LOG_NOTICE), "stdin freopen error.");
+	if (freopen("/dev/null", "w", stdout) == NULL)
+		syslog((int)(LOG_USER | LOG_NOTICE), "stdout freopen error.");
+	if (freopen("/dev/null", "w", stderr) == NULL)
+		syslog((int)(LOG_USER | LOG_NOTICE), "stderr freopen error.");
 	syslog((int)(LOG_USER | LOG_NOTICE), "Daemon started successfully.");
 }
 
@@ -312,4 +316,3 @@ static int csscmp(const struct comm_spec *first, const struct comm_spec *last)
 		return 0;
 	return first->socketfd < last->socketfd ? -1 : 1;
 }
-
