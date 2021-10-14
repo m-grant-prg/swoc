@@ -35,6 +35,7 @@
  *				deprecated ssh_get_publickey().		*
  * 10/10/2021	MG	1.0.8	Use newly internalised common header.	*
  * 14/10/2021	MG	1.0.9	Replace deprecated functions.		*
+ *				Eliminate -Wsign-conversion warnings.	*
  *									*
  ************************************************************************
  */
@@ -330,22 +331,22 @@ static int try_auth_methods_seq(void)
 
 	method = ssh_userauth_list(ssh_sess, NULL);
 
-	if (method & SSH_AUTH_METHOD_PUBLICKEY) {
+	if ((unsigned int)method & SSH_AUTH_METHOD_PUBLICKEY) {
 		res = ssh_userauth_publickey_auto(ssh_sess, NULL, NULL);
 		if (res == SSH_AUTH_SUCCESS)
 			return 0;
 	}
-	if (method & SSH_AUTH_METHOD_INTERACTIVE) {
+	if ((unsigned int)method & SSH_AUTH_METHOD_INTERACTIVE) {
 		res = authenticate_kbdint();
 		if (res == SSH_AUTH_SUCCESS)
 			return 0;
 	}
-	if (method & SSH_AUTH_METHOD_PASSWORD) {
+	if ((unsigned int)method & SSH_AUTH_METHOD_PASSWORD) {
 		res = authenticate_password();
 		if (res == SSH_AUTH_SUCCESS)
 			return 0;
 	}
-	if (method & SSH_AUTH_METHOD_NONE) {
+	if ((unsigned int)method & SSH_AUTH_METHOD_NONE) {
 		res = ssh_userauth_none(ssh_sess, NULL);
 		if (res == SSH_AUTH_SUCCESS)
 			return 0;
