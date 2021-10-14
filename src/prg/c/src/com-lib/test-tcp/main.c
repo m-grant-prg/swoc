@@ -25,7 +25,7 @@ int main(void)
 {
 	int prog_error = 0;
 	int recv_socket, send_socket;
-	char *server = "localhost";
+	char *srv = "localhost";
 	int portno = 62523;
 
 	printf("Recv socket.\n");
@@ -39,7 +39,7 @@ int main(void)
 
 	printf("Send socket.\n");
 	portno = 62522;
-	prog_error = init_conn(&send_socket, &portno, server);
+	prog_error = init_conn(&send_socket, &portno, srv);
 
 	if (prog_error)
 		printf("init_conn error - %i\n", prog_error);
