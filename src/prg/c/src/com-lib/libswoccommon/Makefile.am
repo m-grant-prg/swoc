@@ -54,6 +54,7 @@
 #				Use CPPFLAGS prepared by configure.	#
 #				Use LDFLAGS prepared by configure.	#
 # 11/10/2021	MG	1.0.16	Use api and internal header directories.#
+# 15/10/2021	MG	1.0.17	Change debug optimisation to -O0	#
 #									#
 #########################################################################
 
@@ -74,7 +75,7 @@ AM_CFLAGS += $(PTHREAD_CFLAGS)
 AM_CFLAGS += $(LIBMGEC_CFLAGS) $(LIBMGESYSUTILS_CFLAGS)
 AM_CFLAGS += $(LIBSSH_CFLAGS)
 if DEBUG
-AM_CFLAGS += -ggdb3 -Og
+AM_CFLAGS += -ggdb3 -O0
 else
 AM_CFLAGS += -O2
 endif
