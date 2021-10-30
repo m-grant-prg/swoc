@@ -1,3 +1,61 @@
+2021-10-30 v1.5.1 Mark Grant <m.grant.prg@gmail.com>
+	* doc: Expand branch / Distro release explanation
+	at: Upgrade gen-gnulib.sh to v1.0.2
+	at: Change debug optimisation to -O0
+	at: Update c-compiler macros to v1.0.9
+	com-lib: tests: Clear shadowed variable warning
+	tests: Clear unused parameters warnings
+	actions: New minimum build platform of focal
+	srv-prg: Add missing new line
+	com-lib: Eliminate -Wsign-conversion warnings
+	cli-prg: Silence -Wunused-result warning
+	com-lib: Replace deprecated ssh_write_knownhost()
+	cpm-lib: Replace deprecated ssh_is_server_known()
+	com-lib: Eliminate -Wsign-conversion warnings
+	cli-prg: Silence -Wunused-result warning
+	com-lib: Replace deprecated ssh_write_knownhost()
+	cpm-lib: Replace deprecated ssh_is_server_known()
+	srv-prg: Silence -Wunused-result warnings
+	srv-prg: Silence -Wunused-result warnings
+	srv-prg: Eliminate a Doxygen warning.
+	at: Rationalise headers to api and internal directories
+	com-dev: clang-format cleanup
+	com-dev: Remove unnecessary include
+	com-dev: Internalise libswoccommon header
+	doc: Update config file after Doxygen upgrade
+	at: Use LDFLAGS prepared by configure
+	at: Add linker macro
+	at: Use CPPFLAGS prepared in configure
+	tests: Use CFLAGS from configure
+	at: General README update
+	at: Capitalise var names in configure and Makefiles
+	doc: Bionic is based on v1.4.y branch
+	at: gnulib update for bullseye
+	doc: Add branch / distro-release notes
+	git: Upgrade gitignore to v1.0.5
+	doc: Add gnulib setup notes
+	lxcu: Add support for Fedora and openSUSE
+	at: Trivial date format correction
+	systemd: Add security hardening
+	doc: Add doc-base installation notes
+	doc: Add AT Installation notes
+	at: README: Add ldconfig instruction
+	doc: Use better directory name misc
+	at: Tidy up comments
+	doc: Add debugging notes
+	at: systemd: Comment the systemd ordering reqs
+	at: docs: Move source files to src
+	at: Update AT install section for enable-atonly
+	at: Register docs with scrollkeeper only if ATONLY
+	docs: Document field DOCID must be lower case
+	systemd: Add daemon reload command
+	doc: Add package version to PROJECT_NUMBER
+	git: Add gitattribites file
+	git: Add git mailmap file
+	at: Upgrade bootstrap.sh to v1.4.9
+	travis: Stop using Travis
+	actions: Initial build action setup
+
 2020-10-29 v1.4.1 Mark Grant <m.grant.prg@gmail.com>
 	*  swocserverd source v1.0.8
 	swocserverd: Replace sys_siglist[] with strsignal()
