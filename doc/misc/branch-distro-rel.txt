@@ -12,7 +12,8 @@ Branch	Known Distro Releases	Distro-Rel EOL		Branch EOL
 tip
 	bullseye		June 2026
 	focal			April 2025
-	34
+	35
+	34			May 2022
 	15.3			November 2022
 v1.4.y							June 2024
 	buster			June 2024
