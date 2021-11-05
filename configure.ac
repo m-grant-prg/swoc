@@ -179,6 +179,7 @@
 #				Make use of new linker macro.		#
 # 11/10/2021	MG	1.2.9	Rationalise header directory to API and	#
 #				internal.				#
+# 05/11/2021	MG	1.2.10	Add Canonical target for pthread macro.	#
 #									#
 #########################################################################
 
@@ -189,7 +190,7 @@
 #					#
 #########################################
 
-AC_REVISION($Revision: 1.2.9 $)
+AC_REVISION($Revision: 1.2.10 $)
 
 AC_PREREQ(2.69)
 
@@ -226,6 +227,11 @@ AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.8", \
 
 AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.10", \
 	Define to the version of source code for the server daemon.)
+
+#
+# Canonical targets are required by AX_PTHREAD.
+#
+AC_CANONICAL_TARGET
 
 #
 # Passes the options to all am files. Puts objects in the sub-directory
