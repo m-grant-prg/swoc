@@ -38,22 +38,27 @@
 #				Use LDFLAGS prepared by configure.	#
 # 11/10/2021	MG	1.0.11	Use api and internal header directories.#
 # 15/10/2021	MG	1.0.12	Change debug optimisation to -O0	#
+# 05/11/2021	MG	1.0.13	Use (non-)debug CPPFLAGS from configure	#
+#				Use (non-)debug CFLAGS from configure	#
 #									#
 #########################################################################
 
 
+if DEBUG
+AM_CPPFLAGS = $(MG_DEBUG_CPPFLAGS)
+else
 AM_CPPFLAGS = $(MG_CPPFLAGS)
+endif
 AM_CPPFLAGS += -I$(srcdir)/../../../inc-tmp
 AM_CPPFLAGS += -I$(srcdir)/../../../inc/api
 AM_CPPFLAGS += -I$(srcdir)/../../../inc/internal
 AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
 
 
-AM_CFLAGS = $(MG_CFLAGS)
 if DEBUG
-AM_CFLAGS += -ggdb3 -O0
+AM_CFLAGS = $(MG_DEBUG_CFLAGS)
 else
-AM_CFLAGS += -O2
+AM_CFLAGS = $(MG_CFLAGS)
 endif
 
 

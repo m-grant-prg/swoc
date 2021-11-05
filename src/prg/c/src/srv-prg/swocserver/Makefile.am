@@ -71,23 +71,27 @@
 #				Use LDFLAGS prepared by configure.	#
 # 11/10/2021	MG	1.1.13	Use api and internal header directories.#
 # 15/10/2021	MG	1.1.14	Change debug optimisation to -O0	#
+# 05/11/2021	MG	1.1.15	Use (non-)debug CPPFLAGS from configure	#
+#				Use (non-)debug CFLAGS from configure	#
 #									#
 #########################################################################
 
 
+if DEBUG
+AM_CPPFLAGS = $(MG_DEBUG_CPPFLAGS)
+else
 AM_CPPFLAGS = $(MG_CPPFLAGS)
+endif
 AM_CPPFLAGS += -I$(srcdir)/../../../inc-tmp
 AM_CPPFLAGS += -I$(srcdir)/../../../inc/api
 AM_CPPFLAGS += -I$(srcdir)/../../../inc/internal
 AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
 
 
-AM_CFLAGS = $(MG_CFLAGS)
-AM_CFLAGS += $(LIBSWOCSERVER_CFLAGS) $(LIBMGEC_CFLAGS)
 if DEBUG
-AM_CFLAGS += -ggdb3 -O0
+AM_CFLAGS = $(MG_DEBUG_CFLAGS)
 else
-AM_CFLAGS += -O2
+AM_CFLAGS = $(MG_CFLAGS)
 endif
 if HEADERCHECK
 AM_CFLAGS += -H
@@ -95,6 +99,7 @@ endif
 if SPARSE
 AM_CFLAGS += -Wsparse-all -Wno-vla
 endif
+AM_CFLAGS += $(LIBSWOCSERVER_CFLAGS) $(LIBMGEC_CFLAGS)
 
 
 noinst_HEADERS = internal.h

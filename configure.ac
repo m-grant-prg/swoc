@@ -180,6 +180,8 @@
 # 11/10/2021	MG	1.2.9	Rationalise header directory to API and	#
 #				internal.				#
 # 05/11/2021	MG	1.2.10	Add Canonical target for pthread macro.	#
+#				Create debug version of flags where	#
+#				necessary.				#
 #									#
 #########################################################################
 
@@ -618,9 +620,9 @@ AC_C_RESTRICT
 # Check for threading libraries, compiler and linker flags.
 AX_PTHREAD(, AC_MSG_ERROR(thread information not found))
 
-# Build a suitable CFLAGS list depending on compiler version.
-BUILD_COMPILER_VERSION_CPPFLAGS(MG_CPPFLAGS)
-BUILD_COMPILER_VERSION_CFLAGS(MG_CFLAGS)
+# Build suitable pre-processor, compiler and linker flags.
+BUILD_COMPILER_VERSION_CPPFLAGS(MG_CPPFLAGS, MG_DEBUG_CPPFLAGS)
+BUILD_COMPILER_VERSION_CFLAGS(MG_CFLAGS, MG_DEBUG_CFLAGS)
 BUILD_LDFLAGS(MG_LDFLAGS)
 
 
