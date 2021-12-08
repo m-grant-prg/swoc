@@ -182,10 +182,11 @@
 # 05/11/2021	MG	1.2.10	Add Canonical target for pthread macro.	#
 #				Create debug version of flags where	#
 #				necessary.				#
-# 07/12/2021	MG	1.2.11	If git is available and we are inside a	#
+# 08/12/2021	MG	1.2.11	If git is available and we are inside a	#
 #				git tree then use git describe to add	#
 #				further package version information.	#
 #				Tighten SPDX tag.			#
+#				Add AC_COPYRIGHT macro.			#
 #									#
 #########################################################################
 
@@ -195,6 +196,10 @@
 # SECTION  1: Initialisation & Setup	#
 #					#
 #########################################
+
+AC_COPYRIGHT([Copyright (C) 2015-2021  Mark Grant
+	      This script is free to copy or distribute under the terms set out
+	      in the package license. See COPYING for details.])
 
 AC_REVISION($Revision: 1.2.11 $)
 
