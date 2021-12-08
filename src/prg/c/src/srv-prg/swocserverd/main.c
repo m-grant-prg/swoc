@@ -8,9 +8,9 @@
  * @author Copyright (C) 2016-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
- * SPDX-License-Identifier: GPL-3.0
+ * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.19 ==== 13/10/2021_
+ * @version _v1.0.20 ==== 08/12/2021_
  */
 
 /* **********************************************************************
@@ -64,6 +64,7 @@
  *				of AC_HEADER_STDBOOL.			*
  * 09/03/2020	MG	1.0.18	Initialise client.			*
  * 13/10/2021	MG	1.0.19	Eliminate -Wunused-result warnings.	*
+ * 08/12/2021	MG	1.0.20	Tighten SPDX tag.			*
  *									*
  ************************************************************************
  */

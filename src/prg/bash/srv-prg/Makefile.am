@@ -1,10 +1,10 @@
 #########################################################################
 #									#
 # Script ID: src/prg/bash/srv-prg/Makefile.am				#
-# Author: Copyright (C) 2017-2019  Mark Grant				#
+# Author: Copyright (C) 2017-2019, 2021  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
-# SPDX-License-Identifier: GPL-3.0					#
+# SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
 #	AutoMake script file to generate swocserverd scripts from	#
@@ -32,6 +32,7 @@
 #				(This is more a requirement for		#
 #				downstream packaging but sensible	#
 #				none-the-less).				#
+# 07/12/2021	MG	1.0.7	Tighten SPDX tag.			#
 #									#
 #########################################################################
 

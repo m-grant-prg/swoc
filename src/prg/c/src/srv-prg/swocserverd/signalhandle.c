@@ -15,12 +15,12 @@
  * > SIGCONT\n
  * > SIGTSTP (Ctrl-Z)
  *
- * @author Copyright (C) 2016-2020  Mark Grant
+ * @author Copyright (C) 2016-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
- * SPDX-License-Identifier: GPL-3.0
+ * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.7 ==== 29/10/2020_
+ * @version _v1.0.8 ==== 08/12/2021_
  */
 
 /* **********************************************************************
@@ -41,6 +41,7 @@
  *				strsignal() which is the approved way.	*
  *				(sys_siglist has been renamed and	*
  *				hidden in more recent glibc's).		*
+ * 08/12/2021	MG	1.0.8	Tighten SPDX tag.			*
  *									*
  ************************************************************************
  */

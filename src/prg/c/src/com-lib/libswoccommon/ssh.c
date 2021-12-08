@@ -9,9 +9,9 @@
  * @author Copyright (C) 2017-2019, 2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
- * SPDX-License-Identifier: GPL-3.0
+ * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.9 ==== 14/10/2021_
+ * @version _v1.0.10 ==== 08/12/2021_
  */
 
 /* **********************************************************************
@@ -36,6 +36,7 @@
  * 10/10/2021	MG	1.0.8	Use newly internalised common header.	*
  * 14/10/2021	MG	1.0.9	Replace deprecated functions.		*
  *				Eliminate -Wsign-conversion warnings.	*
+ * 08/12/2021	MG	1.0.10	Tighten SPDX tag.			*
  *									*
  ************************************************************************
  */

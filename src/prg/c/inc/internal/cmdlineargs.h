@@ -6,9 +6,9 @@
  * @author Copyright (C) 2015-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
- * SPDX-License-Identifier: GPL-3.0
+ * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.10 ==== 11/10/2021_
+ * @version _v1.0.11 ==== 08/12/2021_
  */
 
 /* **********************************************************************
@@ -36,6 +36,7 @@
  *				the search in configure.ac.		*
  * 11/10/2021	MG	1.0.10	Move to internal directory.		*
  *				Merge server and client versions.	*
+ * 08/12/2021	MG	1.0.11	Tighten SPDX tag.			*
  *									*
  ************************************************************************
  */

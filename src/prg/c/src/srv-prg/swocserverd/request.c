@@ -3,12 +3,12 @@
  *
  * Request processing functions.
  *
- * @author Copyright (C) 2016-2020  Mark Grant
+ * @author Copyright (C) 2016-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
- * SPDX-License-Identifier: GPL-3.0
+ * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.22 ==== 21/03/2020_
+ * @version _v1.0.23 ==== 08/12/2021_
  */
 
 /* **********************************************************************
@@ -67,6 +67,7 @@
  * 21/03/2020	MG	1.0.22	Add id request type and use it to set	*
  *				the client name. Due to always getting	*
  *				localhost when over an SSH tunnel.	*
+ * 08/12/2021	MG	1.0.23	Tighten SPDX tag.			*
  *									*
  ************************************************************************
  */

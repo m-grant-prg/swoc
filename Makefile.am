@@ -4,7 +4,7 @@
 # Author: Copyright (C) 2015-2021  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
-# SPDX-License-Identifier: GPL-3.0					#
+# SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
 #	AutoMake script file to generate SWOCServer-C project from	#
@@ -70,6 +70,7 @@
 #				Add doc/misc and misc to DIST.		#
 # 11/10/2021	MG	1.1.13	Rationalise header directory to API and	#
 #				internal.				#
+# 07/12/2021	MG	1.1.14	Tighten SPDX tag.			#
 #									#
 #########################################################################
 

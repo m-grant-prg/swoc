@@ -6,9 +6,9 @@
  * @author Copyright (C) 2016-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
- * SPDX-License-Identifier: GPL-3.0
+ * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.17 ==== 10/10/2021_
+ * @version _v1.0.18 ==== 08/12/2021_
  */
 
 /* **********************************************************************
@@ -45,6 +45,7 @@
  *				of AC_HEADER_STDBOOL.			*
  * 14/03/2020	MG	1.0.16	Add support for id_req.			*
  * 10/10/2021	MG	1.0.17	Use newly internalised common header.	*
+ * 08/12/2021	MG	1.0.18	Tighten SPDX tag.			*
  *									*
  ************************************************************************
  */

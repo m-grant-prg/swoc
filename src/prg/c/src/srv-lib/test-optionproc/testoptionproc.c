@@ -7,7 +7,7 @@
  *	To test the options functions.					*
  * 									*
  * Released under the GPLv3 only.					*
- * SPDX-License-Identifier: GPL-3.0					*
+ * SPDX-License-Identifier: GPL-3.0-only				*
  *									*
  ************************************************************************
  */

@@ -6,9 +6,9 @@
  * @author Copyright (C) 2017-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
- * SPDX-License-Identifier: GPL-3.0
+ * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.1 ==== 11/10/2021_
+ * @version _v1.1.2 ==== 08/12/2021_
  */
 
 /* **********************************************************************
@@ -34,6 +34,7 @@
  * 15/03/2020	MG	1.0.9	Add swocid request type.		*
  * 10/10/2021	MG	1.1.0	Make file internal, tightening API.	*
  * 11/10/2021	MG	1.1.1	Move to internal directory.		*
+ * 08/12/2021	MG	1.1.2	Tighten SPDX tag.			*
  *									*
  ************************************************************************
  */

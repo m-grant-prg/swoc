@@ -6,9 +6,9 @@
  * @author Copyright (C) 2017-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
- * SPDX-License-Identifier: GPL-3.0
+ * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.13 ==== 10/10/2021_
+ * @version _v1.1.14 ==== 08/12/2021_
  */
 
 /* **********************************************************************
@@ -48,6 +48,7 @@
  * 21/03/2020	MG	1.1.12	Add support for sending an id message	*
  *				before the requested message.		*
  * 10/10/2021	MG	1.1.13	Use newly internal common header.	*
+ * 08/12/2021	MG	1.1.14	Tighten SPDX tag.			*
  *									*
  ************************************************************************
  */

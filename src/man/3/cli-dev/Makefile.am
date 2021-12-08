@@ -1,10 +1,10 @@
 #########################################################################
 #									#
 # Script ID: src/man/3/cli-dev/Makefile.am				#
-# Author: Copyright (C) 2016-2019  Mark Grant				#
+# Author: Copyright (C) 2016-2019, 2021  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
-# SPDX-License-Identifier: GPL-3.0					#
+# SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
 #	AutoMake script file to generate libswocclient manual pages	#
@@ -34,6 +34,7 @@
 # 18/05/2018	MG	1.0.8	Add swc_show_srv_block_status.3		#
 # 19/05/2019	MG	1.0.9	Merge sub-projects into one.		#
 #				Remove shebang.				#
+# 07/12/2021	MG	1.0.10	Tighten SPDX tag.			#
 #									#
 #########################################################################
 

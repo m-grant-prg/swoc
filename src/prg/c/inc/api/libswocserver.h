@@ -6,9 +6,9 @@
  * @author Copyright (C) 2016-2019, 2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
- * SPDX-License-Identifier: GPL-3.0
+ * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.13 ==== 11/10/2021_
+ * @version _v1.0.14 ==== 08/12/2021_
  */
 
 /* **********************************************************************
@@ -44,6 +44,7 @@
  *				Add server block and unblock.		*
  * 18/05/2019	MG	1.0.12	Merge sub-projects into one.		*
  * 11/10/2021	MG	1.0.13	Move to api directory.			*
+ * 08/12/2021	MG	1.0.14	Tighten SPDX tag.			*
  *									*
  ************************************************************************
  */

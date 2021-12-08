@@ -1,10 +1,10 @@
 #########################################################################
 #									#
 # Script ID: src/man/8/srv-prg/Makefile.am				#
-# Author: Copyright (C) 2015-2019  Mark Grant				#
+# Author: Copyright (C) 2015-2019, 2021  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
-# SPDX-License-Identifier: GPL-3.0					#
+# SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
 #	AutoMake script file to generate SWOCServer manual pages from	#
@@ -33,6 +33,7 @@
 #				then error out.				#
 # 19/05/2019	MG	1.0.7	Merge sub-projects into one.		#
 #				Remove shebang.				#
+# 07/12/2021	MG	1.0.8	Tighten SPDX tag.			#
 #									#
 #########################################################################
 

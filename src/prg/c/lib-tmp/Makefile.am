@@ -1,10 +1,10 @@
 #########################################################################
 #									#
 # Script ID: src/prg/c/lib-tmp/Makefile.am				#
-# Author: Copyright (C) 2017-2019  Mark Grant				#
+# Author: Copyright (C) 2017-2019, 2021  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
-# SPDX-License-Identifier: GPL-3.0					#
+# SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
 #	AutoMake script file to provide AutoTools support for temporary	#
@@ -23,6 +23,7 @@
 # 27/01/2018	MG	1.0.2	Add libmgec as a possibility.		#
 # 19/05/2019	MG	1.0.3	Merge sub-projects into one.		#
 #				Remove shebang.				#
+# 08/12/2021	MG	1.0.4	Tighten SPDX tag.			#
 #									#
 #########################################################################
 

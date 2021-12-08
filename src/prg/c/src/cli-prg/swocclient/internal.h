@@ -3,12 +3,12 @@
  *
  * Header file for Server Wait on Clients client-side program.
  *
- * @author Copyright (C) 2015-2020  Mark Grant
+ * @author Copyright (C) 2015-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
- * SPDX-License-Identifier: GPL-3.0
+ * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.9 ==== 27/03/2020_
+ * @version _v1.0.10 ==== 08/12/2021_
  */
 
 /* **********************************************************************
@@ -34,6 +34,7 @@
  *				same accross the source tree for	*
  *				temporary libraries to work based on	*
  *				the search in configure.ac.		*
+ * 08/12/2021	MG	1.0.10	Tighten SPDX tag.			*
  *									*
  ************************************************************************
  */

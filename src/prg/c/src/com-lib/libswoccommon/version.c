@@ -6,9 +6,9 @@
  * @author Copyright (C) 2017-2019, 2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
- * SPDX-License-Identifier: GPL-3.0
+ * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.6 ==== 10/10/2021_
+ * @version _v1.0.7 ==== 08/12/2021_
  */
 
 /* **********************************************************************
@@ -25,6 +25,7 @@
  *				AC_DEFINE'd value in config.h		*
  * 18/05/2019	MG	1.0.5	Merge sub-projects into one.		*
  * 10/10/2021	MG	1.0.6	Use newly internalised common header.	*
+ * 08/12/2021	MG	1.0.7	Tighten SPDX tag.			*
  *									*
  ************************************************************************
  */

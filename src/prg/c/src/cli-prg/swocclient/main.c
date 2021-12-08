@@ -8,9 +8,9 @@
  * @author Copyright (C) 2015-2021  Mark Grant
  *
  * Released under the GPLv3 only.\n
- * SPDX-License-Identifier: GPL-3.0
+ * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.10 ==== 11/10/2021_
+ * @version _v1.1.11 ==== 08/12/2021_
  */
 
 /* **********************************************************************
@@ -49,6 +49,7 @@
  *				temporary libraries to work based on	*
  *				the search in configure.ac.		*
  * 11/10/2021	MG	1.1.10	Move cmdlineargs.h to inc directory.	*
+ * 08/12/2021	MG	1.1.11	Tighten SPDX tag.			*
  *									*
  ************************************************************************
  */
