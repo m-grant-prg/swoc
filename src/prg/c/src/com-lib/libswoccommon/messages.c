@@ -3,12 +3,12 @@
  *
  * Message processing functions common to swoc programs.
  *
- * @author Copyright (C) 2017-2021  Mark Grant
+ * @author Copyright (C) 2017-2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.14 ==== 08/12/2021_
+ * @version _v1.1.15 ==== 30/03/2022_
  */
 
 /* **********************************************************************
@@ -49,10 +49,13 @@
  *				before the requested message.		*
  * 10/10/2021	MG	1.1.13	Use newly internal common header.	*
  * 08/12/2021	MG	1.1.14	Tighten SPDX tag.			*
+ * 30/03/2022	MG	1.1.15	Check that the IF IP address matches	*
+ *				socket IP address.			*
  *									*
  ************************************************************************
  */
 
+#include <arpa/inet.h>
 #include <errno.h>
 #include <ifaddrs.h>
 #include <limits.h>
@@ -69,6 +72,8 @@
 
 static int get_reply_msg(int sockfd, struct mgemessage *recv_msg);
 static int host_id(int sockfd, char *orig_outgoing_msg);
+static char *get_sock_host_ip(int sock_fd, char *sock_host_ip,
+			      socklen_t sock_host_ip_size);
 
 /**
  * Parse a message.
@@ -280,12 +285,25 @@ static int host_id(int sockfd, char *orig_outgoing_msg)
 	socklen_t sockaddr_size;
 	char host_name[_POSIX_HOST_NAME_MAX];
 	char host_ip[INET6_ADDRSTRLEN];
+	char sock_host_ip[INET6_ADDRSTRLEN];
+	socklen_t sock_host_ip_size = sizeof(sock_host_ip);
+	char *p_sock_host_ip = sock_host_ip;
 	char om[13 + _POSIX_HOST_NAME_MAX + INET6_ADDRSTRLEN];
 	char oom[strlen(orig_outgoing_msg) + 1];
 	char *end;
 	struct mgemessage ret_msg = MGEMESSAGE_INIT(';', ',');
 	long int x;
 	int s;
+
+	/*
+	 * Get the IP address bound to the socket so that later we can ensure
+	 * that we are looking at the correct interface details. (Imagine a
+	 * machine with an ethernet card and a wireless card.)
+	 */
+	p_sock_host_ip
+		= get_sock_host_ip(sockfd, p_sock_host_ip, sock_host_ip_size);
+	if (p_sock_host_ip == NULL)
+		return -1;
 
 	s = getifaddrs(&result);
 	if (s) {
@@ -324,6 +342,13 @@ static int host_id(int sockfd, char *orig_outgoing_msg)
 			       mge_strerror(mge_errno));
 			goto free_exit;
 		}
+		/*
+		 * Does the interface IP match the socket IP, i.e. is this the
+		 * correct interface.
+		 */
+		s = strcmp(p_sock_host_ip, host_ip);
+		if (s)
+			continue;
 		s = getnameinfo(rp->ifa_addr, sockaddr_size, host_name,
 				_POSIX_HOST_NAME_MAX, NULL, 0, NI_NAMEREQD);
 		if (s) {
@@ -384,3 +409,70 @@ free_exit:
 	return -1;
 }
 
+/*
+ * Get the socket's IP address, the IP address of the IF being used.
+ * If over an SSH tunnel, separately create a new normal TCP socket to determine
+ * the IF IP address.
+ * @param sock_fd The socket file descriptor in use.
+ * @param sock_host_ip The string to contain the socket IP address.
+ * @param sock_host_ip_size The size of the string to hold the socket IP
+ * address.
+ * @return NULL on error, on success a pointer to the socket IP address string.
+ */
+static char *get_sock_host_ip(int sock_fd, char *sock_host_ip,
+			      socklen_t sock_host_ip_size)
+{
+	/* sockaddr_storage is large enough for IPv4 of IPv6 */
+	struct sockaddr_storage local_addr;
+	struct sockaddr *address = (struct sockaddr *)&local_addr;
+	socklen_t addr_size = sizeof(local_addr);
+	void *num_address;
+	int s;
+
+	/*
+	 * If the connection is over an SSH tunnel then the socket IP address
+	 * would be localhost. So we must establish a non-SSH connection to get
+	 * the real external IF IP address.
+	 */
+	if (ssh) {
+		s = init_conn(&sock_fd, &srvportno, server);
+		if (s)
+			return NULL;
+	}
+	s = getsockname(sock_fd, (struct sockaddr *)&local_addr, &addr_size);
+	if (s) {
+		sav_errno = errno;
+		mge_errno = MGE_ERRNO;
+		syslog((int)(LOG_USER | LOG_NOTICE), "getsockname error - %s",
+		       mge_strerror(mge_errno));
+		return NULL;
+	}
+	switch (address->sa_family) {
+	case AF_INET:
+		num_address = &((struct sockaddr_in *)address)->sin_addr;
+		break;
+	case AF_INET6:
+		num_address = &((struct sockaddr_in6 *)address)->sin6_addr;
+		break;
+	default:
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "getsockname error - Unknown type, not IPv4 or IPv6 ");
+		return NULL;
+	}
+	if (inet_ntop(address->sa_family, num_address, sock_host_ip,
+		      sock_host_ip_size)
+	    == NULL) {
+		sav_errno = errno;
+		mge_errno = MGE_ERRNO;
+		syslog((int)(LOG_USER | LOG_NOTICE), "getsockname error - %s",
+		       mge_strerror(mge_errno));
+		return NULL;
+	}
+
+	if (ssh) {
+		s = close_sock(&sock_fd);
+		if (s)
+			return NULL;
+	}
+	return sock_host_ip;
+}
