@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.15 ==== 30/03/2022_
+ * @version _v1.1.16 ==== 31/03/2022_
  */
 
 /* **********************************************************************
@@ -51,18 +51,19 @@
  * 08/12/2021	MG	1.1.14	Tighten SPDX tag.			*
  * 30/03/2022	MG	1.1.15	Check that the IF IP address matches	*
  *				socket IP address.			*
+ * 31/03/2022	MG	1.1.16	IP address and host name can be found	*
+ *				via the socket, no need to iterate over	*
+ *				the interfaces.				*
  *									*
  ************************************************************************
  */
 
 #include <arpa/inet.h>
 #include <errno.h>
-#include <ifaddrs.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
 #include <syslog.h>
 
 #include <libswoccommon.h>
@@ -72,8 +73,9 @@
 
 static int get_reply_msg(int sockfd, struct mgemessage *recv_msg);
 static int host_id(int sockfd, char *orig_outgoing_msg);
-static char *get_sock_host_ip(int sock_fd, char *sock_host_ip,
-			      socklen_t sock_host_ip_size);
+static int get_host_name_ip(int sock_fd, char *host_name,
+			    socklen_t host_name_size, char *host_ip,
+			    socklen_t host_ip_size);
 
 /**
  * Parse a message.
@@ -281,13 +283,12 @@ static int get_reply_msg(int sockfd, struct mgemessage *recv_msg)
  */
 static int host_id(int sockfd, char *orig_outgoing_msg)
 {
-	struct ifaddrs *result, *rp;
-	socklen_t sockaddr_size;
 	char host_name[_POSIX_HOST_NAME_MAX];
 	char host_ip[INET6_ADDRSTRLEN];
-	char sock_host_ip[INET6_ADDRSTRLEN];
-	socklen_t sock_host_ip_size = sizeof(sock_host_ip);
-	char *p_sock_host_ip = sock_host_ip;
+	socklen_t host_name_size = sizeof(host_name);
+	socklen_t host_ip_size = sizeof(host_ip);
+	char *p_host_name = host_name;
+	char *p_host_ip = host_ip;
 	char om[13 + _POSIX_HOST_NAME_MAX + INET6_ADDRSTRLEN];
 	char oom[strlen(orig_outgoing_msg) + 1];
 	char *end;
@@ -296,77 +297,14 @@ static int host_id(int sockfd, char *orig_outgoing_msg)
 	int s;
 
 	/*
-	 * Get the IP address bound to the socket so that later we can ensure
-	 * that we are looking at the correct interface details. (Imagine a
-	 * machine with an ethernet card and a wireless card.)
+	 * Get the IP address bound to the socket and the host name attached to
+	 * the socket.
 	 */
-	p_sock_host_ip
-		= get_sock_host_ip(sockfd, p_sock_host_ip, sock_host_ip_size);
-	if (p_sock_host_ip == NULL)
+	s = get_host_name_ip(sockfd, p_host_name, host_name_size, p_host_ip,
+			     host_ip_size);
+	if (s)
 		return -1;
 
-	s = getifaddrs(&result);
-	if (s) {
-		sav_errno = errno;
-		mge_errno = MGE_ERRNO;
-		syslog((int)(LOG_USER | LOG_NOTICE), "getifaddrs error - %s",
-		       mge_strerror(mge_errno));
-		return -1;
-	}
-
-	/* getifaddrs() returns a list of address structures. */
-	for (rp = result; rp != NULL; rp = rp->ifa_next) {
-		if (!strcmp(server, "localhost")) {
-			if (strcmp(rp->ifa_name, "lo"))
-				continue;
-		} else if (!strcmp(rp->ifa_name, "lo")) {
-			continue;
-		}
-		switch (rp->ifa_addr->sa_family) {
-		case AF_INET:
-			sockaddr_size = sizeof(struct sockaddr_in);
-			break;
-		case AF_INET6:
-			sockaddr_size = sizeof(struct sockaddr_in6);
-			break;
-		default:
-			continue;
-		}
-		s = getnameinfo(rp->ifa_addr, sockaddr_size, host_ip,
-				INET6_ADDRSTRLEN, NULL, 0, NI_NUMERICHOST);
-		if (s) {
-			sav_errno = s;
-			mge_errno = MGE_GAI;
-			syslog((int)(LOG_USER | LOG_NOTICE),
-			       "getnameinfo error - %s",
-			       mge_strerror(mge_errno));
-			goto free_exit;
-		}
-		/*
-		 * Does the interface IP match the socket IP, i.e. is this the
-		 * correct interface.
-		 */
-		s = strcmp(p_sock_host_ip, host_ip);
-		if (s)
-			continue;
-		s = getnameinfo(rp->ifa_addr, sockaddr_size, host_name,
-				_POSIX_HOST_NAME_MAX, NULL, 0, NI_NAMEREQD);
-		if (s) {
-			sav_errno = s;
-			mge_errno = MGE_GAI;
-			syslog((int)(LOG_USER | LOG_NOTICE),
-			       "getnameinfo error - %s",
-			       mge_strerror(mge_errno));
-			goto free_exit;
-		}
-		break;
-	}
-	if (rp == NULL) { /* No address succeeded */
-		mge_errno = MGE_ID;
-		syslog((int)(LOG_USER | LOG_NOTICE),
-		       "Host ID not established - %s", mge_strerror(mge_errno));
-		goto free_exit;
-	}
 	strcpy(oom, orig_outgoing_msg);
 	strcpy(om, strtok(oom, ","));
 	strcat(om, ",id,");
@@ -398,34 +336,33 @@ static int host_id(int sockfd, char *orig_outgoing_msg)
 	}
 
 	clear_msg(&ret_msg, ';', ',');
-	freeifaddrs(result);
 	return 0;
 
 msg_free_exit:
 	clear_msg(&ret_msg, ';', ',');
-
-free_exit:
-	freeifaddrs(result);
 	return -1;
 }
 
 /*
- * Get the socket's IP address, the IP address of the IF being used.
- * If over an SSH tunnel, separately create a new normal TCP socket to determine
- * the IF IP address.
+ * Get the socket's IP address and the associated host name.
+ * If over an SSH tunnel, separately create a new normal TCP socket, otherwise
+ * the socket is bound to localhost.
  * @param sock_fd The socket file descriptor in use.
- * @param sock_host_ip The string to contain the socket IP address.
- * @param sock_host_ip_size The size of the string to hold the socket IP
- * address.
- * @return NULL on error, on success a pointer to the socket IP address string.
+ * @param host_name The string to contain the host name.
+ * @param host_name_size The size of the string to hold the host name.
+ * @param host_ip The string to contain the IP address.
+ * @param sock_host_ip_size The size of the string to hold the IP address.
+ * @return non-zero on error, zero on success.
  */
-static char *get_sock_host_ip(int sock_fd, char *sock_host_ip,
-			      socklen_t sock_host_ip_size)
+static int get_host_name_ip(int sock_fd, char *host_name,
+			    socklen_t host_name_size, char *host_ip,
+			    socklen_t host_ip_size)
 {
 	/* sockaddr_storage is large enough for IPv4 of IPv6 */
 	struct sockaddr_storage local_addr;
 	struct sockaddr *address = (struct sockaddr *)&local_addr;
 	socklen_t addr_size = sizeof(local_addr);
+	socklen_t sockaddr_size;
 	void *num_address;
 	int s;
 
@@ -437,7 +374,7 @@ static char *get_sock_host_ip(int sock_fd, char *sock_host_ip,
 	if (ssh) {
 		s = init_conn(&sock_fd, &srvportno, server);
 		if (s)
-			return NULL;
+			return s;
 	}
 	s = getsockname(sock_fd, (struct sockaddr *)&local_addr, &addr_size);
 	if (s) {
@@ -445,34 +382,45 @@ static char *get_sock_host_ip(int sock_fd, char *sock_host_ip,
 		mge_errno = MGE_ERRNO;
 		syslog((int)(LOG_USER | LOG_NOTICE), "getsockname error - %s",
 		       mge_strerror(mge_errno));
-		return NULL;
+		return mge_errno;
 	}
 	switch (address->sa_family) {
 	case AF_INET:
 		num_address = &((struct sockaddr_in *)address)->sin_addr;
+		sockaddr_size = sizeof(struct sockaddr_in);
 		break;
 	case AF_INET6:
 		num_address = &((struct sockaddr_in6 *)address)->sin6_addr;
+		sockaddr_size = sizeof(struct sockaddr_in6);
 		break;
 	default:
 		syslog((int)(LOG_USER | LOG_NOTICE),
 		       "getsockname error - Unknown type, not IPv4 or IPv6 ");
-		return NULL;
+		return -1;
 	}
-	if (inet_ntop(address->sa_family, num_address, sock_host_ip,
-		      sock_host_ip_size)
+	if (inet_ntop(address->sa_family, num_address, host_ip, host_ip_size)
 	    == NULL) {
 		sav_errno = errno;
 		mge_errno = MGE_ERRNO;
 		syslog((int)(LOG_USER | LOG_NOTICE), "getsockname error - %s",
 		       mge_strerror(mge_errno));
-		return NULL;
+		return mge_errno;
+	}
+
+	s = getnameinfo((struct sockaddr *)&local_addr, sockaddr_size,
+			host_name, host_name_size, NULL, 0, NI_NAMEREQD);
+	if (s) {
+		sav_errno = s;
+		mge_errno = MGE_GAI;
+		syslog((int)(LOG_USER | LOG_NOTICE), "getnameinfo error - %s",
+		       mge_strerror(mge_errno));
+		return mge_errno;
 	}
 
 	if (ssh) {
 		s = close_sock(&sock_fd);
 		if (s)
-			return NULL;
+			return s;
 	}
-	return sock_host_ip;
+	return 0;
 }
