@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.16 ==== 31/03/2022_
+ * @version _v1.1.17 ==== 01/04/2022_
  */
 
 /* **********************************************************************
@@ -54,6 +54,7 @@
  * 31/03/2022	MG	1.1.16	IP address and host name can be found	*
  *				via the socket, no need to iterate over	*
  *				the interfaces.				*
+ * 01/04/2022	MG	1.1.17	Improve error handling consistency.	*
  *									*
  ************************************************************************
  */
@@ -143,13 +144,12 @@ void parse_msg(struct mgemessage *msg, enum msg_arguments *msg_args,
  * @param outgoing_msg The message to send.
  * @param outgoing_msg_length The length of the message.
  * @param newsockfd The socket file descriptor.
- * @return 0 on success, non-zero on error.
+ * @return 0 on success, < zero on error.
  */
 int send_outgoing_msg(char *outgoing_msg, size_t outgoing_msg_length,
 		      int *newsockfd)
 {
 	ssize_t n;
-	mge_errno = 0;
 
 	n = send(*newsockfd, outgoing_msg, outgoing_msg_length, 0);
 	if (n < 0) {
@@ -159,8 +159,9 @@ int send_outgoing_msg(char *outgoing_msg, size_t outgoing_msg_length,
 		       "ERROR writing to socket "
 		       "- %s",
 		       mge_strerror(mge_errno));
+		return -mge_errno;
 	}
-	return mge_errno;
+	return 0;
 }
 
 /**
@@ -170,7 +171,7 @@ int send_outgoing_msg(char *outgoing_msg, size_t outgoing_msg_length,
  * @param outgoing_msg The message to send.
  * @param om_length The length of the outgoing message.
  * @param msg The received message.
- * @return 0 on success, -1 on error.
+ * @return 0 on success, < zero on error.
  */
 int exch_msg(char *outgoing_msg, size_t om_length, struct mgemessage *msg)
 {
@@ -220,7 +221,7 @@ err_exit_1:
 err_exit_0:
 	if (ssh)
 		close_ssh_tunnel();
-	return -1;
+	return res;
 }
 
 /*
@@ -230,7 +231,7 @@ err_exit_0:
  * On error mge_errno will be set.
  * @param sockfd The socket to use.
  * @param msg The received message.
- * @return 0 on success, -1 on error.
+ * @return 0 on success, < zero on error.
  */
 static int get_reply_msg(int sockfd, struct mgemessage *recv_msg)
 {
@@ -250,19 +251,21 @@ static int get_reply_msg(int sockfd, struct mgemessage *recv_msg)
 			       "ERROR reading "
 			       "from socket - %s",
 			       mge_strerror(mge_errno));
-			return -1;
+			return -mge_errno;
 		}
 		msg_buf = concat_buf(sock_buf, (size_t)n, msg_buf);
 		if (msg_buf1.buffer == NULL)
-			return -1;
+			return -mge_errno;
 
 		/*
 		 * Only 1 message can be valid, anything else is erroneous,
 		 * so don't loop emptying the buffer of messages.
 		 */
 		recv_msg = pull_msg(msg_buf, recv_msg);
+		if (recv_msg == NULL)
+			return -mge_errno;
 
-		if (recv_msg->complete || mge_errno)
+		if (recv_msg->complete)
 			break;
 
 		memset(sock_buf, '\0', sizeof(sock_buf));
@@ -278,8 +281,10 @@ static int get_reply_msg(int sockfd, struct mgemessage *recv_msg)
  * localhost to the daemon).
  * Daemon is unaffected by errors which are relayed back to the sender.
  * Exactly 2 arguments, the host name and IP address.
+ * On error mge_errno will be set.
  * @param sockfd The socket in use.
  * @param orig_outgoing_msg The original (main) outgoing message.
+ * @return 0 on success, < zero on error.
  */
 static int host_id(int sockfd, char *orig_outgoing_msg)
 {
@@ -303,7 +308,7 @@ static int host_id(int sockfd, char *orig_outgoing_msg)
 	s = get_host_name_ip(sockfd, p_host_name, host_name_size, p_host_ip,
 			     host_ip_size);
 	if (s)
-		return -1;
+		return s;
 
 	strcpy(oom, orig_outgoing_msg);
 	strcpy(om, strtok(oom, ","));
@@ -330,6 +335,7 @@ static int host_id(int sockfd, char *orig_outgoing_msg)
 					mge_errno = (int)x;
 			}
 		}
+		s = -mge_errno;
 		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
 		       mge_strerror(mge_errno));
 		goto msg_free_exit;
@@ -340,19 +346,20 @@ static int host_id(int sockfd, char *orig_outgoing_msg)
 
 msg_free_exit:
 	clear_msg(&ret_msg, ';', ',');
-	return -1;
+	return s;
 }
 
 /*
  * Get the socket's IP address and the associated host name.
  * If over an SSH tunnel, separately create a new normal TCP socket, otherwise
  * the socket is bound to localhost.
+ * On error mge_errno will be set.
  * @param sock_fd The socket file descriptor in use.
  * @param host_name The string to contain the host name.
  * @param host_name_size The size of the string to hold the host name.
  * @param host_ip The string to contain the IP address.
  * @param sock_host_ip_size The size of the string to hold the IP address.
- * @return non-zero on error, zero on success.
+ * @return 0 on success, < zero on error.
  */
 static int get_host_name_ip(int sock_fd, char *host_name,
 			    socklen_t host_name_size, char *host_ip,
@@ -382,7 +389,7 @@ static int get_host_name_ip(int sock_fd, char *host_name,
 		mge_errno = MGE_ERRNO;
 		syslog((int)(LOG_USER | LOG_NOTICE), "getsockname error - %s",
 		       mge_strerror(mge_errno));
-		return mge_errno;
+		return -mge_errno;
 	}
 	switch (address->sa_family) {
 	case AF_INET:
@@ -394,9 +401,10 @@ static int get_host_name_ip(int sock_fd, char *host_name,
 		sockaddr_size = sizeof(struct sockaddr_in6);
 		break;
 	default:
+		mge_errno = MGE_PROTO;
 		syslog((int)(LOG_USER | LOG_NOTICE),
 		       "getsockname error - Unknown type, not IPv4 or IPv6 ");
-		return -1;
+		return -mge_errno;
 	}
 	if (inet_ntop(address->sa_family, num_address, host_ip, host_ip_size)
 	    == NULL) {
@@ -404,7 +412,7 @@ static int get_host_name_ip(int sock_fd, char *host_name,
 		mge_errno = MGE_ERRNO;
 		syslog((int)(LOG_USER | LOG_NOTICE), "getsockname error - %s",
 		       mge_strerror(mge_errno));
-		return mge_errno;
+		return -mge_errno;
 	}
 
 	s = getnameinfo((struct sockaddr *)&local_addr, sockaddr_size,
@@ -414,7 +422,7 @@ static int get_host_name_ip(int sock_fd, char *host_name,
 		mge_errno = MGE_GAI;
 		syslog((int)(LOG_USER | LOG_NOTICE), "getnameinfo error - %s",
 		       mge_strerror(mge_errno));
-		return mge_errno;
+		return -mge_errno;
 	}
 
 	if (ssh) {

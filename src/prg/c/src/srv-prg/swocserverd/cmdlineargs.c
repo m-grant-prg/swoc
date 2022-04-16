@@ -3,12 +3,12 @@
  *
  * Command line argument processing for swocserverd using getopt_long.
  *
- * @author Copyright (C) 2016-2019, 2021  Mark Grant
+ * @author Copyright (C) 2016-2019, 2021, 2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.8 ==== 08/12/2021_
+ * @version _v1.0.9 ==== 05/04/2022_
  */
 
 /* **********************************************************************
@@ -27,6 +27,7 @@
  * 18/05/2019	MG	1.0.6	Merge sub-projects into one.		*
  * 13/10/2021	MG	1.0.7	Eliminate a Doxygen warning.		*
  * 08/12/2021	MG	1.0.8	Tighten SPDX tag.			*
+ * 05/04/2022	MG	1.0.9	Improve error handling consistency.	*
  *									*
  ************************************************************************
  */
@@ -38,14 +39,15 @@
 
 #include "internal.h"
 #include <cmdlineargs.h>
+#include <mge-errno.h>
 
 /**
  * Process command line arguments using getopt_long.
+ * On error mge_errno will be set.
  * @param argc The standard CLA argc.
  * @param argv The standard CLA argv.
  * @param ... Variable number of flag structs.
- * @return 0 on success, on failure standard EX_USAGE (64) command line  usage
- * error.
+ * @return 0 on success, -mge_errno on failure.
  */
 /*
  * The variable number of flag structs parameter above is not used in this
@@ -80,8 +82,7 @@ int process_cla(int argc, char **argv, ...)
 			       "information to stdout and stderr.\n");
 			printf("-V | --version\tDisplay version "
 			       "information.\n");
-			if (!swsd_err)
-				swsd_err = -1;
+			exit(0);
 			break;
 
 		case 'V':
@@ -89,13 +90,13 @@ int process_cla(int argc, char **argv, ...)
 			       swocserverd_get_src_version(), "\n");
 			printf("%s %s %s %s", argv[0], "Package version -",
 			       swocserverd_get_pkg_version(), "\n");
-			if (!swsd_err)
-				swsd_err = -1;
+			exit(0);
 			break;
 
 		case '?':
 			/* getopt_long already printed a message. */
-			swsd_err = EX_USAGE;
+			mge_errno = MGE_PARAM;
+			return -mge_errno;
 			break;
 
 		default:
@@ -106,12 +107,8 @@ int process_cla(int argc, char **argv, ...)
 	/* Non-option arguments are not accepted. */
 	if (optind < argc) {
 		fprintf(stderr, "Program does not accept other arguments.\n");
-		swsd_err = EX_USAGE;
+		mge_errno = MGE_PARAM;
+		return -mge_errno;
 	}
-	if (swsd_err == -1) {
-		swsd_err = 0;
-		return 1;
-	}
-	return swsd_err;
+	return 0;
 }
-

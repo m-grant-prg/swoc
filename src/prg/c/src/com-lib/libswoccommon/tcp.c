@@ -3,12 +3,12 @@
  *
  * TCP connection processing functions.
  *
- * @author Copyright (C) 2017-2021  Mark Grant
+ * @author Copyright (C) 2017-2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.7 ==== 08/12/2021_
+ * @version _v1.1.8 ==== 04/04/2022_
  */
 
 /* **********************************************************************
@@ -33,6 +33,7 @@
  *				retries if the address is in use.	*
  * 10/10/2021	MG	1.1.6	Use newly internalised common header.	*
  * 08/12/2021	MG	1.1.7	Tighten SPDX tag.			*
+ * 04/04/2022	MG	1.1.8	Improve error handling consistency.	*
  *									*
  ************************************************************************
  */
@@ -55,12 +56,13 @@
  * On error mge_errno is set.
  * @param sockfd The socket file descriptor.
  * @param portno The port number.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int prep_recv_sock(int *sockfd, int *portno)
 {
 	struct addrinfo hints;
 	enum comms_mode mode = recv_mode;
+	int ret;
 
 	/*
 	 * BSD now allows that the PF_ prefix always has same value as AF_. It
@@ -78,14 +80,12 @@ int prep_recv_sock(int *sockfd, int *portno)
 	hints.ai_next = NULL;
 
 	/* Host set to NULL for localhost receive. */
-	mge_errno = est_connect(sockfd, NULL, portno, &hints, &mode);
+	ret = est_connect(sockfd, NULL, portno, &hints, &mode);
+	if (ret)
+		return ret;
 
-	if (mge_errno)
-		return mge_errno;
-
-	mge_errno = listen_sock(sockfd);
-
-	return mge_errno;
+	ret = listen_sock(sockfd);
+	return ret;
 }
 
 /**
@@ -94,7 +94,7 @@ int prep_recv_sock(int *sockfd, int *portno)
  * @param sockfd The socket file descriptor.
  * @param portno The port number.
  * @param srv The server name.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int init_conn(int *sockfd, int *portno, char *srv)
 {
@@ -110,9 +110,7 @@ int init_conn(int *sockfd, int *portno, char *srv)
 	hints.ai_addr = NULL;
 	hints.ai_next = NULL;
 
-	mge_errno = est_connect(sockfd, srv, portno, &hints, &mode);
-
-	return mge_errno;
+	return est_connect(sockfd, srv, portno, &hints, &mode);
 }
 
 /**
@@ -124,7 +122,7 @@ int init_conn(int *sockfd, int *portno, char *srv)
  * @param portno The port number.
  * @param hints The hints for getaddrinfo().
  * @param mode send_mode or recv_mode.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 		enum comms_mode *mode)
@@ -133,7 +131,6 @@ int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 	int i, r, s;
 	int x = 0;
 	char port[6];
-	mge_errno = 0;
 
 	sprintf(port, "%i", *portno);
 	s = getaddrinfo(serv, port, hints, &result);
@@ -142,7 +139,7 @@ int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 		mge_errno = MGE_GAI;
 		syslog((int)(LOG_USER | LOG_NOTICE), "getaddrinfo error - %s",
 		       mge_strerror(mge_errno));
-		return mge_errno;
+		return -mge_errno;
 	}
 
 	/* getaddrinfo() returns a list of address structures. */
@@ -191,13 +188,14 @@ int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 	}
 	if (rp == NULL) { /* No address succeeded */
 		mge_errno = MGE_GAI_BIND;
+		s = -mge_errno;
 		syslog((int)(LOG_USER | LOG_NOTICE), "%s",
 		       mge_strerror(mge_errno));
 	}
 
 	freeaddrinfo(result);
 
-	return mge_errno;
+	return s;
 }
 
 /**
@@ -207,14 +205,12 @@ int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
  * if it is in use do a few retries.
  * On error mge_errno is set.
  * @param sfd The socket file descriptor.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int listen_sock(const int *sfd)
 {
 	int i = 0;
 	int status;
-
-	mge_errno = 0;
 
 	do {
 		if (i)
@@ -225,10 +221,11 @@ int listen_sock(const int *sfd)
 	if (status < 0) {
 		sav_errno = errno;
 		mge_errno = MGE_ERRNO;
+		status = -mge_errno;
 		syslog((int)(LOG_USER | LOG_NOTICE), "ERROR on listen - %s",
 		       mge_strerror(mge_errno));
 	}
-	return mge_errno;
+	return status;
 }
 
 /**
@@ -236,20 +233,21 @@ int listen_sock(const int *sfd)
  * Equivalent to close() with error handling.
  * On error mge_errno is set.
  * @param sockfd The socket file descriptor.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int close_sock(const int *sockfd)
 {
-	mge_errno = 0;
+	int s;
 
-	if (close(*sockfd) < 0) {
+	s = close(*sockfd);
+	if (s < 0) {
 		sav_errno = errno;
 		mge_errno = MGE_ERRNO;
+		s = -mge_errno;
 		syslog((int)(LOG_USER | LOG_NOTICE),
 		       "ERROR closing socket "
 		       "- %s",
 		       mge_strerror(mge_errno));
 	}
-	return mge_errno;
+	return s;
 }
-

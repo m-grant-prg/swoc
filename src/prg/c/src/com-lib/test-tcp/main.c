@@ -26,7 +26,7 @@ int main(void)
 	int prog_error = 0;
 	int recv_socket, send_socket;
 	char *srv = "localhost";
-	int portno = 62523;
+	int portno = 62525;
 
 	printf("Recv socket.\n");
 	prog_error = prep_recv_sock(&recv_socket, &portno);
@@ -58,7 +58,7 @@ int main(void)
 	if (prog_error)
 		printf("close_sock recv error - %i\n", prog_error);
 
-	portno = 62523;
+	portno = 62525;
 
 	printf("Re-open Recv socket.\n");
 	prog_error = prep_recv_sock(&recv_socket, &portno);

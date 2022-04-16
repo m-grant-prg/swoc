@@ -3,12 +3,12 @@
  *
  * Command line argument processing for swocserver using getopt_long.
  *
- * @author Copyright (C) 2015-2019, 2021  Mark Grant
+ * @author Copyright (C) 2015-2019, 2021, 2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.9 ==== 08/12/2021_
+ * @version _v1.1.10 ==== 05/04/2022_
  */
 
 /* **********************************************************************
@@ -55,6 +55,7 @@
  * 02/06/2019	MG	1.1.7	Remove duplicated if statements.	*
  * 11/10/2021	MG	1.1.8	Use tree-wide cmdlineargs.h.		*
  * 08/12/2021	MG	1.1.9	Tighten SPDX tag.			*
+ * 05/04/2022	MG	1.1.10	Improve error handling consistency.	*
  *									*
  ************************************************************************
  */
@@ -68,14 +69,15 @@
 
 #include "internal.h"
 #include <cmdlineargs.h>
+#include <mge-errno.h>
 
 /**
  * Process command line arguments using getopt_long.
+ * On error mge_errno will be set.
  * @param argc The standard CLA argc.
  * @param argv The standard CLA argv.
  * @param ... Variable number of flag structs.
- * @return 0 on success, on failure standard EX_USAGE (64) command line  usage
- * error.
+ * @return 0 on success, -mge_errno on failure.
  */
 int process_cla(int argc, char **argv, ...)
 {
@@ -157,8 +159,7 @@ int process_cla(int argc, char **argv, ...)
 			printf("-V | --version\t\tDisplay version "
 			       "information.\n");
 			printf("-w | --wait\t\tWait for all locks to clear.\n");
-			if (!sws_err)
-				sws_err = -1;
+			exit(0);
 			break;
 		case 'r':
 			release_flag->is_set = 1;
@@ -178,125 +179,121 @@ int process_cla(int argc, char **argv, ...)
 			       swocserver_get_src_version(), "\n");
 			printf("%s %s %s %s", argv[0], "Package version -",
 			       swocserver_get_pkg_version(), "\n");
-			if (!sws_err)
-				sws_err = -1;
+			exit(0);
 			break;
 		case 'w':
 			wait_flag->is_set = 1;
 			break;
 		case '?':
 			/* getopt_long already printed a message. */
-			sws_err = EX_USAGE;
-			return 1;
+			mge_errno = MGE_PARAM;
+			return -mge_errno;
 			break;
 
 		default:
 			abort();
 		}
 	}
-	if (sws_err) {
-		sws_err = 0;
-		return 1;
-	}
 
 	/* Non-option arguments are not accepted. */
 	if (optind < argc) {
 		fprintf(stderr, "Program does not accept other arguments.\n");
-		sws_err = EX_USAGE;
-		return 1;
+		mge_errno = MGE_PARAM;
+		return -mge_errno;
 	}
 
 	/* Check mutually exclusive options. */
+	sws_err = 0;
 	if (allow_flag->is_set && block_flag->is_set) {
 		fprintf(stderr, "Options a and b are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (allow_flag->is_set && reload_flag->is_set) {
 		fprintf(stderr, "Options a and c are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (allow_flag->is_set && disallow_flag->is_set) {
 		fprintf(stderr, "Options a and d are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (allow_flag->is_set && end_flag->is_set) {
 		fprintf(stderr, "Options a and e are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (allow_flag->is_set && release_flag->is_set) {
 		fprintf(stderr, "Options a and r are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (allow_flag->is_set && status_flag->is_set) {
 		fprintf(stderr, "Options a and s are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (allow_flag->is_set && unblock_flag->is_set) {
 		fprintf(stderr, "Options a and u are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (allow_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options a and w are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (block_flag->is_set && reload_flag->is_set) {
 		fprintf(stderr, "Options b and c are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (block_flag->is_set && disallow_flag->is_set) {
 		fprintf(stderr, "Options b and d are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (block_flag->is_set && end_flag->is_set) {
 		fprintf(stderr, "Options b and e are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (block_flag->is_set && release_flag->is_set) {
 		fprintf(stderr, "Options b and r are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (block_flag->is_set && status_flag->is_set) {
 		fprintf(stderr, "Options b and s are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (block_flag->is_set && unblock_flag->is_set) {
 		fprintf(stderr, "Options b and u are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (block_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options b and w are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (disallow_flag->is_set && end_flag->is_set) {
 		fprintf(stderr, "Options d and e are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (disallow_flag->is_set && release_flag->is_set) {
 		fprintf(stderr, "Options d and r are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (disallow_flag->is_set && status_flag->is_set) {
 		fprintf(stderr, "Options d and s are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (disallow_flag->is_set && unblock_flag->is_set) {
 		fprintf(stderr, "Options d and u are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (disallow_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options d and w are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (end_flag->is_set && release_flag->is_set) {
 		fprintf(stderr, "Options e and r are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (end_flag->is_set && status_flag->is_set) {
 		fprintf(stderr, "Options e and s are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (end_flag->is_set && unblock_flag->is_set) {
 		fprintf(stderr, "Options e and u are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (end_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options e and w are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (release_flag->is_set && status_flag->is_set) {
 		fprintf(stderr, "Options r and s are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (release_flag->is_set && unblock_flag->is_set) {
 		fprintf(stderr, "Options r and u are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (release_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options r and w are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (status_flag->is_set && unblock_flag->is_set) {
 		fprintf(stderr, "Options s and u are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (status_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options s and w are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	} else if (unblock_flag->is_set && wait_flag->is_set) {
 		fprintf(stderr, "Options u and w are mutually exclusive.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	}
 	/* Check for mandatory options */
 	if (!(allow_flag->is_set || block_flag->is_set || reload_flag->is_set
@@ -305,8 +302,11 @@ int process_cla(int argc, char **argv, ...)
 	      || unblock_flag->is_set || wait_flag->is_set)) {
 		fprintf(stderr, "Either a, b, c, d, e, r, s, u or w "
 				"must be specified.\n");
-		sws_err = EX_USAGE;
+		sws_err = -MGE_PARAM;
 	}
+
+	if (sws_err)
+		mge_errno = MGE_PARAM;
 	return sws_err;
 }
 
@@ -320,6 +320,7 @@ int cpyarg(char *flagarg, char *srcarg)
 		return 0;
 	} else {
 		fprintf(stderr, "Option argument '%s' too long.\n", srcarg);
-		return EX_USAGE;
+		mge_errno = MGE_PARAM;
+		return -mge_errno;
 	}
 }

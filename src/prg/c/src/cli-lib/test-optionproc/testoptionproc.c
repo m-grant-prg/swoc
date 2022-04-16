@@ -22,7 +22,7 @@
  */
 int main(void)
 {
-	int prg_err = 0;
+	int prg_err;
 
 	/* Initial status */
 	prg_err = swc_show_status();

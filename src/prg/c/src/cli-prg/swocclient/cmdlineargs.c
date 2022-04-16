@@ -3,12 +3,12 @@
  *
  * Command line argument processing for swocclient using getopt_long.
  *
- * @author Copyright (C) 2015-2021  Mark Grant
+ * @author Copyright (C) 2015-2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.10 ==== 08/12/2021_
+ * @version _v1.1.11 ==== 01/04/2022_
  */
 
 /* **********************************************************************
@@ -46,6 +46,7 @@
  *				the search in configure.ac.		*
  * 11/10/2021	MG	1.1.9	Move cmdlineargs.h to inc directory.	*
  * 08/12/2021	MG	1.1.10	Tighten SPDX tag.			*
+ * 01/04/2022	MG	1.1.11	Improve error handling consistency.	*
  *									*
  ************************************************************************
  */
@@ -56,16 +57,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <cmdlineargs.h>
 #include "internal.h"
+#include <cmdlineargs.h>
+#include <mge-errno.h>
 
 /**
  * Process command line arguments using getopt_long.
+ * On error mge_errno will be set.
  * @param argc The standard CLA argc.
  * @param argv The standard CLA argv.
  * @param ... Variable number of flag structs.
- * @return 0 on success, on failure standard EX_USAGE (64) command line  usage
- * error.
+ * @return 0 on success, -mge_errno on failure.
  */
 int process_cla(int argc, char **argv, ...)
 {
@@ -112,7 +114,8 @@ int process_cla(int argc, char **argv, ...)
 			    || unblock_flag->is_set || wait_flag->is_set) {
 				fprintf(stderr, "Options b, i, l, r, s, u and "
 						"w are mutually exclusive.\n");
-				return 64;
+				mge_errno = MGE_PARAM;
+				return -mge_errno;
 			}
 			block_flag->is_set = 1;
 			break;
@@ -122,7 +125,8 @@ int process_cla(int argc, char **argv, ...)
 			    || unblock_flag->is_set || wait_flag->is_set) {
 				fprintf(stderr, "Options b, i, l, r, s, u and "
 						"w are mutually exclusive.\n");
-				return 64;
+				mge_errno = MGE_PARAM;
+				return -mge_errno;
 			}
 			reset_flag->is_set = 1;
 			break;
@@ -152,7 +156,8 @@ int process_cla(int argc, char **argv, ...)
 			    || unblock_flag->is_set || wait_flag->is_set) {
 				fprintf(stderr, "Options b, i, l, r, s, u and "
 						"w are mutually exclusive.\n");
-				return 64;
+				mge_errno = MGE_PARAM;
+				return -mge_errno;
 			}
 			lock_flag->is_set = 1;
 			break;
@@ -163,7 +168,8 @@ int process_cla(int argc, char **argv, ...)
 			    || unblock_flag->is_set || wait_flag->is_set) {
 				fprintf(stderr, "Options b, i, l, r, s, u and "
 						"w are mutually exclusive.\n");
-				return 64;
+				mge_errno = MGE_PARAM;
+				return -mge_errno;
 			}
 			release_flag->is_set = 1;
 			break;
@@ -173,7 +179,8 @@ int process_cla(int argc, char **argv, ...)
 			    || status_flag->is_set || wait_flag->is_set) {
 				fprintf(stderr, "Options b, i, l, r, s, u and "
 						"w are mutually exclusive.\n");
-				return 64;
+				mge_errno = MGE_PARAM;
+				return -mge_errno;
 			}
 			unblock_flag->is_set = 1;
 			break;
@@ -183,7 +190,8 @@ int process_cla(int argc, char **argv, ...)
 			    || unblock_flag->is_set || wait_flag->is_set) {
 				fprintf(stderr, "Options b, i, l, r, s, u and "
 						"w are mutually exclusive.\n");
-				return 64;
+				mge_errno = MGE_PARAM;
+				return -mge_errno;
 			}
 			status_flag->is_set = 1;
 			break;
@@ -200,7 +208,8 @@ int process_cla(int argc, char **argv, ...)
 			    || status_flag->is_set || unblock_flag->is_set) {
 				fprintf(stderr, "Options b, i, l, r, s, u and "
 						"w are mutually exclusive.\n");
-				return 64;
+				mge_errno = MGE_PARAM;
+				return -mge_errno;
 			}
 			wait_flag->is_set = 1;
 			strcpy(wait_flag->argument, "0");
@@ -212,7 +221,8 @@ int process_cla(int argc, char **argv, ...)
 			break;
 		case '?':
 			/* getopt_long already printed an error message. */
-			return 64;
+			mge_errno = MGE_PARAM;
+			return -mge_errno;
 			break;
 		default:
 			abort();
@@ -222,7 +232,8 @@ int process_cla(int argc, char **argv, ...)
 	/* Non-option arguments are not accepted. */
 	if (optind < argc) {
 		fprintf(stderr, "Program does not accept other arguments.\n");
-		return 64;
+		mge_errno = MGE_PARAM;
+		return -mge_errno;
 	}
 
 	/* Check for mandatory options */
@@ -231,23 +242,24 @@ int process_cla(int argc, char **argv, ...)
 	      || unblock_flag->is_set || wait_flag->is_set)) {
 		fprintf(stderr, "Either b, i, l, r, s, u or w must be "
 				"specified.\n");
-		return 64;
+		mge_errno = MGE_PARAM;
+		return -mge_errno;
 	}
 	return 0;
 }
 
 /*
  * Function to copy optarg to the flag struct member argument.
+ * On error mge_errno will be set.
  */
 int cpyarg(char *flagarg, char *srcarg)
 {
-	int e = 0;
-	if (ARG_BUF > strlen(srcarg))
+	if (ARG_BUF > strlen(srcarg)) {
 		strcpy(flagarg, srcarg);
-	else {
+		return 0;
+	} else {
 		fprintf(stderr, "Option argument '%s' too long.\n", srcarg);
-		e = 64;
+		mge_errno = MGE_PARAM;
+		return -mge_errno;
 	}
-	return e;
 }
-

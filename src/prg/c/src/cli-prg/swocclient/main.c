@@ -5,12 +5,12 @@
  * To enable a client to place lock flags on a server which will then wait for
  * them to be cleared before continuing processing, (by use of swocserver -w).
  *
- * @author Copyright (C) 2015-2021  Mark Grant
+ * @author Copyright (C) 2015-2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.11 ==== 08/12/2021_
+ * @version _v1.1.12 ==== 01/04/2022_
  */
 
 /* **********************************************************************
@@ -50,6 +50,7 @@
  *				the search in configure.ac.		*
  * 11/10/2021	MG	1.1.10	Move cmdlineargs.h to inc directory.	*
  * 08/12/2021	MG	1.1.11	Tighten SPDX tag.			*
+ * 01/04/2022	MG	1.1.12	Improve error handling consistency.	*
  *									*
  ************************************************************************
  */
@@ -57,9 +58,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <cmdlineargs.h>
 #include "internal.h"
 #include "signalhandle.h"
+#include <cmdlineargs.h>
 #include <libswocclient.h>
 #include <mge-errno.h>
 
@@ -74,7 +75,7 @@ static char *prog_name;
  */
 int main(int argc, char **argv)
 {
-	int prog_error = 0;
+	int ret;
 
 	/* Command line argument flags. */
 	struct cla block_flag = { 0, "" };
@@ -91,45 +92,44 @@ int main(int argc, char **argv)
 	init_sig_handle();
 
 	/* Process command line. */
-	prog_error = process_cla(argc, argv, &block_flag, &lock_flag,
-				 &release_flag, &reset_flag, &status_flag,
-				 &unblock_flag, &wait_flag);
-	if (prog_error)
+	ret = process_cla(argc, argv, &block_flag, &lock_flag, &release_flag,
+			  &reset_flag, &status_flag, &unblock_flag, &wait_flag);
+	if (ret)
 		exit(EXIT_FAILURE);
 
 	/* Invoke main processing. */
 	if (status_flag.is_set) {
-		prog_error = swc_show_status();
-		if (!prog_error)
-			prog_error = swc_show_srv_block_status();
+		ret = swc_show_status();
+		if (!ret)
+			ret = swc_show_srv_block_status();
 	} else if (block_flag.is_set) {
-		prog_error = swc_block();
-		if (!prog_error)
+		ret = swc_block();
+		if (!ret)
 			printf("Client blocked on server.\n");
 	} else if (lock_flag.is_set) {
-		prog_error = swc_set_lock();
-		if (!prog_error)
+		ret = swc_set_lock();
+		if (!ret)
 			printf("Lock flag set on server.\n");
 	} else if (release_flag.is_set) {
-		prog_error = swc_rel_lock();
-		if (!prog_error)
+		ret = swc_rel_lock();
+		if (!ret)
 			printf("Lock flag released on server.\n");
 	} else if (reset_flag.is_set) {
-		prog_error = swc_reset();
+		ret = swc_reset();
 	} else if (unblock_flag.is_set) {
-		prog_error = swc_unblock();
-		if (!prog_error)
+		ret = swc_unblock();
+		if (!ret)
 			printf("Client blocking removed on server.\n");
 	} else if (wait_flag.is_set) {
 		printf("Waiting for maximum of %s lock flags on server.\n",
 		       wait_flag.argument);
-		prog_error = swc_client_wait(wait_flag.argument);
-		if (!prog_error)
+		ret = swc_client_wait(wait_flag.argument);
+		if (!ret)
 			printf("Maximum of %s lock flags set on server.\n",
 			       wait_flag.argument);
 	}
 
-	if (prog_error) {
+	if (ret) {
 		fprintf(stderr, "%s failed with error - %s\n", prog_name,
 			mge_strerror(mge_errno));
 		exit(EXIT_FAILURE);
@@ -137,4 +137,3 @@ int main(int argc, char **argv)
 
 	exit(EXIT_SUCCESS);
 }
-

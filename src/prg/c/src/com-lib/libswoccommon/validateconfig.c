@@ -5,12 +5,12 @@
  *
  * Used for swocserver and swocclient not swocserverd.
  *
- * @author Copyright (C) 2017-2019, 2021  Mark Grant
+ * @author Copyright (C) 2017-2019, 2021, 2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.7 ==== 08/12/2021_
+ * @version _v1.0.87 ==== 04/04/2022_
  */
 
 /* **********************************************************************
@@ -27,6 +27,7 @@
  * 01/06/2019	MG	1.0.5	Trivial type safety improvements.	*
  * 10/10/2021	MG	1.0.6	Use newly internalised common header.	*
  * 08/12/2021	MG	1.0.7	Tighten SPDX tag.			*
+ * 04/04/2022	MG	1.0.8	Improve error handling consistency.	*
  *									*
  ************************************************************************
  */
@@ -65,7 +66,7 @@ char sshuser[_POSIX_LOGIN_NAME_MAX]; /**< Server username for SSH. */
 /**
  * Parse and validate the config file.
  * On error mge_errno is set.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int swcom_validate_config(void)
 {
@@ -80,7 +81,7 @@ int swcom_validate_config(void)
 	if (psections == NULL) {
 		sav_errno = errno;
 		mge_errno = MGE_ERRNO;
-		return mge_errno;
+		return -mge_errno;
 	}
 
 	psections[0] = (struct confsection){ "General",
@@ -120,6 +121,7 @@ exit:
 static int validateconfigfileparams(const struct confsection *ps)
 {
 	int e;
+
 	if ((e = validatepollint(ps)))
 		return e;
 	if ((e = validatessh(ps)))
@@ -161,7 +163,7 @@ poll_error:
 	       "Config param pollint does not "
 	       "contain a valid polling interval - %s",
 	       ps->keys[0].value);
-	return mge_errno;
+	return -mge_errno;
 }
 
 /*
@@ -189,7 +191,7 @@ ssh_error:
 	       "Config param ssh does not "
 	       "contain yes or no - %s",
 	       ps->keys[1].value);
-	return mge_errno;
+	return -mge_errno;
 }
 
 /*
@@ -203,7 +205,7 @@ static int validateserver(const struct confsection *ps)
 		syslog((int)(LOG_USER | LOG_NOTICE),
 		       "Config param server "
 		       "does not contain a valid server name.");
-		return mge_errno;
+		return -mge_errno;
 	}
 	strcpy(server, (ps + 1)->keys[0].value);
 	return 0;
@@ -234,7 +236,7 @@ port_error:
 	       "Config param srvportno does not "
 	       "contain a valid port number - %s",
 	       (ps + 1)->keys[1].value);
-	return mge_errno;
+	return -mge_errno;
 }
 
 /*
@@ -263,7 +265,7 @@ port_error:
 	       "Config param sshportno does not "
 	       "contain a valid port number - %s",
 	       (ps + 2)->keys[0].value);
-	return mge_errno;
+	return -mge_errno;
 }
 
 /*
@@ -277,9 +279,8 @@ static int validatesshuser(const struct confsection *ps)
 		syslog((int)(LOG_USER | LOG_NOTICE),
 		       "Config param sshuser "
 		       "does not contain a valid user name.");
-		return mge_errno;
+		return -mge_errno;
 	}
 	strcpy(sshuser, (ps + 2)->keys[1].value);
 	return 0;
 }
-

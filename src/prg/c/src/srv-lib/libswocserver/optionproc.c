@@ -3,12 +3,12 @@
  *
  * Functions to process server lock flag options.
  *
- * @author Copyright (C) 2016-2019, 2021  Mark Grant
+ * @author Copyright (C) 2016-2019, 2021, 2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.14 ==== 08/12/2021_
+ * @version _v1.1.15 ==== 05/04/2022_
  */
 
 /* **********************************************************************
@@ -65,6 +65,7 @@
  *				for terminating nul.			*
  * 10/10/2021	MG	1.1.13	Use newly internalised common header.	*
  * 08/12/2021	MG	1.1.14	Tighten SPDX tag.			*
+ * 05/04/2022	MG	1.1.15	Improve error handling consistency.	*
  *									*
  ************************************************************************
  */
@@ -107,7 +108,7 @@ char locks_held[11] = "0";
 /**
  * Display clients with active locks to stdout.
  * On error mge_errno is set.
- * @return The number of clients with locks or -1 on error.
+ * @return The number of clients with locks or < zero on error.
  */
 int sws_show_status(void)
 {
@@ -144,7 +145,7 @@ int sws_show_status(void)
 		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
 		       msg->message);
 		clear_msg(msg, ';', ',');
-		return -1;
+		return -mge_errno;
 	}
 
 	for (i = 3; i < msg->argc; i += 2) {
@@ -163,7 +164,7 @@ int sws_show_status(void)
 /**
  * Display status of server blocking.
  * On error mge_errno is set.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int sws_show_block_status(void)
 {
@@ -198,7 +199,7 @@ int sws_show_block_status(void)
 		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
 		       msg->message);
 		clear_msg(msg, ';', ',');
-		return -1;
+		return -mge_errno;
 	}
 
 	if (strcmp(msg->argv[3], "0"))
@@ -214,7 +215,7 @@ int sws_show_block_status(void)
 /**
  * Request server blocking.
  * On error mge_errno is set.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int sws_srv_block(void)
 {
@@ -249,7 +250,7 @@ int sws_srv_block(void)
 		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
 		       msg->message);
 		clear_msg(msg, ';', ',');
-		return -1;
+		return -mge_errno;
 	}
 
 	syslog((int)(LOG_USER | LOG_NOTICE), "Server is blocked.");
@@ -262,7 +263,7 @@ int sws_srv_block(void)
 /**
  * Request removal of server blocking.
  * On error mge_errno is set.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int sws_srv_unblock(void)
 {
@@ -297,7 +298,7 @@ int sws_srv_unblock(void)
 		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
 		       msg->message);
 		clear_msg(msg, ';', ',');
-		return -1;
+		return -mge_errno;
 	}
 
 	syslog((int)(LOG_USER | LOG_NOTICE), "Server is unblocked.");
@@ -310,7 +311,7 @@ int sws_srv_unblock(void)
 /**
  * Display list of blocked clients to stdout.
  * On error mge_errno is set.
- * @return The number of blocked or -1 on error.
+ * @return The number of blocked or < zero on error.
  */
 int sws_show_cli_blocklist(void)
 {
@@ -347,7 +348,7 @@ int sws_show_cli_blocklist(void)
 		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
 		       msg->message);
 		clear_msg(msg, ';', ',');
-		return -1;
+		return -mge_errno;
 	}
 
 	for (i = 3; i < msg->argc; i++) {
@@ -365,7 +366,7 @@ int sws_show_cli_blocklist(void)
 /**
  * Wait until no client locks remain.
  * On error mge_errno is set.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int sws_server_wait(void)
 {
@@ -407,7 +408,7 @@ int sws_server_wait(void)
 			       "- %s",
 			       msg->message);
 			clear_msg(msg, ';', ',');
-			return mge_errno;
+			return -mge_errno;
 		}
 		if (msg->argc > 3)
 			sprintf(locks_held, "%i", ((msg->argc - 3) / 2));
@@ -425,7 +426,7 @@ int sws_server_wait(void)
  * Remove a lock.
  * On error mge_errno is set.
  * @param lockname Client whose lock is to be removed.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int sws_release(char *lockname)
 {
@@ -463,7 +464,7 @@ int sws_release(char *lockname)
 		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
 		       msg->message);
 		clear_msg(msg, ';', ',');
-		return mge_errno;
+		return -mge_errno;
 	}
 
 	syslog((int)(LOG_USER | LOG_NOTICE),
@@ -480,7 +481,7 @@ int sws_release(char *lockname)
  * Set a client to blocked.
  * On error mge_errno is set.
  * @param blockname Client to block.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int sws_cli_block(char *blockname)
 {
@@ -518,7 +519,7 @@ int sws_cli_block(char *blockname)
 		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
 		       msg->message);
 		clear_msg(msg, ';', ',');
-		return mge_errno;
+		return -mge_errno;
 	}
 
 	syslog((int)(LOG_USER | LOG_NOTICE), "Client %s blocked.", blockname);
@@ -532,7 +533,7 @@ int sws_cli_block(char *blockname)
  * Unblock a client block.
  * On error mge_errno is set.
  * @param blockname Client to unblock.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int sws_cli_unblock(char *blockname)
 {
@@ -570,7 +571,7 @@ int sws_cli_unblock(char *blockname)
 		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
 		       msg->message);
 		clear_msg(msg, ';', ',');
-		return mge_errno;
+		return -mge_errno;
 	}
 
 	syslog((int)(LOG_USER | LOG_NOTICE), "Client %s unblocked.", blockname);
@@ -584,7 +585,7 @@ int sws_cli_unblock(char *blockname)
  * Terminate the daemon.
  * Send a message to the daemon asking it to terminate.
  * On error mge_errno is set.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int sws_end_daemon(void)
 {
@@ -619,7 +620,7 @@ int sws_end_daemon(void)
 		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
 		       msg->message);
 		clear_msg(msg, ';', ',');
-		return mge_errno;
+		return -mge_errno;
 	}
 
 	syslog((int)(LOG_USER | LOG_NOTICE), "Request to end daemon "
@@ -634,7 +635,7 @@ int sws_end_daemon(void)
  * Request the daemon to reload the config file.
  * Send a message to the daemon asking it to reload it's configuration file.
  * On error mge_errno is set.
- * @return 0 on success, non-zero on failure.
+ * @return 0 on success, < zero on failure.
  */
 int sws_reload_config(void)
 {
@@ -669,7 +670,7 @@ int sws_reload_config(void)
 		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
 		       msg->message);
 		clear_msg(msg, ';', ',');
-		return mge_errno;
+		return -mge_errno;
 	}
 
 	syslog((int)(LOG_USER | LOG_NOTICE), "Config file reloaded.");
@@ -678,4 +679,3 @@ int sws_reload_config(void)
 
 	return 0;
 }
-
