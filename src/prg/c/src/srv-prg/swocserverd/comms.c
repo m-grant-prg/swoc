@@ -299,7 +299,8 @@ static int init_epoll(int *pepfd, struct epoll_event *pevent,
  */
 static int proc_events(int n_events, struct epoll_event *pevents)
 {
-	int err, i, tmp_comp;
+	int i, tmp_comp;
+	int err = 0;
 	ssize_t n;
 	struct sockaddr_in cli_addr;
 	socklen_t clilen;
