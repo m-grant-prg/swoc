@@ -7,19 +7,26 @@ int swc_set_lock(void);
 DESCRIPTION
 The swc_set_lock function sets or increments this client's lock on the server
 providing locking has not been blocked. If the client is blocked the function
-returns non-zero and mge_errno is set.
+returns -mge_errno and mge_errno is set.
 RETURN VALUE
 0 on success.
 .br
-Non-zero Failure.
+-mge_errno on failure.
 ERRORS
+mge_errno will be set on error as follows:-
+.br
 If blocked mge_errno is set to MGE_CLIENT_BLOCKED
+.br
+Set to the error incurred in a called function.
+
+Set to the error returned in the message from the server or if an error is not
+supplied then MGE_INVAL_MSG is returned.
 AUTHOR
 Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2016-2019, 2021 Mark Grant.
+Copyright (C) 2016-2019, 2021, 2022 Mark Grant.
 .br
 License GPLv3: GNU GPL version 3 only
 .br

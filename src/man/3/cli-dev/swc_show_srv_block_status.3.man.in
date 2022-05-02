@@ -7,18 +7,25 @@ int swc_show_srv_block_status();
 DESCRIPTION
 The swc_show_srv_block_status function reads the swoc.conf configuration file
 and displays the status of server blocking on stdout.
+.br
+mge_errno is set on error.
 RETURN VALUE
 0 on success.
 .br
-non-zero on failure.
+-mge_errno  on failure.
 ERRORS
-On failure mge_errno will be set as required.
+mge_errno will be set on error as follows:-
+.br
+Set to the error incurred in a called function.
+
+Set to the error returned in the message from the server or if an error is not
+supplied then MGE_INVAL_MSG is returned.
 AUTHOR
 Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2018-2019, 2021 Mark Grant.
+Copyright (C) 2018-2019, 2021, 2022 Mark Grant.
 .br
 License GPLv3: GNU GPL version 3 only
 .br

@@ -7,16 +7,24 @@ int swc_unblock(void);
 DESCRIPTION
 The swc_unblock function requests the server to reinstate locking for this
 client.
+mge_errno will be set on error.
 RETURN VALUE
 0 on success.
 .br
-Non-zero Failure.
+-mge_errno on failure.
+ERRORS
+mge_errno will be set on error as follows:-
+.br
+Set to the error incurred in a called function.
+
+Set to the error returned in the message from the server or if an error is not
+supplied then MGE_INVAL_MSG is returned.
 AUTHOR
 Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2018-2019, 2021 Mark Grant.
+Copyright (C) 2018-2019, 2021, 2022 Mark Grant.
 .br
 License GPLv3: GNU GPL version 3 only
 .br

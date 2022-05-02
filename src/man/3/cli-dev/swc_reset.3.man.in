@@ -8,16 +8,25 @@ DESCRIPTION
 The swc_reset function requests the server to re-initialise locking for this
 client. This means that for this client any locks held are released and, if
 blocked, blocking is removed.
+.br
+mge_errno is set on error.
 RETURN VALUE
 0 on success.
 .br
-Non-zero Failure.
+-mge_errno on failure.
+ERRORS
+mge_errno will be set on error as follows:-
+.br
+Set to the error incurred in a called function.
+
+Set to the error returned in the message from the server or if an error is not
+supplied then MGE_INVAL_MSG is returned.
 AUTHOR
 Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2018-2019, 2021 Mark Grant.
+Copyright (C) 2018-2019, 2021, 2022 Mark Grant.
 .br
 License GPLv3: GNU GPL version 3 only
 .br
