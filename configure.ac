@@ -219,7 +219,7 @@ AC_PREREQ(2.69)
 # in source files.
 #
 # Set pkg_version for a default hard-coded version number.
-m4_define(pkg_version, 1.5.2+rc3)
+m4_define(pkg_version, 1.5.3)
 
 AC_INIT([Server Wait On Client Package], m4_esyscmd([ \
 	git describe --always 1>/dev/null 2>/dev/null \
@@ -232,10 +232,10 @@ AC_MSG_NOTICE(initialisation and setup)
 
 AC_SUBST(package_version, $PACKAGE_VERSION)
 
-AC_DEFINE(COMMON_SOURCE_VERSION, "1.1.11", \
+AC_DEFINE(COMMON_SOURCE_VERSION, "1.1.12", \
 	Define to the version of source code for the common library.)
 
-AC_SUBST(common_lib_version_info, "3:3:0")
+AC_SUBST(common_lib_version_info, "3:4:0")
 
 AC_DEFINE(CLIENT_SOURCE_VERSION, "1.1.9", \
 	Define to the version of source code for the client library.)
