@@ -187,6 +187,7 @@
 #				further package version information.	#
 #				Tighten SPDX tag.			#
 #				Add AC_COPYRIGHT macro.			#
+# 06/06/2022	MG	1.2.12	Use new namespace enhanced m4 macros.	#
 #									#
 #########################################################################
 
@@ -201,7 +202,7 @@ AC_COPYRIGHT([Copyright (C) 2015-2022  Mark Grant
 	      This script is free to copy or distribute under the terms set out
 	      in the package license. See COPYING for details.])
 
-AC_REVISION($Revision: 1.2.11 $)
+AC_REVISION($Revision: 1.2.12 $)
 
 AC_PREREQ(2.69)
 
@@ -647,9 +648,9 @@ AC_C_RESTRICT
 AX_PTHREAD(, AC_MSG_ERROR(thread information not found))
 
 # Build suitable pre-processor, compiler and linker flags.
-BUILD_COMPILER_VERSION_CPPFLAGS(MG_CPPFLAGS, MG_DEBUG_CPPFLAGS)
-BUILD_COMPILER_VERSION_CFLAGS(MG_CFLAGS, MG_DEBUG_CFLAGS)
-BUILD_LDFLAGS(MG_LDFLAGS)
+MG_BUILD_COMPILER_VERSION_CPPFLAGS(MG_CPPFLAGS, MG_DEBUG_CPPFLAGS)
+MG_BUILD_COMPILER_VERSION_CFLAGS(MG_CFLAGS, MG_DEBUG_CFLAGS)
+MG_BUILD_LDFLAGS(MG_LDFLAGS)
 
 
 #################################################
