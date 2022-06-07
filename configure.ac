@@ -188,6 +188,8 @@
 #				Tighten SPDX tag.			#
 #				Add AC_COPYRIGHT macro.			#
 # 06/06/2022	MG	1.2.12	Use new namespace enhanced m4 macros.	#
+#				New CL option to enable compiler	#
+#				analyzer output.			#
 #									#
 #########################################################################
 
@@ -288,6 +290,23 @@ AC_CONFIG_MACRO_DIR(m4)
 #########################################
 
 AC_MSG_NOTICE(processing command line arguments)
+
+#
+# The following allows for an enable-analyzer=yes/no command line option.
+# The conditional ANALAYZER is made available to the makefiles.
+#
+AC_ARG_ENABLE(analyzer,
+	AS_HELP_STRING([--enable-analyzer], [build to display analyzer output]),
+	[case "${enableval}" in
+		yes) analyzer=true ;;
+		no)  analyzer=false ;;
+		*) AC_MSG_ERROR(bad value ${enableval} in enable-analyzer);;
+	esac],analyzer=false)
+AM_CONDITIONAL(ANALYZER, test x$analyzer = xtrue)
+
+if test "x${analyzer}" = xtrue; then
+	AC_MSG_NOTICE(building to display compiler analyzer output)
+fi
 
 #
 # The following allows for an enable-atonly=yes/no command line option. The
@@ -650,6 +669,7 @@ AX_PTHREAD(, AC_MSG_ERROR(thread information not found))
 # Build suitable pre-processor, compiler and linker flags.
 MG_BUILD_COMPILER_VERSION_CPPFLAGS(MG_CPPFLAGS, MG_DEBUG_CPPFLAGS)
 MG_BUILD_COMPILER_VERSION_CFLAGS(MG_CFLAGS, MG_DEBUG_CFLAGS)
+MG_BUILD_COMPILER_VERSION_ANALYZER_CFLAGS(MG_ANALYZER_CFLAGS)
 MG_BUILD_LDFLAGS(MG_LDFLAGS)
 
 

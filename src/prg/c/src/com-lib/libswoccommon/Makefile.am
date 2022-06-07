@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: src/prg/c/src/com-lib/libswoccommon/Makefile.am		#
-# Author: Copyright (C) 2016-2019, 2021  Mark Grant			#
+# Author: Copyright (C) 2016-2019, 2021, 2022  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -58,6 +58,7 @@
 # 05/11/2021	MG	1.0.18	Use (non-)debug CPPFLAGS from configure	#
 #				Use (non-)debug CFLAGS from configure	#
 # 08/12/2021	MG	1.0.19	Tighten SPDX tag.			#
+# 06/06/2022	MG	1.0.20	Add compiler analyzer option.		#
 #									#
 #########################################################################
 
@@ -87,6 +88,9 @@ AM_CFLAGS += -H
 endif
 if SPARSE
 AM_CFLAGS += -Wsparse-all -Wno-vla
+endif
+if ANALYZER
+AM_CFLAGS += $(MG_ANALYZER_CFLAGS)
 endif
 AM_CFLAGS += $(PTHREAD_CFLAGS)
 AM_CFLAGS += $(LIBMGEC_CFLAGS) $(LIBMGESYSUTILS_CFLAGS)
