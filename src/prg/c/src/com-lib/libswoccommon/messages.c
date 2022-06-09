@@ -56,6 +56,7 @@
  *				the interfaces.				*
  * 01/04/2022	MG	1.1.17	Improve error handling consistency.	*
  * 09/06/2022	MG	1.1.18	Add check for returned value.		*
+ *				Fix strncmp on NULL buffer.		*
  *									*
  ************************************************************************
  */
@@ -244,7 +245,13 @@ static int get_reply_msg(int sockfd, struct mgemessage *recv_msg)
 	/* Get server daemon reply. */
 	memset(sock_buf, '\0', sizeof(sock_buf));
 
-	while ((n = recv(sockfd, sock_buf, sizeof(sock_buf), 0)) != 0) {
+	n = recv(sockfd, sock_buf, sizeof(sock_buf), 0);
+	if (!n) {
+		mge_errno = MGE_INVAL_MSG;
+		return -mge_errno;
+	}
+
+	do {
 		if (n < 0) {
 			sav_errno = errno;
 			mge_errno = MGE_ERRNO;
@@ -263,14 +270,16 @@ static int get_reply_msg(int sockfd, struct mgemessage *recv_msg)
 		 * so don't loop emptying the buffer of messages.
 		 */
 		recv_msg = pull_msg(msg_buf, recv_msg);
-		if (recv_msg == NULL)
+		if (recv_msg == NULL) {
+			free(msg_buf1.buffer);
 			return -mge_errno;
+		}
 
 		if (recv_msg->complete)
 			break;
 
 		memset(sock_buf, '\0', sizeof(sock_buf));
-	}
+	} while ((n = recv(sockfd, sock_buf, sizeof(sock_buf), 0)) != 0);
 	free(msg_buf1.buffer);
 	return 0;
 }
