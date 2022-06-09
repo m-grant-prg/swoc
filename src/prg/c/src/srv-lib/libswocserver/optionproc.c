@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.15 ==== 05/04/2022_
+ * @version _v1.1.16 ==== 09/06/2022_
  */
 
 /* **********************************************************************
@@ -66,6 +66,7 @@
  * 10/10/2021	MG	1.1.13	Use newly internalised common header.	*
  * 08/12/2021	MG	1.1.14	Tighten SPDX tag.			*
  * 05/04/2022	MG	1.1.15	Improve error handling consistency.	*
+ * 09/06/2022	MG	1.1.16	Correct size of locks_held for sprintf.	*
  *									*
  ************************************************************************
  */
@@ -103,7 +104,7 @@
  * Holds the number of clients currently holding locks during sws_server_wait().
  * This value can be accessed in a handler if a signal is received.
  */
-char locks_held[11] = "0";
+char locks_held[12] = "0";
 
 /**
  * Display clients with active locks to stdout.
