@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.17 ==== 01/04/2022_
+ * @version _v1.1.18 ==== 09/06/2022_
  */
 
 /* **********************************************************************
@@ -55,6 +55,7 @@
  *				via the socket, no need to iterate over	*
  *				the interfaces.				*
  * 01/04/2022	MG	1.1.17	Improve error handling consistency.	*
+ * 09/06/2022	MG	1.1.18	Add check for returned value.		*
  *									*
  ************************************************************************
  */
@@ -317,7 +318,9 @@ static int host_id(int sockfd, char *orig_outgoing_msg)
 	strcat(om, ",");
 	strcat(om, host_ip);
 	strcat(om, ";");
-	send_outgoing_msg(om, strlen(om), &sockfd);
+	s = send_outgoing_msg(om, strlen(om), &sockfd);
+	if (s)
+		goto msg_free_exit;
 
 	s = get_reply_msg(sockfd, &ret_msg);
 	if (s)
