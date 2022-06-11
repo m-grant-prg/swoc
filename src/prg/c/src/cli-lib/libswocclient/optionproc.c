@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.15 ==== 01/04/2022_
+ * @version _v1.1.16 ==== 11/06/2022_
  */
 
 /* **********************************************************************
@@ -60,6 +60,7 @@
  * 10/10/2021	MG	1.1.13	Use new internal common header.		*
  * 08/12/2021	MG	1.1.14	Tighten SPDX tag.			*
  * 01/04/2022	MG	1.1.15	Improve error handling consistency.	*
+ * 11/06/2022	MG	1.1.16	Replace sprintf with safer snprintf.	*
  *									*
  ************************************************************************
  */
@@ -88,6 +89,7 @@
 	#define __bool_true_false_are_defined 1
 #endif
 
+#include <libmgec.h>
 #include <libswocclient.h>
 #include <libswoccommon.h>
 #include <mge-errno.h>
@@ -471,7 +473,7 @@ int swc_client_wait(char *cnumlocks)
 			clear_msg(msg, ';', ',');
 			return -mge_errno;
 		}
-		sprintf(locks_held, "%li", locks);
+		snprintf(locks_held, ARRAY_SIZE(locks_held), "%li", locks);
 
 		clear_msg(msg, ';', ',');
 	} while (locks > numlocks);
