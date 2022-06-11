@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.16 ==== 09/06/2022_
+ * @version _v1.1.16 ==== 11/06/2022_
  */
 
 /* **********************************************************************
@@ -66,7 +66,8 @@
  * 10/10/2021	MG	1.1.13	Use newly internalised common header.	*
  * 08/12/2021	MG	1.1.14	Tighten SPDX tag.			*
  * 05/04/2022	MG	1.1.15	Improve error handling consistency.	*
- * 09/06/2022	MG	1.1.16	Correct size of locks_held for sprintf.	*
+ * 11/06/2022	MG	1.1.16	Correct size of locks_held for sprintf.	*
+ *				Replace sprintf with safer snprintf.	*
  *									*
  ************************************************************************
  */
@@ -95,6 +96,7 @@
 	#define __bool_true_false_are_defined 1
 #endif
 
+#include <libmgec.h>
 #include <libswoccommon.h>
 #include <libswocserver.h>
 #include <mge-errno.h>
@@ -412,7 +414,8 @@ int sws_server_wait(void)
 			return -mge_errno;
 		}
 		if (msg->argc > 3)
-			sprintf(locks_held, "%i", ((msg->argc - 3) / 2));
+			snprintf(locks_held, ARRAY_SIZE(locks_held), "%i",
+				 ((msg->argc - 3) / 2));
 		empty = strcmp(msg->message, "swocserverd,status,ok;");
 		clear_msg(msg, ';', ',');
 	} while (empty);
@@ -439,7 +442,8 @@ int sws_release(char *lockname)
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
-	sprintf(out_msg, "swocserver,release,%s;", lockname);
+	snprintf(out_msg, ARRAY_SIZE(out_msg), "swocserver,release,%s;",
+		 lockname);
 	om_length = strlen(out_msg);
 
 	prg_err = swcom_validate_config();
@@ -494,7 +498,8 @@ int sws_cli_block(char *blockname)
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
-	sprintf(out_msg, "swocserver,block,%s;", blockname);
+	snprintf(out_msg, ARRAY_SIZE(out_msg), "swocserver,block,%s;",
+		 blockname);
 	om_length = strlen(out_msg);
 
 	prg_err = swcom_validate_config();
@@ -546,7 +551,8 @@ int sws_cli_unblock(char *blockname)
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
 
-	sprintf(out_msg, "swocserver,unblock,%s;", blockname);
+	snprintf(out_msg, ARRAY_SIZE(out_msg), "swocserver,unblock,%s;",
+		 blockname);
 	om_length = strlen(out_msg);
 
 	prg_err = swcom_validate_config();
