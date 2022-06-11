@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.8 ==== 04/04/2022_
+ * @version _v1.1.9 ==== 11/06/2022_
  */
 
 /* **********************************************************************
@@ -34,6 +34,7 @@
  * 10/10/2021	MG	1.1.6	Use newly internalised common header.	*
  * 08/12/2021	MG	1.1.7	Tighten SPDX tag.			*
  * 04/04/2022	MG	1.1.8	Improve error handling consistency.	*
+ * 11/06/2022	MG	1.1.9	Replace sprintf with safer snprintf.	*
  *									*
  ************************************************************************
  */
@@ -48,6 +49,7 @@
 #include <syslog.h>
 #include <unistd.h>
 
+#include <libmgec.h>
 #include <libswoccommon.h>
 #include <mge-errno.h>
 
@@ -132,7 +134,7 @@ int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
 	int x = 0;
 	char port[6];
 
-	sprintf(port, "%i", *portno);
+	snprintf(port, ARRAY_SIZE(port), "%i", *portno);
 	s = getaddrinfo(serv, port, hints, &result);
 	if (s) {
 		sav_errno = s;
