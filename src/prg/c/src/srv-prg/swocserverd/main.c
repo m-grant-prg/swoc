@@ -5,12 +5,12 @@
  * Daemon to enable a server to manage client locks and wait on the removal of
  * those locks prior to further server processing.
  *
- * @author Copyright (C) 2016-2021  Mark Grant
+ * @author Copyright (C) 2016-2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.20 ==== 08/12/2021_
+ * @version _v1.0.21 ==== 11/06/2022_
  */
 
 /* **********************************************************************
@@ -65,6 +65,7 @@
  * 09/03/2020	MG	1.0.18	Initialise client.			*
  * 13/10/2021	MG	1.0.19	Eliminate -Wunused-result warnings.	*
  * 08/12/2021	MG	1.0.20	Tighten SPDX tag.			*
+ * 11/06/2022	MG	1.0.21	Replace sprintf with safer snprintf.	*
  *									*
  ************************************************************************
  */
@@ -100,6 +101,7 @@ typedef bool _Bool;
 #include <bstree.h>
 #include <cmdlineargs.h>
 #include <configmake.h>
+#include <libmgec.h>
 #include <mge-errno.h>
 #include <signalhandle.h>
 
@@ -269,7 +271,7 @@ static void daemonise(void)
 			       pidfile);
 			exit(EXIT_FAILURE);
 		}
-		sprintf(spid, "%i\n", (int)pid);
+		snprintf(spid, ARRAY_SIZE(spid), "%i\n", (int)pid);
 		fputs(spid, fp);
 		fclose(fp);
 		exit(EXIT_SUCCESS);

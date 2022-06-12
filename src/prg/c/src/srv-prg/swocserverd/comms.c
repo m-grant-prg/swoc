@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.21 ==== 10/04/2022_
+ * @version _v1.0.22 ==== 11/06/2022_
  */
 
 /* **********************************************************************
@@ -66,6 +66,7 @@
  * 10/10/2021	MG	1.0.19	Use newly internalised common header.	*
  * 08/12/2021	MG	1.0.20	Tighten SPDX tag.			*
  * 10/04/2022	MG	1.0.21	Improve error handling consistency.	*
+ * 11/06/2022	MG	1.0.22	Replace sprintf with safer snprintf.	*
  *									*
  ************************************************************************
  */
@@ -97,6 +98,7 @@
 
 #include "internal.h"
 #include <bstree.h>
+#include <libmgec.h>
 #include <libswoccommon.h>
 #include <mge-errno.h>
 #include <mgebuffer.h>
@@ -164,7 +166,7 @@ static int bind_ports(int *sfd, int *portno, struct addrinfo *hints)
 	int i, r, s;
 	char port[6];
 
-	sprintf(port, "%i", *portno);
+	snprintf(port, ARRAY_SIZE(port), "%i", *portno);
 	s = getaddrinfo(NULL, port, hints, &result);
 	if (s) {
 		sav_errno = s;
@@ -405,7 +407,8 @@ static int proc_msg(struct mgemessage *msg)
 		       "Invalid arguments "
 		       "from %s in message %s",
 		       client, msg->message);
-		sprintf(out_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
+		snprintf(out_msg, ARRAY_SIZE(out_msg), "swocserverd, ,err,%i;",
+			 MGE_INVAL_MSG);
 		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 		mge_errno = MGE_INVAL_MSG;
 		return -mge_errno;
@@ -418,8 +421,8 @@ static int proc_msg(struct mgemessage *msg)
 				msg->message);
 		syslog((int)(LOG_USER | LOG_NOTICE),
 		       "Host not identified for message %s\n", msg->message);
-		sprintf(out_msg, "swocserverd,%s,err,%i;", msg->argv[1],
-			MGE_ID);
+		snprintf(out_msg, ARRAY_SIZE(out_msg), "swocserverd,%s,err,%i;",
+			 msg->argv[1], MGE_ID);
 		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 		mge_errno = MGE_ID;
 		return -mge_errno;
@@ -495,8 +498,8 @@ static int proc_msg(struct mgemessage *msg)
 			       "Invalid request "
 			       "from %s in message %s",
 			       client, msg->message);
-			sprintf(out_msg, "swocserverd, ,err,%i;",
-				MGE_INVAL_MSG);
+			snprintf(out_msg, ARRAY_SIZE(out_msg),
+				 "swocserverd, ,err,%i;", MGE_INVAL_MSG);
 			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 			mge_errno = MGE_INVAL_MSG;
 			return -mge_errno;
@@ -557,8 +560,8 @@ static int proc_msg(struct mgemessage *msg)
 			       "Invalid request "
 			       "from %s in message %s",
 			       client, msg->message);
-			sprintf(out_msg, "swocserverd, ,err,%i;",
-				MGE_INVAL_MSG);
+			snprintf(out_msg, ARRAY_SIZE(out_msg),
+				 "swocserverd, ,err,%i;", MGE_INVAL_MSG);
 			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 			mge_errno = MGE_INVAL_MSG;
 			return -mge_errno;
@@ -574,7 +577,8 @@ static int proc_msg(struct mgemessage *msg)
 		       "Invalid message source "
 		       "from %s in message %s",
 		       client, msg->message);
-		sprintf(out_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
+		snprintf(out_msg, ARRAY_SIZE(out_msg), "swocserverd, ,err,%i;",
+			 MGE_INVAL_MSG);
 		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 		mge_errno = MGE_INVAL_MSG;
 		return -mge_errno;
@@ -590,7 +594,8 @@ static int proc_msg(struct mgemessage *msg)
 		       "Invalid arguments "
 		       "from %s in message %s",
 		       client, msg->message);
-		sprintf(out_msg, "swocserverd, ,err,%i;", MGE_INVAL_MSG);
+		snprintf(out_msg, ARRAY_SIZE(out_msg), "swocserverd, ,err,%i;",
+			 MGE_INVAL_MSG);
 		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 		mge_errno = MGE_INVAL_MSG;
 		return -mge_errno;
