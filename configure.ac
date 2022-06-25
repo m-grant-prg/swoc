@@ -222,7 +222,7 @@ AC_PREREQ(2.69)
 # in source files.
 #
 # Set pkg_version for a default hard-coded version number.
-m4_define(pkg_version, 1.5.3+rc1)
+m4_define(pkg_version, 1.5.4)
 
 AC_INIT([Server Wait On Client Package], m4_esyscmd([ \
 	git describe --always 1>/dev/null 2>/dev/null \
@@ -235,20 +235,20 @@ AC_MSG_NOTICE(initialisation and setup)
 
 AC_SUBST(package_version, $PACKAGE_VERSION)
 
-AC_DEFINE(COMMON_SOURCE_VERSION, "1.1.12", \
+AC_DEFINE(COMMON_SOURCE_VERSION, "1.1.13", \
 	Define to the version of source code for the common library.)
 
-AC_SUBST(common_lib_version_info, "3:4:0")
+AC_SUBST(common_lib_version_info, "3:5:0")
 
-AC_DEFINE(CLIENT_SOURCE_VERSION, "1.1.9", \
+AC_DEFINE(CLIENT_SOURCE_VERSION, "1.1.10", \
 	Define to the version of source code for the client library.)
 
-AC_SUBST(client_lib_version_info, "2:2:0")
+AC_SUBST(client_lib_version_info, "2:3:0")
 
-AC_DEFINE(SERVER_SOURCE_VERSION, "1.1.11", \
+AC_DEFINE(SERVER_SOURCE_VERSION, "1.1.12", \
 	Define to the version of source code for the server library.)
 
-AC_SUBST(server_lib_version_info, "3:2:0")
+AC_SUBST(server_lib_version_info, "3:3:0")
 
 AC_DEFINE(SWOCCLIENT_SOURCE_VERSION, "1.1.8", \
 	Define to the version of source code for the client program.)
@@ -256,7 +256,7 @@ AC_DEFINE(SWOCCLIENT_SOURCE_VERSION, "1.1.8", \
 AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.9", \
 	Define to the version of source code for the server program.)
 
-AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.11", \
+AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.12", \
 	Define to the version of source code for the server daemon.)
 
 #
