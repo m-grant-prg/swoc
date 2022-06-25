@@ -1,3 +1,16 @@
+2022-06-25 v1.5.4 Mark Grant <m.grant.prg@gmail.com>
+	* doc: Update distro releases for this branch
+	srv-prg: Replace sprintf with safer snprintf
+	srv-lib: Replace sprintf with safer snprintf
+	com-lib: Replace sprintf with safer snprintf
+	cli-lib: Replace sprintf with safer snprintf
+	srv-lib: Correct size of locks_held for sprintf
+	com-lib: Fix possible strncmp on NULL buffer
+	com-lib: Add check for returned value
+	at: Upgrade bootstrap.sh to v1.5.1
+	at: Add support for gcc analyzer option
+	at: Update compiler and linker macros to v1.1.1
+
 2022-05-28 v1.5.3 Mark Grant <m.grant.prg@gmail.com>
 	* man3: srv-dev: Update after error handling re-work
 	man3: com-dev: Update after error handling re-work
