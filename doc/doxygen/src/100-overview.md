@@ -1,6 +1,6 @@
 Overview					{#mainpage}
 ========
-[TOC]
+\tableofcontents
 \section general General
 
 The Server Wait On Client (SWOC) system provides a simple lock-flag based method

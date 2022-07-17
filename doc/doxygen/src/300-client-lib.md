@@ -1,7 +1,6 @@
 Client Library
 ==============
-[TOC]
-
+\tableofcontents
 \section msgformat Client Messages
 
 Message formats are as follows.
