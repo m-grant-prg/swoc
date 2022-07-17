@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: doc/doxygen/Makefile.am					#
-# Author: Copyright (C) 2018-2021  Mark Grant				#
+# Author: Copyright (C) 2018-2022  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -39,6 +39,7 @@
 #				Move main source documents into src to	#
 #				enable use of EXTRA_DIST on subdir src.	#
 # 07/12/2021	MG	1.0.8	Tighten SPDX tag.			#
+# 17/07/2022	MG	1.0.9	Add a doxygen target.			#
 #									#
 #########################################################################
 
@@ -48,8 +49,9 @@
 docpkg = $(PACKAGE_TARNAME)-doxy-$(PACKAGE_VERSION).tar.gz
 
 # The dependencies below start with Doxyfile which is produced by configure, so
-# thereafter no updates to these documents will happen by make alone. Re-run
-# configure and make, or, delete the stamp file and run make to force an update.
+# only changes to Doxyfile.in will re-build the documentation. Changes to
+# documentation source or c source will require either make doxygen, a make
+# clean and make or the deletion of the stamp files and make to force an update.
 
 $(docpkg): doxygen.stamp
 	tar -chz --format=posix -f $@ html
@@ -99,6 +101,12 @@ doxygen1.stamp: Doxyfile
 	echo Timestamp > $@
 
 
+# Create a target to facilitate make doxygen
+doxygen: $(docpkg) $(intdocpkg) swoc swoc-int
+
+.PHONY: doxygen
+
+
 apidir = $(htmldir)/api
 intdir = $(htmldir)/int
 
@@ -120,6 +128,7 @@ swoc-int: $(srcdir)/swoc-int.in
 docbasedir = @docbaseloc@
 
 docbase_DATA = swoc swoc-int
+
 
 install-data-hook:
 if !DISTCHECKFAKE

@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: ./Makefile.am						#
-# Author: Copyright (C) 2015-2021  Mark Grant				#
+# Author: Copyright (C) 2015-2022  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -71,6 +71,7 @@
 # 11/10/2021	MG	1.1.13	Rationalise header directory to API and	#
 #				internal.				#
 # 07/12/2021	MG	1.1.14	Tighten SPDX tag.			#
+# 17/07/2022	MG	1.1.15	Add doxygen target.			#
 #									#
 #########################################################################
 
@@ -167,4 +168,10 @@ srctarball:
 		--output=$${targ} \
 		HEAD && \
 	cd -
+
+doxygen:
+	(cd doc/doxygen && rm -f *.stamp && $(MAKE) $(AM_MAKEFLAGS) $@) \
+		|| exit 1
+
+.PHONY: doxygen
 
