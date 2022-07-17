@@ -40,8 +40,15 @@
 #				enable use of EXTRA_DIST on subdir src.	#
 # 07/12/2021	MG	1.0.8	Tighten SPDX tag.			#
 # 17/07/2022	MG	1.0.9	Add a doxygen target.			#
+#				Add dependency on document sources and	#
+#				C sources.				#
 #									#
 #########################################################################
+
+
+srcdepends := $(shell find $(srcdir)/src -type f -printf "%p ") \
+	$(shell find $(top_srcdir) -type f -name *.c -printf "%p " \
+		-o -name *.h -printf "%p ")
 
 
 # Build API documentation.
@@ -56,7 +63,7 @@ docpkg = $(PACKAGE_TARNAME)-doxy-$(PACKAGE_VERSION).tar.gz
 $(docpkg): doxygen.stamp
 	tar -chz --format=posix -f $@ html
 
-doxygen.stamp: Doxyfile
+doxygen.stamp: Doxyfile $(srcdepends)
 	if $(AM_V_P); then \
 		DOXYGEN_QUIET=NO \
 			DOXYGEN_PROJECT_NAME="Server Wait On Clients System - API Documentation" \
@@ -82,7 +89,7 @@ intdocpkg = $(PACKAGE_TARNAME)-int-doxy-$(PACKAGE_VERSION).tar.gz
 $(intdocpkg): doxygen1.stamp
 	tar -chz --format=posix -f $@ html-int
 
-doxygen1.stamp: Doxyfile
+doxygen1.stamp: Doxyfile $(srcdepends)
 	if $(AM_V_P); then \
 		DOXYGEN_QUIET=NO \
 			DOXYGEN_PROJECT_NAME="Server Wait On Clients System - Full Internal Documentation" \
