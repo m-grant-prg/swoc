@@ -55,11 +55,6 @@ srcdepends := $(shell find $(srcdir)/src -type f -printf "%p ") \
 
 docpkg = $(PACKAGE_TARNAME)-doxy-$(PACKAGE_VERSION).tar.gz
 
-# The dependencies below start with Doxyfile which is produced by configure, so
-# only changes to Doxyfile.in will re-build the documentation. Changes to
-# documentation source or c source will require either make doxygen, a make
-# clean and make or the deletion of the stamp files and make to force an update.
-
 $(docpkg): doxygen.stamp
 	tar -chz --format=posix -f $@ html
 
