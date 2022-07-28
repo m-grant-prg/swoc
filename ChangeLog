@@ -1,3 +1,12 @@
+2022-07-28 v1.6.2 Mark Grant <m.grant.prg@gmail.com>
+	* at: Add URL for online documentation on GitHub Pages
+	docs: Host Doxygen documentation at GitHub Pages
+	at: doc: Remove stale comment
+	doc: Remove distro / branch information
+	at: doc: Remove portability constraints for Automake
+	at: doc: Introduce doxygen target
+	doc: Replace non-working [TOC] with \tableofcontents
+
 2022-06-26 v1.6.1 Mark Grant <m.grant.prg@gmail.com>
 	* doc: Update distro releases for this branch
 	srv-prg: Replace sprintf with safer snprintf
