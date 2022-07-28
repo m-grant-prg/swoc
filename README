@@ -2,7 +2,7 @@
 Server Wait On Clients (SWOC) System
 ====================================
 
-Author - Copyright (C) 2018-2021 Mark Grant
+Author - Copyright (C) 2018-2022 Mark Grant
 
 --------
 Contents
@@ -72,7 +72,9 @@ SWOC Common Library, equivalent packages for the libswocserver Server Library,
 equivalent packages for the libswocclient Client Library, a package swocclient
 for the client application, a package swocserver for the server application, an
 API  documentation package swoc-doc and a full documentation package
-swoc-int-doc.
+swoc-int-doc. These Doxygen documentation packages are also available online at
+- https://m-grant-prg.github.io/swoc/
+
 
 N.B.
 ----
