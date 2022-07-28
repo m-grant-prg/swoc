@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Script ID: doc/doxygen/Makefile.am					#
+# Script ID: docs/doxygen/Makefile.am					#
 # Author: Copyright (C) 2018-2022  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#

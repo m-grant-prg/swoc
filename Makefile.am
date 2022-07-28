@@ -72,6 +72,9 @@
 #				internal.				#
 # 07/12/2021	MG	1.1.14	Tighten SPDX tag.			#
 # 17/07/2022	MG	1.1.15	Add doxygen target.			#
+# 28/07/2022	MG	1.2.1	Change doc directory to docs to support	#
+#				using GitHub Pages to host Doxygen	#
+#				documentation.				#
 #									#
 #########################################################################
 
@@ -145,7 +148,7 @@ SUBDIRS += src/prg/c/src/srv-prg/swocserverd
 if SYSD
 SUBDIRS += src/systemd/srv-prg
 endif
-SUBDIRS += doc/doxygen
+SUBDIRS += docs/doxygen
 
 
 doc_DATA = AUTHORS ChangeLog COPYING NEWS README
@@ -154,7 +157,7 @@ doc_DATA = AUTHORS ChangeLog COPYING NEWS README
 EXTRA_DIST = $(srcdir)/AUTHORS $(srcdir)/ChangeLog $(srcdir)/COPYING \
 		$(srcdir)/NEWS $(srcdir)/README
 EXTRA_DIST += m4/gnulib-cache.m4
-EXTRA_DIST += doc/misc misc
+EXTRA_DIST += docs/misc misc
 
 
 srctarball:
@@ -170,7 +173,7 @@ srctarball:
 	cd -
 
 doxygen:
-	(cd doc/doxygen && rm -f *.stamp && $(MAKE) $(AM_MAKEFLAGS) $@) \
+	(cd docs/doxygen && rm -f *.stamp && $(MAKE) $(AM_MAKEFLAGS) $@) \
 		|| exit 1
 
 .PHONY: doxygen
