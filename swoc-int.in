@@ -1,0 +1,11 @@
+Document: swoc-int
+Title: Server Wait On Clients system internal documentation.
+Author: Mark Grant
+Abstract: This document describes the library source and the command line
+ programs source for the SWOC system.
+Section: Programming/C
+
+Format: HTML
+Index: @htmldir@/int/html-int/index.html
+Files: @htmldir@/int/html-int/*.html
+
