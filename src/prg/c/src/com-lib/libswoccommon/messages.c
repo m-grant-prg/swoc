@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.18 ==== 09/06/2022_
+ * @version _v1.1.19 ==== 25/08/2022_
  */
 
 /* **********************************************************************
@@ -57,6 +57,7 @@
  * 01/04/2022	MG	1.1.17	Improve error handling consistency.	*
  * 09/06/2022	MG	1.1.18	Add check for returned value.		*
  *				Fix strncmp on NULL buffer.		*
+ * 25/08/2022	MG	1.1.19	Use host canonical name in ID check.	*
  *									*
  ************************************************************************
  */
@@ -362,7 +363,7 @@ msg_free_exit:
 }
 
 /*
- * Get the socket's IP address and the associated host name.
+ * Get the socket's IP address and the associated canonical host name.
  * If over an SSH tunnel, separately create a new normal TCP socket, otherwise
  * the socket is bound to localhost.
  * On error mge_errno will be set.
@@ -381,6 +382,9 @@ static int get_host_name_ip(int sock_fd, char *host_name,
 	struct sockaddr_storage local_addr;
 	struct sockaddr *address = (struct sockaddr *)&local_addr;
 	socklen_t addr_size = sizeof(local_addr);
+	struct addrinfo hints;
+	struct addrinfo *info;
+	char hostname[host_name_size];
 	socklen_t sockaddr_size;
 	void *num_address;
 	int s;
@@ -427,8 +431,8 @@ static int get_host_name_ip(int sock_fd, char *host_name,
 		return -mge_errno;
 	}
 
-	s = getnameinfo((struct sockaddr *)&local_addr, sockaddr_size,
-			host_name, host_name_size, NULL, 0, NI_NAMEREQD);
+	s = getnameinfo((struct sockaddr *)&local_addr, sockaddr_size, hostname,
+			host_name_size, NULL, 0, NI_NAMEREQD);
 	if (s) {
 		sav_errno = s;
 		mge_errno = MGE_GAI;
@@ -436,6 +440,22 @@ static int get_host_name_ip(int sock_fd, char *host_name,
 		       mge_strerror(mge_errno));
 		return -mge_errno;
 	}
+
+	memset(&hints, 0, sizeof hints);
+	hints.ai_family = AF_UNSPEC; /* Either IPV4 or IPV6 */
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_flags = AI_CANONNAME;
+
+	s = getaddrinfo(hostname, "http", &hints, &info);
+	if (s) {
+		sav_errno = s;
+		mge_errno = MGE_GAI;
+		syslog((int)(LOG_USER | LOG_NOTICE), "getnameinfo error - %s",
+		       mge_strerror(mge_errno));
+		return -mge_errno;
+	}
+
+	strncpy(host_name, hostname, host_name_size);
 
 	if (ssh) {
 		s = close_sock(&sock_fd);
