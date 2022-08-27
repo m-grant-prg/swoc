@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.19 ==== 25/08/2022_
+ * @version _v1.1.19 ==== 27/08/2022_
  */
 
 /* **********************************************************************
@@ -57,7 +57,7 @@
  * 01/04/2022	MG	1.1.17	Improve error handling consistency.	*
  * 09/06/2022	MG	1.1.18	Add check for returned value.		*
  *				Fix strncmp on NULL buffer.		*
- * 25/08/2022	MG	1.1.19	Use host canonical name in ID check.	*
+ * 27/08/2022	MG	1.1.19	Use host canonical name in ID check.	*
  *									*
  ************************************************************************
  */
@@ -455,7 +455,7 @@ static int get_host_name_ip(int sock_fd, char *host_name,
 		return -mge_errno;
 	}
 
-	strncpy(host_name, hostname, host_name_size);
+	strcpy(host_name, hostname);
 
 	if (ssh) {
 		s = close_sock(&sock_fd);
