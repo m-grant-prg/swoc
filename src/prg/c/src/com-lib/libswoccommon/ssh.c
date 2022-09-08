@@ -290,7 +290,7 @@ static int verify_knownhost(void)
 		}
 		res = ssh_session_update_known_hosts(ssh_sess);
 		if (res == SSH_ERROR) {
-			mge_errno =MGE_SSH;
+			mge_errno = MGE_SSH;
 			res = -mge_errno;
 			syslog((int)(LOG_USER | LOG_NOTICE),
 			       "Error writing "
