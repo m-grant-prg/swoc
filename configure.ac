@@ -671,7 +671,12 @@ else
 	AC_CHECK_HEADERS(libmgec/mge-bstree.h, [],
 			 AC_MSG_ERROR(header not found))
 fi
-AC_CHECK_HEADERS(mge-errno.h, [], AC_MSG_ERROR(header not found))
+if test -f `dirname $0`/src/prg/c/inc-tmp/mge-errno.h ; then
+	AC_MSG_NOTICE(mge-errno.h is in the internal inc-tmp directory)
+else
+	AC_CHECK_HEADERS(libmgec/mge-errno.h, [],
+			 AC_MSG_ERROR(header not found))
+fi
 AC_CHECK_HEADERS(configfile.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(remsyslog.h, , AC_MSG_ERROR(header not found))
 
