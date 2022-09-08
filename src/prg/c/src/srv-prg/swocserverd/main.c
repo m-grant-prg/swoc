@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.21 ==== 11/06/2022_
+ * @version _v1.0.22 ==== 08/09/2022_
  */
 
 /* **********************************************************************
@@ -66,6 +66,7 @@
  * 13/10/2021	MG	1.0.19	Eliminate -Wunused-result warnings.	*
  * 08/12/2021	MG	1.0.20	Tighten SPDX tag.			*
  * 11/06/2022	MG	1.0.21	Replace sprintf with safer snprintf.	*
+ * 08/09/2022	MG	1.0.22	Rename bstree.h				*
  *									*
  ************************************************************************
  */
@@ -98,10 +99,10 @@ typedef bool _Bool;
 #endif
 
 #include "internal.h"
-#include <bstree.h>
 #include <cmdlineargs.h>
 #include <configmake.h>
 #include <libmgec.h>
+#include <mge-bstree.h>
 #include <mge-errno.h>
 #include <signalhandle.h>
 

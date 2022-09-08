@@ -48,6 +48,7 @@
  * 08/12/2021	MG	1.0.18	Tighten SPDX tag.			*
  * 08/09/2022	MG	1.0.19	Rename portability.h			*
  *				Rename mgemessage.h			*
+ *				Rename bstree.h				*
  *									*
  ************************************************************************
  */
@@ -74,8 +75,8 @@
 	#define __bool_true_false_are_defined 1
 #endif
 
-#include <bstree.h>
 #include <libswoccommon.h>
+#include <mge-bstree.h>
 #include <mge-message.h>
 #include <mge-portability.h>
 

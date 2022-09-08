@@ -69,6 +69,7 @@
  * 11/06/2022	MG	1.0.22	Replace sprintf with safer snprintf.	*
  * 08/09/2022	MG	1.0.23	Rename mgebuffer.h			*
  *				Rename mgemessage.h			*
+ *				Rename bstree.h				*
  *									*
  ************************************************************************
  */
@@ -99,9 +100,9 @@
 #endif
 
 #include "internal.h"
-#include <bstree.h>
 #include <libmgec.h>
 #include <libswoccommon.h>
+#include <mge-bstree.h>
 #include <mge-buffer.h>
 #include <mge-errno.h>
 #include <mge-message.h>
