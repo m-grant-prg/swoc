@@ -3,12 +3,12 @@
  *
  * Internal header file for Server Wait on Client common library.
  *
- * @author Copyright (C) 2017-2021  Mark Grant
+ * @author Copyright (C) 2017-2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.2 ==== 08/12/2021_
+ * @version _v1.1.3 ==== 08/09/2022_
  */
 
 /* **********************************************************************
@@ -35,6 +35,7 @@
  * 10/10/2021	MG	1.1.0	Make file internal, tightening API.	*
  * 11/10/2021	MG	1.1.1	Move to internal directory.		*
  * 08/12/2021	MG	1.1.2	Tighten SPDX tag.			*
+ * 08/09/2022	MG	1.1.3	Rename portability.h			*
  *									*
  ************************************************************************
  */
@@ -45,8 +46,8 @@
 #include <netdb.h>
 #include <sys/types.h>
 
+#include <mge-portability.h>
 #include <mgemessage.h>
-#include <portability.h>
 
 BEGIN_C_DECLS
 

@@ -3,12 +3,12 @@
  *
  * Header file for signal handling.
  *
- * @author Copyright (C) 2015-2021  Mark Grant
+ * @author Copyright (C) 2015-2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.10 ==== 08/12/2021_
+ * @version _v1.0.11 ==== 08/09/2022_
  */
 
 /* **********************************************************************
@@ -35,6 +35,7 @@
  * 11/10/2021	MG	1.0.9	Move to inc directory.			*
  *				Merge client and server versions.	*
  * 08/12/2021	MG	1.0.10	Tighten SPDX tag.			*
+ * 08/09/2022	MG	1.0.11	Rename portability.h			*
  *									*
  ************************************************************************
  */
@@ -42,7 +43,7 @@
 #ifndef SIGNALHANDLE_H
 #define SIGNALHANDLE_H
 
-#include <portability.h>
+#include <mge-portability.h>
 
 BEGIN_C_DECLS
 
@@ -53,4 +54,3 @@ void termination_handler(int signum);
 END_C_DECLS
 
 #endif /* ndef SIGNALHANDLE_H */
-

@@ -3,12 +3,12 @@
  *
  * Header file for Server Wait on Clients server-side daemon.
  *
- * @author Copyright (C) 2016-2021  Mark Grant
+ * @author Copyright (C) 2016-2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.18 ==== 08/12/2021_
+ * @version _v1.0.19 ==== 08/09/2022_
  */
 
 /* **********************************************************************
@@ -46,6 +46,7 @@
  * 14/03/2020	MG	1.0.16	Add support for id_req.			*
  * 10/10/2021	MG	1.0.17	Use newly internalised common header.	*
  * 08/12/2021	MG	1.0.18	Tighten SPDX tag.			*
+ * 08/09/2022	MG	1.0.19	Rename portability.h			*
  *									*
  ************************************************************************
  */
@@ -74,8 +75,8 @@
 
 #include <bstree.h>
 #include <libswoccommon.h>
+#include <mge-portability.h>
 #include <mgemessage.h>
-#include <portability.h>
 
 BEGIN_C_DECLS
 
@@ -155,4 +156,3 @@ void swocserverd_print_src_version(void);
 END_C_DECLS
 
 #endif /* ndef SWOCSERVERD_INTERNAL_H */
-

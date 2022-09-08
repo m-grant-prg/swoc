@@ -3,12 +3,12 @@
  *
  * Header file for command line processing.
  *
- * @author Copyright (C) 2015-2021  Mark Grant
+ * @author Copyright (C) 2015-2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.11 ==== 08/12/2021_
+ * @version _v1.0.12 ==== 08/09/2022_
  */
 
 /* **********************************************************************
@@ -37,6 +37,7 @@
  * 11/10/2021	MG	1.0.10	Move to internal directory.		*
  *				Merge server and client versions.	*
  * 08/12/2021	MG	1.0.11	Tighten SPDX tag.			*
+ * 08/09/2022	MG	1.0.12	Rename portability.h			*
  *									*
  ************************************************************************
  */
@@ -46,7 +47,7 @@
 
 #include <limits.h>
 
-#include <portability.h>
+#include <mge-portability.h>
 
 BEGIN_C_DECLS
 
@@ -70,4 +71,3 @@ int cpyarg(char *flagarg, char *srcarg);
 END_C_DECLS
 
 #endif /* ndef CMDLINEARGS_H */
-

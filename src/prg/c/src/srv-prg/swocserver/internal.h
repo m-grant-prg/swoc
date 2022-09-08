@@ -3,12 +3,12 @@
  *
  * Header file for Server Wait on Clients server-side program.
  *
- * @author Copyright (C) 2015-2019, 2021  Mark Grant
+ * @author Copyright (C) 2015-2019, 2021, 2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.9 ==== 08/12/2021_
+ * @version _v1.0.10 ==== 08/09/2022_
  */
 
 /* **********************************************************************
@@ -30,6 +30,7 @@
  * 22/05/2018	MG	1.0.7	Change from swocserver.h to internal.h	*
  * 18/05/2019	MG	1.0.8	Merge sub-projects into one.		*
  * 08/12/2021	MG	1.0.9	Tighten SPDX tag.			*
+ * 08/09/2022	MG	1.0.10	Rename portability.h			*
  *									*
  ************************************************************************
  */
@@ -38,7 +39,7 @@
 #define SWOCSERVER_INTERNAL_H
 
 #include <libswocserver.h>
-#include <portability.h>
+#include <mge-portability.h>
 
 BEGIN_C_DECLS
 
@@ -55,4 +56,3 @@ void swocserver_print_src_version(void);
 END_C_DECLS
 
 #endif /* ndef SWOCSERVER_INTERNAL_H */
-
