@@ -71,6 +71,7 @@
  * 14/04/2022	MG	1.0.24	Improve error handling consistency.	*
  * 12/06/2022	MG	1.0.25	Replace sprintf with safer snprintf.	*
  * 08/09/2022	MG	1.0.26	Rename mgemessage.h			*
+ *				Rename mgememory.h			*
  *									*
  ************************************************************************
  */
@@ -105,8 +106,8 @@
 #include <bstree.h>
 #include <libmgec.h>
 #include <mge-errno.h>
+#include <mge-memory.h>
 #include <mge-message.h>
-#include <mgememory.h>
 
 /**
  * swocserver requesting the daemon to terminate.

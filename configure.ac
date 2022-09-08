@@ -202,6 +202,7 @@
 #				directory.				#
 #				Rename mgebuffer.h			#
 #				Rename mgemessage.h			#
+#				Rename mgememory.h			#
 #									#
 #########################################################################
 
@@ -657,7 +658,12 @@ else
 	AC_CHECK_HEADERS(libmgec/mge-message.h, [],
 			 AC_MSG_ERROR(header not found))
 fi
-AC_CHECK_HEADERS(mgememory.h, [], AC_MSG_ERROR(header not found))
+if test -f `dirname $0`/src/prg/c/inc-tmp/mge-memory.h ; then
+	AC_MSG_NOTICE(mge-memory.h is in the internal inc-tmp directory)
+else
+	AC_CHECK_HEADERS(libmgec/mge-memory.h, [],
+			 AC_MSG_ERROR(header not found))
+fi
 AC_CHECK_HEADERS(bstree.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(mge-errno.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(configfile.h, [], AC_MSG_ERROR(header not found))
