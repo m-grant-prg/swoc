@@ -677,7 +677,12 @@ else
 	AC_CHECK_HEADERS(libmgec/mge-errno.h, [],
 			 AC_MSG_ERROR(header not found))
 fi
-AC_CHECK_HEADERS(configfile.h, [], AC_MSG_ERROR(header not found))
+if test -f `dirname $0`/src/prg/c/inc-tmp/configfile.h ; then
+	AC_MSG_NOTICE(configfile.h is in the internal inc-tmp directory)
+else
+	AC_CHECK_HEADERS(libmgec/configfile.h, [],
+			 AC_MSG_ERROR(header not found))
+fi
 AC_CHECK_HEADERS(remsyslog.h, , AC_MSG_ERROR(header not found))
 
 AC_HEADER_STDBOOL
