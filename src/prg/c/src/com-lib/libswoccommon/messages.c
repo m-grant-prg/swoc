@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.19 ==== 27/08/2022_
+ * @version _v1.1.20 ==== 08/09/2022_
  */
 
 /* **********************************************************************
@@ -58,6 +58,8 @@
  * 09/06/2022	MG	1.1.18	Add check for returned value.		*
  *				Fix strncmp on NULL buffer.		*
  * 27/08/2022	MG	1.1.19	Use host canonical name in ID check.	*
+ * 08/09/2022	MG	1.1.20	Rename mgebuffer.h			*
+ *				Rename mgemessage.h			*
  *									*
  ************************************************************************
  */
@@ -71,9 +73,9 @@
 #include <syslog.h>
 
 #include <libswoccommon.h>
+#include <mge-buffer.h>
 #include <mge-errno.h>
-#include <mgebuffer.h>
-#include <mgemessage.h>
+#include <mge-message.h>
 
 static int get_reply_msg(int sockfd, struct mgemessage *recv_msg);
 static int host_id(int sockfd, char *orig_outgoing_msg);

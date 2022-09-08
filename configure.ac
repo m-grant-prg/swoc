@@ -200,6 +200,8 @@
 # 08/09/2022	MG	1.3.2	Rename portability.h			#
 #				Add checks for headers in inc-tmp	#
 #				directory.				#
+#				Rename mgebuffer.h			#
+#				Rename mgemessage.h			#
 #									#
 #########################################################################
 
@@ -643,9 +645,19 @@ else
 	AC_CHECK_HEADERS(libmgec/mge-portability.h, [],
 			 AC_MSG_ERROR(header not found))
 fi
-AC_CHECK_HEADERS(mgebuffer.h, [], AC_MSG_ERROR(header not found))
+if test -f `dirname $0`/src/prg/c/inc-tmp/mge-buffer.h ; then
+	AC_MSG_NOTICE(mge-buffer.h is in the internal inc-tmp directory)
+else
+	AC_CHECK_HEADERS(libmgec/mge-buffer.h, [],
+			 AC_MSG_ERROR(header not found))
+fi
+if test -f `dirname $0`/src/prg/c/inc-tmp/mge-message.h ; then
+	AC_MSG_NOTICE(mge-message.h is in the internal inc-tmp directory)
+else
+	AC_CHECK_HEADERS(libmgec/mge-message.h, [],
+			 AC_MSG_ERROR(header not found))
+fi
 AC_CHECK_HEADERS(mgememory.h, [], AC_MSG_ERROR(header not found))
-AC_CHECK_HEADERS(mgemessage.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(bstree.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(mge-errno.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(configfile.h, [], AC_MSG_ERROR(header not found))

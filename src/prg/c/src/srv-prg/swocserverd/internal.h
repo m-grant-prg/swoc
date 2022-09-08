@@ -47,6 +47,7 @@
  * 10/10/2021	MG	1.0.17	Use newly internalised common header.	*
  * 08/12/2021	MG	1.0.18	Tighten SPDX tag.			*
  * 08/09/2022	MG	1.0.19	Rename portability.h			*
+ *				Rename mgemessage.h			*
  *									*
  ************************************************************************
  */
@@ -75,8 +76,8 @@
 
 #include <bstree.h>
 #include <libswoccommon.h>
+#include <mge-message.h>
 #include <mge-portability.h>
-#include <mgemessage.h>
 
 BEGIN_C_DECLS
 

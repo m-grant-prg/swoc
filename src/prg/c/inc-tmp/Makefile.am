@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: src/prg/c/inc-tmp/Makefile.am				#
-# Author: Copyright (C) 2017-2019, 2021  Mark Grant			#
+# Author: Copyright (C) 2017-2019, 2021, 2022  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -35,11 +35,13 @@
 #				Remove shebang.				#
 # 10/10/2021	MG	1.0.8	Use newly internalised common header.	#
 # 08/12/2021	MG	1.0.9	Tighten SPDX tag.			#
+# 08/09/2022	MG	1.0.10	Rename mgebuffer.h			#
+#				Rename mgemessage.h			#
 #									#
 #########################################################################
 
 
 noinst_HEADERS = $(tmpheaders)
 
-EXTRA_HEADERS = bstree.h libswoccommon.h mgebuffer.h mge-errno.h mgemessage.h
+EXTRA_HEADERS = bstree.h libswoccommon.h mge-buffer.h mge-errno.h mge-message.h
 

@@ -36,6 +36,7 @@
  * 11/10/2021	MG	1.1.1	Move to internal directory.		*
  * 08/12/2021	MG	1.1.2	Tighten SPDX tag.			*
  * 08/09/2022	MG	1.1.3	Rename portability.h			*
+ *				Rename mgemessage.h			*
  *									*
  ************************************************************************
  */
@@ -46,8 +47,8 @@
 #include <netdb.h>
 #include <sys/types.h>
 
+#include <mge-message.h>
 #include <mge-portability.h>
-#include <mgemessage.h>
 
 BEGIN_C_DECLS
 
