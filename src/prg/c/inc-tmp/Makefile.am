@@ -35,15 +35,15 @@
 #				Remove shebang.				#
 # 10/10/2021	MG	1.0.8	Use newly internalised common header.	#
 # 08/12/2021	MG	1.0.9	Tighten SPDX tag.			#
-# 08/09/2022	MG	1.0.10	Rename mgebuffer.h			#
+# 12/09/2022	MG	1.0.10	Rename mgebuffer.h			#
 #				Rename mgemessage.h			#
 #				Rename bstree.h				#
+#				Empty EXTRA_HEADERS.			#
 #									#
 #########################################################################
 
 
 noinst_HEADERS = $(tmpheaders)
 
-EXTRA_HEADERS = mge-bstree.h libswoccommon.h mge-buffer.h mge-errno.h \
-		mge-message.h
+EXTRA_HEADERS =
 
