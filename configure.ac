@@ -211,6 +211,7 @@
 #				Variables such as pkgincludedir. Use	#
 #				Makefile.am variable substitution	#
 #				instead.				#
+#				Flatten build of pkgconfig files.	#
 #									#
 #########################################################################
 
@@ -969,9 +970,7 @@ AC_CONFIG_FILES(Makefile
 		src/prg/c/inc/internal/Makefile
 		src/prg/c/inc-tmp/Makefile
 		src/prg/c/lib-tmp/Makefile
-		src/prg/c/pkg-config/cli-dev/Makefile
-		src/prg/c/pkg-config/com-dev/Makefile
-		src/prg/c/pkg-config/srv-dev/Makefile
+		src/prg/c/pkg-config/Makefile
 		src/prg/c/src/cli-lib/libswocclient/Makefile
 		src/prg/c/src/cli-lib/test-optionproc/Makefile
 		src/prg/c/src/cli-prg/swocclient/Makefile

@@ -75,6 +75,7 @@
 # 28/07/2022	MG	1.2.1	Change doc directory to docs to support	#
 #				using GitHub Pages to host Doxygen	#
 #				documentation.				#
+# 13/09/2022	MG	1.2.2	Flatten build of pkgconfig files.	#
 #									#
 #########################################################################
 
@@ -112,16 +113,14 @@ SUBDIRS += src/prg/c/lib-tmp
 SUBDIRS += src/prg/c/gen/lib
 SUBDIRS += src/prg/c/inc/api
 SUBDIRS += src/prg/c/inc/internal
-SUBDIRS += src/prg/c/pkg-config/com-dev
+SUBDIRS += src/prg/c/pkg-config
 SUBDIRS += src/prg/c/src/com-lib/libswoccommon
 SUBDIRS += src/prg/c/src/com-lib/test-messages
 SUBDIRS += src/prg/c/src/com-lib/test-ssh
 SUBDIRS += src/prg/c/src/com-lib/test-tcp
 SUBDIRS += src/prg/c/src/com-lib/test-validate
-SUBDIRS += src/prg/c/pkg-config/cli-dev
 SUBDIRS += src/prg/c/src/cli-lib/libswocclient
 SUBDIRS += src/prg/c/src/cli-lib/test-optionproc
-SUBDIRS += src/prg/c/pkg-config/srv-dev
 SUBDIRS += src/prg/c/src/srv-lib/libswocserver
 SUBDIRS += src/prg/c/src/srv-lib/test-optionproc
 SUBDIRS += src/prg/c/src/cli-prg/swocclient
