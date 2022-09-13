@@ -17,7 +17,7 @@
 #include <string.h>
 
 #include <libswoccommon.h>
-#include <mge-errno.h>
+#include <libmgec/mge-errno.h>
 
 /*
  * ssh test program.

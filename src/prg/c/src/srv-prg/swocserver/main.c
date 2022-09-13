@@ -5,12 +5,12 @@
  * To enable a server to wait on clients releasing flags prior to further server
  * processing. (By use of swocserver -w).
  *
- * @author Copyright (C) 2015-2019, 2021  Mark Grant
+ * @author Copyright (C) 2015-2019, 2021, 2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.8 ==== 08/12/2021_
+ * @version _v1.1.9 ==== 12/09/2022_
  */
 
 /* **********************************************************************
@@ -57,6 +57,7 @@
  * 22/05/2018	MG	1.1.6	Change from swocserver.h to internal.h	*
  * 18/05/2019	MG	1.1.7	Merge sub-projects into one.		*
  * 08/12/2021	MG	1.1.8	Tighten SPDX tag.			*
+ * 12/09/2022	MG	1.1.9	Use pkginclude location.		*
  *									*
  ************************************************************************
  */
@@ -66,7 +67,7 @@
 
 #include "internal.h"
 #include <cmdlineargs.h>
-#include <mge-errno.h>
+#include <libmgec/mge-errno.h>
 #include <signalhandle.h>
 
 static char *prog_name; /**< This program's name. */
@@ -163,4 +164,3 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	exit(EXIT_SUCCESS);
 }
-

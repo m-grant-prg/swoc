@@ -16,8 +16,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <libmgec/mge-errno.h>
 #include <libswoccommon.h>
-#include <mge-errno.h>
 
 /*
  * messages test program.

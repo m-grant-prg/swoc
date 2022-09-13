@@ -3,12 +3,12 @@
  *
  * To parse and validate the config file.
  *
- * @author Copyright (C) 2017-2019, 2021  Mark Grant
+ * @author Copyright (C) 2017-2019, 2021, 2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.11 ==== 08/12/2021_
+ * @version _v1.0.12 ==== 12/09/2022_
  */
 
 /* **********************************************************************
@@ -36,6 +36,7 @@
  * 18/05/2019	MG	1.0.9	Merge sub-projects into one.		*
  * 02/06/2019	MG	1.0.10	Trivial type safety improvements.	*
  * 08/12/2021	MG	1.0.11	Tighten SPDX tag.			*
+ * 12/09/2022	MG	1.0.12	Use pkginclude location.		*
  *									*
  ************************************************************************
  */
@@ -50,8 +51,8 @@
 #include <configmake.h>
 
 #include "internal.h"
-#include <configfile.h>
-#include <mge-errno.h>
+#include <libmgec/mge-errno.h>
+#include <libmgesysutils/mge-configfile.h>
 
 static int validateportnos(const struct confsection *ps);
 
@@ -137,4 +138,3 @@ port_error:
 	       ps->keys[k].value);
 	return mge_errno;
 }
-

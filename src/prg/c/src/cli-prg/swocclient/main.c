@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.12 ==== 01/04/2022_
+ * @version _v1.1.13 ==== 12/09/2022_
  */
 
 /* **********************************************************************
@@ -51,6 +51,7 @@
  * 11/10/2021	MG	1.1.10	Move cmdlineargs.h to inc directory.	*
  * 08/12/2021	MG	1.1.11	Tighten SPDX tag.			*
  * 01/04/2022	MG	1.1.12	Improve error handling consistency.	*
+ * 12/09/2022	MG	1.1.13	Use pkginclude location.		*
  *									*
  ************************************************************************
  */
@@ -61,8 +62,8 @@
 #include "internal.h"
 #include "signalhandle.h"
 #include <cmdlineargs.h>
+#include <libmgec/mge-errno.h>
 #include <libswocclient.h>
-#include <mge-errno.h>
 
 /** The name of this program. */
 static char *prog_name;

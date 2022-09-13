@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.15 ==== 08/09/2022_
+ * @version _v1.0.15 ==== 12/09/2022_
  */
 
 /* **********************************************************************
@@ -45,7 +45,8 @@
  * 18/05/2019	MG	1.0.12	Merge sub-projects into one.		*
  * 11/10/2021	MG	1.0.13	Move to api directory.			*
  * 08/12/2021	MG	1.0.14	Tighten SPDX tag.			*
- * 08/09/2022	MG	1.0.15	Rename portability.h			*
+ * 12/09/2022	MG	1.0.15	Rename portability.h			*
+ *				Use pkginclude location.		*
  *									*
  ************************************************************************
  */
@@ -53,7 +54,7 @@
 #ifndef LIBSWOCSERVER_H
 #define LIBSWOCSERVER_H
 
-#include <mge-portability.h>
+#include <libmgec/mge-portability.h>
 
 BEGIN_C_DECLS
 

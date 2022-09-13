@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.17 ==== 08/09/2022_
+ * @version _v1.1.17 ==== 12/09/2022_
  */
 
 /* **********************************************************************
@@ -68,7 +68,8 @@
  * 05/04/2022	MG	1.1.15	Improve error handling consistency.	*
  * 11/06/2022	MG	1.1.16	Correct size of locks_held for sprintf.	*
  *				Replace sprintf with safer snprintf.	*
- * 08/09/2022	MG	1.1.17	Rename mgemessage.h			*
+ * 12/09/2022	MG	1.1.17	Rename mgemessage.h			*
+ *				Use pkginclude location.		*
  *									*
  ************************************************************************
  */
@@ -97,11 +98,11 @@
 	#define __bool_true_false_are_defined 1
 #endif
 
-#include <libmgec.h>
+#include <libmgec/libmgec.h>
+#include <libmgec/mge-errno.h>
+#include <libmgec/mge-message.h>
 #include <libswoccommon.h>
 #include <libswocserver.h>
-#include <mge-errno.h>
-#include <mge-message.h>
 
 /**
  * Holds the number of clients currently holding locks during sws_server_wait().

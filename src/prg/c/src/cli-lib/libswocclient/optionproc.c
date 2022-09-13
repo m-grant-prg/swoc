@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.17 ==== 08/09/2022_
+ * @version _v1.1.17 ==== 12/09/2022_
  */
 
 /* **********************************************************************
@@ -61,7 +61,8 @@
  * 08/12/2021	MG	1.1.14	Tighten SPDX tag.			*
  * 01/04/2022	MG	1.1.15	Improve error handling consistency.	*
  * 11/06/2022	MG	1.1.16	Replace sprintf with safer snprintf.	*
- * 08/09/2022	MG	1.1.17	Rename mgemessage.h			*
+ * 12/09/2022	MG	1.1.17	Rename mgemessage.h			*
+ *				Use pkginclude location.		*
  *									*
  ************************************************************************
  */
@@ -90,12 +91,12 @@
 	#define __bool_true_false_are_defined 1
 #endif
 
-#include <libmgec.h>
+#include <libmgec/libmgec.h>
+#include <libmgec/mge-message.h>
+#include <libmgec/mge-errno.h>
+#include <libmgesysutils/mge-remsyslog.h>
 #include <libswocclient.h>
 #include <libswoccommon.h>
-#include <mge-errno.h>
-#include <mge-message.h>
-#include <remsyslog.h>
 
 /**
  * Holds the number of locks currently held during swc_client_wait(). This

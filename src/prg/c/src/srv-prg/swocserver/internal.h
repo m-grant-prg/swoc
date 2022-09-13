@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.10 ==== 08/09/2022_
+ * @version _v1.0.10 ==== 12/09/2022_
  */
 
 /* **********************************************************************
@@ -30,7 +30,8 @@
  * 22/05/2018	MG	1.0.7	Change from swocserver.h to internal.h	*
  * 18/05/2019	MG	1.0.8	Merge sub-projects into one.		*
  * 08/12/2021	MG	1.0.9	Tighten SPDX tag.			*
- * 08/09/2022	MG	1.0.10	Rename portability.h			*
+ * 12/09/2022	MG	1.0.10	Rename portability.h			*
+ *				Use pkginclude location.		*
  *									*
  ************************************************************************
  */
@@ -38,8 +39,8 @@
 #ifndef SWOCSERVER_INTERNAL_H
 #define SWOCSERVER_INTERNAL_H
 
+#include <libmgec/mge-portability.h>
 #include <libswocserver.h>
-#include <mge-portability.h>
 
 BEGIN_C_DECLS
 

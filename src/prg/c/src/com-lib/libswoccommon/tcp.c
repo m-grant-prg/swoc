@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.9 ==== 11/06/2022_
+ * @version _v1.1.10 ==== 12/09/2022_
  */
 
 /* **********************************************************************
@@ -35,6 +35,7 @@
  * 08/12/2021	MG	1.1.7	Tighten SPDX tag.			*
  * 04/04/2022	MG	1.1.8	Improve error handling consistency.	*
  * 11/06/2022	MG	1.1.9	Replace sprintf with safer snprintf.	*
+ * 12/09/2022	MG	1.1.10	Use pkginclude location.		*
  *									*
  ************************************************************************
  */
@@ -49,9 +50,9 @@
 #include <syslog.h>
 #include <unistd.h>
 
-#include <libmgec.h>
+#include <libmgec/libmgec.h>
+#include <libmgec/mge-errno.h>
 #include <libswoccommon.h>
-#include <mge-errno.h>
 
 /**
  * Prepare TCP socket to receive connections.

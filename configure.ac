@@ -197,13 +197,14 @@
 # 28/07/2022	MG	1.3.1	Change doc directory to docs to support	#
 #				using GitHub Pages for hosting Doxygen	#
 #				documentation.				#
-# 08/09/2022	MG	1.3.2	Rename portability.h			#
+# 12/09/2022	MG	1.3.2	Rename portability.h			#
 #				Add checks for headers in inc-tmp	#
 #				directory.				#
 #				Rename mgebuffer.h			#
 #				Rename mgemessage.h			#
 #				Rename mgememory.h			#
 #				Rename bstree.h				#
+#				Use pkginclude location.		#
 #									#
 #########################################################################
 
@@ -641,52 +642,52 @@ AC_CHECK_HEADERS(syslog.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(errno.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(getopt.h, [], AC_MSG_ERROR(header not found))
 AC_CHECK_HEADERS(libssh/libssh.h, [], AC_MSG_ERROR(header not found))
-if test -f `dirname $0`/src/prg/c/inc-tmp/mge-portability.h ; then
+if test -f `dirname $0`/src/prg/c/inc-tmp/libmgec/mge-portability.h ; then
 	AC_MSG_NOTICE(mge-portability.h is in the internal inc-tmp directory)
 else
 	AC_CHECK_HEADERS(libmgec/mge-portability.h, [],
 			 AC_MSG_ERROR(header not found))
 fi
-if test -f `dirname $0`/src/prg/c/inc-tmp/mge-buffer.h ; then
+if test -f `dirname $0`/src/prg/c/inc-tmp/libmgec/mge-buffer.h ; then
 	AC_MSG_NOTICE(mge-buffer.h is in the internal inc-tmp directory)
 else
 	AC_CHECK_HEADERS(libmgec/mge-buffer.h, [],
 			 AC_MSG_ERROR(header not found))
 fi
-if test -f `dirname $0`/src/prg/c/inc-tmp/mge-message.h ; then
+if test -f `dirname $0`/src/prg/c/inc-tmp/libmgec/mge-message.h ; then
 	AC_MSG_NOTICE(mge-message.h is in the internal inc-tmp directory)
 else
 	AC_CHECK_HEADERS(libmgec/mge-message.h, [],
 			 AC_MSG_ERROR(header not found))
 fi
-if test -f `dirname $0`/src/prg/c/inc-tmp/mge-memory.h ; then
+if test -f `dirname $0`/src/prg/c/inc-tmp/libmgec/mge-memory.h ; then
 	AC_MSG_NOTICE(mge-memory.h is in the internal inc-tmp directory)
 else
 	AC_CHECK_HEADERS(libmgec/mge-memory.h, [],
 			 AC_MSG_ERROR(header not found))
 fi
-if test -f `dirname $0`/src/prg/c/inc-tmp/mge-bstree.h ; then
+if test -f `dirname $0`/src/prg/c/inc-tmp/libmgec/mge-bstree.h ; then
 	AC_MSG_NOTICE(mge-bstree.h is in the internal inc-tmp directory)
 else
 	AC_CHECK_HEADERS(libmgec/mge-bstree.h, [],
 			 AC_MSG_ERROR(header not found))
 fi
-if test -f `dirname $0`/src/prg/c/inc-tmp/mge-errno.h ; then
+if test -f `dirname $0`/src/prg/c/inc-tmp/libmgec/mge-errno.h ; then
 	AC_MSG_NOTICE(mge-errno.h is in the internal inc-tmp directory)
 else
 	AC_CHECK_HEADERS(libmgec/mge-errno.h, [],
 			 AC_MSG_ERROR(header not found))
 fi
-if test -f `dirname $0`/src/prg/c/inc-tmp/configfile.h ; then
-	AC_MSG_NOTICE(configfile.h is in the internal inc-tmp directory)
+if test -f `dirname $0`/src/prg/c/inc-tmp/libmgesysutils/mge-configfile.h ; then
+	AC_MSG_NOTICE(mge-configfile.h is in the internal inc-tmp directory)
 else
-	AC_CHECK_HEADERS(libmgec/configfile.h, [],
+	AC_CHECK_HEADERS(libmgec/mge-configfile.h, [],
 			 AC_MSG_ERROR(header not found))
 fi
-if test -f `dirname $0`/src/prg/c/inc-tmp/remsyslog.h ; then
-	AC_MSG_NOTICE(remsyslog.h is in the internal inc-tmp directory)
+if test -f `dirname $0`/src/prg/c/inc-tmp/libmgesysutils/mge-remsyslog.h ; then
+	AC_MSG_NOTICE(mge-remsyslog.h is in the internal inc-tmp directory)
 else
-	AC_CHECK_HEADERS(libmgec/remsyslog.h, [],
+	AC_CHECK_HEADERS(libmgec/mge-remsyslog.h, [],
 			 AC_MSG_ERROR(header not found))
 fi
 

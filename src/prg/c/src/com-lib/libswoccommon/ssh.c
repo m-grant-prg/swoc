@@ -11,7 +11,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.12 ==== 08/09/2022_
+ * @version _v1.0.12 ==== 12/09/2022_
  */
 
 /* **********************************************************************
@@ -38,7 +38,8 @@
  *				Eliminate -Wsign-conversion warnings.	*
  * 08/12/2021	MG	1.0.10	Tighten SPDX tag.			*
  * 02/04/2022	MG	1.0.11	Improve error handling consistency.	*
- * 08/09/2022	MG	1.0.12	Rename mgememory.h			*
+ * 12/09/2022	MG	1.0.12	Rename mgememory.h			*
+ *				Use pkginclude location.		*
  *									*
  ************************************************************************
  */
@@ -53,9 +54,9 @@
 #include <sys/types.h>
 #include <syslog.h>
 
+#include <libmgec/mge-errno.h>
+#include <libmgec/mge-memory.h>
 #include <libswoccommon.h>
-#include <mge-errno.h>
-#include <mge-memory.h>
 
 static int verify_knownhost(void);
 static int try_auth_methods_seq(void);

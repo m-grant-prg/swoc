@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.3 ==== 08/09/2022_
+ * @version _v1.1.3 ==== 12/09/2022_
  */
 
 /* **********************************************************************
@@ -35,8 +35,9 @@
  * 10/10/2021	MG	1.1.0	Make file internal, tightening API.	*
  * 11/10/2021	MG	1.1.1	Move to internal directory.		*
  * 08/12/2021	MG	1.1.2	Tighten SPDX tag.			*
- * 08/09/2022	MG	1.1.3	Rename portability.h			*
+ * 12/09/2022	MG	1.1.3	Rename portability.h			*
  *				Rename mgemessage.h			*
+ *				Use pkginclude location.		*
  *									*
  ************************************************************************
  */
@@ -47,8 +48,8 @@
 #include <netdb.h>
 #include <sys/types.h>
 
-#include <mge-message.h>
-#include <mge-portability.h>
+#include <libmgec/mge-message.h>
+#include <libmgec/mge-portability.h>
 
 BEGIN_C_DECLS
 
