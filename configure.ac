@@ -213,6 +213,7 @@
 #				instead.				#
 #				Flatten build of pkgconfig files.	#
 #				Add test headers build.			#
+#				Add run-tests for make check.		#
 #									#
 #########################################################################
 
@@ -986,6 +987,7 @@ AC_CONFIG_FILES(Makefile
 		src/prg/c/src/srv-prg/swocserver/Makefile
 		src/prg/c/src/srv-prg/swocserverd/Makefile
 		src/prg/c/src/tests/test-headers/Makefile
+		src/prg/c/src/tests/run-tests/Makefile
 		src/systemd/srv-prg/Makefile)
 
 AC_OUTPUT

@@ -77,6 +77,7 @@
 #				documentation.				#
 # 13/09/2022	MG	1.2.2	Flatten build of pkgconfig files.	#
 #				Add test-headers build.			#
+#				Add run-tests for make check.		#
 #									#
 #########################################################################
 
@@ -126,6 +127,7 @@ SUBDIRS += src/prg/c/src/srv-lib/libswocserver
 SUBDIRS += src/prg/c/src/srv-lib/test-optionproc
 SUBDIRS += src/prg/c/src/cli-prg/swocclient
 SUBDIRS += src/prg/c/src/tests/test-headers
+SUBDIRS += src/prg/c/src/tests/run-tests
 
 # systemd requires the ordering of certain actions, so:-
 # Install
