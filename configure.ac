@@ -197,7 +197,7 @@
 # 28/07/2022	MG	1.3.1	Change doc directory to docs to support	#
 #				using GitHub Pages for hosting Doxygen	#
 #				documentation.				#
-# 12/09/2022	MG	1.3.2	Rename portability.h			#
+# 13/09/2022	MG	1.3.2	Rename portability.h			#
 #				Add checks for headers in inc-tmp	#
 #				directory.				#
 #				Rename mgebuffer.h			#
@@ -205,6 +205,12 @@
 #				Rename mgememory.h			#
 #				Rename bstree.h				#
 #				Use pkginclude location.		#
+#				Do not generate pkg-config file with	#
+#				AC_CONFIG_FILES as it does not support	#
+#				extended Installation Directory		#
+#				Variables such as pkgincludedir. Use	#
+#				Makefile.am variable substitution	#
+#				instead.				#
 #									#
 #########################################################################
 
@@ -248,8 +254,6 @@ AC_INIT([Server Wait On Client Package], m4_esyscmd([ \
 
 AC_MSG_NOTICE(initialisation and setup)
 
-AC_SUBST(package_version, $PACKAGE_VERSION)
-
 AC_DEFINE(COMMON_SOURCE_VERSION, "1.1.13", \
 	Define to the version of source code for the common library.)
 
@@ -273,6 +277,8 @@ AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.1.9", \
 
 AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.12", \
 	Define to the version of source code for the server daemon.)
+
+AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
 #
 # Canonical targets are required by AX_PTHREAD.
@@ -802,8 +808,14 @@ AC_MSG_NOTICE(processing additional checks and variables)
 #	pkglibexecdir	${libexecdir}/${PACKAGE}
 #
 AC_SUBST([edit], ["$SED \
+		-e 's|@cli_pc_requires[@]|\$(cli_pc_requires)|g' \
+		-e 's|@cli_pc_requires_private[@]|\$(cli_pc_requires_private)|g' \
+		-e 's|@com_pc_requires[@]|\$(com_pc_requires)|g' \
+		-e 's|@com_pc_requires_private[@]|\$(com_pc_requires_private)|g' \
+		-e 's|@srv_pc_requires[@]|\$(srv_pc_requires)|g' \
+		-e 's|@srv_pc_requires_private[@]|\$(srv_pc_requires_private)|g' \
+		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
 		-e 's|@bashlocation[@]|\$(BASH)|g' \
-		-e 's|@package_version[@]|\$(package_version)|g' \
 		-e 's|@docbaseloc[@]|\$(docbaseloc)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
@@ -921,13 +933,14 @@ AC_MSG_NOTICE(processing output files)
 # AC_CONFIG_FILES should not be used to substitute AutoConf Installation
 # Directory Variables, (bindir and friends), except in Makefiles and pkg-config
 # files. See GNU AutoConf manual section 4.8.2 Installation Directory Variables.
+# This manual section mentions bindir, includedir etc but makes no mention of
+# any extended forms such as pkgincludedir, and it indeed seems that they are
+# not supported. Variable substitution in the Makefile.am's should be used
+# instead.
 #
 AC_CONFIG_FILES(docs/doxygen/Doxyfile)
 AC_CONFIG_FILES(src/conf/etc/com-lib/swoc.conf)
 AC_CONFIG_FILES(src/conf/etc/srv-prg/swocserverd.conf)
-AC_CONFIG_FILES(src/prg/c/pkg-config/cli-dev/libswocclient.pc)
-AC_CONFIG_FILES(src/prg/c/pkg-config/com-dev/libswoccommon.pc)
-AC_CONFIG_FILES(src/prg/c/pkg-config/srv-dev/libswocserver.pc)
 
 # Causes AC_OUTPUT to create a c preprocessor file with #define statements about
 # the configuration.

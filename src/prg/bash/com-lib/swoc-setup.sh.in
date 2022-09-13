@@ -9,7 +9,7 @@
 #########################################################################
 #									#
 # Script ID: swoc-setup.sh						#
-# Author: Copyright (C) 2017-2019, 2021  Mark Grant			#
+# Author: Copyright (C) 2017-2019, 2021, 2022  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -61,6 +61,7 @@
 #				Use configure generated bash location	#
 #				for shebang.				#
 # 07/12/2021	MG	1.0.4	Tighten SPDX tag.			#
+# 13/09/2022	MG	1.0.5	Use more standard pkgversion.		#
 #									#
 #########################################################################
 
@@ -69,9 +70,9 @@
 ##################
 script_exit_code=0
 outputprefix="swoc-setup.sh: "
-version="1.0.4"				# set version variable
+version="1.0.5"				# set version variable
 etclocation=@sysconfdir@		# Path to etc directory
-packageversion=@package_version@	# Version of the complete package
+packageversion=@pkgversion@		# Version of the complete package
 
 pollint=""
 ssh=""

@@ -3,13 +3,14 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 datarootdir=@datarootdir@
 datadir=@datadir@
-includedir=@includedir@
+pkgincludedir=@pkgincludedir@
 
 Name: libswoccommon
 Description: Server Wait On Client common library.
-Version: @PACKAGE_VERSION@
+Version: @pkgversion@
+URL: https://github.com/m-grant-prg/swoc/wiki
 Requires: @com_pc_requires@
 Requires.private: @com_pc_requires_private@
 Libs: -L${libdir} -lswoccommon
-Cflags: -I${includedir}
+Cflags: -I${pkgincludedir}
 

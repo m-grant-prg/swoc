@@ -3,12 +3,13 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 datarootdir=@datarootdir@
 datadir=@datadir@
-includedir=@includedir@
+pkgincludedir=@pkgincludedir@
 
 Name: libswocclient
 Description: Server Wait On Client client-side library.
-Version: @PACKAGE_VERSION@
+Version: @pkgversion@
+URL: https://github.com/m-grant-prg/swoc/wiki
 Requires: @cli_pc_requires@
 Requires.private: @cli_pc_requires_private@
 Libs: -L${libdir} -lswocclient
-Cflags: -I${includedir}
+Cflags: -I${pkgincludedir}
