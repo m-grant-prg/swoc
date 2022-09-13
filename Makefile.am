@@ -76,6 +76,7 @@
 #				using GitHub Pages to host Doxygen	#
 #				documentation.				#
 # 13/09/2022	MG	1.2.2	Flatten build of pkgconfig files.	#
+#				Add test-headers build.			#
 #									#
 #########################################################################
 
@@ -124,6 +125,7 @@ SUBDIRS += src/prg/c/src/cli-lib/test-optionproc
 SUBDIRS += src/prg/c/src/srv-lib/libswocserver
 SUBDIRS += src/prg/c/src/srv-lib/test-optionproc
 SUBDIRS += src/prg/c/src/cli-prg/swocclient
+SUBDIRS += src/prg/c/src/tests/test-headers
 
 # systemd requires the ordering of certain actions, so:-
 # Install

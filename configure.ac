@@ -212,6 +212,7 @@
 #				Makefile.am variable substitution	#
 #				instead.				#
 #				Flatten build of pkgconfig files.	#
+#				Add test headers build.			#
 #									#
 #########################################################################
 
@@ -818,6 +819,7 @@ AC_SUBST([edit], ["$SED \
 		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
 		-e 's|@bashlocation[@]|\$(BASH)|g' \
 		-e 's|@docbaseloc[@]|\$(docbaseloc)|g' \
+		-e 's|@CC[@]|\$(CC)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
 		-e 's|@bindir[@]|\$(bindir)|g' \
@@ -983,6 +985,7 @@ AC_CONFIG_FILES(Makefile
 		src/prg/c/src/srv-lib/test-optionproc/Makefile
 		src/prg/c/src/srv-prg/swocserver/Makefile
 		src/prg/c/src/srv-prg/swocserverd/Makefile
+		src/prg/c/src/tests/test-headers/Makefile
 		src/systemd/srv-prg/Makefile)
 
 AC_OUTPUT
