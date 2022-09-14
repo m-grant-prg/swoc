@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.22 ==== 12/09/2022_
+ * @version _v1.0.22 ==== 14/09/2022_
  */
 
 /* **********************************************************************
@@ -66,8 +66,9 @@
  * 13/10/2021	MG	1.0.19	Eliminate -Wunused-result warnings.	*
  * 08/12/2021	MG	1.0.20	Tighten SPDX tag.			*
  * 11/06/2022	MG	1.0.21	Replace sprintf with safer snprintf.	*
- * 12/09/2022	MG	1.0.22	Rename bstree.h				*
+ * 14/09/2022	MG	1.0.22	Rename bstree.h				*
  *				Use pkginclude location.		*
+ *				Correct included headers.		*
  *									*
  ************************************************************************
  */
@@ -78,7 +79,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <sys/types.h>
 #include <syslog.h>
 #include <unistd.h>
 

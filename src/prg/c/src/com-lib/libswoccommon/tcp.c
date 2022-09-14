@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.10 ==== 12/09/2022_
+ * @version _v1.1.10 ==== 14/09/2022_
  */
 
 /* **********************************************************************
@@ -35,7 +35,8 @@
  * 08/12/2021	MG	1.1.7	Tighten SPDX tag.			*
  * 04/04/2022	MG	1.1.8	Improve error handling consistency.	*
  * 11/06/2022	MG	1.1.9	Replace sprintf with safer snprintf.	*
- * 12/09/2022	MG	1.1.10	Use pkginclude location.		*
+ * 14/09/2022	MG	1.1.10	Use pkginclude location.		*
+ *				Correct included headers.		*
  *									*
  ************************************************************************
  */
@@ -46,7 +47,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/socket.h>
-#include <sys/types.h>
 #include <syslog.h>
 #include <unistd.h>
 

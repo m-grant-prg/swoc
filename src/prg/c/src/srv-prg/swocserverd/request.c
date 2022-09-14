@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.26 ==== 12/09/2022_
+ * @version _v1.0.26 ==== 14/09/2022_
  */
 
 /* **********************************************************************
@@ -70,21 +70,23 @@
  * 08/12/2021	MG	1.0.23	Tighten SPDX tag.			*
  * 14/04/2022	MG	1.0.24	Improve error handling consistency.	*
  * 12/06/2022	MG	1.0.25	Replace sprintf with safer snprintf.	*
- * 12/09/2022	MG	1.0.26	Rename mgemessage.h			*
+ * 14/09/2022	MG	1.0.26	Rename mgemessage.h			*
  *				Rename mgememory.h			*
  *				Rename bstree.h				*
  *				Use pkginclude location.		*
+ *				Correct included header files.		*
  *									*
  ************************************************************************
  */
 
 #include <arpa/inet.h>
-#include <errno.h>
 #include <limits.h>
 #include <netdb.h>
+#include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/socket.h>
 #include <syslog.h>
 
 /* Standard GNU AC_HEADER_STDBOOL ifdeffery. */
@@ -110,6 +112,7 @@
 #include <libmgec/mge-errno.h>
 #include <libmgec/mge-memory.h>
 #include <libmgec/mge-message.h>
+#include <libswoccommon.h>
 
 /**
  * swocserver requesting the daemon to terminate.

@@ -15,12 +15,12 @@
  * > SIGCONT\n
  * > SIGTSTP (Ctrl-Z)
  *
- * @author Copyright (C) 2015-2021  Mark Grant
+ * @author Copyright (C) 2015-2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.11 ==== 08/12/2021_
+ * @version _v1.0.12 ==== 14/09/2022_
  */
 
 /* **********************************************************************
@@ -50,19 +50,19 @@
  * 11/10/2021	MG	1.0.9	Move signalhandle.h to internal inc.	*
  * 14/10/2021	MG	1.0.10	Eliminate -Wunused-result warnings.	*
  * 08/12/2021	MG	1.0.11	Tighten SPDX tag.			*
+ * 14/09/2022	MG	1.0.12	Correct included headers.		*
  *									*
  ************************************************************************
  */
 
-#include <errno.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-#include <signalhandle.h>
 #include <libswocclient.h>
+#include <signalhandle.h>
 
 /**
  * Initialise signal handler.
@@ -230,4 +230,3 @@ void termination_handler(int signum)
 	}
 	raise(signum);
 }
-

@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.11 ==== 12/09/2022_
+ * @version _v1.1.11 ==== 14/09/2022_
  */
 
 /* **********************************************************************
@@ -56,7 +56,8 @@
  * 11/10/2021	MG	1.1.8	Use tree-wide cmdlineargs.h.		*
  * 08/12/2021	MG	1.1.9	Tighten SPDX tag.			*
  * 05/04/2022	MG	1.1.10	Improve error handling consistency.	*
- * 12/09/2022	MG	1.1.11	Use pkginclude location.		*
+ * 14/09/2022	MG	1.1.11	Use pkginclude location.		*
+ *				Correct included headers.		*
  *									*
  ************************************************************************
  */
@@ -66,7 +67,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sysexits.h>
 
 #include "internal.h"
 #include <cmdlineargs.h>

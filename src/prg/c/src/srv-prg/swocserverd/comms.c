@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.23 ==== 12/09/2022_
+ * @version _v1.0.23 ==== 14/09/2022_
  */
 
 /* **********************************************************************
@@ -67,19 +67,22 @@
  * 08/12/2021	MG	1.0.20	Tighten SPDX tag.			*
  * 10/04/2022	MG	1.0.21	Improve error handling consistency.	*
  * 11/06/2022	MG	1.0.22	Replace sprintf with safer snprintf.	*
- * 12/09/2022	MG	1.0.23	Rename mgebuffer.h			*
+ * 14/09/2022	MG	1.0.23	Rename mgebuffer.h			*
  *				Rename mgemessage.h			*
  *				Rename bstree.h				*
  *				Use pkginclude location.		*
+ *				Correct included headers.		*
  *									*
  ************************************************************************
  */
 
-#include <errno.h>
+#include <netdb.h>
+#include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/epoll.h>
+#include <sys/socket.h>
 #include <syslog.h>
 #include <unistd.h>
 

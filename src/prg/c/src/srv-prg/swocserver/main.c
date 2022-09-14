@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.9 ==== 12/09/2022_
+ * @version _v1.1.9 ==== 14/09/2022_
  */
 
 /* **********************************************************************
@@ -57,7 +57,8 @@
  * 22/05/2018	MG	1.1.6	Change from swocserver.h to internal.h	*
  * 18/05/2019	MG	1.1.7	Merge sub-projects into one.		*
  * 08/12/2021	MG	1.1.8	Tighten SPDX tag.			*
- * 12/09/2022	MG	1.1.9	Use pkginclude location.		*
+ * 14/09/2022	MG	1.1.9	Use pkginclude location.		*
+ *				Correct included headers.		*
  *									*
  ************************************************************************
  */
@@ -68,6 +69,7 @@
 #include "internal.h"
 #include <cmdlineargs.h>
 #include <libmgec/mge-errno.h>
+#include <libswocserver.h>
 #include <signalhandle.h>
 
 static char *prog_name; /**< This program's name. */

@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.9 ==== 12/09/2022_
+ * @version _v1.0.9 ==== 14/09/2022_
  */
 
 /* **********************************************************************
@@ -28,7 +28,8 @@
  * 10/10/2021	MG	1.0.6	Use newly internalised common header.	*
  * 08/12/2021	MG	1.0.7	Tighten SPDX tag.			*
  * 04/04/2022	MG	1.0.8	Improve error handling consistency.	*
- * 12/09/2022	MG	1.0.9	Rename configfile.h			*
+ * 14/09/2022	MG	1.0.9	Rename configfile.h			*
+ *				Correct included headers.		*
  *									*
  ************************************************************************
  */
@@ -36,11 +37,9 @@
 #include <ctype.h>
 #include <errno.h>
 #include <limits.h>
-#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/stat.h>
 #include <syslog.h>
 
 #include <configmake.h>
