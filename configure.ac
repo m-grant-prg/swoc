@@ -217,8 +217,8 @@
 #				Rename tmplibraries variable to have	#
 #				directory depth figure.			#
 #				Move all tests under tests.		#
-#				Flatten cli-lib, cli-prg  directory	#
-#				structures.				#
+#				Flatten cli-lib, cli-prg, com-lib	#
+#				directory structures.			#
 #									#
 #########################################################################
 
@@ -1000,15 +1000,12 @@ AC_CONFIG_FILES(Makefile
 		src/prg/c/src/cli-lib/Makefile
 		src/prg/c/src/cli-prg/Makefile
 		src/prg/c/src/com-lib/libswoccommon/Makefile
-		src/prg/c/src/com-lib/test-messages/Makefile
-		src/prg/c/src/com-lib/test-ssh/Makefile
-		src/prg/c/src/com-lib/test-tcp/Makefile
-		src/prg/c/src/com-lib/test-validate/Makefile
 		src/prg/c/src/srv-lib/libswocserver/Makefile
 		src/prg/c/src/srv-lib/test-optionproc/Makefile
 		src/prg/c/src/srv-prg/swocserver/Makefile
 		src/prg/c/src/srv-prg/swocserverd/Makefile
 		src/prg/c/src/tests/cli-lib/Makefile
+		src/prg/c/src/tests/com-lib/Makefile
 		src/prg/c/src/tests/test-headers/Makefile
 		src/prg/c/src/tests/run-tests/Makefile
 		src/systemd/srv-prg/Makefile)

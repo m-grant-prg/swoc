@@ -1,6 +1,6 @@
 /* **********************************************************************
  *									*
- * Source: testvalidate.c						*
+ * Source: test-validate.c						*
  * Author: Mark Grant							*
  *									*
  * Purpose:								*

@@ -1,10 +1,10 @@
 /* **********************************************************************
  *									*
- * Source: main.c							*
+ * Source: test-messages.c						*
  * Author: Mark Grant							*
  *									*
  * Purpose:								*
- *	Test program for ssh in libswoccommon shared library.		*
+ *	Test program for messages in libswoccommon shared library.	*
  * 									*
  * Released under the GPLv3 only.					*
  * SPDX-License-Identifier: GPL-3.0-only				*
@@ -16,11 +16,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <libswoccommon.h>
 #include <libmgec/mge-errno.h>
+#include <libswoccommon.h>
 
 /*
- * ssh test program.
+ * messages test program.
  */
 int main(void)
 {
@@ -31,7 +31,7 @@ int main(void)
 	struct mgemessage *msg = &msg1;
 
 	pollint = 10;
-	ssh = 1;
+	ssh = 0;
 	strcpy(server, "localhost");
 	srvportno = 62522;
 	sshportno = 62521;

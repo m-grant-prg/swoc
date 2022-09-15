@@ -1,6 +1,6 @@
 /* **********************************************************************
  *									*
- * Source: main.c							*
+ * Source: test-tcp.c							*
  * Author: Mark Grant							*
  *									*
  * Purpose:								*

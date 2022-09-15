@@ -1,13 +1,13 @@
 #########################################################################
 #									#
-# Script ID: src/prg/c/src/com-lib/test-messages/Makefile.am		#
+# Script ID: src/prg/c/src/tests/com-lib/Makefile.am			#
 # Author: Copyright (C) 2017-2019, 2021, 2022  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
-#	AutoMake script file to generate messages test program.		#
+#	AutoMake script file to generate com-lib test programs.		#
 #									#
 #########################################################################
 
@@ -42,6 +42,7 @@
 #				Use (non-)debug CFLAGS from configure	#
 # 08/12/2021	MG	1.0.12	Tighten SPDX tag.			#
 # 15/09/2022	MG	1.0.13	Rename tmplibraries.			#
+#				Flatten directory structure.		#
 #									#
 #########################################################################
 
@@ -64,13 +65,16 @@ AM_CFLAGS = $(MG_CFLAGS)
 endif
 
 
-check_PROGRAMS = messagestest
-messagestest_SOURCES = main.c
+check_PROGRAMS = messagestest sshtest tcptest validatetest
+messagestest_SOURCES = test-messages.c
+sshtest_SOURCES = test-ssh.c
+tcptest_SOURCES = test-tcp.c
+validatetest_SOURCES = test-validate.c
 
 
 AM_LDFLAGS = $(MG_LDFLAGS)
 
 
-LDADD = ../libswoccommon/libswoccommon.la
+LDADD = ../../com-lib/libswoccommon/libswoccommon.la
 LDADD += $(tmplibraries_depth_3)
 
