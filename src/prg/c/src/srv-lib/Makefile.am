@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Script ID: src/prg/c/src/srv-lib/libswocserver/Makefile.am		#
+# Script ID: src/prg/c/src/srv-lib/Makefile.am				#
 # Author: Copyright (C) 2016-2019, 2021, 2022  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
@@ -64,6 +64,7 @@
 # 06/06/2022	MG	1.0.21	Add compiler analyzer option.		#
 # 15/09/2022	MG	1.0.22	Rename tmplibraries.			#
 #				New com-lib directory structure.	#
+#				Flatten directory structure.		#
 #									#
 #########################################################################
 
@@ -73,10 +74,10 @@ AM_CPPFLAGS = $(MG_DEBUG_CPPFLAGS)
 else
 AM_CPPFLAGS = $(MG_CPPFLAGS)
 endif
-AM_CPPFLAGS += -I$(srcdir)/../../../inc-tmp
-AM_CPPFLAGS += -I$(srcdir)/../../../inc/api
-AM_CPPFLAGS += -I$(srcdir)/../../../inc/internal
-AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
+AM_CPPFLAGS += -I$(srcdir)/../../inc-tmp
+AM_CPPFLAGS += -I$(srcdir)/../../inc/api
+AM_CPPFLAGS += -I$(srcdir)/../../inc/internal
+AM_CPPFLAGS += -I../../gen/inc -I../../gen/lib
 
 
 if DEBUG
@@ -107,6 +108,6 @@ AM_LDFLAGS += -version-info @server_lib_version_info@
 AM_LDFLAGS += $(LIBMGEC_LIBS)
 
 
-libswocserver_la_LIBADD = $(tmplibraries_depth_3)
-libswocserver_la_LIBADD += ../../com-lib/libswoccommon.la
+libswocserver_la_LIBADD = $(tmplibraries_depth_2)
+libswocserver_la_LIBADD += ../com-lib/libswoccommon.la
 
