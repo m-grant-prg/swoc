@@ -1,7 +1,7 @@
 NAME
 sws_cli_unblock - Unblock a client.
 SYNOPSIS
-#include <libswocserver.h>
+#include <swoc/libswocserver.h>
 
 int sws_cli_unblock(char *clientblockname);
 DESCRIPTION

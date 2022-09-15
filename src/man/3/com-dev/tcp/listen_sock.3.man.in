@@ -1,7 +1,7 @@
 NAME
 listen_sock - Set a TCP stream socket to listen.
 SYNOPSIS
-#include <libswoccommon.h>
+#include <swoc/libswoccommon.h>
 
 int listen_sock(int *sockfd, int *portno);
 DESCRIPTION

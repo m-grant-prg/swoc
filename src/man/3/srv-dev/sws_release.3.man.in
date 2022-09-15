@@ -1,7 +1,7 @@
 NAME
 sws_release - Remove a named client lock.
 SYNOPSIS
-#include <libswocserver.h>
+#include <swoc/libswocserver.h>
 
 int sws_release(char *clientlockname);
 DESCRIPTION

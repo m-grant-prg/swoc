@@ -1,7 +1,7 @@
 NAME
 swc_show_status - Show the status of this client's locks on the server.
 SYNOPSIS
-#include <libswocclient.h>
+#include <swoc/libswocclient.h>
 
 int swc_show_status(void);
 DESCRIPTION

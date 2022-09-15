@@ -1,7 +1,7 @@
 NAME
 sws_show_block_status - Show the status of blocking on this server.
 SYNOPSIS
-#include <libswocserver.h>
+#include <swoc/libswocserver.h>
 
 int sws_show_block_status();
 DESCRIPTION

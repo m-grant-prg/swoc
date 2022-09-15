@@ -1,7 +1,7 @@
 NAME
 open_ssh_tunnel - Set up an SSH tunnel.
 SYNOPSIS
-#include <libswoccommon.h>
+#include <swoc/libswoccommon.h>
 
 int open_ssh_tunnel(void);
 DESCRIPTION

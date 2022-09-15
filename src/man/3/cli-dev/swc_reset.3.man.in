@@ -1,7 +1,7 @@
 NAME
 swc_reset - Removes all locks and any blocking for this client on the server.
 SYNOPSIS
-#include <libswocclient.h>
+#include <swoc/libswocclient.h>
 
 int swc_reset(void);
 DESCRIPTION

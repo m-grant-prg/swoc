@@ -2,7 +2,7 @@ NAME
 swcom_validate_config - validates the swocserver / swocclient configuration
 file.
 SYNOPSIS
-#include <libswoccommon.h>
+#include <swoc/libswoccommon.h>
 
 int swcom_validate_config();
 DESCRIPTION

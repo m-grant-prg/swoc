@@ -1,7 +1,7 @@
 NAME
 swc_rel_lock - Release this client's lock on the server.
 SYNOPSIS
-#include <libswocclient.h>
+#include <swoc/libswocclient.h>
 
 int swc_rel_lock(void);
 DESCRIPTION

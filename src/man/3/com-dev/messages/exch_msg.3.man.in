@@ -1,7 +1,7 @@
 NAME
 exch_msg - sends 1 message, then receives 1 message.
 SYNOPSIS
-#include <libswoccommon.h>
+#include <swoc/libswoccommon.h>
 
 int exch_msg(char *outgoing_msg, size_t om_length,
 	struct mgemessage *msg);

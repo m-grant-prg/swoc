@@ -1,7 +1,7 @@
 NAME
 swc_block - Block locking for this client on the server.
 SYNOPSIS
-#include <libswocclient.h>
+#include <swoc/libswocclient.h>
 
 int swc_block(void);
 DESCRIPTION

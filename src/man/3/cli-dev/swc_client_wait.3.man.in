@@ -2,7 +2,7 @@ NAME
 swc_client_wait(cnumlocks) - Wait until this client has cnumlocks or less locks
 on the server.
 SYNOPSIS
-#include <libswocclient.h>
+#include <swoc/libswocclient.h>
 
 int swc_client_wait(char *cnumlocks);
 DESCRIPTION

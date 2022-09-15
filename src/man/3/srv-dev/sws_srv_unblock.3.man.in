@@ -1,7 +1,7 @@
 NAME
 sws_srv_unblock - Unblock the server.
 SYNOPSIS
-#include <libswocserver.h>
+#include <swoc/libswocserver.h>
 
 int sws_srv_unblock();
 DESCRIPTION

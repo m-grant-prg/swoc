@@ -1,7 +1,7 @@
 NAME
 close_sock - Close the socket.
 SYNOPSIS
-#include <libswoccommon.h>
+#include <swoc/libswoccommon.h>
 
 int close_sock(int *sockfd);
 DESCRIPTION

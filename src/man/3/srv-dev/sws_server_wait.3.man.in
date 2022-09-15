@@ -1,7 +1,7 @@
 NAME
 sws_server_wait - Wait for all client locks on this server to be released.
 SYNOPSIS
-#include <libswocserver.h>
+#include <swoc/libswocserver.h>
 
 int sws_server_wait();
 DESCRIPTION

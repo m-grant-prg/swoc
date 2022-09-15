@@ -1,7 +1,7 @@
 NAME
 sws_reload_config - Request the swocserver daemon to reload it's config file.
 SYNOPSIS
-#include <libswocserver.h>
+#include <swoc/libswocserver.h>
 
 int sws_reload_config();
 DESCRIPTION

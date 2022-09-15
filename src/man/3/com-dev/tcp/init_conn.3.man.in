@@ -1,7 +1,7 @@
 NAME
 init_conn - Initiate a TCP stream connection to a specified server.
 SYNOPSIS
-#include <libswoccommon.h>
+#include <swoc/libswoccommon.h>
 
 int init_conn(int *sockfd, int *portno, char *server);
 DESCRIPTION

@@ -2,7 +2,7 @@ NAME
 est_connect - Establish a TCP stream socket connection for either sending or
 receiving.
 SYNOPSIS
-#include <libswoccommon.h>
+#include <swoc/libswoccommon.h>
 
 int est_connect(int *sfd, char *serv, int *portno,
 	struct addrinfo *hints, enum comms_mode *mode);

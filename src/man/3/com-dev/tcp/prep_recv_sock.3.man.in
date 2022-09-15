@@ -1,7 +1,7 @@
 NAME
 prep_recv_sock - Prepare a socket to receive a TCP stream connection.
 SYNOPSIS
-#include <libswoccommon.h>
+#include <swoc/libswoccommon.h>
 
 int prep_recv_sock(int *sockfd, int *portno);
 DESCRIPTION

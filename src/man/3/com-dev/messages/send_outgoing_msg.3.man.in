@@ -1,7 +1,7 @@
 NAME
 send_outgoing_msg - sends a message.
 SYNOPSIS
-#include <libswoccommon.h>
+#include <swoc/libswoccommon.h>
 
 int send_outgoing_msg(char *outgoing_msg, size_t outgoing_msg_length,
 			int *newsockfd);

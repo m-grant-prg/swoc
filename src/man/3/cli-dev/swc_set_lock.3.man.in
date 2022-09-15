@@ -1,7 +1,7 @@
 NAME
 swc_set_lock - Set this client's lock on the server.
 SYNOPSIS
-#include <libswocclient.h>
+#include <swoc/libswocclient.h>
 
 int swc_set_lock(void);
 DESCRIPTION

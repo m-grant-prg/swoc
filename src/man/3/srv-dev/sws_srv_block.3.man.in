@@ -1,7 +1,7 @@
 NAME
 sws_srv_block - Block the server.
 SYNOPSIS
-#include <libswocserver.h>
+#include <swoc/libswocserver.h>
 
 int sws_srv_block();
 DESCRIPTION
