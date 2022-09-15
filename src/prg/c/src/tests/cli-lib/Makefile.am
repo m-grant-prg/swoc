@@ -75,6 +75,6 @@ optionproctest_SOURCES = test-optionproc.c
 AM_LDFLAGS = $(MG_LDFLAGS)
 
 
-LDADD = ../../cli-lib/libswocclient/libswocclient.la
+LDADD = ../../cli-lib/libswocclient.la
 LDADD += $(tmplibraries_depth_3)
 

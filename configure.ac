@@ -217,6 +217,7 @@
 #				Rename tmplibraries variable to have	#
 #				directory depth figure.			#
 #				Move all tests under tests.		#
+#				Flatten cli-lib directory structure.	#
 #									#
 #########################################################################
 
@@ -883,6 +884,22 @@ done
 # The depth_X part of the variable name indicates how many directory levels
 # must be traversed upwards to reach the level containing the lib-tmp directory.
 #
+AC_SUBST(tmplibraries_depth_2)
+
+for direntry in `dirname $0`/src/prg/c/lib-tmp/*
+do
+	if test -d "$direntry" ;then
+		for entry in `dirname $0`\
+/src/prg/c/lib-tmp/$(basename "$direntry")/*.la
+		do
+			if test -f "$entry" ;then
+				tmplibraries_depth_2=$tmplibraries_depth_2\
+" \$(srcdir)/../../lib-tmp/"$(basename "$direntry")"/"$(basename "$entry")
+			fi
+		done
+	fi
+done
+
 AC_SUBST(tmplibraries_depth_3)
 
 for direntry in `dirname $0`/src/prg/c/lib-tmp/*
@@ -979,7 +996,7 @@ AC_CONFIG_FILES(Makefile
 		src/prg/c/inc-tmp/Makefile
 		src/prg/c/lib-tmp/Makefile
 		src/prg/c/pkg-config/Makefile
-		src/prg/c/src/cli-lib/libswocclient/Makefile
+		src/prg/c/src/cli-lib/Makefile
 		src/prg/c/src/cli-prg/swocclient/Makefile
 		src/prg/c/src/com-lib/libswoccommon/Makefile
 		src/prg/c/src/com-lib/test-messages/Makefile
