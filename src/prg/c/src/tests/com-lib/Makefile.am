@@ -75,6 +75,6 @@ validatetest_SOURCES = test-validate.c
 AM_LDFLAGS = $(MG_LDFLAGS)
 
 
-LDADD = ../../com-lib/libswoccommon/libswoccommon.la
+LDADD = ../../com-lib/libswoccommon.la
 LDADD += $(tmplibraries_depth_3)
 

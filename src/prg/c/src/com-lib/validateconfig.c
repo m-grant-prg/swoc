@@ -1,5 +1,5 @@
 /**
- * @file src/prg/c/src/com-lib/libswoccommon/validateconfig.c
+ * @file src/prg/c/src/com-lib/validateconfig.c
  *
  * To parse and validate the config file.
  *
@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.9 ==== 14/09/2022_
+ * @version _v1.0.9 ==== 15/09/2022_
  */
 
 /* **********************************************************************
@@ -28,8 +28,9 @@
  * 10/10/2021	MG	1.0.6	Use newly internalised common header.	*
  * 08/12/2021	MG	1.0.7	Tighten SPDX tag.			*
  * 04/04/2022	MG	1.0.8	Improve error handling consistency.	*
- * 14/09/2022	MG	1.0.9	Rename configfile.h			*
+ * 15/09/2022	MG	1.0.9	Rename configfile.h			*
  *				Correct included headers.		*
+ *				Flatten directory structure.		*
  *									*
  ************************************************************************
  */

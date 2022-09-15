@@ -119,13 +119,13 @@ SUBDIRS += src/prg/c/gen/lib
 SUBDIRS += src/prg/c/inc/api
 SUBDIRS += src/prg/c/inc/internal
 SUBDIRS += src/prg/c/pkg-config
-SUBDIRS += src/prg/c/src/com-lib/libswoccommon
+SUBDIRS += src/prg/c/src/com-lib
 SUBDIRS += src/prg/c/src/cli-lib
 SUBDIRS += src/prg/c/src/srv-lib/libswocserver
-SUBDIRS += src/prg/c/src/srv-lib/test-optionproc
 SUBDIRS += src/prg/c/src/cli-prg
 SUBDIRS += src/prg/c/src/tests/cli-lib
 SUBDIRS += src/prg/c/src/tests/com-lib
+SUBDIRS += src/prg/c/src/tests/srv-lib
 SUBDIRS += src/prg/c/src/tests/test-headers
 SUBDIRS += src/prg/c/src/tests/run-tests
 

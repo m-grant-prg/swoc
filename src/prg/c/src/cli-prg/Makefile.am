@@ -120,6 +120,6 @@ AM_LDFLAGS += $(LIBMGEC_LIBS)
 
 
 LDADD = $(tmplibraries_depth_2)
-LDADD += ../com-lib/libswoccommon/libswoccommon.la
+LDADD += ../com-lib/libswoccommon.la
 LDADD += ../cli-lib/libswocclient.la
 

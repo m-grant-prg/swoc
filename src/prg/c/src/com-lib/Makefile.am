@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Script ID: src/prg/c/src/com-lib/libswoccommon/Makefile.am		#
+# Script ID: src/prg/c/src/com-lib/Makefile.am				#
 # Author: Copyright (C) 2016-2019, 2021, 2022  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
@@ -60,6 +60,7 @@
 # 08/12/2021	MG	1.0.19	Tighten SPDX tag.			#
 # 06/06/2022	MG	1.0.20	Add compiler analyzer option.		#
 # 15/09/2022	MG	1.0.21	Rename tmplibraries.			#
+#				Flatten directory structure.		#
 #									#
 #########################################################################
 
@@ -73,10 +74,10 @@ else
 AM_CPPFLAGS = $(MG_CPPFLAGS)
 endif
 AM_CPPFLAGS += $(PTHREAD_CFLAGS)
-AM_CPPFLAGS += -I$(srcdir)/../../../inc-tmp
-AM_CPPFLAGS += -I$(srcdir)/../../../inc/api
-AM_CPPFLAGS += -I$(srcdir)/../../../inc/internal
-AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
+AM_CPPFLAGS += -I$(srcdir)/../../inc-tmp
+AM_CPPFLAGS += -I$(srcdir)/../../inc/api
+AM_CPPFLAGS += -I$(srcdir)/../../inc/internal
+AM_CPPFLAGS += -I../../gen/inc -I../../gen/lib
 
 
 if DEBUG
@@ -101,8 +102,7 @@ AM_CFLAGS += $(LIBSSH_CFLAGS)
 lib_LTLIBRARIES = libswoccommon.la
 
 
-libswoccommon_la_SOURCES = messages.c ssh.c tcp.c
-libswoccommon_la_SOURCES += validateconfig.c
+libswoccommon_la_SOURCES = messages.c ssh.c tcp.c validateconfig.c
 libswoccommon_la_SOURCES += version.c
 
 
@@ -113,5 +113,5 @@ AM_LDFLAGS += $(LIBSSH_LIBS)
 AM_LDFLAGS += -version-info @common_lib_version_info@
 
 
-libswoccommon_la_LIBADD = $(tmplibraries_depth_3)
+libswoccommon_la_LIBADD = $(tmplibraries_depth_2)
 

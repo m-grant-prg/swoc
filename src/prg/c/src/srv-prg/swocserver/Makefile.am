@@ -76,6 +76,7 @@
 # 08/12/2021	MG	1.1.16	Tighten SPDX tag.			#
 # 06/06/2022	MG	1.1.17	Add compiler analyzer option.		#
 # 15/09/2022	MG	1.1.18	Rename tmplibraries.			#
+#				New com-lib directory structure.	#
 #									#
 #########################################################################
 
@@ -120,7 +121,7 @@ AM_LDFLAGS += $(LIBMGEC_LIBS)
 
 
 LDADD = $(tmplibraries_depth_3)
-LDADD += ../../com-lib/libswoccommon/libswoccommon.la
+LDADD += ../../com-lib//libswoccommon.la
 LDADD += ../../srv-lib/libswocserver/libswocserver.la
 
 

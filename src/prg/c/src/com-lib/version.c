@@ -1,5 +1,5 @@
 /**
- * @file src/prg/c/src/com-lib/libswoccommon/version.c
+ * @file src/prg/c/src/com-lib/version.c
  *
  * Source for version functions.
  *
@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.8 ==== 14/09/2022_
+ * @version _v1.0.8 ==== 15/09/2022_
  */
 
 /* **********************************************************************
@@ -26,7 +26,8 @@
  * 18/05/2019	MG	1.0.5	Merge sub-projects into one.		*
  * 10/10/2021	MG	1.0.6	Use newly internalised common header.	*
  * 08/12/2021	MG	1.0.7	Tighten SPDX tag.			*
- * 14/09/2022	MG	1.0.8	Correct included headers.		*
+ * 15/09/2022	MG	1.0.8	Correct included headers.		*
+ *				Flatten directory structure.		*
  *									*
  ************************************************************************
  */

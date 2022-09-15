@@ -1,6 +1,6 @@
 /* **********************************************************************
  *									*
- * Source: testoptionproc.c						*
+ * Source: test-optionproc.c						*
  * Author: Mark Grant							*
  *									*
  * Purpose:								*

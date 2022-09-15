@@ -1,13 +1,13 @@
 #########################################################################
 #									#
-# Script ID: src/prg/c/src/srv-lib/test-optionproc/Makefile.am		#
+# Script ID: src/prg/c/src/tests/srv-lib/Makefile.am			#
 # Author: Copyright (C) 2016-2019, 2021, 2022 Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
-#	AutoMake script file to generate testoptionproc test program.	#
+#	AutoMake script file to generate optionproctest test program.	#
 #									#
 #########################################################################
 
@@ -42,6 +42,7 @@
 #				Use (non-)debug CFLAGS from configure	#
 # 08/12/2021	MG	1.0.14	Tighten SPDX tag.			#
 # 15/09/2022	MG	1.0.15	Rename tmplibraries.			#
+#				Move tests under tests.			#
 #									#
 #########################################################################
 
@@ -64,13 +65,13 @@ AM_CFLAGS = $(MG_CFLAGS)
 endif
 
 
-check_PROGRAMS = testoptionproc
-testoptionproc_SOURCES = testoptionproc.c
+check_PROGRAMS = optionproctest
+optionproctest_SOURCES = test-optionproc.c
 
 
 AM_LDFLAGS = $(MG_LDFLAGS)
 
 
-LDADD = ../libswocserver/libswocserver.la
+LDADD = ../../srv-lib/libswocserver/libswocserver.la
 LDADD += $(tmplibraries_depth_3)
 

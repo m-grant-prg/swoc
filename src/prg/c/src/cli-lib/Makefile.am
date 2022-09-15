@@ -109,5 +109,5 @@ AM_LDFLAGS += $(LIBMGEC_LIBS) $(LIBMGESYSUTILS_LIBS)
 
 
 libswocclient_la_LIBADD = $(tmplibraries_depth_2)
-libswocclient_la_LIBADD += ../com-lib/libswoccommon/libswoccommon.la
+libswocclient_la_LIBADD += ../com-lib/libswoccommon.la
 

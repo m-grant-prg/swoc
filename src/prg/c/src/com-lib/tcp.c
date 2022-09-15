@@ -1,5 +1,5 @@
 /**
- * @file src/prg/c/src/com-lib/libswoccommon/tcp.c
+ * @file src/prg/c/src/com-lib/tcp.c
  *
  * TCP connection processing functions.
  *
@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.10 ==== 14/09/2022_
+ * @version _v1.1.10 ==== 15/09/2022_
  */
 
 /* **********************************************************************
@@ -35,8 +35,9 @@
  * 08/12/2021	MG	1.1.7	Tighten SPDX tag.			*
  * 04/04/2022	MG	1.1.8	Improve error handling consistency.	*
  * 11/06/2022	MG	1.1.9	Replace sprintf with safer snprintf.	*
- * 14/09/2022	MG	1.1.10	Use pkginclude location.		*
+ * 15/09/2022	MG	1.1.10	Use pkginclude location.		*
  *				Correct included headers.		*
+ *				Flatten directory structure.		*
  *									*
  ************************************************************************
  */
