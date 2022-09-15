@@ -1,5 +1,5 @@
 /**
- * @file src/prg/c/src/cli-prg/swocclient/cmdlineargs.c
+ * @file src/prg/c/src/cli-prg/cmdlineargs.c
  *
  * Command line argument processing for swocclient using getopt_long.
  *
@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.12 ==== 12/09/2022_
+ * @version _v1.1.12 ==== 15/09/2022_
  */
 
 /* **********************************************************************
@@ -47,7 +47,8 @@
  * 11/10/2021	MG	1.1.9	Move cmdlineargs.h to inc directory.	*
  * 08/12/2021	MG	1.1.10	Tighten SPDX tag.			*
  * 01/04/2022	MG	1.1.11	Improve error handling consistency.	*
- * 12/09/2022	MG	1.1.12	Use pkginclude location.		*
+ * 15/09/2022	MG	1.1.12	Use pkginclude location.		*
+ *				Flatten directory structure.		*
  *									*
  ************************************************************************
  */

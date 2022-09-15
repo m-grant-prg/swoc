@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Script ID: src/prg/c/src/cli-prg/swocclient/Makefile.am		#
+# Script ID: src/prg/c/src/cli-prg/Makefile.am				#
 # Author: Copyright (C) 2015-2022  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
@@ -75,6 +75,7 @@
 # 08/12/2021	MG	1.0.28	Tighten SPDX tag.			#
 # 06/06/2022	MG	1.0.29	Add compiler analyzer option.		#
 # 15/09/2022	MG	1.0.30	Rename tmplibraries.			#
+#				Flatten directory structure.		#
 #									#
 #########################################################################
 
@@ -84,10 +85,10 @@ AM_CPPFLAGS = $(MG_DEBUG_CPPFLAGS)
 else
 AM_CPPFLAGS = $(MG_CPPFLAGS)
 endif
-AM_CPPFLAGS += -I$(srcdir)/../../../inc-tmp
-AM_CPPFLAGS += -I$(srcdir)/../../../inc/api
-AM_CPPFLAGS += -I$(srcdir)/../../../inc/internal
-AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
+AM_CPPFLAGS += -I$(srcdir)/../../inc-tmp
+AM_CPPFLAGS += -I$(srcdir)/../../inc/api
+AM_CPPFLAGS += -I$(srcdir)/../../inc/internal
+AM_CPPFLAGS += -I../../gen/inc -I../../gen/lib
 
 
 if DEBUG
@@ -118,7 +119,7 @@ AM_LDFLAGS = $(MG_LDFLAGS)
 AM_LDFLAGS += $(LIBMGEC_LIBS)
 
 
-LDADD = $(tmplibraries_depth_3)
-LDADD += ../../com-lib/libswoccommon/libswoccommon.la
-LDADD += ../../cli-lib/libswocclient/libswocclient.la
+LDADD = $(tmplibraries_depth_2)
+LDADD += ../com-lib/libswoccommon/libswoccommon.la
+LDADD += ../cli-lib/libswocclient.la
 

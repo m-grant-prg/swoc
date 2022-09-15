@@ -1,14 +1,14 @@
 /**
- * @file src/prg/c/src/cli-prg/swocclient/version.c
+ * @file src/prg/c/src/cli-prg/version.c
  *
  * Source for version functions.
  *
- * @author Copyright (C) 2015-2021  Mark Grant
+ * @author Copyright (C) 2015-2022  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.10 ==== 08/12/2021_
+ * @version _v1.0.11 ==== 15/09/2022_
  */
 
 /* **********************************************************************
@@ -34,6 +34,7 @@
  *				temporary libraries to work based on	*
  *				the search in configure.ac.		*
  * 08/12/2021	MG	1.0.10	Tighten SPDX tag.			*
+ * 15/09/2022	MG	1.0.11	Flatten directory structure.		*
  *									*
  ************************************************************************
  */

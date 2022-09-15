@@ -79,7 +79,8 @@
 #				Add test-headers build.			#
 #				Add run-tests for make check.		#
 #				Move all tests under tests.		#
-#				Flatten cli-lib directory structure.	#
+#				Flatten cli-lib, cli-prg  directory	#
+#				structures.				#
 #									#
 #########################################################################
 
@@ -126,7 +127,7 @@ SUBDIRS += src/prg/c/src/com-lib/test-validate
 SUBDIRS += src/prg/c/src/cli-lib
 SUBDIRS += src/prg/c/src/srv-lib/libswocserver
 SUBDIRS += src/prg/c/src/srv-lib/test-optionproc
-SUBDIRS += src/prg/c/src/cli-prg/swocclient
+SUBDIRS += src/prg/c/src/cli-prg
 SUBDIRS += src/prg/c/src/tests/cli-lib
 SUBDIRS += src/prg/c/src/tests/test-headers
 SUBDIRS += src/prg/c/src/tests/run-tests

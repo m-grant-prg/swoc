@@ -1,5 +1,5 @@
 /**
- * @file src/prg/c/src/cli-prg/swocclient/main.c
+ * @file src/prg/c/src/cli-prg/main.c
  *
  * Server Wait On Clients client program.
  * To enable a client to place lock flags on a server which will then wait for
@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.13 ==== 14/09/2022_
+ * @version _v1.1.13 ==== 15/09/2022_
  */
 
 /* **********************************************************************
@@ -51,8 +51,9 @@
  * 11/10/2021	MG	1.1.10	Move cmdlineargs.h to inc directory.	*
  * 08/12/2021	MG	1.1.11	Tighten SPDX tag.			*
  * 01/04/2022	MG	1.1.12	Improve error handling consistency.	*
- * 14/09/2022	MG	1.1.13	Use pkginclude location.		*
+ * 15/09/2022	MG	1.1.13	Use pkginclude location.		*
  *				Correct included headers.		*
+ *				Flatten directory structure.		*
  *									*
  ************************************************************************
  */
