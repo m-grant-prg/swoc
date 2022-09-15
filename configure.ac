@@ -216,6 +216,7 @@
 #				Add run-tests for make check.		#
 #				Rename tmplibraries variable to have	#
 #				directory depth figure.			#
+#				Move all tests under tests.		#
 #									#
 #########################################################################
 
@@ -979,7 +980,6 @@ AC_CONFIG_FILES(Makefile
 		src/prg/c/lib-tmp/Makefile
 		src/prg/c/pkg-config/Makefile
 		src/prg/c/src/cli-lib/libswocclient/Makefile
-		src/prg/c/src/cli-lib/test-optionproc/Makefile
 		src/prg/c/src/cli-prg/swocclient/Makefile
 		src/prg/c/src/com-lib/libswoccommon/Makefile
 		src/prg/c/src/com-lib/test-messages/Makefile
@@ -990,6 +990,7 @@ AC_CONFIG_FILES(Makefile
 		src/prg/c/src/srv-lib/test-optionproc/Makefile
 		src/prg/c/src/srv-prg/swocserver/Makefile
 		src/prg/c/src/srv-prg/swocserverd/Makefile
+		src/prg/c/src/tests/cli-lib/Makefile
 		src/prg/c/src/tests/test-headers/Makefile
 		src/prg/c/src/tests/run-tests/Makefile
 		src/systemd/srv-prg/Makefile)

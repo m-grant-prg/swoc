@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Script ID: src/prg/c/src/cli-lib/test-optionproc/Makefile.am		#
+# Script ID: src/prg/c/src/tests/cli-lib/Makefile.am			#
 # Author: Copyright (C) 2016-2019, 2021, 2022  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
@@ -45,6 +45,7 @@
 #				Use (non-)debug CFLAGS from configure	#
 # 08/12/2021	MG	1.0.15	Tighten SPDX tag.			#
 # 15/09/2022	MG	1.0.16	Rename tmplibraries.			#
+#				Move to tests sub directory.		#
 #									#
 #########################################################################
 
@@ -67,13 +68,13 @@ AM_CFLAGS = $(MG_CFLAGS)
 endif
 
 
-check_PROGRAMS = testoptionproc
-testoptionproc_SOURCES = testoptionproc.c
+check_PROGRAMS = optionproctest
+optionproctest_SOURCES = test-optionproc.c
 
 
 AM_LDFLAGS = $(MG_LDFLAGS)
 
 
-LDADD = ../libswocclient/libswocclient.la
+LDADD = ../../cli-lib/libswocclient/libswocclient.la
 LDADD += $(tmplibraries_depth_3)
 
