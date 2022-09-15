@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # Script ID: src/prg/c/src/srv-lib/test-optionproc/Makefile.am		#
-# Author: Copyright (C) 2016-2019, 2021  Mark Grant			#
+# Author: Copyright (C) 2016-2019, 2021, 2022 Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -41,6 +41,7 @@
 # 05/11/2021	MG	1.0.13	Use (non-)debug CPPFLAGS from configure	#
 #				Use (non-)debug CFLAGS from configure	#
 # 08/12/2021	MG	1.0.14	Tighten SPDX tag.			#
+# 15/09/2022	MG	1.0.15	Rename tmplibraries.			#
 #									#
 #########################################################################
 
@@ -71,5 +72,5 @@ AM_LDFLAGS = $(MG_LDFLAGS)
 
 
 LDADD = ../libswocserver/libswocserver.la
-LDADD += $(tmplibraries)
+LDADD += $(tmplibraries_depth_3)
 

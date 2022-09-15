@@ -74,6 +74,7 @@
 #				Use (non-)debug CFLAGS from configure	#
 # 08/12/2021	MG	1.0.28	Tighten SPDX tag.			#
 # 06/06/2022	MG	1.0.29	Add compiler analyzer option.		#
+# 15/09/2022	MG	1.0.30	Rename tmplibraries.			#
 #									#
 #########################################################################
 
@@ -117,7 +118,7 @@ AM_LDFLAGS = $(MG_LDFLAGS)
 AM_LDFLAGS += $(LIBMGEC_LIBS)
 
 
-LDADD = $(tmplibraries)
+LDADD = $(tmplibraries_depth_3)
 LDADD += ../../com-lib/libswoccommon/libswoccommon.la
 LDADD += ../../cli-lib/libswocclient/libswocclient.la
 

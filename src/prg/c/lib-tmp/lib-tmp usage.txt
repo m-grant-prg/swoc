@@ -16,13 +16,11 @@ the following line:-
 
 xxxxxxxxx_LDADD = $(tmplibraries)
 
-The variable tmplibraries contains all temporary libraries found by the search
-routine in configure.ac. N.B. configure.ac provides a single variable so all
-Makefile.am's which consume it must be at the same level in the folder
-hierarchy, e.g.:-
-source/progs/c/src/libmgec/Makefile.am
-and
-source/progs/c/src/test-bstree/Makefile.am.
+The variables tmplibraries_depth_X contain all temporary libraries found by the
+search routine in configure.ac. N.B. configure.ac provides variables to all
+Makefile.am's, they provide the relative paths to the libraries at various
+depths from lib-tmp. The variable name is tmplibraries_depth_X where X is the
+number of directories to be traversed upwards to the lib-tmp directory.
 
 N.B.
 ----
