@@ -1,5 +1,5 @@
 /**
- * @file src/prg/c/inc/api/libswocclient.h
+ * @file src/prg/c/inc/swoc/libswocclient.h
  *
  * Header file for Server Wait on Clients client-side library.
  *
@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.14 ==== 12/09/2022_
+ * @version _v1.0.14 ==== 17/09/2022_
  */
 
 /* **********************************************************************
@@ -33,7 +33,7 @@
  * 18/05/2019	MG	1.0.11	Merge sub-projects into one.		*
  * 11/10/2021	MG	1.0.12	Move to inc directory.			*
  * 08/12/2021	MG	1.0.13	Tighten SPDX tag.			*
- * 12/09/2022	MG	1.0.14	Rename portability.h			*
+ * 17/09/2022	MG	1.0.14	Rename portability.h			*
  *				Use pkginclude location.		*
  *									*
  ************************************************************************

@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.23 ==== 14/09/2022_
+ * @version _v1.0.23 ==== 17/09/2022_
  */
 
 /* **********************************************************************
@@ -67,7 +67,7 @@
  * 08/12/2021	MG	1.0.20	Tighten SPDX tag.			*
  * 10/04/2022	MG	1.0.21	Improve error handling consistency.	*
  * 11/06/2022	MG	1.0.22	Replace sprintf with safer snprintf.	*
- * 14/09/2022	MG	1.0.23	Rename mgebuffer.h			*
+ * 17/09/2022	MG	1.0.23	Rename mgebuffer.h			*
  *				Rename mgemessage.h			*
  *				Rename bstree.h				*
  *				Use pkginclude location.		*
@@ -109,7 +109,7 @@
 #include <libmgec/mge-buffer.h>
 #include <libmgec/mge-errno.h>
 #include <libmgec/mge-message.h>
-#include <libswoccommon.h>
+#include <swoc/libswoccommon.h>
 
 static int bind_ports(int *sfd, int *portno, struct addrinfo *hints);
 static int init_epoll(int *pepfd, struct epoll_event *pevent,

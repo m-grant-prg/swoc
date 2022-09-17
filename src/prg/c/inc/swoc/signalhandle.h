@@ -1,5 +1,5 @@
 /**
- * @file src/prg/c/inc/internal/signalhandle.h
+ * @file src/prg/c/inc/swoc/signalhandle.h
  *
  * Header file for signal handling.
  *
@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.11 ==== 12/09/2022_
+ * @version _v1.0.11 ==== 17/09/2022_
  */
 
 /* **********************************************************************
@@ -35,7 +35,7 @@
  * 11/10/2021	MG	1.0.9	Move to inc directory.			*
  *				Merge client and server versions.	*
  * 08/12/2021	MG	1.0.10	Tighten SPDX tag.			*
- * 12/09/2022	MG	1.0.11	Rename portability.h			*
+ * 17/09/2022	MG	1.0.11	Rename portability.h			*
  *				Use pkginclude location.		*
  *									*
  ************************************************************************

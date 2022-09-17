@@ -197,7 +197,7 @@
 # 28/07/2022	MG	1.3.1	Change doc directory to docs to support	#
 #				using GitHub Pages for hosting Doxygen	#
 #				documentation.				#
-# 15/09/2022	MG	1.3.2	Rename portability.h			#
+# 17/09/2022	MG	1.3.2	Rename portability.h			#
 #				Add checks for headers in inc-tmp	#
 #				directory.				#
 #				Rename mgebuffer.h			#
@@ -695,13 +695,13 @@ fi
 if test -f `dirname $0`/src/prg/c/inc-tmp/libmgesysutils/mge-configfile.h ; then
 	AC_MSG_NOTICE(mge-configfile.h is in the internal inc-tmp directory)
 else
-	AC_CHECK_HEADERS(libmgec/mge-configfile.h, [],
+	AC_CHECK_HEADERS(libmgesysutils/mge-configfile.h, [],
 			 AC_MSG_ERROR(header not found))
 fi
 if test -f `dirname $0`/src/prg/c/inc-tmp/libmgesysutils/mge-remsyslog.h ; then
 	AC_MSG_NOTICE(mge-remsyslog.h is in the internal inc-tmp directory)
 else
-	AC_CHECK_HEADERS(libmgec/mge-remsyslog.h, [],
+	AC_CHECK_HEADERS(libmgesysutils/mge-remsyslog.h, [],
 			 AC_MSG_ERROR(header not found))
 fi
 
@@ -992,8 +992,7 @@ AC_CONFIG_FILES(Makefile
 		src/prg/bash/com-lib/Makefile
 		src/prg/bash/srv-prg/Makefile
 		src/prg/c/gen/lib/Makefile
-		src/prg/c/inc/api/Makefile
-		src/prg/c/inc/internal/Makefile
+		src/prg/c/inc/swoc/Makefile
 		src/prg/c/inc-tmp/Makefile
 		src/prg/c/lib-tmp/Makefile
 		src/prg/c/pkg-config/Makefile

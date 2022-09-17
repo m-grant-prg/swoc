@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.11 ==== 15/09/2022_
+ * @version _v1.0.11 ==== 17/09/2022_
  */
 
 /* **********************************************************************
@@ -34,12 +34,13 @@
  *				temporary libraries to work based on	*
  *				the search in configure.ac.		*
  * 08/12/2021	MG	1.0.10	Tighten SPDX tag.			*
- * 15/09/2022	MG	1.0.11	Flatten directory structure.		*
+ * 17/09/2022	MG	1.0.11	Flatten directory structure.		*
  *									*
  ************************************************************************
  */
 
 #include <config.h>
+
 #include <stdio.h>
 
 #include "internal.h"

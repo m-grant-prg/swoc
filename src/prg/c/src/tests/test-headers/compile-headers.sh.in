@@ -7,8 +7,7 @@ testdir=$(pwd)
 # the directory structure is different during make distcheck.
 if [[ -z $srcdir ]]; then
 	cliheaders="-I../../../../../../../src/prg/c/inc"
-	cliheaders+=" -I../../../../../../../src/prg/c/inc/api"
-	cliheaders+=" -I../../../../../../../src/prg/c/inc/internal"
+	cliheaders+=" -I../../../../../../../src/prg/c/inc"
 	cliheaders+=" -I../../../../../../../src/prg/c/inc-tmp"
 	cliheaders+=" -I../../../../../../../src/prg/c/inc-tmp/libmgec"
 	cliheaders+=" -I../../../../../../../src/prg/c/inc-tmp/libmgesysutils"
@@ -16,8 +15,7 @@ if [[ -z $srcdir ]]; then
 		-o -name *.h -print)
 else
 	cliheaders="-I$srcdir/../../../../../../src/prg/c/inc"
-	cliheaders+=" -I$srcdir/../../../../../../src/prg/c/inc/api"
-	cliheaders+=" -I$srcdir/../../../../../../src/prg/c/inc/internal"
+	cliheaders+=" -I$srcdir/../../../../../../src/prg/c/inc"
 	cliheaders+=" -I$srcdir/../../../../../../src/prg/c/inc-tmp"
 	cliheaders+=" -I$srcdir/../../../../../../src/prg/c/inc-tmp/libmgec"
 	cliheaders+=" -I$srcdir/../../../../../../src/prg/c/inc-tmp/libmgesysutils"

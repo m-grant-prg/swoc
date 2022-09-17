@@ -75,7 +75,7 @@
 # 28/07/2022	MG	1.2.1	Change doc directory to docs to support	#
 #				using GitHub Pages to host Doxygen	#
 #				documentation.				#
-# 15/09/2022	MG	1.2.2	Flatten build of pkgconfig files.	#
+# 17/09/2022	MG	1.2.2	Flatten build of pkgconfig files.	#
 #				Add test-headers build.			#
 #				Add run-tests for make check.		#
 #				Move all tests under tests.		#
@@ -116,8 +116,7 @@ SUBDIRS += src/prg/bash/srv-prg
 SUBDIRS += src/prg/c/inc-tmp
 SUBDIRS += src/prg/c/lib-tmp
 SUBDIRS += src/prg/c/gen/lib
-SUBDIRS += src/prg/c/inc/api
-SUBDIRS += src/prg/c/inc/internal
+SUBDIRS += src/prg/c/inc/swoc
 SUBDIRS += src/prg/c/pkg-config
 SUBDIRS += src/prg/c/src/com-lib
 SUBDIRS += src/prg/c/src/cli-lib

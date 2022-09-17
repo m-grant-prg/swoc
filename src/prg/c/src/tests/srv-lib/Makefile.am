@@ -41,8 +41,9 @@
 # 05/11/2021	MG	1.0.13	Use (non-)debug CPPFLAGS from configure	#
 #				Use (non-)debug CFLAGS from configure	#
 # 08/12/2021	MG	1.0.14	Tighten SPDX tag.			#
-# 15/09/2022	MG	1.0.15	Rename tmplibraries.			#
+# 17/09/2022	MG	1.0.15	Rename tmplibraries.			#
 #				Move tests under tests.			#
+#				Flatten inc directory to pkgincludedir.	#
 #									#
 #########################################################################
 
@@ -53,8 +54,7 @@ else
 AM_CPPFLAGS = $(MG_CPPFLAGS)
 endif
 AM_CPPFLAGS += -I$(srcdir)/../../../inc-tmp
-AM_CPPFLAGS += -I$(srcdir)/../../../inc/api
-AM_CPPFLAGS += -I$(srcdir)/../../../inc/internal
+AM_CPPFLAGS += -I$(srcdir)/../../../inc
 AM_CPPFLAGS += -I../../../gen/inc -I../../../gen/lib
 
 

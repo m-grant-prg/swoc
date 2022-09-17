@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <libswocserver.h>
+#include <swoc/libswocserver.h>
 
 /*
  * Main

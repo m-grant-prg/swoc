@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.9 ==== 15/09/2022_
+ * @version _v1.0.9 ==== 17/09/2022_
  */
 
 /* **********************************************************************
@@ -27,7 +27,7 @@
  *				AC_DEFINE'd value in config.h		*
  * 18/05/2019	MG	1.0.7	Merge sub-projects into one.		*
  * 08/12/2021	MG	1.0.8	Tighten SPDX tag.			*
- * 15/09/2022	MG	1.0.9	Correct included headers.		*
+ * 17/09/2022	MG	1.0.9	Correct included headers.		*
  *				Flatten directory structure.		*
  *									*
  ************************************************************************
@@ -36,7 +36,8 @@
 #include <stdio.h>
 
 #include <config.h>
-#include <libswocserver.h>
+
+#include <swoc/libswocserver.h>
 
 /**
  * Get the git-describe based package version.

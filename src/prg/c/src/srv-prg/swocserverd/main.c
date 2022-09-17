@@ -10,7 +10,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.22 ==== 14/09/2022_
+ * @version _v1.0.22 ==== 17/09/2022_
  */
 
 /* **********************************************************************
@@ -66,7 +66,7 @@
  * 13/10/2021	MG	1.0.19	Eliminate -Wunused-result warnings.	*
  * 08/12/2021	MG	1.0.20	Tighten SPDX tag.			*
  * 11/06/2022	MG	1.0.21	Replace sprintf with safer snprintf.	*
- * 14/09/2022	MG	1.0.22	Rename bstree.h				*
+ * 17/09/2022	MG	1.0.22	Rename bstree.h				*
  *				Use pkginclude location.		*
  *				Correct included headers.		*
  *									*
@@ -99,13 +99,14 @@ typedef bool _Bool;
 	#define __bool_true_false_are_defined 1
 #endif
 
-#include "internal.h"
-#include <cmdlineargs.h>
 #include <configmake.h>
+
+#include "internal.h"
 #include <libmgec/libmgec.h>
 #include <libmgec/mge-bstree.h>
 #include <libmgec/mge-errno.h>
-#include <signalhandle.h>
+#include <swoc/cmdlineargs.h>
+#include <swoc/signalhandle.h>
 
 int swsd_err;			   /**< swoc daemon error number. */
 char client[_POSIX_HOST_NAME_MAX]; /**< Client name. */

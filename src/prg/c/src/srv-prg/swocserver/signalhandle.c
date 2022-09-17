@@ -20,7 +20,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.9 ==== 14/09/2022_
+ * @version _v1.0.9 ==== 17/09/2022_
  */
 
 /* **********************************************************************
@@ -42,7 +42,7 @@
  * 18/05/2019	MG	1.0.6	Merge sub-projects into one.		*
  * 13/10/2021	MG	1.0.7	Eliminate -Wunused-result warnings.	*
  * 08/12/2021	MG	1.0.8	Tighten SPDX tag.			*
- * 14/09/2022	MG	1.0.9	Correct included headers.		*
+ * 17/09/2022	MG	1.0.9	Correct included headers.		*
  *									*
  ************************************************************************
  */
@@ -53,8 +53,8 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <libswocserver.h>
-#include <signalhandle.h>
+#include <swoc/libswocserver.h>
+#include <swoc/signalhandle.h>
 
 /**
  * Initialise signal handler.

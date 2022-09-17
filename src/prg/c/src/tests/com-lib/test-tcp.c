@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <libswoccommon.h>
+#include <swoc/libswoccommon.h>
 
 /*
  * tcp test program.

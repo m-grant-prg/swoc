@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.19 ==== 12/09/2022_
+ * @version _v1.0.19 ==== 17/09/2022_
  */
 
 /* **********************************************************************
@@ -46,7 +46,7 @@
  * 14/03/2020	MG	1.0.16	Add support for id_req.			*
  * 10/10/2021	MG	1.0.17	Use newly internalised common header.	*
  * 08/12/2021	MG	1.0.18	Tighten SPDX tag.			*
- * 12/09/2022	MG	1.0.19	Rename portability.h			*
+ * 17/09/2022	MG	1.0.19	Rename portability.h			*
  *				Rename mgemessage.h			*
  *				Rename bstree.h				*
  *				Use pkginclude location.		*
@@ -79,7 +79,7 @@
 #include <libmgec/mge-bstree.h>
 #include <libmgec/mge-message.h>
 #include <libmgec/mge-portability.h>
-#include <libswoccommon.h>
+#include <swoc/libswoccommon.h>
 
 BEGIN_C_DECLS
 

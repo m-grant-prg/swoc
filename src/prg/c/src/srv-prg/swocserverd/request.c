@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.26 ==== 14/09/2022_
+ * @version _v1.0.26 ==== 17/09/2022_
  */
 
 /* **********************************************************************
@@ -70,7 +70,7 @@
  * 08/12/2021	MG	1.0.23	Tighten SPDX tag.			*
  * 14/04/2022	MG	1.0.24	Improve error handling consistency.	*
  * 12/06/2022	MG	1.0.25	Replace sprintf with safer snprintf.	*
- * 14/09/2022	MG	1.0.26	Rename mgemessage.h			*
+ * 17/09/2022	MG	1.0.26	Rename mgemessage.h			*
  *				Rename mgememory.h			*
  *				Rename bstree.h				*
  *				Use pkginclude location.		*
@@ -112,7 +112,7 @@
 #include <libmgec/mge-errno.h>
 #include <libmgec/mge-memory.h>
 #include <libmgec/mge-message.h>
-#include <libswoccommon.h>
+#include <swoc/libswoccommon.h>
 
 /**
  * swocserver requesting the daemon to terminate.
