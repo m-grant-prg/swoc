@@ -41,8 +41,7 @@
 # 05/11/2021	MG	1.0.11	Use (non-)debug CPPFLAGS from configure	#
 #				Use (non-)debug CFLAGS from configure	#
 # 08/12/2021	MG	1.0.12	Tighten SPDX tag.			#
-# 17/09/2022	MG	1.0.13	Rename tmplibraries.			#
-#				Flatten directory structure.		#
+# 29/09/2022	MG	1.0.13	Flatten directory structure.		#
 #				Flatten inc directory to pkgincludedir.	#
 #									#
 #########################################################################
@@ -75,6 +74,6 @@ validatetest_SOURCES = test-validate.c
 AM_LDFLAGS = $(MG_LDFLAGS)
 
 
-LDADD = ../../com-lib/libswoccommon.la
-LDADD += $(tmplibraries_depth_3)
+LDADD = $(tmplibraries)
+LDADD += ../../com-lib/libswoccommon.la
 

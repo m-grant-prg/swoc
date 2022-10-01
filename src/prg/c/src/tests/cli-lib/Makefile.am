@@ -44,8 +44,7 @@
 # 05/11/2021	MG	1.0.14	Use (non-)debug CPPFLAGS from configure	#
 #				Use (non-)debug CFLAGS from configure	#
 # 08/12/2021	MG	1.0.15	Tighten SPDX tag.			#
-# 17/09/2022	MG	1.0.16	Rename tmplibraries.			#
-#				Move to tests sub directory.		#
+# 29/09/2022	MG	1.0.16	Move to tests sub directory.		#
 #				Flatten inc directory to pkgincludedir.	#
 #									#
 #########################################################################
@@ -75,6 +74,6 @@ optionproctest_SOURCES = test-optionproc.c
 AM_LDFLAGS = $(MG_LDFLAGS)
 
 
-LDADD = ../../cli-lib/libswocclient.la
-LDADD += $(tmplibraries_depth_3)
+LDADD = $(tmplibraries)
+LDADD += ../../cli-lib/libswocclient.la
 
