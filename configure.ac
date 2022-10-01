@@ -219,6 +219,7 @@
 #				srv-lib directory structures.		#
 #				Change tmplibraries to use an absolute	#
 #				path.					#
+#				Use find to get tmpheaders.		#
 #									#
 #########################################################################
 
@@ -867,12 +868,11 @@ AC_SUBST([edit], ["$SED \
 #
 AC_SUBST(tmpheaders)
 
-for entry in `dirname $0`/src/prg/c/inc-tmp/*.h
-do
-	if test -f "$entry" ;then
-		tmpheaders=$tmpheaders" "$(basename "$entry")
-	fi
-done
+AC_MSG_NOTICE(Looking for temporary headers...)
+cd `dirname $0`/src/prg/c/inc-tmp
+tmpheaders=$(echo $(find -name *.h))
+cd - > /dev/null
+AC_MSG_NOTICE(Temporary headers to be used are $tmpheaders)
 
 #
 # This creates an AutoConf substitution variable for temporary libraries.
