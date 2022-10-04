@@ -222,6 +222,8 @@
 #				Use find to get tmpheaders.		#
 #				Libraries: In tmplibraries else use	#
 #				pkg-config else use search libs.	#
+# 04/10/2022	MG	1.3.3	Separate AutoTools generated files from	#
+#				project root.				#
 #									#
 #########################################################################
 
@@ -236,7 +238,7 @@ AC_COPYRIGHT([Copyright (C) 2015-2022  Mark Grant
 	      This script is free to copy or distribute under the terms set out
 	      in the package license. See COPYING for details.])
 
-AC_REVISION($Revision: 1.3.2 $)
+AC_REVISION($Revision: 1.3.3 $)
 
 AC_PREREQ(2.69)
 
@@ -290,6 +292,9 @@ AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.0.12", \
 	Define to the version of source code for the server daemon.)
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
+
+# Separate AutoTools generated files from project root.
+AC_CONFIG_AUX_DIR([build-aux])
 
 #
 # Canonical targets are required by AX_PTHREAD.
