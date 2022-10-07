@@ -16,6 +16,8 @@ Contents
 
 4 ... Utility Scripts
 
+5 ... Further Information
+
 
 
 -------------------------
@@ -192,4 +194,20 @@ so as root or sudo you would type:-
 Answer the prompts from the setup script.
 Subsequent to running this script, config files can only be modified with an
 editor, setup.sh will not work unless the config file is deleted.
+
+-------------------------
+5 ... Further Information
+=========================
+Further information can be found on the wiki at:-
+
+https://github.com/m-grant-prg/swoc/wiki
+
+Programmer oriented documentation can for the latest stable release can be found
+at:-
+
+https://m-grant-prg.github.io/swoc/
+
+The API link will provide documentation relevant to a consumer of the project,
+whereas, the internal documentation provides that documentation plus
+documentation aimed at contributors to the project.
 
