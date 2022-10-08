@@ -227,6 +227,7 @@
 #				USe AC_MSG_CHECKING where appropriate.	#
 #				Move CFLAGS init to Compiler setup	#
 #				section.				#
+# 08/10/2022	MG	1.3.4	Use AC CHECK FUNCS exclusively.		#
 #									#
 #########################################################################
 
@@ -241,7 +242,7 @@ AC_COPYRIGHT([Copyright (C) 2015-2022  Mark Grant
 	      This script is free to copy or distribute under the terms set out
 	      in the package license. See COPYING for details.])
 
-AC_REVISION($Revision: 1.3.3 $)
+AC_REVISION($Revision: 1.3.4 $)
 
 AC_PREREQ(2.69)
 
@@ -767,7 +768,7 @@ AC_MSG_NOTICE(checking for GNU compatible library functions required)
 AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS(getpass memset socket strchr strerror strncasecmp strsignal)
-AC_CHECK_FUNC(strtol)
+AC_CHECK_FUNCS([strtol])
 
 
 #################################################################
