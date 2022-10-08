@@ -767,7 +767,7 @@ AC_MSG_NOTICE(checking for GNU compatible library functions required)
 
 AC_FUNC_FORK
 AC_FUNC_MALLOC
-AC_CHECK_FUNCS(getpass memset socket strchr strerror strncasecmp strsignal)
+AC_CHECK_FUNCS([getpass memset socket strchr strerror strncasecmp strsignal])
 AC_CHECK_FUNCS([strtol])
 
 
