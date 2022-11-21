@@ -19,6 +19,7 @@
 # Date		Author	Version	Description				#
 #									#
 # 28/07/2022	MG	1.0.1	Initial release.                        #
+# 21/11/2022    MG      1.0.2   Use new libmgec7 and libmgesysutils2.   #
 #									#
 #########################################################################
 
@@ -51,8 +52,8 @@ jobs:
           sudo apt-get install -y autoconf-archive libtool-bin
           sudo apt-get install -y doxygen graphviz
           sudo apt-get install -y libssh-gcrypt-dev libssh-gcrypt-4
-          sudo apt-get install -y libmgec2-dev libmgec2
-          sudo apt-get install -y libmgesysutils-dev libmgesysutils1
+          sudo apt-get install -y libmgec7-dev libmgec7
+          sudo apt-get install -y libmgesysutils2-dev libmgesysutils2
           sudo apt-get install -y txt2man txt2manwrap
 
       - name: Autoreconf
