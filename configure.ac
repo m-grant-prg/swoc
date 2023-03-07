@@ -41,6 +41,8 @@
 #	Used to check that include-what-you-use is installed.		#
 # --enable-sparse							#
 #	Used to compile with the sparse static analyser.		#
+# --enable-systemd							#
+#	Used to provide systemd setup.					#
 #									#
 # Layout: (Only relevant sections will exist).				#
 # ChangeLog : High level ChangeLog					#
