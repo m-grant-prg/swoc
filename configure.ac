@@ -14,6 +14,7 @@
 #		[--enable-debug=<yes|no> [default: no]]			#
 #		[--enable-distcheckfake=<yes|no> [default: no]]		#
 #		[--enable-headercheck=<yes|no> [default: no]]		#
+#		[--enable-iwyu=<yes|no> [default: no]]			#
 #		[--enable-sparse=<yes|no> [default: no]]		#
 #		[--enable-systemd=yes|no> [default: no]]		#
 #									#
@@ -36,6 +37,8 @@
 #	would normally fail.						#
 # --enable-headercheck							#
 #	Used to set a flag to output the header file nesting.		#
+# --enable-iwyu								#
+#	Used to check that include-what-you-use is installed.		#
 # --enable-sparse							#
 #	Used to compile with the sparse static analyser.		#
 #									#
@@ -231,6 +234,9 @@
 # 07/03/2023	MG	1.3.5	Enforce compiler to use, in order; CC	#
 #				passed to configure, sparse if		#
 #				requested, or from a standard list.	#
+#				Add CL argument for enable-iwyu and use	#
+#				to determine if program availability	#
+#				checks should be performed.		#
 #									#
 #########################################################################
 
@@ -446,6 +452,25 @@ else
 fi
 
 #
+# The following allows for an enable-iwyu=yes/no command line option.
+# The result is only used in configure.
+#
+AC_ARG_ENABLE(iwyu,
+	AS_HELP_STRING([--enable-iwyu], [include-what-you-use is selected]),
+	[case "${enableval}" in
+		yes) enable_iwyu=true ;;
+		no)  enable_iwyu=false ;;
+		*) AC_MSG_ERROR(bad value ${enableval} in enable-iwyu);;
+	esac],enable_iwyu=false)
+
+AC_MSG_CHECKING([whether include-what-you-use is selected])
+if test "x${enable_iwyu}" = xtrue; then
+	AC_MSG_RESULT([yes])
+else
+	AC_MSG_RESULT([no])
+fi
+
+#
 # The following allows for an enable-sparse=yes/no command line option. The
 # conditional SPARSE is made available to the makefiles.
 #
@@ -613,6 +638,13 @@ fi
 AC_CHECK_PROG(DOXYGEN, doxygen, yes, no)
 if test "x$DOXYGEN" = "xno" ; then
 	AC_MSG_ERROR(doxygen not found)
+fi
+
+if test "x${enable_iwyu}" = xtrue; then
+	AC_CHECK_PROG(IWYU, iwyu,yes, no)
+	if test "x$IWYU" = "xno" ; then
+		AC_MSG_ERROR(iwyu not found)
+	fi
 fi
 
 AC_CHECK_PROG(TAR, tar, yes, no)
