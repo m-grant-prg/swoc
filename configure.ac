@@ -236,13 +236,16 @@
 #				Move CFLAGS init to Compiler setup	#
 #				section.				#
 # 08/10/2022	MG	1.3.4	Use AC CHECK FUNCS exclusively.		#
-# 16/03/2023	MG	1.3.5	Enforce compiler to use, in order; CC	#
+# 24/03/2023	MG	1.3.5	Enforce compiler to use, in order; CC	#
 #				passed to configure, sparse if		#
 #				requested, or from a standard list.	#
 #				Add CL arguments for enable-iwyu and	#
 #				enable-scan-build and use to determine	#
 #				if program availability checks should	#
 #				be performed.				#
+#				Use pkg-config command AOT		#
+#				Pkg_Check_Modules as the macro has	#
+#				problems under some normal conditions.	#
 #									#
 #########################################################################
 
@@ -848,25 +851,47 @@ AC_CHECK_FUNCS([strtol])
 AC_MSG_NOTICE(Processing required libraries)
 
 # Use tmplibraries if present
-#	else use pkg check modules giving XXX_CFLAGS and XXX_LIBS
-#		else use search libs giving LIBS
-AS_IF([test -f `dirname $0`/src/prg/c/lib-tmp/libmgec/libmgec.la],
-      [AC_MSG_NOTICE([Using tmplibraries AOT pkg-config for libmgec library])],
-      [PKG_CHECK_MODULES([LIBMGEC], [libmgec], [],
-	   [AC_SEARCH_LIBS([pull_msg], [mgec], [],
-		[AC_MSG_ERROR([function pull_msg not found in libmgec])])])])
+#	else use pkg-config files if present and suitable giving XXX_CFLAGS and
+#	XXX_LIBS
+#		else use Search_Libs giving LIBS
+# As per p274, Autotools, 2nd edition, 2020, John Calcote - Do not use
+# Pkg_Check_Modules macro, it has problems under common conditions.
+if [test -f `dirname $0`/src/prg/c/lib-tmp/libmgec/libmgec.la];then
+	AC_MSG_NOTICE([Using tmplibraries AOT pkg-config for libmgec library])
+elif pkg-config --atleast-version=1.7.0 libmgec; then
+	AC_MSG_NOTICE([Using pkg-config for libmgec library])
+	AC_SUBST([LIBMGEC_CFLAGS], [$(pkg-config --cflags libmgec)])
+	AC_SUBST([LIBMGEC_LIBS], [$(pkg-config --libs libmgec)])
+else
+	AC_MSG_NOTICE([Using Search_LIBS to find libmgec library])
+	AC_SEARCH_LIBS([pull_msg], [mgec], [],
+		[AC_MSG_ERROR([function pull_msg not found in libmgec])])
+fi
 
-AS_IF([test -f `dirname $0`/src/prg/c/lib-tmp/libmgesysutils/libmgesysutils.la],
-      [AC_MSG_NOTICE([Using tmplibraries AOT pkg-config for libmgeysutils])],
-      [PKG_CHECK_MODULES([LIBMGESYSUTILS], [libmgesysutils], [],
-	 [AC_SEARCH_LIBS([parsefile], [mgesysutils], [],
-	    [AC_MSG_ERROR([function parsefile not found in libmgeysutils])])])])
+if [test -f `dirname $0`/src/prg/c/lib-tmp/libmgesysutils/libmgesysutils.la]
+then
+	AC_MSG_NOTICE([Using tmplibraries AOT pkg-config for libmgesysutils])
+elif pkg-config --atleast-version=1.5.0 libmgesysutils; then
+	AC_MSG_NOTICE([Using pkg-config for libmgesysutils library])
+	AC_SUBST([LIBMGESYSUTILS_CFLAGS], [$(pkg-config --cflags libmgesysutils)])
+	AC_SUBST([LIBMGESYSUTILS_LIBS], [$(pkg-config --libs libmgesysutils)])
+else
+	AC_MSG_NOTICE([Using Search_LIBS to find libmgesysutils library])
+	AC_SEARCH_LIBS([parsefile], [mgesysutils], [],
+		[AC_MSG_ERROR([function parsefile not found in libmgesysutils])])
+fi
 
-AS_IF([test -f `dirname $0`/src/prg/c/lib-tmp/libssh/libssh.la],
-      [AC_MSG_NOTICE([Using tmplibraries AOT pkg-config for libssh])],
-      [PKG_CHECK_MODULES([LIBSSH], [libssh], [],
-	[AC_SEARCH_LIBS([ssh_get_server_publickey], [ssh], [],
-	 [AC_MSG_ERROR([function ssh_get_server_publickey not found in lssh])])])])
+if [test -f `dirname $0`/src/prg/c/lib-tmp/libssh/libssh.la];then
+	AC_MSG_NOTICE([Using tmplibraries AOT pkg-config for libssh library])
+elif pkg-config --atleast-version=0.9.5 libssh; then
+	AC_MSG_NOTICE([Using pkg-config for libssh library])
+	AC_SUBST([LIBSSH_CFLAGS], [$(pkg-config --cflags libssh)])
+	AC_SUBST([LIBSSH_LIBS], [$(pkg-config --libs libssh)])
+else
+	AC_MSG_NOTICE([Using Search_LIBS to find libssh library])
+	AC_SEARCH_LIBS([ssh_get_server_publickey], [ssh], [],
+		[AC_MSG_ERROR([ssh_get_server_publickey not found in libssh])])
+fi
 
 
 #################################################
