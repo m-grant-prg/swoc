@@ -1,6 +1,9 @@
 # This file should contain packages required to satisfy the Build-Depends of
 # this package.
 
+autoconf autoconf-archive automake libtool make
+doxygen graphviz graphviz-gd
 libmgec7-devel libmgec7 libmgesysutils2-devel libmgesysutils2
 libssh-devel libssh
+txt2man txt2manwrap
 
