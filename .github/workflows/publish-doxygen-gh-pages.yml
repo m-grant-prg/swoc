@@ -25,6 +25,7 @@
 #                               cease to work after GitHub updates. So  #
 #                               replaced by fork and update by          #
 #                               CityOfLosAngeles.                       #
+#                               Run on 22.04.                           #
 #									#
 #########################################################################
 
@@ -39,7 +40,7 @@ jobs:
   version_check:
     outputs:
       status: ${{ steps.build.outputs.flag }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       # Check-out the repository under $GITHUB_WORKSPACE.
@@ -71,7 +72,7 @@ jobs:
 
 
   publish-doxygen:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: version_check
     if: needs.version_check.outputs.status == 'build'
     steps:
