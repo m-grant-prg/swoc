@@ -1,7 +1,7 @@
 #########################################################################
 #									#
 # File ID: ./.github/workflows/publish-doxygen-gh-pages.yml		#
-# Author: Copyright (C) 2022  Mark Grant				#
+# Author: Copyright (C) 2022, 2023  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -20,6 +20,11 @@
 #									#
 # 28/07/2022	MG	1.0.1	Initial release.                        #
 # 21/11/2022    MG      1.0.2   Use new libmgec7 and libmgesysutils2.   #
+# 13/07/2023    MG      1.0.3   Original action to fetch latest GitHub  #
+#                               release became unmaintained and was to  #
+#                               cease to work after GitHub updates. So  #
+#                               replaced by fork and update by          #
+#                               CityOfLosAngeles.                       #
 #									#
 #########################################################################
 
@@ -31,8 +36,10 @@ on:
     types: [released]
 
 jobs:
-  publish-doxygen:
-    runs-on: ubuntu-latest
+  version_check:
+    outputs:
+      status: ${{ steps.build.outputs.flag }}
+    runs-on: ubuntu-20.04
 
     steps:
       # Check-out the repository under $GITHUB_WORKSPACE.
@@ -41,13 +48,40 @@ jobs:
           fetch-depth: 0 # Get all incl tags, needed for git-enhanced AC_INIT
           ref: ${{ github.event.release.tag_name }}
 
-      - name: Add the extra PPA
-        run: sudo add-apt-repository ppa:m-grant-prg/utils -y
+      - name: Fetch latest release
+        id: latest_release
+        uses: CityOfLosAngeles/fetch-latest-github-release@v2.0.2
 
-      - name: Update the package list
-        run: sudo apt-get update
+      - name: Print versions
+        run: |
+          echo "Latest release is ${{ steps.latest_release.outputs.name }}"
+          echo "This release is ${{ github.event.release.name }}"
 
-      - name: Add the extra PPA packages
+      - name: Flag to build the docs
+        id: build
+        if: steps.latest_release.outputs.name == github.event.release.name
+        run: |
+          echo "This release is the flagged latest release so build."
+          echo "flag=build" >> $GITHUB_OUTPUT
+
+      - name: Notify no build
+        if: steps.latest_release.outputs.name != github.event.release.name
+        run: |
+          echo "This release is not the flagged latest release so no build."
+
+
+  publish-doxygen:
+    runs-on: ubuntu-20.04
+    needs: version_check
+    if: needs.version_check.outputs.status == 'build'
+    steps:
+      # Check-out the repository under $GITHUB_WORKSPACE.
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Get all incl tags, needed for git-enhanced AC_INIT
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Install the extra PPA packages
         run: |
           sudo apt-get install -y autoconf-archive libtool-bin
           sudo apt-get install -y doxygen graphviz
@@ -56,11 +90,10 @@ jobs:
           sudo apt-get install -y libmgesysutils2-dev libmgesysutils2
           sudo apt-get install -y txt2man txt2manwrap
 
-      - name: Autoreconf
-        run: autoreconf -if .
-
       - name: Configure
-        run: ./configure --enable-silent-rules=yes
+        run: |
+          autoreconf -if .
+          ./configure --enable-silent-rules=yes
 
       - name: Make doxygen
         run: make doxygen
