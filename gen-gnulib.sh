@@ -9,15 +9,17 @@
 #########################################################################
 #									#
 # Script ID: gen-gnulib.sh						#
-# Author: Copyright (C) 2018, 2021  Mark Grant				#
+# Author: Copyright (C) 2018, 2021, 2023  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
-# To simplify the running of daily apt-get maintenance commands.	#
+#	A helper script to import gnulib modules.			#
 #									#
-# Syntax:	gen-gnulib.sh [ -h || --help ] || [ -V || --version ]	#
+# Syntax:	gen-gnulib.sh [ -h || --help ] || [ -V || --version ] \	#
+#				<Base Directory> \			#
+#				<module 1> [ ... <module n> ]		#
 #									#
 # Exit codes used:-							#
 # Bash standard Exit Codes:	0 - success				#
@@ -56,6 +58,12 @@
 # 07/02/2018	MG	1.0.1	Created.				#
 # 19/10/2021	MG	1.0.2	Major overhaul.				#
 # 23/11/2021	MG	1.0.3	Tighten SPDX tag.			#
+# 22/07/2023	MG	1.1.0	Correct Purpose statement above.	#
+#				Fix shellcheck warnings.		#
+#				Fix base directory handling.		#
+#				At least 2 non-option arguments, the	#
+#				base directory and at least 1 module	#
+#				name.					#
 #									#
 #########################################################################
 
@@ -63,11 +71,11 @@
 ##################
 # Init variables #
 ##################
-readonly version=1.0.3				# Script version
-readonly outputprefix="$(basename $0): "
-readonly packageversion=1.1.1		# Package version
+readonly version=1.1.0				# Script version
+readonly packageversion=1.2.0		# Package version
 
 basedir="."
+modules=()
 
 
 #############
@@ -80,10 +88,12 @@ basedir="."
 usage ()
 {
 cat << EOF
-Usage is $0 [OPTIONS]
+Usage is $0 [OPTIONS] <Base Directory> <Module 1> [ ... <Module n> ]
 	[OPTIONS] are:-
 	-h or --help Displays usage information
 	-V or --version Displays version information
+	Base Directory - Path to directory containing configure.ac
+	Module 1 [ ... Module n ] - 1 or more module names
 EOF
 }
 
@@ -106,7 +116,7 @@ output()
 # No return value.
 script_exit()
 {
-	exit $1
+	exit "$1"
 }
 
 # Standard function to test command error and exit if non-zero.
@@ -115,7 +125,7 @@ script_exit()
 std_cmd_err_handler()
 {
 	if (( $1 )); then
-		script_exit $1
+		script_exit "$1"
 	fi
 }
 
@@ -172,10 +182,16 @@ proc_CL()
 		esac
 	done
 
-	# Pass anything after the -- straight to the commands.
-	if (( $# )); then
-		basedir=$@
+	# First non-option arg is the base dir, where configure.ac is located.
+	if (( $# < 2 )); then
+		msg="Base Directory must be specified as the first non-option"
+		msg+=" argument followed by at least 1 module name."
+		output "$msg" 1
+		script_exit 64
 	fi
+	basedir=$1
+	shift
+	modules=( "$@" )
 }
 
 
@@ -185,8 +201,8 @@ proc_CL()
 
 proc_CL "$@"
 
-gnulib-tool --import --dir=$basedir --source-base=src/prg/c/gen/lib \
-	--no-conditional-dependencies --no-libtool --no-vc-files configmake
+gnulib-tool --import --dir="$basedir" --source-base=src/prg/c/gen/lib \
+	--no-conditional-dependencies --no-libtool --no-vc-files "${modules[@]}"
 status=$?
 std_cmd_err_handler $status
 
