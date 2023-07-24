@@ -2,7 +2,7 @@
 Server Wait On Clients (SWOC) System
 ====================================
 
-Author - Copyright (C) 2018-2022 Mark Grant
+Author - Copyright (C) 2018-2023 Mark Grant
 
 --------
 Contents
@@ -174,7 +174,7 @@ https://github.com/m-grant-prg/acmbuild/wiki
 gen-gnulib.sh
 -------------
 This script generates or re-generates the gnulib requirements, I shan't go into
-detail here.
+detail here. For further information please see docs/misc/gnulib.txt.
 
 It is useful when setting up the project initially, when you are actually
 building in what is required and thinking about it, thereafter it is best to use

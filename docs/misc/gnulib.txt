@@ -1,0 +1,25 @@
+
+Author - Copyright (C) 2023 Mark Grant
+
+gnulib interaction
+==================
+The initial gnulib setup is performed by the script gen-gnulib.sh located in the
+project root directory. See the script itself for more information. For this
+project, invoking it from the project root directory would take the form:-
+	./gen-gnulib.sh . configmake
+
+Files in src/prg/c/gen/inc are not tracked in git but those in m4 and
+src/prg/c/gen/lib are. This allows people to work from a source tarball or a git
+clone without having to install gnulib and running gnulib-tool. It also enables
+straight forward builds of the project in packaging environments such as;
+pbuilder and LaunchPad, and, osc and openSUSE Build Service.
+This is described as option 3 on:-
+	https://www.gnu.org/software/gnulib/manual/html_node/VCS-Issues.html
+
+The bootstrap.sh script has a -g option which will perform a:-
+	gnulib-tool --update
+	based on gnulib-cache.m4 if you have gnulib installed.
+
+The gnulib files committed are updated by the repo owner from the latest
+version he has installed.
+
