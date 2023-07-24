@@ -3,10 +3,3 @@
 # citing this missing directory.
 # In other words, this is a git hack to satisfy AutoTools.
 
-# Ignore everything
-*
-
-# ... except ...
-!.gitignore
-!gnulib-cache.m4
-
