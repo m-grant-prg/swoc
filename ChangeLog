@@ -1,3 +1,69 @@
+2023-07-31 v1.6.4 Mark Grant <m.grant.prg@gmail.com>
+	* actions: Correct Copyright dates
+	actions: Replace fetch-latest-release action
+	at: Allow for v1.1.1~rc1 version numbering
+	lxcu: Correct install list to Build-Depends
+	lxcu: Add in-file help text
+	at: Use pkg-config command AOT Pkg_Check_Modules
+	lxcu: Update following vm-container-utils upgrade
+	at: Add enable-scan-build CLA
+	at: Upgrade bootstrap.sh to v1.5.6
+	at: Add missing enable-systemd option comment
+	at: Add configure CLA enable-iwyu
+	at: Enforce compiler to use rules
+	m4: Update linker macros to v1.1.2
+	m4: Update c compiler macros to v1.2.3
+	git: Update mailmap to v1.0.3
+	editors: Update local.vimrc to v1.0.3
+	git: Update gitignore to v1.0.11
+	git: Update gitattributes to v1.0.4
+	editors: Update editorconfig to v1.0.4
+	clang: Update clang-format to v1.0.3
+	lxcu: Use new libmgec7 and libmgesysutils2
+	actions: Use new libmgec7 and libmgesysutils2
+	at: Improve quoting
+	at: Use AC_CHECK_FUNCS exclusively
+	at: Add further information section
+	docs: Add AutoTools section
+	at: Move CFLAGS init to Compiler Setup section
+	at: Use AC_MSG_CHECKING where appropriate
+	at: Use AC_CONFIG_AUX_DIR
+	at: Use tmplibraries else pkg-config else search libs
+	at: tests: Add libmgec to linker flags
+	at: Use find to get tmpheaders
+	at: tmplibraries to use absolute paths
+	at: Rename to tmplibraries
+	all: Flatten inc directory to pkgincludedir
+	srv-lib: Flatten directory structure
+	com-lib: srv-lib: Flatten directory structure, move tests
+	com-lib: Move tests under tests
+	cli-prg: Flatten directory structure
+	cli-lib: Flatten directory structure
+	tests: Move cli-lib tests under tests
+	at: Rename tmplibraries
+	man: Add pkgincludedir to #include's
+	c: Correct included headers
+	at: Add automatic test run
+	at: tests: Add test compilation of headers
+	at: Flatten directory structure for pkgconfig build
+	at: pkg-config: Install API headers in pkgincludedir
+	all: Use pkginclude location for header files
+	at: Empty EXTRA_HEADERS
+	git: Ignore headers in sub-directories of inc-tmp
+	docs: Remove globbed tarballs
+	docs: Add header file guidelines
+	docs: Exclude inc-tmp directory
+	at: Check for configfile.h in the inc-tmp directory
+	at: Check for mge-errno.h in the inc-tmp directory
+	at: c: Rename bstree.h
+	com-lib: Fix trivial coding style error
+	at: c: Rename mgememory.h
+	at: c: Rename mgebuffer.h and mgemessage.h
+	at: c: Rename portability.h to mge-portability.h
+	at: Add libmgesysutils candidate in lib-tmp
+	com-lib: strcpy does the job better than strncpy
+	com-lib: Use host's canonical name in ID check
+
 2022-08-16 v1.6.3 Mark Grant <m.grant.prg@gmail.com>
 	* editors: Update editorconfig to v1.0.3
 	editors: Add editorconfig file
