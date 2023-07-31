@@ -104,7 +104,8 @@ d) ... If you downloaded the source tarball type 'autoreconf -if'
 e) ... Documents can be registered with scrollkeeper but this process will
 	conflict if the documents have already been installed via a package
 	manager. So, if the documents have not been installed by a package
-	manager:-
+	manager. (For further information please see
+	docs/misc/AT-Installation.txt.):-
 
 	Type './configure --enable-atonly'
 
@@ -117,7 +118,8 @@ f) ... As root or sudo, type 'make install clean'
 g) ... Edit the sysconfdir/swocserverd.conf, (usually /etc/swocserverd.conf), as
 	required.
 
-h) ... Update shared libraries links and cache
+h) ... Update shared libraries links and cache. (For further information please
+	see docs/misc/AT-Installation.txt.)
 
 	As root or sudo, type 'ldconfig'
 
