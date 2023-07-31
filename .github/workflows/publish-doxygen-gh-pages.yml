@@ -26,6 +26,8 @@
 #                               replaced by fork and update by          #
 #                               CityOfLosAngeles.                       #
 #                               Run on 22.04.                           #
+# 31/07/2023    MG      1.0.4   Remove txt2man install, rely on         #
+#                               dependencies.                           #
 #									#
 #########################################################################
 
@@ -89,7 +91,7 @@ jobs:
           sudo apt-get install -y libssh-gcrypt-dev libssh-gcrypt-4
           sudo apt-get install -y libmgec7-dev libmgec7
           sudo apt-get install -y libmgesysutils2-dev libmgesysutils2
-          sudo apt-get install -y txt2man txt2manwrap
+          sudo apt-get install -y txt2manwrap
 
       - name: Configure
         run: |
