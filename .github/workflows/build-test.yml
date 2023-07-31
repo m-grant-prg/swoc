@@ -27,6 +27,7 @@
 # 13/07/2023    MG      1.0.5   Run on 22.04.                           #
 # 31/07/2023    MG      1.0.6   Remove txt2man install, rely on         #
 #                               dependencies.                           #
+#                               Organise standard repo and PPA actions. #
 #									#
 #########################################################################
 
@@ -49,15 +50,20 @@ jobs:
         with:
           fetch-depth: 0 # Get all incl tags, needed for git-enhanced AC_INIT
 
-      - name: Add the extra PPA
-        run: sudo add-apt-repository ppa:m-grant-prg/utils -y
-      - name: Update the package lists
+      - name: Update the package list
         run: sudo apt-get update
-      - name: Add the extra packages
+      - name: Add the extra standard packages
         run: |
           sudo apt-get install -y autoconf-archive libtool-bin
           sudo apt-get install -y doxygen graphviz
           sudo apt-get install -y libssh-gcrypt-dev libssh-gcrypt-4
+
+      - name: Add the extra PPA
+        run: sudo add-apt-repository ppa:m-grant-prg/utils -y
+      - name: Update the package list
+        run: sudo apt-get update
+      - name: Add the PPA packages
+        run: |
           sudo apt-get install -y libmgec7-dev libmgec7
           sudo apt-get install -y libmgesysutils2-dev libmgesysutils2
           sudo apt-get install -y txt2manwrap
