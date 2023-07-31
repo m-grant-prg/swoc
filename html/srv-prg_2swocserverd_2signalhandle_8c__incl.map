@@ -1,10 +1,12 @@
 <map id="src/prg/c/src/srv&#45;prg/swocserverd/signalhandle.c" name="src/prg/c/src/srv&#45;prg/swocserverd/signalhandle.c">
-<area shape="rect" id="node1" title=" " alt="" coords="221,5,428,47"/>
+<area shape="rect" id="node1" title="Signal handling functions." alt="" coords="269,5,476,47"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,95,79,121"/>
 <area shape="rect" id="node3" title=" " alt="" coords="103,95,170,121"/>
 <area shape="rect" id="node4" title=" " alt="" coords="195,95,265,121"/>
 <area shape="rect" id="node5" title=" " alt="" coords="289,95,360,121"/>
 <area shape="rect" id="node6" title=" " alt="" coords="384,95,460,121"/>
 <area shape="rect" id="node7" title=" " alt="" coords="484,95,568,121"/>
-<area shape="rect" id="node8" title=" " alt="" coords="593,95,710,121"/>
+<area shape="rect" id="node8" title=" " alt="" coords="593,95,758,121"/>
+<area shape="rect" id="node9" href="$signalhandle_8h.html" title="Header file for signal handling." alt="" coords="782,95,937,121"/>
+<area shape="rect" id="node10" title=" " alt="" coords="765,169,954,196"/>
 </map>

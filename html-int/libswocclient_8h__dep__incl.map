@@ -1,7 +1,7 @@
-<map id="src/prg/c/inc/api/libswocclient.h" name="src/prg/c/inc/api/libswocclient.h">
-<area shape="rect" id="node1" title=" " alt="" coords="291,5,517,32"/>
-<area shape="rect" id="node2" href="$cli-lib_2libswocclient_2optionproc_8c.html" title=" " alt="" coords="5,80,200,121"/>
-<area shape="rect" id="node3" href="$cli-lib_2libswocclient_2version_8c.html" title=" " alt="" coords="225,80,399,121"/>
-<area shape="rect" id="node4" href="$cli-prg_2swocclient_2main_8c.html" title=" " alt="" coords="423,80,569,121"/>
-<area shape="rect" id="node5" href="$cli-prg_2swocclient_2signalhandle_8c.html" title=" " alt="" coords="593,80,786,121"/>
+<map id="src/prg/c/inc/swoc/libswocclient.h" name="src/prg/c/inc/swoc/libswocclient.h">
+<area shape="rect" id="node1" title="Header file for Server Wait on Clients client&#45;side library." alt="" coords="253,5,391,47"/>
+<area shape="rect" id="node2" href="$cli-lib_2optionproc_8c.html" title="Functions to process client lock flag options." alt="" coords="5,95,145,136"/>
+<area shape="rect" id="node3" href="$cli-lib_2version_8c.html" title="Source for version functions." alt="" coords="169,95,309,136"/>
+<area shape="rect" id="node4" href="$cli-prg_2main_8c.html" title="Server Wait On Clients client program." alt="" coords="333,95,479,136"/>
+<area shape="rect" id="node5" href="$cli-prg_2signalhandle_8c.html" title="Signal handling functions." alt="" coords="503,95,648,136"/>
 </map>

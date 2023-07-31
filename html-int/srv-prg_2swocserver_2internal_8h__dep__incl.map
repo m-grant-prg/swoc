@@ -1,6 +1,6 @@
 <map id="src/prg/c/src/srv&#45;prg/swocserver/internal.h" name="src/prg/c/src/srv&#45;prg/swocserver/internal.h">
-<area shape="rect" id="node1" title=" " alt="" coords="217,5,383,47"/>
-<area shape="rect" id="node2" href="$srv-prg_2swocserver_2cmdlineargs_8c.html" title=" " alt="" coords="5,95,200,136"/>
-<area shape="rect" id="node3" href="$srv-prg_2swocserver_2main_8c.html" title=" " alt="" coords="225,95,375,136"/>
-<area shape="rect" id="node4" href="$srv-prg_2swocserver_2version_8c.html" title=" " alt="" coords="400,95,563,136"/>
+<area shape="rect" id="node1" title="Header file for Server Wait on Clients server&#45;side program." alt="" coords="217,5,383,47"/>
+<area shape="rect" id="node2" href="$srv-prg_2swocserver_2cmdlineargs_8c.html" title="Command line argument processing for swocserver using getopt_long." alt="" coords="5,95,200,136"/>
+<area shape="rect" id="node3" href="$srv-prg_2swocserver_2main_8c.html" title="Server Wait On Clients server program." alt="" coords="225,95,375,136"/>
+<area shape="rect" id="node4" href="$srv-prg_2swocserver_2version_8c.html" title="Source for version functions." alt="" coords="400,95,563,136"/>
 </map>

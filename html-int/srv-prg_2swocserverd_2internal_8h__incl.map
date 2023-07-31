@@ -1,10 +1,10 @@
 <map id="src/prg/c/src/srv&#45;prg/swocserverd/internal.h" name="src/prg/c/src/srv&#45;prg/swocserverd/internal.h">
-<area shape="rect" id="node1" title=" " alt="" coords="183,5,357,47"/>
+<area shape="rect" id="node1" title="Header file for Server Wait on Clients server&#45;side daemon." alt="" coords="216,5,391,47"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,95,76,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="101,95,175,121"/>
-<area shape="rect" id="node4" href="$libswoccommon_8h.html" title=" " alt="" coords="200,95,340,121"/>
-<area shape="rect" id="node7" title=" " alt="" coords="295,169,418,196"/>
-<area shape="rect" id="node8" title=" " alt="" coords="442,169,541,196"/>
-<area shape="rect" id="node5" title=" " alt="" coords="80,169,151,196"/>
-<area shape="rect" id="node6" title=" " alt="" coords="175,169,271,196"/>
+<area shape="rect" id="node3" title=" " alt="" coords="101,95,266,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="115,169,297,196"/>
+<area shape="rect" id="node5" title=" " alt="" coords="322,169,511,196"/>
+<area shape="rect" id="node6" href="$libswoccommon_8h.html" title="Internal header file for Server Wait on Client common library." alt="" coords="392,95,569,121"/>
+<area shape="rect" id="node7" title=" " alt="" coords="536,169,607,196"/>
+<area shape="rect" id="node8" title=" " alt="" coords="631,169,727,196"/>
 </map>

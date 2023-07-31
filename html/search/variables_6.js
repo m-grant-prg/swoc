@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['relay_5fdata_5ffailure_285',['relay_data_failure',['../ssh_8c.html#aaf920cd3e27c1d815befee3edec3a189',1,'ssh.c']]],
-  ['relay_5fdata_5fsuccess_286',['relay_data_success',['../ssh_8c.html#a670e510e3e7ed35ad81ec037ee57b63a',1,'ssh.c']]],
-  ['relay_5fthread_287',['relay_thread',['../ssh_8c.html#a7e6e7c4a5b0a65c48893795c85f76879',1,'ssh.c']]]
+  ['locks_5fheld_322',['locks_held',['../libswocclient_8h.html#a29cd59bd1ea501b097f5d2b1d8cf00e8',1,'locks_held():&#160;optionproc.c'],['../libswocserver_8h.html#a29cd59bd1ea501b097f5d2b1d8cf00e8',1,'locks_held():&#160;optionproc.c'],['../cli-lib_2optionproc_8c.html#ab42f8c0d2f10bd4749697f30008ede6a',1,'locks_held():&#160;optionproc.c'],['../srv-lib_2optionproc_8c.html#a55957b815ac9e4684f6b9dc1d91a2cf8',1,'locks_held():&#160;optionproc.c']]]
 ];

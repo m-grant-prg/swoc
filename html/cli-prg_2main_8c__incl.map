@@ -1,0 +1,11 @@
+<map id="src/prg/c/src/cli&#45;prg/main.c" name="src/prg/c/src/cli&#45;prg/main.c">
+<area shape="rect" id="node1" title="Server Wait On Clients client program." alt="" coords="287,5,433,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,72,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="97,95,167,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="191,95,350,121"/>
+<area shape="rect" id="node5" href="$cmdlineargs_8h.html" title="Header file for command line processing." alt="" coords="374,95,525,121"/>
+<area shape="rect" id="node8" href="$libswocclient_8h.html" title="Header file for Server Wait on Clients client&#45;side library." alt="" coords="549,95,705,121"/>
+<area shape="rect" id="node9" href="$signalhandle_8h.html" title="Header file for signal handling." alt="" coords="729,95,884,121"/>
+<area shape="rect" id="node6" title=" " alt="" coords="414,169,485,196"/>
+<area shape="rect" id="node7" title=" " alt="" coords="532,169,721,196"/>
+</map>

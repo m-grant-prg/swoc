@@ -1,4 +1,4 @@
-<map id="src/prg/c/inc/api/libswocserver.h" name="src/prg/c/inc/api/libswocserver.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,235,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="71,80,169,107"/>
+<map id="src/prg/c/inc/swoc/libswocserver.h" name="src/prg/c/inc/swoc/libswocserver.h">
+<area shape="rect" id="node1" title="Header file for Server Wait on Clients server&#45;side library." alt="" coords="31,5,169,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,195,121"/>
 </map>

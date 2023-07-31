@@ -1,4 +1,5 @@
 var dir_efba290c06ce2e8ec7503f448f60051b =
 [
-    [ "libswocclient", "dir_1a31b4cff70347abdfac272892b35972.html", "dir_1a31b4cff70347abdfac272892b35972" ]
+    [ "optionproc.c", "cli-lib_2optionproc_8c.html", "cli-lib_2optionproc_8c" ],
+    [ "version.c", "cli-lib_2version_8c.html", "cli-lib_2version_8c" ]
 ];

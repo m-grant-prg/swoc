@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bool_300',['bool',['../cli-lib_2libswocclient_2optionproc_8c.html#abb452686968e48b67397da5f97445f5b',1,'bool():&#160;optionproc.c'],['../srv-lib_2libswocserver_2optionproc_8c.html#abb452686968e48b67397da5f97445f5b',1,'bool():&#160;optionproc.c'],['../comms_8c.html#abb452686968e48b67397da5f97445f5b',1,'bool():&#160;comms.c'],['../srv-prg_2swocserverd_2main_8c.html#abb452686968e48b67397da5f97445f5b',1,'bool():&#160;main.c'],['../request_8c.html#abb452686968e48b67397da5f97445f5b',1,'bool():&#160;request.c']]]
+  ['arg_5fbuf_368',['ARG_BUF',['../cmdlineargs_8h.html#a2e37674a85ed2b026047e6d36ccf7703',1,'cmdlineargs.h']]]
 ];

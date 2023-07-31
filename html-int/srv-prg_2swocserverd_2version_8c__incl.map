@@ -1,13 +1,13 @@
 <map id="src/prg/c/src/srv&#45;prg/swocserverd/version.c" name="src/prg/c/src/srv&#45;prg/swocserverd/version.c">
-<area shape="rect" id="node1" title=" " alt="" coords="85,5,255,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="39,95,112,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="137,95,203,121"/>
-<area shape="rect" id="node4" href="$srv-prg_2swocserverd_2internal_8h.html" title=" " alt="" coords="228,95,312,121"/>
+<area shape="rect" id="node1" title="Source for version functions." alt="" coords="118,5,289,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="72,95,145,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="170,95,237,121"/>
+<area shape="rect" id="node4" href="$srv-prg_2swocserverd_2internal_8h.html" title="Header file for Server Wait on Clients server&#45;side daemon." alt="" coords="261,95,345,121"/>
 <area shape="rect" id="node5" title=" " alt="" coords="5,169,76,196"/>
-<area shape="rect" id="node6" title=" " alt="" coords="101,169,175,196"/>
-<area shape="rect" id="node7" href="$libswoccommon_8h.html" title=" " alt="" coords="200,169,340,196"/>
-<area shape="rect" id="node10" title=" " alt="" coords="295,244,418,271"/>
-<area shape="rect" id="node11" title=" " alt="" coords="442,244,541,271"/>
-<area shape="rect" id="node8" title=" " alt="" coords="80,244,151,271"/>
-<area shape="rect" id="node9" title=" " alt="" coords="175,244,271,271"/>
+<area shape="rect" id="node6" title=" " alt="" coords="101,169,266,196"/>
+<area shape="rect" id="node7" title=" " alt="" coords="115,244,297,271"/>
+<area shape="rect" id="node8" title=" " alt="" coords="322,244,511,271"/>
+<area shape="rect" id="node9" href="$libswoccommon_8h.html" title="Internal header file for Server Wait on Client common library." alt="" coords="392,169,569,196"/>
+<area shape="rect" id="node10" title=" " alt="" coords="536,244,607,271"/>
+<area shape="rect" id="node11" title=" " alt="" coords="631,244,727,271"/>
 </map>

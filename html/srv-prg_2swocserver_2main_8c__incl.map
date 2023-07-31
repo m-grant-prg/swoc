@@ -1,9 +1,12 @@
 <map id="src/prg/c/src/srv&#45;prg/swocserver/main.c" name="src/prg/c/src/srv&#45;prg/swocserver/main.c">
-<area shape="rect" id="node1" title=" " alt="" coords="219,5,370,47"/>
+<area shape="rect" id="node1" title="Server Wait On Clients server program." alt="" coords="303,5,454,47"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,95,72,121"/>
 <area shape="rect" id="node3" title=" " alt="" coords="97,95,167,121"/>
 <area shape="rect" id="node4" title=" " alt="" coords="191,95,275,121"/>
-<area shape="rect" id="node5" title=" " alt="" coords="300,95,415,121"/>
-<area shape="rect" id="node6" title=" " alt="" coords="439,95,542,121"/>
-<area shape="rect" id="node7" title=" " alt="" coords="567,95,684,121"/>
+<area shape="rect" id="node5" title=" " alt="" coords="299,95,458,121"/>
+<area shape="rect" id="node6" href="$cmdlineargs_8h.html" title="Header file for command line processing." alt="" coords="482,95,633,121"/>
+<area shape="rect" id="node9" href="$libswocserver_8h.html" title="Header file for Server Wait on Clients server&#45;side library." alt="" coords="657,95,817,121"/>
+<area shape="rect" id="node10" href="$signalhandle_8h.html" title="Header file for signal handling." alt="" coords="841,95,996,121"/>
+<area shape="rect" id="node7" title=" " alt="" coords="522,169,593,196"/>
+<area shape="rect" id="node8" title=" " alt="" coords="643,169,832,196"/>
 </map>

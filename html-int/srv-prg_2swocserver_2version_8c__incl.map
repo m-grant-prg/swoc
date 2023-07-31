@@ -1,8 +1,8 @@
 <map id="src/prg/c/src/srv&#45;prg/swocserver/version.c" name="src/prg/c/src/srv&#45;prg/swocserver/version.c">
-<area shape="rect" id="node1" title=" " alt="" coords="55,5,218,47"/>
+<area shape="rect" id="node1" title="Source for version functions." alt="" coords="55,5,218,47"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,95,79,121"/>
 <area shape="rect" id="node3" title=" " alt="" coords="103,95,170,121"/>
-<area shape="rect" id="node4" href="$srv-prg_2swocserver_2internal_8h.html" title=" " alt="" coords="195,95,279,121"/>
-<area shape="rect" id="node5" href="$libswocserver_8h.html" title=" " alt="" coords="126,169,249,196"/>
-<area shape="rect" id="node6" title=" " alt="" coords="187,244,286,271"/>
+<area shape="rect" id="node4" href="$srv-prg_2swocserver_2internal_8h.html" title="Header file for Server Wait on Clients server&#45;side program." alt="" coords="195,95,279,121"/>
+<area shape="rect" id="node5" title=" " alt="" coords="142,244,331,271"/>
+<area shape="rect" id="node6" href="$libswocserver_8h.html" title="Header file for Server Wait on Clients server&#45;side library." alt="" coords="215,169,375,196"/>
 </map>

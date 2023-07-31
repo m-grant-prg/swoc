@@ -42,6 +42,10 @@
 # 17/07/2022	MG	1.0.9	Add a doxygen target.			#
 #				Add dependency on document sources and	#
 #				C sources.				#
+# 08/09/2022	MG	1.0.10	Remove all doxygen tarballs. Orphaned	#
+#				tarballs can be left if git describe	#
+#				changes and no make clean has been	#
+#				performed.				#
 #									#
 #########################################################################
 
@@ -167,9 +171,9 @@ EXTRA_DIST = $(docpkg) $(intdocpkg) $(srcdir)/src $(srcdir)/swoc.in \
 	     $(srcdir)/swoc-int.in
 
 
-CLEANFILES = doxywarn.txt doxygen.stamp doxygen1.stamp $(docpkg) $(intdocpkg) \
-	     swoc swoc-int
+CLEANFILES = doxywarn.txt doxygen.stamp doxygen1.stamp swoc swoc-int
 
 clean-local:
+	rm -rf html html-int swoc*doxy*.tar.gz
 	rm -rf html html-int
 

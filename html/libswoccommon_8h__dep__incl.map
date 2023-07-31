@@ -1,0 +1,12 @@
+<map id="src/prg/c/inc/swoc/libswoccommon.h" name="src/prg/c/inc/swoc/libswoccommon.h">
+<area shape="rect" id="node1" title="Internal header file for Server Wait on Client common library." alt="" coords="706,5,850,47"/>
+<area shape="rect" id="node2" href="$cli-lib_2optionproc_8c.html" title="Functions to process client lock flag options." alt="" coords="5,95,145,136"/>
+<area shape="rect" id="node3" href="$messages_8c.html" title="Message processing functions common to swoc programs." alt="" coords="169,95,323,136"/>
+<area shape="rect" id="node4" href="$ssh_8c.html" title="SSH connection processing functions." alt="" coords="347,95,500,136"/>
+<area shape="rect" id="node5" href="$tcp_8c.html" title="TCP connection processing functions." alt="" coords="524,95,677,136"/>
+<area shape="rect" id="node6" href="$com-lib_2validateconfig_8c.html" title="To parse and validate the config file." alt="" coords="701,95,855,136"/>
+<area shape="rect" id="node7" href="$com-lib_2version_8c.html" title="Source for version functions." alt="" coords="879,95,1032,136"/>
+<area shape="rect" id="node8" href="$srv-lib_2optionproc_8c.html" title="Functions to process server lock flag options." alt="" coords="1056,95,1201,136"/>
+<area shape="rect" id="node9" href="$comms_8c.html" title="Comms functions associated with the swocserverd daemon." alt="" coords="1226,95,1397,136"/>
+<area shape="rect" id="node10" href="$request_8c.html" title="Request processing functions." alt="" coords="1421,95,1593,136"/>
+</map>
