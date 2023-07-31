@@ -5,5 +5,5 @@ autoconf autoconf-archive automake libtool make
 doxygen graphviz graphviz-gd
 libmgec7-devel libmgec7 libmgesysutils2-devel libmgesysutils2
 libssh-devel libssh4
-txt2man txt2manwrap
+txt2manwrap
 

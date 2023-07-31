@@ -5,5 +5,5 @@ autoconf autoconf-archive automake autotools-dev libtool-bin
 doxygen graphviz
 libmgec7-dev libmgec7 libmgesysutils2-dev libmgesysutils2
 libssh-gcrypt-dev libssh-gcrypt-4
-txt2man txt2manwrap
+txt2manwrap
 
