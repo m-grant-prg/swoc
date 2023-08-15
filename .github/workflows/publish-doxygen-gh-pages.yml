@@ -25,6 +25,8 @@
 #                               cease to work after GitHub updates. So  #
 #                               replaced by fork and update by          #
 #                               CityOfLosAngeles.                       #
+# 15/08/2023    MG      1.0.4   Upgrade fetch-latest-release action to  #
+#                               v2.0.3                                  #
 #									#
 #########################################################################
 
@@ -50,7 +52,7 @@ jobs:
 
       - name: Fetch latest release
         id: latest_release
-        uses: CityOfLosAngeles/fetch-latest-github-release@v2.0.2
+        uses: CityOfLosAngeles/fetch-latest-github-release@v2.0.3
 
       - name: Print versions
         run: |
