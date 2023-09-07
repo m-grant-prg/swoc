@@ -49,7 +49,7 @@ jobs:
 
     steps:
       # Check-out the repository under $GITHUB_WORKSPACE.
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Get all incl tags, needed for git-enhanced AC_INIT
           ref: ${{ github.event.release.tag_name }}
@@ -82,7 +82,7 @@ jobs:
     if: needs.version_check.outputs.status == 'build'
     steps:
       # Check-out the repository under $GITHUB_WORKSPACE.
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Get all incl tags, needed for git-enhanced AC_INIT
           ref: ${{ github.event.release.tag_name }}
