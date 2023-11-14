@@ -8,7 +8,6 @@
 
 #########################################################################
 #									#
-# Script ID: gen-gnulib.sh						#
 # Author: Copyright (C) 2018, 2021, 2023  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
@@ -17,9 +16,7 @@
 # Purpose:								#
 #	A helper script to import gnulib modules.			#
 #									#
-# Syntax:	gen-gnulib.sh [ -h || --help ] || [ -V || --version ] \	#
-#				<Base Directory> \			#
-#				<module 1> [ ... <module n> ]		#
+# Syntax:	See usage()						#
 #									#
 # Exit codes used:-							#
 # Bash standard Exit Codes:	0 - success				#
@@ -49,30 +46,12 @@
 #									#
 #########################################################################
 
-#########################################################################
-#									#
-# Changelog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 07/02/2018	MG	1.0.1	Created.				#
-# 19/10/2021	MG	1.0.2	Major overhaul.				#
-# 23/11/2021	MG	1.0.3	Tighten SPDX tag.			#
-# 22/07/2023	MG	1.1.0	Correct Purpose statement above.	#
-#				Fix shellcheck warnings.		#
-#				Fix base directory handling.		#
-#				At least 2 non-option arguments, the	#
-#				base directory and at least 1 module	#
-#				name.					#
-#									#
-#########################################################################
-
 
 ##################
 # Init variables #
 ##################
-readonly version=1.1.0				# Script version
-readonly packageversion=1.2.0		# Package version
+readonly version=1.2.0				# Script version
+readonly packageversion=1.3.0		# Package version
 
 basedir="."
 modules=()
@@ -85,15 +64,18 @@ modules=()
 # -h --help output.
 # No parameters
 # No return value
-usage ()
+usage()
 {
 cat << EOF
-Usage is $0 [OPTIONS] <Base Directory> <Module 1> [ ... <Module n> ]
+Usage is $0 BASE_DIRECTORY MODULE [MODULE ...]
+Usage is $0 {-h|-V}
+Usage is $0 [OPTIONS]
 	[OPTIONS] are:-
 	-h or --help Displays usage information
 	-V or --version Displays version information
-	Base Directory - Path to directory containing configure.ac
-	Module 1 [ ... Module n ] - 1 or more module names
+
+	BASE_DIRECTORY - Path to directory containing configure.ac
+	MODULE [MODULE ...] - 1 or more module names
 EOF
 }
 
