@@ -1,1 +1,17 @@
+#########################################################################
+#									#
+# Author: Copyright (C) 2023  Mark Grant				#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0-only					#
+#									#
+# N.B.									#
+# After changes to any gitignore file please run			#
+#		'git ls-files -i --exclude-standard'			#
+# to determine if any tracked files are now ignored.			#
+#									#
+#########################################################################
+
+
 **/*.h
+
