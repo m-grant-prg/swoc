@@ -8,15 +8,22 @@
 # Purpose:								#
 #	AutoConf script file to configure SWOCServer-C project.		#
 #									#
-# cmd line syntax:							#
-# ./configure	[--enable-atonly=<yes|no> [default: no]]		#
-#		[--enable-debug=<yes|no> [default: no]]			#
-#		[--enable-distcheckfake=<yes|no> [default: no]]		#
-#		[--enable-headercheck=<yes|no> [default: no]]		#
-#		[--enable-iwyu=<yes|no> [default: no]]			#
-#		[--enable-scan-build=<yes|no> [default: no]]		#
-#		[--enable-sparse=<yes|no> [default: no]]		#
-#		[--enable-systemd=yes|no> [default: no]]		#
+# cmd line syntax of standard configure:				#
+# ./configure --help							#
+#									#
+# cmd line syntax of additional functionality:				#
+# ./configure	[--enable-atonly[={yes|no}]]				#
+#		[--enable-debug[={yes|no}]]				#
+#		[--enable-distcheckfake[={yes|no}]]			#
+#		[--enable-headercheck[={yes|no}]]			#
+#		[--enable-iwyu[={yes|no}]]				#
+#		[--enable-scan-build[={yes|no}]]			#
+#		[--enable-sparse[={yes|no}]]				#
+#		[--enable-systemd[={yes|no}]]				#
+# Parameter defaults:							#
+#	When specified on the CL, but without the [={yes|no}], the	#
+#	default is yes.							#
+#	When not specified the default is no.				#
 #									#
 # Parameters generic description. For specifics to this configure.ac	#
 # please see inline comments at the point of definition:-		#
