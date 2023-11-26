@@ -3,69 +3,12 @@
  *
  * Functions to process client lock flag options.
  *
- * @author Copyright (C) 2016-2019, 2021, 2022  Mark Grant
+ * @author Copyright (C) 2016-2019, 2021-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.17 ==== 17/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 11/06/2016	MG	1.0.1	First release.Separated out from	*
- *				swocclient-c package.			*
- * 12/06/2016	MG	1.0.2	Adopt convention of function definition	*
- *				with empty parameter list to use void,	*
- *				just as with prototypes.		*
- * 16/07/2016	MG	1.0.3	Move towards kernel coding style.	*
- * 17/07/2016	MG	1.0.4	Further coding style changes.		*
- * 06/05/2017	MG	1.1.0	Migrate from NFS 'file as a flag'	*
- *				semaphore to TCP stream socket		*
- *				messaging to new swocserverd daemon.	*
- *				Add new swc_client_wait function.	*
- *				Migrate to use of mge_errno and libmgec	*
- *				error handling.				*
- * 11/11/2017	MG	1.1.1	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 31/01/2018	MG	1.1.2	Daemon return message now standardised.	*
- *				On error use the error number in the	*
- *				return message to populate mge_errno.	*
- * 01/02/2018	MG	1.1.3	On error path check argc == 4 before	*
- *				indexing into argv.			*
- * 02/02/2018	MG	1.1.4	Use safer strtol instead of atoi.	*
- *				Add number of locks as parameter to	*
- *				the wait function.			*
- * 18/03/2018	MG	1.1.5	Store the number of locks currently	*
- *				held during swc_client_wait() in a	*
- *				global variable. This value can be	*
- *				accessed in a handler if a signal is	*
- *				received.				*
- * 02/05/2018	MG	1.1.6	Add support for clinet blocked list.	*
- * 18/05/2018	MG	1.1.7	Add show server block status.		*
- * 05/08/2018	MG	1.1.8	Change mgemessage struct initialisation	*
- *				following .complete field change to	*
- *				type bool.				*
- * 07/09/2018	MG	1.1.9	Use new mgemessage struct initialiser.	*
- * 18/05/2019	MG	1.1.10	Merge sub-projects into one.		*
- * 02/06/2019	MG	1.1.11	Add explicit cast to pollint for sign	*
- *				conversion. It has already been		*
- *				validated > 0.				*
- * 08/11/2019	MG	1.1.12	Use standard GNU ifdeffery around use	*
- *				of AC_HEADER_STDBOOL.			*
- * 10/10/2021	MG	1.1.13	Use new internal common header.		*
- * 08/12/2021	MG	1.1.14	Tighten SPDX tag.			*
- * 01/04/2022	MG	1.1.15	Improve error handling consistency.	*
- * 11/06/2022	MG	1.1.16	Replace sprintf with safer snprintf.	*
- * 17/09/2022	MG	1.1.17	Rename mgemessage.h			*
- *				Use pkginclude location.		*
- *				Flatten directory structure.		*
- *									*
- ************************************************************************
+ * @version _v1.2.0 ==== 26/11/2023_
  */
 
 #include <limits.h>
@@ -93,8 +36,8 @@
 #endif
 
 #include <libmgec/libmgec.h>
-#include <libmgec/mge-message.h>
 #include <libmgec/mge-errno.h>
+#include <libmgec/mge-message.h>
 #include <libmgesysutils/mge-remsyslog.h>
 #include <swoc/libswocclient.h>
 #include <swoc/libswoccommon.h>

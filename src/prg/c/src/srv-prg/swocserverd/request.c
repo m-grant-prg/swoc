@@ -3,80 +3,12 @@
  *
  * Request processing functions.
  *
- * @author Copyright (C) 2016-2022  Mark Grant
+ * @author Copyright (C) 2016-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.26 ==== 17/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 19/11/2016	MG	1.0.1	First release.				*
- * 08/01/2017	MG	1.0.2	Add creation / deletion of pid file.	*
- *				(Recommended for a systemd service of	*
- *				type forking.)				*
- * 02/02/2017	MG	1.0.3	Migrate to use of mge_errno in libmgec.	*
- * 13/02/2017	MG	1.0.4	Implement config file reload		*
- *				functionality.				*
- * 22/04/2017	MG	1.0.5	Change to use new bstree struct.	*
- * 27/05/2017	MG	1.0.6	Give daemon its own config file.	*
- * 				Use new local validateconfig.		*
- * 				Add support for temporary include	*
- *				directory.				*
- * 04/06/2017	MG	1.0.7	Split comms functions out of main into	*
- *				their own source file.			*
- *				Tidy up unnecessary include statements.	*
- * 				Use more meaningful name for client	*
- *				lock bstree.				*
- * 07/06/2017	MG	1.0.8	Implement epoll controlled use of	*
- *				multiple ports.				*
- * 14/09/2017	MG		Change force_unlock to unlock.		*
- * 18/11/2017	MG	1.0.9	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 31/01/2018	MG	1.0.10	On unlock and release return a more	*
- *				informative mge_errno.			*
- * 24/03/2018	MG	1.0.11	Add missing mgemessage.h include.	*
- * 28/03/2018	MG	1.0.12	Declare variables before code, (fixes	*
- *				a sparse warning).			*
- * 10/05/2018	MG	1.0.13	Add support for blocked clients list.	*
- *				Add server client block and unblock.	*
- *				Add server block and unblock.		*
- * 18/05/2018	MG	1.0.14	Add client show server block status.	*
- * 22/05/2018	MG	1.0.15	Change from swocserverd.h to internal.h	*
- * 03/06/2018	MG	1.0.16	Log number of clients and locks		*
- *				existing when an end request is		*
- *				processed.				*
- * 25/08/2018	MG	1.0.17	Extract a core config reload function	*
- *				from srv_reload_req so that it can be	*
- *				used by the signal handler on receipt	*
- *				of SIGHUP, (which is a convention).	*
- * 12/09/2018	MG	1.0.18	Remove use of no longer available	*
- *				DEF_MSG_SIZE macro, (it is not part of	*
- *				the API).				*
- * 18/05/2019	MG	1.0.19	Merge sub-projects into one.		*
- * 02/06/2019	MG	1.0.20	Remove 2 incorrect casts.		*
- *				Correct cut & paste error in param msg.	*
- * 08/11/2019	MG	1.0.21	Use standard GNU ifdeffery around use	*
- *				of AC_HEADER_STDBOOL.			*
- * 21/03/2020	MG	1.0.22	Add id request type and use it to set	*
- *				the client name. Due to always getting	*
- *				localhost when over an SSH tunnel.	*
- * 08/12/2021	MG	1.0.23	Tighten SPDX tag.			*
- * 14/04/2022	MG	1.0.24	Improve error handling consistency.	*
- * 12/06/2022	MG	1.0.25	Replace sprintf with safer snprintf.	*
- * 17/09/2022	MG	1.0.26	Rename mgemessage.h			*
- *				Rename mgememory.h			*
- *				Rename bstree.h				*
- *				Use pkginclude location.		*
- *				Correct included header files.		*
- *									*
- ************************************************************************
+ * @version _v1.1.0 ==== 26/11/2023_
  */
 
 #include <arpa/inet.h>

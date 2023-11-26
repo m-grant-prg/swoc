@@ -1,7 +1,6 @@
 #########################################################################
 #									#
-# Script ID: src/prg/c/inc-tmp/Makefile.am				#
-# Author: Copyright (C) 2017-2019, 2021, 2022  Mark Grant		#
+# Author: Copyright (C) 2017-2019, 2021-2023  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -14,31 +13,6 @@
 # which is normally part of a -dev package. At the end of development	#
 # this, of course, has to be moved back to the -dev package and		#
 # released from there.							#
-#									#
-#########################################################################
-
-#########################################################################
-#									#
-# Changelog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 19/05/2017	MG	1.0.0	First release.				#
-# 02/10/2017	MG	1.0.1	Add mge-errno.h possibility.		#
-# 12/01/2018	MG	1.0.2	Add SPDX license tags to source files.	#
-# 16/01/2018	MG	1.0.3	Change to include headers from relevant	#
-#				-dev projects.				#
-# 01/05/2018	MG	1.0.4	Add libswoccommon.h.			#
-# 03/06/2018	MG	1.0.5	Add bstree.h				#
-# 17/06/2018	MG	1.0.6	Add mgebuffer & mgemessage candidates.	#
-# 19/05/2019	MG	1.0.7	Merge sub-projects into one.		#
-#				Remove shebang.				#
-# 10/10/2021	MG	1.0.8	Use newly internalised common header.	#
-# 08/12/2021	MG	1.0.9	Tighten SPDX tag.			#
-# 12/09/2022	MG	1.0.10	Rename mgebuffer.h			#
-#				Rename mgemessage.h			#
-#				Rename bstree.h				#
-#				Empty EXTRA_HEADERS.			#
 #									#
 #########################################################################
 

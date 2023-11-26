@@ -3,31 +3,12 @@
  *
  * Source for version functions.
  *
- * @author Copyright (C) 2015-2019, 2021  Mark Grant
+ * @author Copyright (C) 2015-2019, 2021, 2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.7 ==== 08/12/2021_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 22/06/2015	MG	1.0.1	First release.				*
- * 17/07/2016	MG	1.0.2	Move towards kernel coding style.	*
- * 17/11/2017	MG	1.0.3	Add Doxygen comments.			*
- *				Add SPDX license tags.			*
- * 05/06/2018	MG	1.0.4	Make this ChangeLog for this file only.	*
- * 24/06/2018	MG	1.0.5	Remove SOURCE_CODE define, now uses the	*
- *				AC_DEFINE'd value in config.h		*
- * 18/05/2019	MG	1.0.6	Merge sub-projects into one.		*
- * 08/12/2021	MG	1.0.7	Tighten SPDX tag.			*
- *									*
- ************************************************************************
+ * @version _v1.1.0 ==== 26/11/2023_
  */
 
 #include <config.h>
@@ -70,4 +51,3 @@ void swocserver_print_src_version(void)
 	printf("%s %s %s", "swocserver Source version -",
 	       SWOCSERVER_SOURCE_VERSION, "\n");
 }
-

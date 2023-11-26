@@ -1,6 +1,5 @@
 #########################################################################
 #									#
-# Script ID: ./configure.ac						#
 # Author: Copyright (C) 2015-2023  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
@@ -48,7 +47,6 @@
 #	Used to provide systemd setup.					#
 #									#
 # Layout: (Only relevant sections will exist).				#
-# ChangeLog : High level ChangeLog					#
 # SECTION  1: Initialisation & Setup					#
 # SECTION  2: Architecture, target and host checks			#
 # SECTION  3: Command line arguments					#
@@ -67,188 +65,6 @@
 #									#
 #########################################################################
 
-#########################################################################
-#									#
-# ChangeLog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 22/06/2015	MG	1.0.1	First release.				#
-# 02/07/2015	MG	1.0.2	Remove redundant c++ compiler check.	#
-# 06/07/2015	MG	1.0.3	Make libconffile pkg-config check	#
-#				display name more meaningful.		#
-# 12/07/2015	MG	1.0.4	Change to use libmgesysutils.		#
-# 27/09/2015	MG	1.0.5	Add check for txt2manwrap as part of	#
-#				changes to conform to AutoTools		#
-#				Template version 1.0.4.			#
-# 24/10/2015	MG	1.0.6	Restructure and change to conform to	#
-#				AutoTools General Template v1.0.6.	#
-# 10/05/2016	MG	1.0.7	Move header files to include directory.	#
-# 28/05/2016	MG	1.0.8	Modified following introduction of	#
-#				libswocserver library.			#
-# 13/06/2016	MG	1.0.9	Use new more unique function name in	#
-#				AC_SEARCH_LIBS libswocserver library	#
-#				check.					#
-# 20/09/2016	MG	1.0.10	Add swocserverd daemon directory.	#
-# 02/02/2017	MG	1.1.0	Add library check for libmgesysutils.	#
-#				Add header checks for above.		#
-#				Add enable-debug option.		#
-#				Add libmgec library support.		#
-#				Add header checks for mgebuffer,	#
-#				mgememory and mgemessage.		#
-#				Add library and pkg-config check for	#
-#				libswoccommon.				#
-#				Add command line controlled systemd	#
-#				service build.				#
-#				Change to empty CFLAGS here and leave	#
-#				setting to the Makefile.am's.		#
-#				Add header checks for bstree.h & 	#
-#				mge-errno.h				#
-# 19/05/2017	MG	1.1.1	Add support for temporary header	#
-#				directory.				#
-#				Add Makefiles for man 5 pages and bash.	#
-# 07/06/2017	MG	1.1.2	Add support for temporary libraries.	#
-# 09/09/2017	MG	1.1.3	Correct function name in error string	#
-#				for AC_SEARCH_LIBs on libswoccommon.	#
-# 20/10/2017	MG	1.1.4	Add search for temporary libraries and	#
-#				store result in a variable for AutoMake	#
-#				consumption.				#
-# 12/01/2018	MG	1.1.5	Add SPDX license tags to source files.	#
-# 16/01/2018	MG	1.1.6	Correct generation of config.h		#
-#				Update minimum AutoTools version.	#
-#				Update AC macros and comments.		#
-#				Change to manual package version	#
-#				numbering on adoption of project /	#
-#				sub-project structure.			#
-# 05/02/2018	NG	1.1.7	Change AC_CONFIG_SRCDIR to sensible	#
-#				value.					#
-# 12/02/2018	MG	1.1.8	Make AutoMake use posix format for tar.	#
-# 22/03/2018	MG	1.1.9	Add header check for configfile.h	#
-# 24/03/2018	MG	1.1.10	Add support for an enable-sparse CLA	#
-#				and passing a suitable variable to the	#
-#				Makefile.am's.				#
-# 10/05/2018	MG	1.1.11	Add check for stdbool.h			#
-# 24/06/2018	MG	1.1.12	Build setup.sh in AC_CONFIG_FILES.	#
-#				Build swocserverd.conf in		#
-#				AC_CONFIG_FILES.			#
-#				Build swocserverd.service in		#
-#				AC_CONFIG_FILES.			#
-#				Remove no longer needed AC_SUBST	#
-#				variable pkgversion.			#
-#				AC_DEFINE SWOCSERVER_SOURCE_VERSION for	#
-#				use in version.c via config.h		#
-#				AC_DEFINE SWOCSERVERD_SOURCE_VERSION	#
-#				for use in version.c via config.h	#
-# 27/06/2018	MG	1.1.13	Do not use AC_CONFIG_FILES for		#
-#				substitution of Installation Directory	#
-#				Variables. Reverse build of setup.sh to	#
-#				the Makefile. Reverse build of		#
-#				swocserverd.service to the Makefile.	#
-# 13/08/2018	MG	1.1.14	Add support for an enable-headercheck	#
-#				CLA and passing a suitable variable to	#
-#				the Makefile.am's.			#
-#				Build suitable CFLAGS based on compiler	#
-#				version.				#
-# 23/09/2018	MG	1.1.15	Remove check for deprecated and		#
-#				replaced bzero().			#
-# 05/10/2018	MG	1.1.16	Add program check for pkg-config.	#
-# 25/05/2019	MG	1.2.1	Re-vamp to new standard layout.		#
-#				Remove v from package version number.	#
-#				Pass bash path to scripts and Makefiles	#
-# 01/06/2019	MG	1.2.2	Add AC_CHECK_DECLS([sys_siglist]).	#
-#				Add missing function checks.		#
-#				Add missing check for sys/socket.h	#
-#				Use standard macro AC_HEADER_STDBOOL 	#
-#				in preference to AC_CHECK_HEADERS.	#
-# 06/11/2019	MG	1.2.3	Add enable-distcheckfake option.	#
-#				Add enable option descriptions in this	#
-#				file's header.				#
-# 27/03/2020	MG	1.2.4	Add check for arpa/inet.h for use with	#
-#				inet_ntop().				#
-#				Move the cli-prg source into the	#
-#				swocclient sub-directory as the		#
-#				directory hierarchy needs to be the	#
-#				same accross the source tree for	#
-#				temporary libraries to work based on	#
-#				the search in configure.ac.		#
-# 17/06/2020	MG	1.2.5	Remove check for unused program dia.	#
-#				Change libssh check to a new function	#
-#				used in this project which has replaced	#
-#				a function now deprecated.		#
-# 29/10/2020	MG	1.2.6	Replace use of sys_siglist[] with	#
-#				strsignal() which is the approved way.	#
-#				(sys_siglist has been renamed and	#
-#				hidden in more recent glibc's). Add	#
-#				check for the function.			#
-# 09/08/2021	MG	1.2.7	Add enable-atonly CLA and add support	#
-#				for doc-base.				#
-# 09/10/2021	MG	1.2.8	Capitalise MG_CFLAGS variable.		#
-#				Make use of new CPPFLAGS macro.		#
-#				Make use of new linker macro.		#
-# 11/10/2021	MG	1.2.9	Rationalise header directory to API and	#
-#				internal.				#
-# 05/11/2021	MG	1.2.10	Add Canonical target for pthread macro.	#
-#				Create debug version of flags where	#
-#				necessary.				#
-# 08/12/2021	MG	1.2.11	If git is available and we are inside a	#
-#				git tree then use git describe to add	#
-#				further package version information.	#
-#				Tighten SPDX tag.			#
-#				Add AC_COPYRIGHT macro.			#
-# 06/06/2022	MG	1.2.12	Use new namespace enhanced m4 macros.	#
-#				New CL option to enable compiler	#
-#				analyzer output.			#
-# 17/07/2022	MG	1.2.13	Remove portability restrictions for	#
-#				Automake. Allows automatic generation	#
-#				of source file depends in the doxygen	#
-#				Makefile.am				#
-# 28/07/2022	MG	1.3.1	Change doc directory to docs to support	#
-#				using GitHub Pages for hosting Doxygen	#
-#				documentation.				#
-# 01/10/2022	MG	1.3.2	Rename portability.h			#
-#				Add checks for headers in inc-tmp	#
-#				directory.				#
-#				Rename mgebuffer.h			#
-#				Rename mgemessage.h			#
-#				Rename mgememory.h			#
-#				Rename bstree.h				#
-#				Use pkginclude location.		#
-#				Do not generate pkg-config file with	#
-#				AC_CONFIG_FILES as it does not support	#
-#				extended Installation Directory		#
-#				Variables such as pkgincludedir. Use	#
-#				Makefile.am variable substitution	#
-#				instead.				#
-#				Flatten build of pkgconfig files.	#
-#				Add test headers build.			#
-#				Add run-tests for make check.		#
-#				Move all tests under tests.		#
-#				Flatten cli-lib, cli-prg, com-lib,	#
-#				srv-lib directory structures.		#
-#				Change tmplibraries to use an absolute	#
-#				path.					#
-#				Use find to get tmpheaders.		#
-#				Libraries: In tmplibraries else use	#
-#				pkg-config else use search libs.	#
-# 06/10/2022	MG	1.3.3	Separate AutoTools generated files from	#
-#				project root.				#
-#				USe AC_MSG_CHECKING where appropriate.	#
-#				Move CFLAGS init to Compiler setup	#
-#				section.				#
-# 08/10/2022	MG	1.3.4	Use AC CHECK FUNCS exclusively.		#
-# 24/03/2023	MG	1.3.5	Enforce compiler to use, in order; CC	#
-#				passed to configure, sparse if		#
-#				requested, or from a standard list.	#
-#				Add CL arguments for enable-iwyu and	#
-#				enable-scan-build and use to determine	#
-#				if program availability checks should	#
-#				be performed.				#
-#				Use pkg-config command AOT		#
-#				Pkg_Check_Modules as the macro has	#
-#				problems under some normal conditions.	#
-#									#
-#########################################################################
-
 
 #########################################
 #					#
@@ -260,7 +76,7 @@ AC_COPYRIGHT([Copyright (C) 2015-2023  Mark Grant
 	      This script is free to copy or distribute under the terms set out
 	      in the package license. See COPYING for details.])
 
-AC_REVISION($Revision: 1.3.5 $)
+AC_REVISION($Revision: 1.4.0 $)
 
 AC_PREREQ(2.69)
 

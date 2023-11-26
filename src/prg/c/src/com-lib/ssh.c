@@ -6,44 +6,12 @@
  * Covers tunnel creation and destruction including all authentication. Creates
  * a seperate thread for data relay through the tunnel.
  *
- * @author Copyright (C) 2017-2019, 2021, 2022  Mark Grant
+ * @author Copyright (C) 2017-2019, 2021-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.12 ==== 17/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 19/10/2017	MG	1.0.1	First release.				*
- * 10/11/2017	MG	1.0.2	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 15/08/2018	MG	1.0.3	Move ret_buf from stack to heap.	*
- *				Apply unused attribute to relay_data	*
- *				parameter which is only required	*
- *				because of pthread_create.		*
- * 23/09/2018	MG	1.0.4	Replace use of deprecated bzero() with	*
- *				memset().				*
- * 18/05/2019	MG	1.0.5	Merge sub-projects into one.		*
- * 01/06/2019	MG	1.0.6	Trivial type safety improvements.	*
- * 09/11/2019	MG	1.0.7	Use ssh_get_server_publickey() AOT	*
- *				deprecated ssh_get_publickey().		*
- * 10/10/2021	MG	1.0.8	Use newly internalised common header.	*
- * 14/10/2021	MG	1.0.9	Replace deprecated functions.		*
- *				Eliminate -Wsign-conversion warnings.	*
- * 08/12/2021	MG	1.0.10	Tighten SPDX tag.			*
- * 02/04/2022	MG	1.0.11	Improve error handling consistency.	*
- * 17/09/2022	MG	1.0.12	Rename mgememory.h			*
- *				Use pkginclude location.		*
- *				Correct included headers.		*
- *				Flatten directory structure.		*
- *									*
- ************************************************************************
+ * @version _v1.1.0 ==== 26/11/2023_
  */
 
 #include <libssh/libssh.h>

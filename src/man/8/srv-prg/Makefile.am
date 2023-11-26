@@ -1,7 +1,6 @@
 #########################################################################
 #									#
-# Script ID: src/man/8/srv-prg/Makefile.am				#
-# Author: Copyright (C) 2015-2019, 2021  Mark Grant			#
+# Author: Copyright (C) 2015-2019, 2021, 2023  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -9,31 +8,6 @@
 # Purpose:								#
 #	AutoMake script file to generate SWOCServer manual pages from	#
 # source.								#
-#									#
-#########################################################################
-
-#########################################################################
-#									#
-# Changelog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 22/06/2015	MG	1.0.1	First release.				#
-# 27/09/2015	MG	1.0.2	Change to conform to AutoTools Template	#
-#				version 1.0.4.				#
-# 09/01/2017	MG	1.0.3	Move to section 8 and add daemon page.	#
-# 22/04/2017	MG	1.0.4	The resulting .tmp file from the	#
-#				$(edit) was being ignored.		#
-#				Change man page source file extensions	#
-#				to .man.in				#
-# 12/01/2018	MG	1.0.5	Add SPDX license tags to source files.	#
-# 16/01/2018	MG	1.0.6	Determine the manual section from the	#
-#				target suffix. If the suffix is blank	#
-#				(foo.) or if there is no suffix (foo)	#
-#				then error out.				#
-# 19/05/2019	MG	1.0.7	Merge sub-projects into one.		#
-#				Remove shebang.				#
-# 07/12/2021	MG	1.0.8	Tighten SPDX tag.			#
 #									#
 #########################################################################
 

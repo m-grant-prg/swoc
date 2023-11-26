@@ -1,7 +1,6 @@
 #########################################################################
 #									#
-# Script ID: src/prg/c/inc/swoc/Makefile.am				#
-# Author: Copyright (C) 2021, 2022  Mark Grant				#
+# Author: Copyright (C) 2021-2023  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -11,18 +10,6 @@
 #									#
 #########################################################################
 
-#########################################################################
-#									#
-# Changelog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 11/10/2021	MG	1.0.1	First release.				#
-# 08/12/2021	MG	1.0.2	Tighten SPDX tag.			#
-# 17/09/2022	MG	1.0.3	Install in pkginclude directory.	#
-#				Combine api and internal headers.	#
-#									#
-#########################################################################
 
 pkginclude_HEADERS = libswocclient.h libswocserver.h
 

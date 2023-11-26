@@ -3,43 +3,12 @@
  *
  * Internal header file for Server Wait on Client common library.
  *
- * @author Copyright (C) 2017-2022  Mark Grant
+ * @author Copyright (C) 2017-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.3 ==== 17/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 24/10/2017	MG	1.0.1	This ChangeLog introduced.		*
- * 29/10/2017	MG	1.0.2	Move port / socket mapping struct to	*
- *				swocserverd.h.				*
- * 10/11/2017	MG	1.0.3	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 07/03/2018	MG	1.0.4	Remove redundant global variable portno	*
- * 01/05/2018	MG	1.0.5	Add support for blocked clients list.	*
- * 10/05/2018	MG	1.0.6	Add support for server list of blocked	*
- *				clients.				*
- *				Improve function name consistency,	*
- *				unlock -> release.			*
- *				Add support for server blocking.	*
- * 15/08/2018	MG	1.0.7	Change parameter name to prevent shadow.*
- * 18/05/2019	MG	1.0.8	Merge sub-projects into one.		*
- * 15/03/2020	MG	1.0.9	Add swocid request type.		*
- * 10/10/2021	MG	1.1.0	Make file internal, tightening API.	*
- * 11/10/2021	MG	1.1.1	Move to internal directory.		*
- * 08/12/2021	MG	1.1.2	Tighten SPDX tag.			*
- * 17/09/2022	MG	1.1.3	Rename portability.h			*
- *				Rename mgemessage.h			*
- *				Use pkginclude location.		*
- *									*
- ************************************************************************
+ * @version _v1.2.0 ==== 25/11/2023_
  */
 
 #ifndef LIBSWOCCOMMON_H

@@ -3,40 +3,12 @@
  *
  * Header file for Server Wait on Clients client-side library.
  *
- * @author Copyright (C) 2016-2019, 2021, 2022  Mark Grant
+ * @author Copyright (C) 2016-2019, 2021-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.14 ==== 17/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 16/07/2016	MG	1.0.1	First version release.			*
- * 17/07/2016	MG	1.0.2	Move towards kernel coding style.	*
- * 06/01/2017	MG	1.0.3	Modify to use swocserverd daemon and	*
- *				TCP stream.				*
- * 06/02/2017	MG	1.0.4	Add pollint and wait function.		*
- * 02/10/2017	MG	1.0.5	Move validate config to common.		*
- * 11/11/2017	MG	1.0.6	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 02/02/2018	MG	1.0.7	Add number of locks parameter to wait.	*
- * 18/03/2018	MG	1.0.8	Add locks_held for use during signal	*
- *				handling, primarily in swocclient -w.	*
- * 02/05/2018	MG	1.0.9	Add support for client block list.	*
- * 18/05/2018	MG	1.0.10	Add show server block status.		*
- * 18/05/2019	MG	1.0.11	Merge sub-projects into one.		*
- * 11/10/2021	MG	1.0.12	Move to inc directory.			*
- * 08/12/2021	MG	1.0.13	Tighten SPDX tag.			*
- * 17/09/2022	MG	1.0.14	Rename portability.h			*
- *				Use pkginclude location.		*
- *									*
- ************************************************************************
+ * @version _v1.1.0 ==== 25/11/2023_
  */
 
 #ifndef LIBSWOCCLIENT_H

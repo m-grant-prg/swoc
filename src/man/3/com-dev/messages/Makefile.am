@@ -1,7 +1,6 @@
 #########################################################################
 #									#
-# Script ID: src/man/3/com-dev/messages/Makefile.am			#
-# Author: Copyright (C) 2016-2019, 2021  Mark Grant			#
+# Author: Copyright (C) 2016-2019, 2021, 2023  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -9,27 +8,6 @@
 # Purpose:								#
 #	AutoMake script file to generate libswoccommon manual pages	#
 # from source.								#
-#									#
-#########################################################################
-
-#########################################################################
-#									#
-# Changelog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 20/12/2016	MG	1.0.1	Initial release.			#
-# 23/04/2017	MG	1.0.2	Correct $(edit) output was being	#
-#				ignored.				#
-#				Rename source file extensions .man.in	#
-# 12/01/2018	MG	1.0.3	Add SPDX license tags to source files.	#
-# 14/01/2018	MG	1.0.4	Determine the manual section from the	#
-#				target suffix. If the suffix is blank	#
-#				(foo.) or if there is no suffix (foo)	#
-#				then error out.				#
-# 19/05/2019	MG	1.0.5	Merge sub-projects into one.		#
-#				Remove shebang.				#
-# 07/12/2021	MG	1.0.6	Tighten SPDX tag.			#
 #									#
 #########################################################################
 

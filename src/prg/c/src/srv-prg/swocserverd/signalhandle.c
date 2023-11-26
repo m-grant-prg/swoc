@@ -15,36 +15,12 @@
  * > SIGCONT\n
  * > SIGTSTP (Ctrl-Z)
  *
- * @author Copyright (C) 2016-2022  Mark Grant
+ * @author Copyright (C) 2016-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.9 ==== 17/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 19/11/2016	MG	1.0.1	First release.				*
- * 17/02/2017	MG	1.0.2	Initialise signal mask before use.	*
- * 18/11/2017	MG	1.0.3	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 03/06/2018	MG	1.0.4	Use standard signal handling method.	*
- * 25/08/2018	MG	1.0.5	Add support for normal daemon reload	*
- *				config file on receipt of SIGHUP.	*
- * 18/05/2019	MG	1.0.6	Merge sub-projects into one.		*
- * 29/10/2020	MG	1.0.7	Replace use of sys_siglist[] with	*
- *				strsignal() which is the approved way.	*
- *				(sys_siglist has been renamed and	*
- *				hidden in more recent glibc's).		*
- * 08/12/2021	MG	1.0.8	Tighten SPDX tag.			*
- * 17/09/2022	MG	1.0.9	Correct included headers.		*
- *									*
- ************************************************************************
+ * @version _v1.1.0 ==== 26/11/2023_
  */
 
 #include <signal.h>

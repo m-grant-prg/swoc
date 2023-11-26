@@ -3,76 +3,12 @@
  *
  * Functions to process server lock flag options.
  *
- * @author Copyright (C) 2016-2019, 2021, 2022  Mark Grant
+ * @author Copyright (C) 2016-2019, 2021-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.17 ==== 17/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 25/05/2016	MG	1.0.1	First release.Separated out from	*
- *				swocserver-c package.			*
- * 12/06/2016	MG	1.0.2	Make publicly visible function names	*
- *				more unique.				*
- * 16/07/2016	MG	1.0.3	Move towards kernel coding style.	*
- * 17/07/2016	MG	1.0.4	Further coding style changes.		*
- * 06/05/2017	MG	1.1.0	Convert from NFS 'file as a flag'	*
- *				semaphore to TCP socket messaging to	*
- *				new server daemon.			*
- *				Migrate to use of mge_errno error	*
- *				handling from libmgec.			*
- *				Print the number of clients with locks	*
- *				in sws_show_status().			*
- * 12/09/2017	MG	1.1.1	Change sws_force_unlock() to		*
- *				sws_unlock().				*
- * 15/09/2017	MG	1.1.2	Change refernces to ssl to tls.		*
- * 12/11/2017	MG	1.1.3	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 01/02/2018	MG	1.1.4	Daemon return message now standardised.	*
- *				On error use the error number in the	*
- *				return message to populate mge_errno.	*
- * 28/03/2018	MG	1.1.5	Ensure variables are declared before	*
- *				code, (fixes a sparse warning).		*
- * 29/03/2018	MG	1.1.6	Store the current number of clients	*
- *				holding locks during sws_server_wait()	*
- *				in a global variable. This value can be	*
- *				accessed in a handler if a signal is	*
- *				received.				*
- * 10/05/2018	MG	1.1.7	Improve function name consistency,	*
- *				unlock -> release.			*
- *				Add support for server listing blocked	*
- *				clients.				*
- *				Add client block and unblock.		*
- *				Add server block and unblock.		*
- * 05/08/2018	MG	1.1.8	Change mgemessage struct initialisation	*
- *				following field complete change to type	*
- *				bool.					*
- * 07/09/2018	MG	1.1.9	Use new mgemessage struct initialiser.	*
- * 18/05/2019	MG	1.1.10	Merge sub-projects into one.		*
- * 02/06/2019	MG	1.1.11	Add explicit cast to pollint for sign	*
- *				conversion. It has already been		*
- *				validated > 0.				*
- * 08/11/2019	MG	1.1.12	Use standard GNU ifdeffery around use	*
- *				of AC_HEADER_STDBOOL.			*
- *				Increase size of locks_held to allow	*
- *				for terminating nul.			*
- * 10/10/2021	MG	1.1.13	Use newly internalised common header.	*
- * 08/12/2021	MG	1.1.14	Tighten SPDX tag.			*
- * 05/04/2022	MG	1.1.15	Improve error handling consistency.	*
- * 11/06/2022	MG	1.1.16	Correct size of locks_held for sprintf.	*
- *				Replace sprintf with safer snprintf.	*
- * 17/09/2022	MG	1.1.17	Rename mgemessage.h			*
- *				Use pkginclude location.		*
- *				Flatten directory structure.		*
- *									*
- ************************************************************************
+ * @version _v1.2.0 ==== 26/11/2023_
  */
 
 #include <limits.h>

@@ -3,43 +3,12 @@
  *
  * Header file for Server Wait on Clients client-side program.
  *
- * @author Copyright (C) 2015-2022  Mark Grant
+ * @author Copyright (C) 2015-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.11 ==== 15/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 08/07/2015	MG	1.0.1	First release.				*
- * 09/05/2016	MG	1.0.2	Move header files to include directory.	*
- * 11/06/2016	MG	1.0.3	Modified following introduction of	*
- *				libswocclient library.			*
- * 13/06/2016	MG	1.0.4	Adopt convention of using void in empty	*
- *				function parameter lists.		*
- * 17/07/2016	MG	1.0.5	Move towards kernel coding style.	*
- * 12/11/2017	MG	1.0.6	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 22/05/2018	MG	1.0.7	Change name to internal.h and place in	*
- *				src directory.				*
- * 18/05/2019	MG	1.0.8	Merge sub-projects into one.		*
- * 27/03/2020	MG	1.0.9	Move into swocclient sub-directory as	*
- *				the directory hierarchy needs to be the	*
- *				same accross the source tree for	*
- *				temporary libraries to work based on	*
- *				the search in configure.ac.		*
- * 08/12/2021	MG	1.0.10	Tighten SPDX tag.			*
- * 15/09/2022	MG	1.0.11	Rename portability.h			*
- *				Use pkginclude location.		*
- *				Flatten directory structure.		*
- *									*
- ************************************************************************
+ * @version _v1.1.0 ==== 26/11/2023_
  */
 
 #ifndef SWOCCLIENT_INTERNAL_H

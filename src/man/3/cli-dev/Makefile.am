@@ -1,7 +1,6 @@
 #########################################################################
 #									#
-# Script ID: src/man/3/cli-dev/Makefile.am				#
-# Author: Copyright (C) 2016-2019, 2021  Mark Grant			#
+# Author: Copyright (C) 2016-2019, 2021, 2023  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -9,32 +8,6 @@
 # Purpose:								#
 #	AutoMake script file to generate libswocclient manual pages	#
 # from source.								#
-#									#
-#########################################################################
-
-#########################################################################
-#									#
-# Changelog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 08/06/2016	MG	1.0.1	Initial release.		.	#
-# 10/06/2016	MG	1.0.2	Change to new naming convention.	#
-# 06/02/2017	MG	1.0.3	Add page for new swc_client_wait	#
-#				function.				#
-# 24/04/2017	MG	1.0.4	The output of the $(edit) was being	#
-#				ignored.				#
-#				Change source file extension to .man.in	#
-# 12/01/2018	MG	1.0.5	Add SPDX license tags to source files.	#
-# 13/01/2018	MG	1.0.6	Determine the manual section from the	#
-#				target suffix. If the suffix is blank	#
-#				(foo.) or if there is no suffix (foo)	#
-#				then error out.				#
-# 02/05/2018	MG	1.0.7	Add support for client block list.	#
-# 18/05/2018	MG	1.0.8	Add swc_show_srv_block_status.3		#
-# 19/05/2019	MG	1.0.9	Merge sub-projects into one.		#
-#				Remove shebang.				#
-# 07/12/2021	MG	1.0.10	Tighten SPDX tag.			#
 #									#
 #########################################################################
 

@@ -3,63 +3,12 @@
  *
  * Command line argument processing for swocserver using getopt_long.
  *
- * @author Copyright (C) 2015-2019, 2021, 2022  Mark Grant
+ * @author Copyright (C) 2015-2019, 2021-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.11 ==== 17/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 22/06/2015	MG	1.0.1	First release.				*
- * 16/05/2016	MG	1.0.2	Add --force-unlock option.		*
- *				Make --status and --wait ignore		*
- *				directories.				*
- * 28/05/2016	MG	1.0.3	Modified following introduction of	*
- *				libswocserver library.			*
- * 13/06/2016	MG	1.0.4	Use new more unique library function	*
- *				names.					*
- * 17/07/2016	MG	1.0.5	Move towards kernel coding style.	*
- * 27/09/2016	MG	1.0.6	Further coding style changes.		*
- *				Improve in-source documentation.	*
- *				Enable cmdlineargs support for multiple	*
- *				command line programs in a single	*
- *				project.				*
- *				Simplify cmdlineargs error handling.	*
- *				Use more informative name - sws_err.	*
- * 06/05/2017	MG	1.1.0	Migrate from NFS 'file as a flag' 	*
- *				semaphore to TCP socket stream		*
- *				messaging between applications and	*
- *				daemon.					*
- *				Add end_daemon option to command line	*
- *				program.				*
- * 12/09/2017	MG	1.1.1	Change 'force unlock' to just 'unlock'.	*
- * 17/11/2017	MG	1.1.2	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 28/03/2018	MG	1.1.3	Ensure variables are declared before	*
- *				code, (fixes sparse warning).		*
- *				Replace initialising pointers to zero	*
- *				with NULL. (fixes sparse warnings).	*
- * 11/05/2018	MG	1.1.4	Improve function name consistency,	*
- *				unlock -> release.			*
- *				Add client block and unblock options.	*
- *				Add server block and unblock.		*
- * 22/05/2018	MG	1.1.5	Change from swocserver.h to internal.h	*
- * 18/05/2019	MG	1.1.6	Merge sub-projects into one.		*
- * 02/06/2019	MG	1.1.7	Remove duplicated if statements.	*
- * 11/10/2021	MG	1.1.8	Use tree-wide cmdlineargs.h.		*
- * 08/12/2021	MG	1.1.9	Tighten SPDX tag.			*
- * 05/04/2022	MG	1.1.10	Improve error handling consistency.	*
- * 17/09/2022	MG	1.1.11	Use pkginclude location.		*
- *				Correct included headers.		*
- *									*
- ************************************************************************
+ * @version _v1.2.0 ==== 26/11/2023_
  */
 
 #include <getopt.h>

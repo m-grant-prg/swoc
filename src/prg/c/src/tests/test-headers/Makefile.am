@@ -1,23 +1,12 @@
 #########################################################################
 #									#
-# Script ID: src/prg/c/src/tests/test-headers/Makefile.am		#
-# Author: Copyright (C) 2022  Mark Grant				#
+# Author: Copyright (C) 2022, 2023  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
 #	AutoMake script file to generate the headers test program.	#
-#									#
-#########################################################################
-
-#########################################################################
-#									#
-# Changelog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 13/09/2022	MG	1.0.1	First release.				#
 #									#
 #########################################################################
 

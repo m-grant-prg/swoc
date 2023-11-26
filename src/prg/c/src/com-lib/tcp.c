@@ -3,43 +3,12 @@
  *
  * TCP connection processing functions.
  *
- * @author Copyright (C) 2017-2022  Mark Grant
+ * @author Copyright (C) 2017-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.10 ==== 17/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 05/05/2017	MG	1.0.0	First release.				*
- * 15/09/2017	MG	1.0.1	Change force-unlock option to unlock.	*
- * 19/10/2017	MG	1.1.0	Add support for SSH.			*
- * 10/11/2017	MG	1.1.1	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 06/03/2018	MG	1.1.2	Another client or server comms session	*
- *				could be taking place. Therefore allow	*
- *				bind and connect 10 tries if the	*
- *				address is in use.			*
- * 15/08/2018	MG	1.1.3	Change parameter name to prevent shadow.*
- * 18/05/2019	MG	1.1.4	Merge sub-projects into one.		*
- * 16/06/2020	MG	1.1.5	listen() on a socket may race with	*
- *				other swoc invocations, so allow some	*
- *				retries if the address is in use.	*
- * 10/10/2021	MG	1.1.6	Use newly internalised common header.	*
- * 08/12/2021	MG	1.1.7	Tighten SPDX tag.			*
- * 04/04/2022	MG	1.1.8	Improve error handling consistency.	*
- * 11/06/2022	MG	1.1.9	Replace sprintf with safer snprintf.	*
- * 17/09/2022	MG	1.1.10	Use pkginclude location.		*
- *				Correct included headers.		*
- *				Flatten directory structure.		*
- *									*
- ************************************************************************
+ * @version _v1.2.0 ==== 26/11/2023_
  */
 
 #include <errno.h>

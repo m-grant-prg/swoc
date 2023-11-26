@@ -3,35 +3,12 @@
  *
  * Command line argument processing for swocserverd using getopt_long.
  *
- * @author Copyright (C) 2016-2019, 2021, 2022  Mark Grant
+ * @author Copyright (C) 2016-2019, 2021-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.10 ==== 17/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 19/11/2016	MG	1.0.1	First release.				*
- * 04/06/2017	MG	1.0.2	Tidy up unnecessary include statements.	*
- * 18/11/2017	MG	1.0.3	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 28/03/2018	MG	1.0.4	Replace initialising pointers to zero	*
- *				with NULL. (fixes sparse warnings).	*
- * 22/05/2018	MG	1.0.5	Change from swocserverd.h to internal.h	*
- * 18/05/2019	MG	1.0.6	Merge sub-projects into one.		*
- * 13/10/2021	MG	1.0.7	Eliminate a Doxygen warning.		*
- * 08/12/2021	MG	1.0.8	Tighten SPDX tag.			*
- * 05/04/2022	MG	1.0.9	Improve error handling consistency.	*
- * 17/09/2022	MG	1.0.10	Use pkginclude location.		*
- *				Correct included headers.		*
- *									*
- ************************************************************************
+ * @version _v1.1.0 ==== 26/11/2023_
  */
 
 #include <getopt.h>

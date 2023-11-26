@@ -3,52 +3,12 @@
  *
  * Header file for Server Wait on Clients server-side library.
  *
- * @author Copyright (C) 2016-2019, 2021, 2022  Mark Grant
+ * @author Copyright (C) 2016-2019, 2021-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.15 ==== 17/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 16/07/2016	MG	1.0.1	First versioned release.		*
- * 17/07/2016	MG	1.0.2	Further coding style changes.		*
- * 14/12/2016	MG	1.0.3	Changes for move from NFS share 'file	*
- *				as flag' to TCP socket implementation.	*
- *				Add server extern.			*
- *				Add common server-side validate		*
- *				prototype.				*
- *				Add new end daemon function prototype.	*
- * 13/02/2017	MG	1.0.4	Add new reload config function.		*
- * 15/05/2017	MG	1.0.5	Change validate config to swocserver-	*
- *				only, aot common with swocserverd.	*
- * 12/09/2017	MG	1.0.6	Change sws_force_unlock() to		*
- *				sws_unlock().				*
- * 15/09/2017	MG	1.0.7	Change references to ssl to tls.	*
- * 02/10/2017	MG	1.0.8	Move validate config to common.		*
- * 12/11/2017	MG	1.0.9	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 29/03/2018	MG	1.0.10	Add locks_held for use during signal	*
- *				handling, primarily in swocserver -w.	*
- * 10/05/2018	MG	1.0.11	Improve function name consistency,	*
- *				unlock -> release.			*
- *				Add support for server listing blocked	*
- *				clients.				*
- *				Add client block and unblock.		*
- *				Add server block and unblock.		*
- * 18/05/2019	MG	1.0.12	Merge sub-projects into one.		*
- * 11/10/2021	MG	1.0.13	Move to api directory.			*
- * 08/12/2021	MG	1.0.14	Tighten SPDX tag.			*
- * 17/09/2022	MG	1.0.15	Rename portability.h			*
- *				Use pkginclude location.		*
- *									*
- ************************************************************************
+ * @version _v1.1.0 ==== 25/11/2023_
  */
 
 #ifndef LIBSWOCSERVER_H

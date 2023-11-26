@@ -15,36 +15,12 @@
  * > SIGCONT\n
  * > SIGTSTP (Ctrl-Z)
  *
- * @author Copyright (C) 2015-2019, 2021, 2022  Mark Grant
+ * @author Copyright (C) 2015-2019, 2021-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.9 ==== 17/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 22/06/2015	MG	1.0.1	First release.				*
- * 13/06/2016	MG	1.0.2	Adopt convention of using void in empty	*
- *				function parameter lists.		*
- * 17/07/2016	MG	1.0.3	Move towards kernel coding style.	*
- * 17/11/2017	MG	1.0.4	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 29/03/2018	MG	1.0.5	Print clients holding locks warning.	*
- *				Code for re-raise and return exit paths.*
- *				Improve error handling.			*
- *				Improve comments.			*
- * 18/05/2019	MG	1.0.6	Merge sub-projects into one.		*
- * 13/10/2021	MG	1.0.7	Eliminate -Wunused-result warnings.	*
- * 08/12/2021	MG	1.0.8	Tighten SPDX tag.			*
- * 17/09/2022	MG	1.0.9	Correct included headers.		*
- *									*
- ************************************************************************
+ * @version _v1.1.0 ==== 26/11/2023_
  */
 
 #include <signal.h>

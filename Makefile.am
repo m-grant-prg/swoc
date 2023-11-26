@@ -1,6 +1,5 @@
 #########################################################################
 #									#
-# Script ID: ./Makefile.am						#
 # Author: Copyright (C) 2015-2023  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
@@ -9,80 +8,6 @@
 # Purpose:								#
 #	AutoMake script file to generate SWOCServer-C project from	#
 # source.								#
-#									#
-#########################################################################
-
-#########################################################################
-#									#
-# Changelog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 22/06/2015	MG	1.0.1	First release.				#
-# 24/10/2015	MG	1.0.2	Restructure and change to conform to	#
-#				AutoTools General Template v1.0.6.	#
-# 10/05/2016	MG	1.0.3	Move header files to include directory.	#
-# 28/05/2016	MG	1.0.4	Modified following libswocserver	#
-#				library introduction.			#
-# 20/09/2016	MG	1.0.5	Add swocserverd daemon directory.	#
-# 23/09/2016	MG	1.0.6	Add bash directory following move from	#
-#				libswocserver package.			#
-# 10/01/2017	MG	1.1.0	Move bash config file setup script back	#
-#				to libswocserver package as that	#
-#				library can exist without this server	#
-#				package.				#
-#				Add systemd service build. This only	#
-#				gets executed if configure is run with	#
-#				--enable-systemd=yes.	 		#
-# 19/05/2017	MG	1.1.1	Add support for temporary header	#
-#				directory.				#
-#				Add Make locations for man 5 pages and	#
-#				bash.					#
-# 07/06/2017	MG	1.1.2	Add support for temporary libraries.	#
-# 12/01/2018	MG	1.1.3	Add SPDX license tags to source files.	#
-# 16/01/2018	MG	1.1.4	Correct generation of config.h		#
-# 05/02/2018	MG	1.1.5	Remove unnecessary -I m4extra.		#
-# 26/04/2018	MG	1.1.6	Add srctarball target to build a source	#
-#				tarball in the build directory. Uses	#
-#				git archive to archive HEAD.		#
-# 08/06/2018	MG	1.1.7	Add info messages to srctarball target.	#
-# 26/10/2018	MG	1.1.8	Change srctarball target to build with	#
-#				src between package name and version in	#
-#				filename.				#
-# 19/05/2019	MG	1.1.9	Merge sub-projects into one.		#
-#				Make source tarball name == GitHub.	#
-#				Add install of standard GNU files such	#
-#				as AUTHORS etc.				#
-#				Remove shebang.				#
-# 06/11/2019	MG	1.1.10	To enable make distcheck to work, any	#
-#				hard-coded paths requiring permissions	#
-#				such as /etc or fixed locations such as	#
-#				/usr/share/java must be accommodated,	#
-#				so set the configure flags to be used	#
-#				by make distcheck.			#
-# 27/03/2020	MG	1.1.11	Move the cli-prg source into the	#
-#				swocclient sub-directory as the		#
-#				directory hierarchy needs to be the	#
-#				same accross the source tree for	#
-#				temporary libraries to work based on	#
-#				the search in configure.ac.		#
-# 14/08/2021	MG	1.1.12	Add systemd action ordering comment.	#
-#				Add doc/misc and misc to DIST.		#
-# 11/10/2021	MG	1.1.13	Rationalise header directory to API and	#
-#				internal.				#
-# 07/12/2021	MG	1.1.14	Tighten SPDX tag.			#
-# 17/07/2022	MG	1.1.15	Add doxygen target.			#
-# 28/07/2022	MG	1.2.1	Change doc directory to docs to support	#
-#				using GitHub Pages to host Doxygen	#
-#				documentation.				#
-# 17/09/2022	MG	1.2.2	Flatten build of pkgconfig files.	#
-#				Add test-headers build.			#
-#				Add run-tests for make check.		#
-#				Move all tests under tests.		#
-#				Flatten cli-lib, cli-prg, com-lib,	#
-#				srv-lib directory structures.		#
-# 11/07/2023	MG	1.2.3	Enable use of v1.1.1~rc1 type vesrion	#
-#				numbers for source tarballs.		#
 #									#
 #########################################################################
 

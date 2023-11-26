@@ -3,68 +3,12 @@
  *
  * Message processing functions common to swoc programs.
  *
- * @author Copyright (C) 2017-2022  Mark Grant
+ * @author Copyright (C) 2017-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.20 ==== 17/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 05/05/2017	MG	1.0.0	First release.				*
- * 15/09/2017	MG	1.0.1	Change force-unlock option to unlock.	*
- * 19/10/2017	MG	1.1.0	Add support for SSH.			*
- * 10/11/2017	MG	1.1.1	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 07/03/2018	MG	1.1.2	Preserve config file global variables	*
- *				unchanged. Use local variables when	*
- *				values need changing.			*
- * 01/05/2018	MG	1.1.3	Add support for client blocking list.	*
- * 10/05/2018	MG	1.1.4	Improve function name consistency,	*
- *				unlock -> release.			*
- *				Add support for server listing blocked	*
- *				clients.				*
- *				Add support for server blocking.	*
- * 17/06/2018	MG	1.1.5	libmgec/pull_msg now allows for the 	*
- *				extraction of partial messages from the	*
- *				buffer struct to the message struct, so	*
- *				eliminate the clear_msg call if the	*
- *				message after pull is incomplete.	*
- * 05/08/2018	MG	1.1.6	Correct mgebuffer struct initialisation	*
- * 17/08/2018	MG	1.1.7	Correct sizing of local serv variable.	*
- * 07/09/2018	MG	1.1.8	Use new mgebuffer struct initialiser.	*
- * 23/09/2018	MG	1.1.9	Replace use of deprecated bzero() with	*
- *				memset().				*
- * 26/05/2019	MG	1.1.10	Merge sub-projects into one.		*
- *				Cast ssize_t to size_t to avoid sign	*
- *				warning.				*
- * 01/06/2019	MG	1.1.11	Trivial improvements to type safety.	*
- * 21/03/2020	MG	1.1.12	Add support for sending an id message	*
- *				before the requested message.		*
- * 10/10/2021	MG	1.1.13	Use newly internal common header.	*
- * 08/12/2021	MG	1.1.14	Tighten SPDX tag.			*
- * 30/03/2022	MG	1.1.15	Check that the IF IP address matches	*
- *				socket IP address.			*
- * 31/03/2022	MG	1.1.16	IP address and host name can be found	*
- *				via the socket, no need to iterate over	*
- *				the interfaces.				*
- * 01/04/2022	MG	1.1.17	Improve error handling consistency.	*
- * 09/06/2022	MG	1.1.18	Add check for returned value.		*
- *				Fix strncmp on NULL buffer.		*
- * 27/08/2022	MG	1.1.19	Use host canonical name in ID check.	*
- * 17/09/2022	MG	1.1.20	Rename mgebuffer.h			*
- *				Rename mgemessage.h			*
- *				Use pkginclude location.		*
- *				Correct included headers.		*
- *				Flatten directory structure.		*
- *									*
- ************************************************************************
+ * @version _v1.2.0 ==== 26/11/2023_
  */
 
 #include <arpa/inet.h>

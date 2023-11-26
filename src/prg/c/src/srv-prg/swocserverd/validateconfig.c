@@ -3,42 +3,12 @@
  *
  * To parse and validate the config file.
  *
- * @author Copyright (C) 2017-2019, 2021, 2022  Mark Grant
+ * @author Copyright (C) 2017-2019, 2021-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.12 ==== 12/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 27/05/2017	MG	1.0.1	First release.				*
- * 03/06/2017	MG	1.0.2	Only validate and load new port number	*
- *				parameters. Not yet used in further	*
- *				processing. Still just uses one non-SSL	*
- *				port.					*
- * 04/06/2017	MG	1.0.3	Tidy up unnecessary include statements.	*
- * 09/09/2017	MG	1.0.4	Change what is done so far from SSL to	*
- *				TLS.					*
- * 29/10/2017	MG	1.0.5	Remove references to TLS. Security now	*
- *				implemented from client side via SSH	*
- *				tunnelling.				*
- * 18/11/2017	MG	1.0.6	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 28/03/2018	MG	1.0.7	Ensure variables are declared before	*
- *				code, (fixes sparse warning).		*
- * 22/05/2018	MG	1.0.8	Change from swocserverd.h to internal.h	*
- * 18/05/2019	MG	1.0.9	Merge sub-projects into one.		*
- * 02/06/2019	MG	1.0.10	Trivial type safety improvements.	*
- * 08/12/2021	MG	1.0.11	Tighten SPDX tag.			*
- * 12/09/2022	MG	1.0.12	Use pkginclude location.		*
- *									*
- ************************************************************************
+ * @version _v1.1.0 ==== 26/11/2023_
  */
 
 #include <ctype.h>

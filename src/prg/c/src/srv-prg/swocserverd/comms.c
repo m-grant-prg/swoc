@@ -3,77 +3,12 @@
  *
  * Comms functions associated with the swocserverd daemon.
  *
- * @author Copyright (C) 2017-2022  Mark Grant
+ * @author Copyright (C) 2017-2023  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.0.23 ==== 17/09/2022_
- */
-
-/* **********************************************************************
- *									*
- * Changelog								*
- *									*
- * Date		Author	Version	Description				*
- *									*
- * 04/06/2017	MG	1.0.1	First release.				*
- *				Split comms functions out of main into	*
- *				their own source file.			*
- *				Tidy up unnecessary include statements.	*
- * 07/06/2017	MG	1.0.2	Implement epoll controlled use of	*
- *				multiple ports.				*
- *				Ensure error path frees memory		*
- *				allocation.				*
- * 14/09/2017	MG	1.0.3	Change 'force unlock' to just 'unlock'.	*
- * 29/10/2017	MG	1.0.4	Remove references to TLS. Security now	*
- *				implemented from client side via SSH	*
- *				tunnelling.				*
- * 18/11/2017	MG	1.0.5	Add Doxygen comments.			*
- *				Add SPDX license tag.			*
- * 31/01/2018	MG	1.0.6	Standardise on error message daemon	*
- *				returns, now, swocserverd, ,err,9;	*
- *				where 9 is a valid mge-errno.h error	*
- *				number.					*
- * 28/03/2018	MG	1.0.7	Enforce ANSI function declarations.	*
- *				Declare variables before code, (fixes	*
- *				sparse warning).			*
- * 01/05/2018	MG	1.0.8	Add support for blocked clients list.	*
- * 10/05/2018	MG	1.0.9	Improve function name consistency,	*
- *				unlock -> release.			*
- *				Add server client block and unblock.	*
- *				Add server block and unblock.		*
- * 18/05/2018	MG	1.0.10	Add client show server block status.	*
- * 22/05/2018	MG	1.0.11	Change from swocserverd.h to internal.h	*
- * 17/06/2018	MG	1.0.12	libmgec/pull_msg now allows for the 	*
- *				extraction of partial messages from the	*
- *				buffer struct to the message struct, so	*
- *				eliminate the clear_msg call if the	*
- *				message after pull is incomplete.	*
- * 05/08/2018	MG	1.0.13	Correct mgebuffer initialisation.	*
- *				Change mgemessage initialisation after	*
- *				field complete changed to type bool.	*
- *				Add missing includes.			*
- * 07/09/2018	MG	1.0.14	Use new mgemessage struct initialiser.	*
- * 23/09/2018	MG	1.0.15	Replace use of deprecated bzero() with	*
- *				memset().				*
- * 26/05/2019	MG	1.0.16	Merge sub-projects into one.		*
- *				Cast ssize_t to size_t to avoid sign	*
- *				warning.				*
- * 08/11/2019	MG	1.0.17	Use standard GNU ifdeffery around use	*
- *				of AC_HEADER_STDBOOL.			*
- * 22/03/2020	MG	1.0.18	Add id request type.			*
- * 10/10/2021	MG	1.0.19	Use newly internalised common header.	*
- * 08/12/2021	MG	1.0.20	Tighten SPDX tag.			*
- * 10/04/2022	MG	1.0.21	Improve error handling consistency.	*
- * 11/06/2022	MG	1.0.22	Replace sprintf with safer snprintf.	*
- * 17/09/2022	MG	1.0.23	Rename mgebuffer.h			*
- *				Rename mgemessage.h			*
- *				Rename bstree.h				*
- *				Use pkginclude location.		*
- *				Correct included headers.		*
- *									*
- ************************************************************************
+ * @version _v1.1.0 ==== 26/11/2023_
  */
 
 #include <netdb.h>

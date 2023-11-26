@@ -1,7 +1,6 @@
 #########################################################################
 #									#
-# Script ID: src/man/8/cli-prg/Makefile.am				#
-# Author: Copyright (C) 2015-2019, 2021  Mark Grant			#
+# Author: Copyright (C) 2015-2019, 2021, 2023  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -9,29 +8,6 @@
 # Purpose:								#
 #	AutoMake script file to generate SWOCClient manual pages from	#
 # source.								#
-#									#
-#########################################################################
-
-#########################################################################
-#									#
-# Changelog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 08/07/2015	MG	1.0.1	First release.				#
-# 27/09/2015	MG	1.0.2	Change to conform to AutoTools Template	#
-#				version 1.0.4.				#
-# 25/04/2017	MG	1.0.3	Output from $(edit) was being ignored.	#
-#				Change source file extension to .man.in	#
-#				Move to section 8.			#
-# 12/01/2018	MG	1.0.4	Add SPDX license tags to source files.	#
-# 15/01/2018	MG	1.0.5	Determine the manual section from the	#
-#				target suffix. If the suffix is blank	#
-#				(foo.) or if there is no suffix (foo)	#
-#				then error out.				#
-# 19/05/2019	MG	1.0.6	Merge sub-projects into one.		#
-#				Remove shebang.				#
-# 07/12/2021	MG	1.0.7	Tighten SPDX tag.			#
 #									#
 #########################################################################
 
