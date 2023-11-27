@@ -22,6 +22,8 @@
 #include <libmgec/mge-errno.h>
 #include <swoc/cmdlineargs.h>
 
+static void usage(char **argv);
+
 /**
  * Process command line arguments using getopt_long.
  * On error mge_errno will be set.
@@ -42,7 +44,6 @@ int process_cla(int argc, char **argv, ...)
 	int option_index = 0;
 	int c;
 	int x;
-	char *argv_copy, *base_name;
 
 	struct option long_options[]
 		= { { "block", no_argument, NULL, 'b' },
@@ -93,29 +94,7 @@ int process_cla(int argc, char **argv, ...)
 			reset_flag->is_set = 1;
 			break;
 		case 'h':
-			argv_copy = strdup(argv[0]);
-			base_name = basename(argv_copy);
-			printf("Usage is:-\n");
-			printf("%s %s", base_name,
-			       "{-b|-i|-l|-r|-u|-s|-w[NUMLOCKS]}\n");
-			printf("%s %s", base_name, "{-h|-V}\n");
-			printf("\nUsage is:-\n");
-			printf("%s %s", base_name, "[OPTIONS]\n");
-			printf("\t-b | --block\tBlock client on server.\n");
-			printf("\t-i | --reset\tSet locks to 0 and unblock "
-			       "client on server.\n");
-			printf("\t-l | --lock\tSet client lock on server.\n");
-			printf("\t-r | --release\tRelease client lock on "
-			       "server.\n");
-			printf("\t-u | --unblock\tUnblock client on server.\n");
-			printf("\t-s | --status\tShow the locking status.\n");
-			printf("\t-V | --version\tDisplay version "
-			       "information.\n");
-			printf("\t-w[NUMLOCKS] | --wait[{ |=}NUMLOCKS]\n"
-			       "\t\t\tWait until this client has NUMLOCKS or "
-			       "fewer locks.\n"
-			       "\t\t\tIf not specified, NUMLOCKS defaults to"
-			       " 0.\n");
+			usage(argv);
 			exit(0);
 			break;
 		case 'l':
@@ -230,4 +209,31 @@ int cpyarg(char *flagarg, char *srcarg)
 		mge_errno = MGE_PARAM;
 		return -mge_errno;
 	}
+}
+
+/*
+ * Display help text.
+ */
+static void usage(char **argv)
+{
+	char *argv_copy, *base_name;
+
+	argv_copy = strdup(argv[0]);
+	base_name = basename(argv_copy);
+	printf("Usage is:-\n");
+	printf("%s %s", base_name, "{-b|-i|-l|-r|-u|-s|-w[NUMLOCKS]}\n");
+	printf("%s %s", base_name, "{-h|-V}\n");
+	printf("\nUsage is:-\n");
+	printf("%s %s", base_name, "[OPTIONS]\n");
+	printf("\t-b | --block\tBlock client on server.\n");
+	printf("\t-i | --reset\tSet locks to 0 and unblock client on"
+	       " server.\n");
+	printf("\t-l | --lock\tSet client lock on server.\n");
+	printf("\t-r | --release\tRelease client lock on server.\n");
+	printf("\t-u | --unblock\tUnblock client on server.\n");
+	printf("\t-s | --status\tShow the locking status.\n");
+	printf("\t-V | --version\tDisplay version information.\n");
+	printf("\t-w[NUMLOCKS] | --wait[{ |=}NUMLOCKS]\n"
+	       "\t\t\tWait until this client has NUMLOCKS or fewer locks.\n"
+	       "\t\t\tIf not specified, NUMLOCKS defaults to 0.\n");
 }
