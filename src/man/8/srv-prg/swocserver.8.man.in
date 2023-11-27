@@ -1,13 +1,15 @@
 NAME
-swocserver - wait for or report on client 'Server Wait On Clients' flags.
+swocserver - manage 'Server Wait On Clients' flags from a server standpoint.
 SYNOPSIS
-swocserver [OPTION]
+swocserver {-a|-bCLIENT|-c|-d|-e|-rCLIENT|-s|-uCLIENT|-w}
+swocserver {-h|-V}
+swocserver [OPTIONS]
 DESCRIPTION
 Monitors client lock flags on this server and waits until they are cleared.
 OPTIONS
 -a, --allow  unblock the server so it can accept lock requests
 
--b, --block 'Client'  block 'Client' from adding locks
+-bCLIENT, --block{ |=}CLIENT  block 'CLIENT' from adding locks and blocks
 
 -c, --reload-config  requests the daemon to reload it's config file
 
@@ -17,11 +19,12 @@ OPTIONS
 
 -h, --help  prints usage information
 
--r, --release 'Lock Name'  remove lock 'Lock Name'
+-rCLIENT, --release{ |=}CLIENT  remove 1 lock for 'CLIENT'
 
 -s, --status  reports on the status of server locking
 
--u, --unblock 'Client'  unblock 'Client' allowing them to add locks
+-uCLIENT, --unblock{ |=}CLIENT  unblock 'CLIENT' allowing it to add locks and
+blocks
 
 -V, --version  prints version information
 
@@ -44,7 +47,7 @@ Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2015-2019, 2021 Mark Grant.
+Copyright (C) 2015-2019, 2021, 2023 Mark Grant.
 .br
 License GPLv3: GNU GPL version 3 only
 .br

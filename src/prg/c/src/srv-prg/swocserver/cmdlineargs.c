@@ -12,6 +12,7 @@
  */
 
 #include <getopt.h>
+#include <libgen.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,6 +42,7 @@ int process_cla(int argc, char **argv, ...)
 	/* getopt_long stores the option index here. */
 	int option_index = 0;
 	int c;
+	char *argv_copy, *base_name;
 
 	struct option long_options[]
 		= { { "allow", no_argument, NULL, 'a' },
@@ -90,25 +92,34 @@ int process_cla(int argc, char **argv, ...)
 			end_flag->is_set = 1;
 			break;
 		case 'h':
-			printf("%s %s", argv[0], " - Help option.\n");
-			printf("\tLong and short options can be mixed on the "
-			       "command line but if an option\ntakes an "
-			       "optional argument it is best to enter "
-			       "-o\"argument\" or\n--option=argument.\n");
-			printf("-a | --allow\t\tUnblock the server.\n");
-			printf("-b | --block 'Client'\tBlock 'Client'.\n");
-			printf("-c | --reload-config\tRequest the daemon to "
+			argv_copy = strdup(argv[0]);
+			base_name = basename(argv_copy);
+			printf("Usage is:-\n");
+			printf("%s %s", base_name,
+			       "{-a|-bCLIENT|-c|-d|-e|-rCLIENT|-s|-uCLIENT"
+			       "|-w}\n");
+			printf("%s %s", base_name, "{-h|-V}\n");
+			printf("\nUsage is:-\n");
+			printf("%s %s", base_name, "[OPTIONS]\n");
+			printf("\t-a | --allow\t\tUnblock the server.\n");
+			printf("\t-bCLIENT | --block{ |=}CLIENT\n"
+			       "\t\t\t\tBlock 'CLIENT' from adding locks and"
+			       " blocks.\n");
+			printf("\t-c | --reload-config\tRequest the daemon to "
 			       "reload it's config file.\n");
-			printf("-d | --disallow\t\tBlock the server.\n");
-			printf("-e | --end-daemon\tEnd the swocserver "
+			printf("\t-d | --disallow\t\tBlock the server.\n");
+			printf("\t-e | --end-daemon\tEnd the swocserver "
 			       "daemon.\n");
-			printf("-r | --release 'Client'\tRemove the lock for "
-			       "'Client'.\n");
-			printf("-s | --status\t\tShow the locking status.\n");
-			printf("-u | --unblock 'Client'\tUnblock 'Client'.\n");
-			printf("-V | --version\t\tDisplay version "
+			printf("\t-rCLIENT | --release{ |=}CLIENT\n"
+			       "\t\t\t\tRemove the lock for 'CLIENT'.\n");
+			printf("\t-s | --status\t\tShow the locking status.\n");
+			printf("\t-uCLIENT | --unblock{ |=}CLIENT\n"
+			       "\t\t\t\tUnblock 'CLIENT' allowing locks and"
+			       " blocks.\n");
+			printf("\t-V | --version\t\tDisplay version "
 			       "information.\n");
-			printf("-w | --wait\t\tWait for all locks to clear.\n");
+			printf("\t-w | --wait\t\tWait for all locks to"
+			       " clear.\n");
 			exit(0);
 			break;
 		case 'r':
