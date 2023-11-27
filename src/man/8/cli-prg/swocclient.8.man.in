@@ -1,7 +1,9 @@
 NAME
 swocclient - manage client's 'Server Wait On Clients' flag.
 SYNOPSIS
-swocclient [OPTION]
+swocclient {-b|-i|-l|-r|-u|-s|-w[NUMLOCKS]}
+swocclient {-h|-V}
+swocclient [OPTIONS]
 DESCRIPTION
 Sets, releases, reports or waits on this client's 'Server Wait On Clients' flags
 on the server.
@@ -23,8 +25,8 @@ held and the status of blocking.
 
 -V, --version  prints version information
 
--w[NumLocks], --wait[=NumLocks]  Wait until this client has NumLocks or fewer
-locks.
+-w[NUMLOCKS], --wait[{ |=}NUMLOCKS]  Wait until this client has NumLocks or
+fewer locks.
 EXIT STATUS
 0
 if OK,
@@ -43,7 +45,7 @@ Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2015-2019, 2021 Mark Grant.
+Copyright (C) 2015-2019, 2021, 2023 Mark Grant.
 .br
 License GPLv3: GNU GPL version 3 only
 .br

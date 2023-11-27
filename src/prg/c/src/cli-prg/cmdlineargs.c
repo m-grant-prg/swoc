@@ -12,6 +12,7 @@
  */
 
 #include <getopt.h>
+#include <libgen.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,6 +42,7 @@ int process_cla(int argc, char **argv, ...)
 	int option_index = 0;
 	int c;
 	int x;
+	char *argv_copy, *base_name;
 
 	struct option long_options[]
 		= { { "block", no_argument, NULL, 'b' },
@@ -91,23 +93,29 @@ int process_cla(int argc, char **argv, ...)
 			reset_flag->is_set = 1;
 			break;
 		case 'h':
-			printf("%s %s", argv[0], " - Help option.\n");
-			printf("\tLong and short options can be mixed on the "
-			       "command line but if an option takes an "
-			       "optional argument it is best to enter "
-			       "-o\"argument\" or --option=argument.\n");
-			printf("-b | --block\tBlock client on server.\n");
-			printf("-i | --reset\tSet locks to 0 and unblock "
+			argv_copy = strdup(argv[0]);
+			base_name = basename(argv_copy);
+			printf("Usage is:-\n");
+			printf("%s %s", base_name,
+			       "{-b|-i|-l|-r|-u|-s|-w[NUMLOCKS]}\n");
+			printf("%s %s", base_name, "{-h|-V}\n");
+			printf("\nUsage is:-\n");
+			printf("%s %s", base_name, "[OPTIONS]\n");
+			printf("\t-b | --block\tBlock client on server.\n");
+			printf("\t-i | --reset\tSet locks to 0 and unblock "
 			       "client on server.\n");
-			printf("-l | --lock\tSet client lock on server.\n");
-			printf("-r | --release\tRelease client lock on "
+			printf("\t-l | --lock\tSet client lock on server.\n");
+			printf("\t-r | --release\tRelease client lock on "
 			       "server.\n");
-			printf("-u | --unblock\tUnblock client on server.\n");
-			printf("-s | --status\tShow the locking status.\n");
-			printf("-V | --version\tDisplay version "
+			printf("\t-u | --unblock\tUnblock client on server.\n");
+			printf("\t-s | --status\tShow the locking status.\n");
+			printf("\t-V | --version\tDisplay version "
 			       "information.\n");
-			printf("-w[NumLocks] | --wait[=NumLocks]\tWait until "
-			       "this client has NumLocks or fewer locks.\n");
+			printf("\t-w[NUMLOCKS] | --wait[{ |=}NUMLOCKS]\n"
+			       "\t\t\tWait until this client has NUMLOCKS or "
+			       "fewer locks.\n"
+			       "\t\t\tIf not specified, NUMLOCKS defaults to"
+			       " 0.\n");
 			exit(0);
 			break;
 		case 'l':
