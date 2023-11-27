@@ -205,10 +205,9 @@ int cpyarg(char *flagarg, char *srcarg)
 		fprintf(stderr, "Option argument '%s' too long.\n", srcarg);
 		mge_errno = MGE_PARAM;
 		return -mge_errno;
-	} else {
-		strcpy(flagarg, srcarg);
-		return 0;
 	}
+	strcpy(flagarg, srcarg);
+	return 0;
 }
 
 /*
