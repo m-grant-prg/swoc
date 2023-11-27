@@ -12,8 +12,10 @@
  */
 
 #include <getopt.h>
+#include <libgen.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "internal.h"
 #include <libmgec/mge-errno.h>
@@ -37,6 +39,7 @@ int process_cla(int argc, char **argv, ...)
 	/* getopt_long stores the option index here. */
 	int option_index = 0;
 	int c;
+	char *argv_copy, *base_name;
 
 	struct option long_options[] = { { "debug", no_argument, NULL, 'D' },
 					 { "help", no_argument, NULL, 'h' },
@@ -51,14 +54,16 @@ int process_cla(int argc, char **argv, ...)
 			break;
 
 		case 'h':
-			printf("%s %s", argv[0], " - Help option.\n");
-			printf("\tLong and short options can be mixed on the "
-			       "command line but if an option\ntakes an "
-			       "optional argument it is best to enter "
-			       "-o\"argument\" or\n--option=argument.\n");
-			printf("-D | --debug\tDon't daemonise. Output "
-			       "information to stdout and stderr.\n");
-			printf("-V | --version\tDisplay version "
+			argv_copy = strdup(argv[0]);
+			base_name = basename(argv_copy);
+			printf("Usage is:-\n");
+			printf("%s %s", base_name, "[-D]\n");
+			printf("%s %s", base_name, "{-h|-V}\n");
+			printf("\nUsage is:-\n");
+			printf("%s %s", base_name, "[OPTIONS]\n");
+			printf("\t-D | --debug\tDon't daemonise. Output "
+			       "information to stdout and \n\t\t\tstderr.\n");
+			printf("\t-V | --version\tDisplay version "
 			       "information.\n");
 			exit(0);
 			break;

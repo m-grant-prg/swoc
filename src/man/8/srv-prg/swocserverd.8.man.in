@@ -1,7 +1,9 @@
 NAME
-swocserverd - daemon providing Server Wait On Client server processing.
+swocserverd - start daemon providing Server Wait On Client server processing.
 SYNOPSIS
-swocserverd [OPTION]
+swocserverd [-D]
+swocserverd {-h|-V}
+swocserverd [OPTIONS]
 DESCRIPTION
 Daemon to respond to client (swocclient) and server (swocserver) requests.
 OPTIONS
@@ -27,7 +29,7 @@ Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2017-2019, 2021 Mark Grant.
+Copyright (C) 2017-2019, 2021, 2023 Mark Grant.
 .br
 License GPLv3: GNU GPL version 3 only
 .br
