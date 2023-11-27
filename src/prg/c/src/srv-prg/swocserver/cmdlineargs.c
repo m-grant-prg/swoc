@@ -22,6 +22,8 @@
 #include <libmgec/mge-errno.h>
 #include <swoc/cmdlineargs.h>
 
+static void usage(char **argv);
+
 /**
  * Process command line arguments using getopt_long.
  * On error mge_errno will be set.
@@ -42,7 +44,6 @@ int process_cla(int argc, char **argv, ...)
 	/* getopt_long stores the option index here. */
 	int option_index = 0;
 	int c;
-	char *argv_copy, *base_name;
 
 	struct option long_options[]
 		= { { "allow", no_argument, NULL, 'a' },
@@ -92,34 +93,7 @@ int process_cla(int argc, char **argv, ...)
 			end_flag->is_set = 1;
 			break;
 		case 'h':
-			argv_copy = strdup(argv[0]);
-			base_name = basename(argv_copy);
-			printf("Usage is:-\n");
-			printf("%s %s", base_name,
-			       "{-a|-bCLIENT|-c|-d|-e|-rCLIENT|-s|-uCLIENT"
-			       "|-w}\n");
-			printf("%s %s", base_name, "{-h|-V}\n");
-			printf("\nUsage is:-\n");
-			printf("%s %s", base_name, "[OPTIONS]\n");
-			printf("\t-a | --allow\t\tUnblock the server.\n");
-			printf("\t-bCLIENT | --block{ |=}CLIENT\n"
-			       "\t\t\t\tBlock 'CLIENT' from adding locks and"
-			       " blocks.\n");
-			printf("\t-c | --reload-config\tRequest the daemon to "
-			       "reload it's config file.\n");
-			printf("\t-d | --disallow\t\tBlock the server.\n");
-			printf("\t-e | --end-daemon\tEnd the swocserver "
-			       "daemon.\n");
-			printf("\t-rCLIENT | --release{ |=}CLIENT\n"
-			       "\t\t\t\tRemove the lock for 'CLIENT'.\n");
-			printf("\t-s | --status\t\tShow the locking status.\n");
-			printf("\t-uCLIENT | --unblock{ |=}CLIENT\n"
-			       "\t\t\t\tUnblock 'CLIENT' allowing locks and"
-			       " blocks.\n");
-			printf("\t-V | --version\t\tDisplay version "
-			       "information.\n");
-			printf("\t-w | --wait\t\tWait for all locks to"
-			       " clear.\n");
+			usage(argv);
 			exit(0);
 			break;
 		case 'r':
@@ -284,4 +258,36 @@ int cpyarg(char *flagarg, char *srcarg)
 		mge_errno = MGE_PARAM;
 		return -mge_errno;
 	}
+}
+
+/*
+ * Display help text.
+ */
+static void usage(char **argv)
+{
+	char *argv_copy, *base_name;
+
+	argv_copy = strdup(argv[0]);
+	base_name = basename(argv_copy);
+	printf("Usage is:-\n");
+	printf("%s %s", base_name,
+	       "{-a|-bCLIENT|-c|-d|-e|-rCLIENT|-s|-uCLIENT"
+	       "|-w}\n");
+	printf("%s %s", base_name, "{-h|-V}\n");
+	printf("\nUsage is:-\n");
+	printf("%s %s", base_name, "[OPTIONS]\n");
+	printf("\t-a | --allow\t\tUnblock the server.\n");
+	printf("\t-bCLIENT | --block{ |=}CLIENT\n"
+	       "\t\t\t\tBlock 'CLIENT' from adding locks and blocks.\n");
+	printf("\t-c | --reload-config\tRequest the daemon to reload it's"
+	       " config file.\n");
+	printf("\t-d | --disallow\t\tBlock the server.\n");
+	printf("\t-e | --end-daemon\tEnd the swocserver daemon.\n");
+	printf("\t-rCLIENT | --release{ |=}CLIENT\n"
+	       "\t\t\t\tRemove the lock for 'CLIENT'.\n");
+	printf("\t-s | --status\t\tShow the locking status.\n");
+	printf("\t-uCLIENT | --unblock{ |=}CLIENT\n"
+	       "\t\t\t\tUnblock 'CLIENT' allowing locks and blocks.\n");
+	printf("\t-V | --version\t\tDisplay version information.\n");
+	printf("\t-w | --wait\t\tWait for all locks to clear.\n");
 }
