@@ -250,13 +250,13 @@ int process_cla(int argc, char **argv, ...)
  */
 int cpyarg(char *flagarg, char *srcarg)
 {
-	if (ARG_BUF > strlen(srcarg)) {
-		strcpy(flagarg, srcarg);
-		return 0;
-	} else {
+	if (ARG_BUF <= strlen(srcarg)) {
 		fprintf(stderr, "Option argument '%s' too long.\n", srcarg);
 		mge_errno = MGE_PARAM;
 		return -mge_errno;
+	} else {
+		strcpy(flagarg, srcarg);
+		return 0;
 	}
 }
 
