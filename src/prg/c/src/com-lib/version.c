@@ -21,7 +21,7 @@
  * Get the git-describe based package version.
  * @return The package version string.
  */
-char *libswoccommon_get_pkg_version(void)
+__attribute__((const)) const char *libswoccommon_get_pkg_version(void)
 {
 	return PACKAGE_VERSION;
 }
@@ -30,7 +30,7 @@ char *libswoccommon_get_pkg_version(void)
  * Get the source version.
  * @return The source version string.
  */
-char *libswoccommon_get_src_version(void)
+__attribute__((const)) const char *libswoccommon_get_src_version(void)
 {
 	return COMMON_SOURCE_VERSION;
 }

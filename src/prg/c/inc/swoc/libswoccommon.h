@@ -90,9 +90,9 @@ int open_ssh_tunnel(void);
 
 int close_ssh_tunnel(void);
 
-char *libswoccommon_get_pkg_version(void);
+__attribute__((const)) const char *libswoccommon_get_pkg_version(void);
 
-char *libswoccommon_get_src_version(void);
+__attribute__((const)) const char *libswoccommon_get_src_version(void);
 
 void libswoccommon_print_pkg_version(void);
 
