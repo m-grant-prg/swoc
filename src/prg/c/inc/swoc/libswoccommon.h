@@ -81,10 +81,11 @@ int close_sock(const int *sockfd);
 void parse_msg(struct mgemessage *msg, enum msg_arguments *msg_args,
 	       enum msg_source *msg_src, enum msg_request *msg_req);
 
-int send_outgoing_msg(char *outgoing_msg, size_t outgoing_msg_length,
+int send_outgoing_msg(const char *outgoing_msg, size_t outgoing_msg_length,
 		      int *newsockfd);
 
-int exch_msg(char *outgoing_msg, size_t om_length, struct mgemessage *msg);
+int exch_msg(const char *outgoing_msg, size_t om_length,
+	     struct mgemessage *msg);
 
 int open_ssh_tunnel(void);
 

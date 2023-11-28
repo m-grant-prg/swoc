@@ -36,9 +36,9 @@ int swc_client_wait(char *cnumlocks);
 
 int swc_reset(void);
 
-char *libswocclient_get_pkg_version(void);
+__attribute__((const)) const char *libswocclient_get_pkg_version(void);
 
-char *libswocclient_get_src_version(void);
+__attribute__((const)) const char *libswocclient_get_src_version(void);
 
 void libswocclient_print_pkg_version(void);
 

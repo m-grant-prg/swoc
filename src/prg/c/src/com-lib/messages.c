@@ -29,7 +29,7 @@
 #include <swoc/libswoccommon.h>
 
 static int get_reply_msg(int sockfd, struct mgemessage *recv_msg);
-static int host_id(int sockfd, char *orig_outgoing_msg);
+static int host_id(int sockfd, const char *orig_outgoing_msg);
 static int get_host_name_ip(int sock_fd, char *host_name,
 			    socklen_t host_name_size, char *host_ip,
 			    socklen_t host_ip_size);
@@ -102,7 +102,7 @@ void parse_msg(struct mgemessage *msg, enum msg_arguments *msg_args,
  * @param newsockfd The socket file descriptor.
  * @return 0 on success, < zero on error.
  */
-int send_outgoing_msg(char *outgoing_msg, size_t outgoing_msg_length,
+int send_outgoing_msg(const char *outgoing_msg, size_t outgoing_msg_length,
 		      int *newsockfd)
 {
 	ssize_t n;
@@ -129,7 +129,7 @@ int send_outgoing_msg(char *outgoing_msg, size_t outgoing_msg_length,
  * @param msg The received message.
  * @return 0 on success, < zero on error.
  */
-int exch_msg(char *outgoing_msg, size_t om_length, struct mgemessage *msg)
+int exch_msg(const char *outgoing_msg, size_t om_length, struct mgemessage *msg)
 {
 	int res;
 	int sockfd;
@@ -250,7 +250,7 @@ static int get_reply_msg(int sockfd, struct mgemessage *recv_msg)
  * @param orig_outgoing_msg The original (main) outgoing message.
  * @return 0 on success, < zero on error.
  */
-static int host_id(int sockfd, char *orig_outgoing_msg)
+static int host_id(int sockfd, const char *orig_outgoing_msg)
 {
 	char host_name[_POSIX_HOST_NAME_MAX];
 	char host_ip[INET6_ADDRSTRLEN];

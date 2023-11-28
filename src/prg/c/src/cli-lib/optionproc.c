@@ -58,7 +58,7 @@ int swc_show_status(void)
 	int ret;
 	long int x;
 	char *end;
-	char *outgoing_msg = "swocclient,status;";
+	const char *outgoing_msg = "swocclient,status;";
 	size_t om_length = strlen(outgoing_msg);
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
@@ -110,7 +110,7 @@ int swc_show_srv_block_status(void)
 	int ret;
 	long int x;
 	char *end;
-	char *out_msg = "swocclient,blockstatus;";
+	const char *out_msg = "swocclient,blockstatus;";
 	size_t om_length = strlen(out_msg);
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
@@ -161,7 +161,7 @@ int swc_block(void)
 	int ret;
 	long int x;
 	char *end;
-	char *outgoing_msg = "swocclient,block;";
+	const char *outgoing_msg = "swocclient,block;";
 	size_t om_length = strlen(outgoing_msg);
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
@@ -210,7 +210,7 @@ int swc_unblock(void)
 	int ret;
 	long int x;
 	char *end;
-	char *outgoing_msg = "swocclient,unblock;";
+	const char *outgoing_msg = "swocclient,unblock;";
 	size_t om_length = strlen(outgoing_msg);
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
@@ -259,7 +259,7 @@ int swc_set_lock(void)
 	int ret;
 	long int x;
 	char *end;
-	char *outgoing_msg = "swocclient,lock;";
+	const char *outgoing_msg = "swocclient,lock;";
 	size_t om_length = strlen(outgoing_msg);
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
@@ -308,7 +308,7 @@ int swc_rel_lock(void)
 	int ret;
 	long int x;
 	char *end;
-	char *outgoing_msg = "swocclient,release;";
+	const char *outgoing_msg = "swocclient,release;";
 	size_t om_length = strlen(outgoing_msg);
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
@@ -362,7 +362,7 @@ int swc_client_wait(char *cnumlocks)
 	long int x;
 	char *end;
 	long int locks, numlocks;
-	char *outgoing_msg = "swocclient,status;";
+	const char *outgoing_msg = "swocclient,status;";
 	size_t om_length = strlen(outgoing_msg);
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
@@ -440,7 +440,7 @@ int swc_reset(void)
 	int ret;
 	long int x;
 	char *end;
-	char *outgoing_msg = "swocclient,reset;";
+	const char *outgoing_msg = "swocclient,reset;";
 	size_t om_length = strlen(outgoing_msg);
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
