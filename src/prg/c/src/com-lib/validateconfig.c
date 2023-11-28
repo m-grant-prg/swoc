@@ -51,7 +51,7 @@ int swcom_validate_config(void)
 {
 	int swscom_err = 0;
 	/* Expand config file full path. */
-	char *configfile = SYSCONFDIR "/swoc.conf";
+	const char *configfile = SYSCONFDIR "/swoc.conf";
 	struct confsection *psections;
 
 	/* Set up config file parameters. */
