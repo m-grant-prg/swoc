@@ -25,7 +25,7 @@ int main(void)
 {
 	int prog_error = 0;
 	int recv_socket, send_socket;
-	char *srv = "localhost";
+	const char *srv = "localhost";
 	int portno = 62525;
 
 	printf("Recv socket.\n");

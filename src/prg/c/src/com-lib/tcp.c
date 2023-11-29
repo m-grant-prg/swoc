@@ -69,7 +69,7 @@ int prep_recv_sock(int *sockfd, int *portno)
  * @param srv The server name.
  * @return 0 on success, < zero on failure.
  */
-int init_conn(int *sockfd, int *portno, char *srv)
+int init_conn(int *sockfd, int *portno, const char *srv)
 {
 	struct addrinfo hints;
 	enum comms_mode mode = send_mode;
@@ -97,7 +97,7 @@ int init_conn(int *sockfd, int *portno, char *srv)
  * @param mode send_mode or recv_mode.
  * @return 0 on success, < zero on failure.
  */
-int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
+int est_connect(int *sfd, const char *serv, int *portno, struct addrinfo *hints,
 		enum comms_mode *mode)
 {
 	struct addrinfo *result, *rp;

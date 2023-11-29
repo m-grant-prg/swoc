@@ -69,9 +69,9 @@ int swcom_validate_config(void);
 
 int prep_recv_sock(int *sockfd, int *portno);
 
-int init_conn(int *sockfd, int *portno, char *srv);
+int init_conn(int *sockfd, int *portno, const char *srv);
 
-int est_connect(int *sfd, char *serv, int *portno, struct addrinfo *hints,
+int est_connect(int *sfd, const char *serv, int *portno, struct addrinfo *hints,
 		enum comms_mode *mode);
 
 int listen_sock(const int *sfd);
