@@ -18,9 +18,9 @@
 
 BEGIN_C_DECLS
 
-char *swocclient_get_pkg_version(void);
+__attribute__((const)) const char *swocclient_get_pkg_version(void);
 
-char *swocclient_get_src_version(void);
+__attribute__((const)) const char *swocclient_get_src_version(void);
 
 void swocclient_print_pkg_version(void);
 
