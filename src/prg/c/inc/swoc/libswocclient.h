@@ -32,7 +32,7 @@ int swc_set_lock(void);
 
 int swc_rel_lock(void);
 
-int swc_client_wait(char *cnumlocks);
+int swc_client_wait(const char *cnumlocks);
 
 int swc_reset(void);
 

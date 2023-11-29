@@ -356,7 +356,7 @@ int swc_rel_lock(void)
  * must be 0 or 1.
  * @return 0 on success, < zero on failure.
  */
-int swc_client_wait(char *cnumlocks)
+int swc_client_wait(const char *cnumlocks)
 {
 	int ret;
 	long int x;
