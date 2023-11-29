@@ -42,9 +42,9 @@ int sws_end_daemon(void);
 
 int sws_reload_config(void);
 
-char *libswocserver_get_pkg_version(void);
+__attribute__((const)) const char *libswocserver_get_pkg_version(void);
 
-char *libswocserver_get_src_version(void);
+__attribute__((const)) const char *libswocserver_get_src_version(void);
 
 void libswocserver_print_pkg_version(void);
 
