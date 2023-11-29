@@ -25,7 +25,7 @@
 int main(void)
 {
 	int prog_error = 0;
-	char *outgoing_msg = "swocserver,status;";
+	const char *outgoing_msg = "swocserver,status;";
 	size_t om_length = strlen(outgoing_msg);
 	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
 	struct mgemessage *msg = &msg1;
