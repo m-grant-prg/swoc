@@ -20,7 +20,7 @@
  * Get the git-describe based package version.
  * @return The package version string.
  */
-char *swocserver_get_pkg_version(void)
+__attribute__((const)) const char *swocserver_get_pkg_version(void)
 {
 	return PACKAGE_VERSION;
 }
@@ -29,7 +29,7 @@ char *swocserver_get_pkg_version(void)
  * Get the source version.
  * @return The source version string.
  */
-char *swocserver_get_src_version(void)
+__attribute__((const)) const char *swocserver_get_src_version(void)
 {
 	return SWOCSERVER_SOURCE_VERSION;
 }

@@ -105,9 +105,9 @@ int cli_reset_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
 void id_req(struct mgemessage *msg, enum msg_arguments *msg_args);
 
-char *swocserverd_get_pkg_version(void);
+__attribute__((const)) const char *swocserverd_get_pkg_version(void);
 
-char *swocserverd_get_src_version(void);
+__attribute__((const)) const char *swocserverd_get_src_version(void);
 
 void swocserverd_print_pkg_version(void);
 

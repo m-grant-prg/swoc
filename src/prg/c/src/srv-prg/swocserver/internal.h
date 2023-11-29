@@ -21,9 +21,9 @@ BEGIN_C_DECLS
 
 extern int sws_err;
 
-char *swocserver_get_pkg_version(void);
+__attribute__((const)) const char *swocserver_get_pkg_version(void);
 
-char *swocserver_get_src_version(void);
+__attribute__((const)) const char *swocserver_get_src_version(void);
 
 void swocserver_print_pkg_version(void);
 

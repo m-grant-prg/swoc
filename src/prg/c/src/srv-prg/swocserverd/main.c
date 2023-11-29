@@ -70,7 +70,7 @@ static int csscmp(const struct comm_spec *first, const struct comm_spec *last);
  */
 int main(int argc, char **argv)
 {
-	char *pidfile = RUNSTATEDIR "/swocserverd.pid";
+	const char *pidfile = RUNSTATEDIR "/swocserverd.pid";
 	FILE *fp;
 
 	client[0] = '\0';
@@ -186,7 +186,7 @@ b4_cli_locks:
  */
 static void daemonise(void)
 {
-	char *pidfile = RUNSTATEDIR "/swocserverd.pid";
+	const char *pidfile = RUNSTATEDIR "/swocserverd.pid";
 	pid_t pid, sid;
 	char spid[256];
 	FILE *fp;

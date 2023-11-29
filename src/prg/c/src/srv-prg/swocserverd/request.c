@@ -147,7 +147,7 @@ int srv_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 	char *out_msg, *t_out_msg = NULL;
 	size_t out_msg_size = 30; /* Large enough for an error message. */
 	char tmp_msg[_POSIX_HOST_NAME_MAX + 100] = "";
-	char *client_lu = "";
+	const char *client_lu = "";
 	int counter, ret;
 
 	if (msg->argc > 2) {
@@ -214,7 +214,7 @@ int srv_cli_blocklist_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 	char *out_msg, *t_out_msg = NULL;
 	size_t out_msg_size = 30;
 	char tmp_msg[_POSIX_HOST_NAME_MAX + 100] = "";
-	char *client_lu = "";
+	const char *client_lu = "";
 	int ret;
 
 	if (msg->argc > 2) {

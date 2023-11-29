@@ -34,7 +34,7 @@ static int validateportnos(const struct confsection *ps);
 int swsd_validate_config(void)
 {
 	/* Expand config file full path. */
-	char *configfile = SYSCONFDIR "/swocserverd.conf";
+	const char *configfile = SYSCONFDIR "/swocserverd.conf";
 	struct confsection *psections;
 	int nsections;
 
