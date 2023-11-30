@@ -371,7 +371,7 @@ int sws_server_wait(void)
  * @param lockname Client whose lock is to be removed.
  * @return 0 on success, < zero on failure.
  */
-int sws_release(char *lockname)
+int sws_release(const char *lockname)
 {
 	int prg_err = 0;
 	long int x;
@@ -427,7 +427,7 @@ int sws_release(char *lockname)
  * @param blockname Client to block.
  * @return 0 on success, < zero on failure.
  */
-int sws_cli_block(char *blockname)
+int sws_cli_block(const char *blockname)
 {
 	int prg_err = 0;
 	long int x;
@@ -480,7 +480,7 @@ int sws_cli_block(char *blockname)
  * @param blockname Client to unblock.
  * @return 0 on success, < zero on failure.
  */
-int sws_cli_unblock(char *blockname)
+int sws_cli_unblock(const char *blockname)
 {
 	int prg_err = 0;
 	long int x;

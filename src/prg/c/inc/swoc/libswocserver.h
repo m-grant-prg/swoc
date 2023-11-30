@@ -32,11 +32,11 @@ int sws_show_cli_blocklist(void);
 
 int sws_server_wait(void);
 
-int sws_release(char *lockname);
+int sws_release(const char *lockname);
 
-int sws_cli_block(char *blockname);
+int sws_cli_block(const char *blockname);
 
-int sws_cli_unblock(char *blockname);
+int sws_cli_unblock(const char *blockname);
 
 int sws_end_daemon(void);
 
