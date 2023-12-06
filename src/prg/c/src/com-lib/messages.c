@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.2.0 ==== 26/11/2023_
+ * @version _v1.2.0 ==== 06/12/2023_
  */
 
 #include <arpa/inet.h>
@@ -20,7 +20,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
-#include <sys/types.h>
 #include <syslog.h>
 
 #include <libmgec/mge-buffer.h>
