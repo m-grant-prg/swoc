@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Author: Copyright (C) 2015-2023  Mark Grant				#
+# Author: Copyright (C) 2015-2024  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -79,7 +79,7 @@
 #					#
 #########################################
 
-AC_COPYRIGHT([Copyright (C) 2015-2023  Mark Grant
+AC_COPYRIGHT([Copyright (C) 2015-2024  Mark Grant
 	      This script is free to copy or distribute under the terms set out
 	      in the package license. See COPYING for details.])
 
