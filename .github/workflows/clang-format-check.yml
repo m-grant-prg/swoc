@@ -1,0 +1,26 @@
+#########################################################################
+#									#
+# Author: Copyright (C) 2024  Mark Grant				#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0-only					#
+#									#
+# Purpose:								#
+# Action to run clang-format to check C source coding style.            #
+#									#
+#########################################################################
+
+
+name: clang-format check
+on: [push, pull_request]
+jobs:
+  formatting-check:
+    name: Format check
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run clang-format style check
+        uses: jidicula/clang-format-action@v4.11.0
+        with:
+          clang-format-version: '14'
+
