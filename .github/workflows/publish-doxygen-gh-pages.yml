@@ -33,7 +33,7 @@ jobs:
 
       - name: Fetch latest release
         id: latest_release
-        uses: CityOfLosAngeles/fetch-latest-github-release@v2.0.3
+        uses: CityOfLosAngeles/fetch-latest-github-release@v2.0.4
 
       - name: Print versions
         run: |
