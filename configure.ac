@@ -83,7 +83,7 @@ AC_COPYRIGHT([Copyright (C) 2015-2024  Mark Grant
 	      This script is free to copy or distribute under the terms set out
 	      in the package license. See COPYING for details.])
 
-AC_REVISION($Revision: 1.4.0 $)
+AC_REVISION($Revision: 1.4.1 $)
 
 AC_PREREQ(2.69)
 
@@ -492,9 +492,9 @@ if test "x$DOXYGEN" = "xno" ; then
 fi
 
 if test "x${enable_iwyu}" = xtrue; then
-	AC_CHECK_PROG(IWYU, iwyu,yes, no)
+	AC_CHECK_PROG(IWYU, include-what-you-use, yes, no)
 	if test "x$IWYU" = "xno" ; then
-		AC_MSG_ERROR(iwyu not found)
+		AC_MSG_ERROR(include-what-you-use not found)
 	fi
 fi
 
