@@ -48,6 +48,23 @@ The bootstrap.sh script has a -g option which will perform a:-
 The gnulib files committed are updated by the repo owner from the latest
 version he has installed.
 
+\section header_naming Header File Naming Considerations
+
+\subsection internal_header_naming Internal
+Internal header files can have any name due to the current directory lookup
+of "".
+
+\subsection api_header_naming API
+If headers are installed in includedir the name should be as unique as possible
+due to the large potential for name clashes, namespacing would help.
+
+If headers are installed in pkgincludedir and a pkg-config file is supplied
+then the situation is like the above since the pkg-config file supplies the
+compiler with the Cflags of pkgincludedir. So, the compiler command line will
+have both -I${includedir} and -I${pkgincludedir} making a large pool.
+
+If headers are installed in pkgincludedir and all #includes use
+${PACKAGE}/example.h then the names can be anything.
 
 \section temporaries Temporary Headers and Libraries
 
