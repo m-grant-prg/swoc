@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['open_5fssh_5ftunnel_259',['open_ssh_tunnel',['../libswoccommon_8h.html#a6be32f1b2cbf9eb18d67a4067974ce69',1,'open_ssh_tunnel(void):&#160;ssh.c'],['../ssh_8c.html#a6be32f1b2cbf9eb18d67a4067974ce69',1,'open_ssh_tunnel(void):&#160;ssh.c']]]
+  ['main_243',['main',['../cli-prg_2main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;main.c'],['../srv-prg_2swocserver_2main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;main.c'],['../srv-prg_2swocserverd_2main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;main.c']]]
 ];

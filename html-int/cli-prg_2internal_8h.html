@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Server Wait On Clients System - Full Internal Documentation
-   &#160;<span id="projectnumber">v1.7.0</span>
+   &#160;<span id="projectnumber">v1.7.1</span>
    </div>
    <div id="projectbrief">Server Wait On Clients System.</div>
   </td>
@@ -117,12 +117,9 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:af043bca849469833297c9baa9de843ba"><td class="memItemLeft" align="right" valign="top">BEGIN_C_DECLS char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cli-prg_2internal_8h.html#af043bca849469833297c9baa9de843ba">swocclient_get_pkg_version</a> (void)</td></tr>
-<tr class="memdesc:af043bca849469833297c9baa9de843ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the git-describe based package version.  <a href="cli-prg_2internal_8h.html#af043bca849469833297c9baa9de843ba">More...</a><br /></td></tr>
-<tr class="separator:af043bca849469833297c9baa9de843ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac35c664513620f269ef3232b74a28d8d"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cli-prg_2internal_8h.html#ac35c664513620f269ef3232b74a28d8d">swocclient_get_src_version</a> (void)</td></tr>
-<tr class="memdesc:ac35c664513620f269ef3232b74a28d8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the source version.  <a href="cli-prg_2internal_8h.html#ac35c664513620f269ef3232b74a28d8d">More...</a><br /></td></tr>
-<tr class="separator:ac35c664513620f269ef3232b74a28d8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20da2a28310f6806412ee2833b1ff39f"><td class="memItemLeft" align="right" valign="top">BEGIN_C_DECLS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cli-prg_2internal_8h.html#a20da2a28310f6806412ee2833b1ff39f">__attribute__</a> ((const)) const char *swocclient_get_pkg_version(void)</td></tr>
+<tr class="memdesc:a20da2a28310f6806412ee2833b1ff39f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the git-describe based package version.  <a href="cli-prg_2internal_8h.html#a20da2a28310f6806412ee2833b1ff39f">More...</a><br /></td></tr>
+<tr class="separator:a20da2a28310f6806412ee2833b1ff39f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4bc24cb5f2d7e9d2fc8c5ee1ada06c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cli-prg_2internal_8h.html#af4bc24cb5f2d7e9d2fc8c5ee1ada06c9">swocclient_print_pkg_version</a> (void)</td></tr>
 <tr class="memdesc:af4bc24cb5f2d7e9d2fc8c5ee1ada06c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print the package version string to stdout.  <a href="cli-prg_2internal_8h.html#af4bc24cb5f2d7e9d2fc8c5ee1ada06c9">More...</a><br /></td></tr>
 <tr class="separator:af4bc24cb5f2d7e9d2fc8c5ee1ada06c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -132,50 +129,32 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Header file for Server Wait on Clients client-side program. </p>
-<dl class="section author"><dt>Author</dt><dd>Copyright (C) 2015-2022 Mark Grant</dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Copyright (C) 2015-2023 Mark Grant</dd></dl>
 <p>Released under the GPLv3 only.<br  />
 SPDX-License-Identifier: GPL-3.0-only</p>
-<dl class="section version"><dt>Version</dt><dd><em>v1.0.11 ==== 15/09/2022</em> </dd></dl>
+<dl class="section version"><dt>Version</dt><dd><em>v1.1.0 ==== 26/11/2023</em> </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="af043bca849469833297c9baa9de843ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af043bca849469833297c9baa9de843ba">&#9670;&nbsp;</a></span>swocclient_get_pkg_version()</h2>
+<a id="a20da2a28310f6806412ee2833b1ff39f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20da2a28310f6806412ee2833b1ff39f">&#9670;&nbsp;</a></span>__attribute__()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">BEGIN_C_DECLS char* swocclient_get_pkg_version </td>
+          <td class="memname">BEGIN_C_DECLS __attribute__ </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
+          <td class="paramtype">(const)&#160;</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Get the git-describe based package version. </p>
-<dl class="section return"><dt>Returns</dt><dd>The package version string. </dd></dl>
-
-</div>
-</div>
-<a id="ac35c664513620f269ef3232b74a28d8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac35c664513620f269ef3232b74a28d8d">&#9670;&nbsp;</a></span>swocclient_get_src_version()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">char* swocclient_get_src_version </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get the source version. </p>
-<dl class="section return"><dt>Returns</dt><dd>The source version string. </dd></dl>
+<p>Get the source version.</p>
+<dl class="section return"><dt>Returns</dt><dd>The package version string.</dd>
+<dd>
+The source version string. </dd></dl>
 
 </div>
 </div>

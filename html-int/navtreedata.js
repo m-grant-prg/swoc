@@ -37,6 +37,10 @@ var NAVTREE =
       [ "Overview", "md_docs_doxygen_src_150_autotools_internal.html#overview", null ],
       [ "Bootstrapping The Project", "md_docs_doxygen_src_150_autotools_internal.html#bootstrapping", null ],
       [ "gnulib", "md_docs_doxygen_src_150_autotools_internal.html#gnulib", null ],
+      [ "Header File Naming Considerations", "md_docs_doxygen_src_150_autotools_internal.html#header_naming", [
+        [ "Internal", "md_docs_doxygen_src_150_autotools_internal.html#internal_header_naming", null ],
+        [ "API", "md_docs_doxygen_src_150_autotools_internal.html#api_header_naming", null ]
+      ] ],
       [ "Temporary Headers and Libraries", "md_docs_doxygen_src_150_autotools_internal.html#temporaries", [
         [ "Concept", "md_docs_doxygen_src_150_autotools_internal.html#concept", null ],
         [ "Header Components", "md_docs_doxygen_src_150_autotools_internal.html#header_components", [
@@ -52,9 +56,16 @@ var NAVTREE =
         ] ]
       ] ],
       [ "Linking Internal Libraries", "md_docs_doxygen_src_150_autotools_internal.html#linking_internal_libraries", null ],
-      [ "Installation Considerations", "md_docs_doxygen_src_150_autotools_internal.html#nstallation_condiderations", [
+      [ "Installation Considerations", "md_docs_doxygen_src_150_autotools_internal.html#installation_condiderations", [
         [ "Making Libraries Available", "md_docs_doxygen_src_150_autotools_internal.html#ldconfig", null ],
         [ "doc-base Documentation", "md_docs_doxygen_src_150_autotools_internal.html#doc_base", null ]
+      ] ],
+      [ "Troubleshooting", "md_docs_doxygen_src_150_autotools_internal.html#troubleshooting", [
+        [ "Automake or Libtool Bug", "md_docs_doxygen_src_150_autotools_internal.html#automake_or_libtool_bug", [
+          [ "Affected Environments", "md_docs_doxygen_src_150_autotools_internal.html#affected_environments", null ],
+          [ "The Issue", "md_docs_doxygen_src_150_autotools_internal.html#the_issue", null ],
+          [ "Workarounds", "md_docs_doxygen_src_150_autotools_internal.html#workarounds", null ]
+        ] ]
       ] ]
     ] ],
     [ "Common Library", "md_docs_doxygen_src_200_common_lib.html", [
@@ -88,7 +99,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"request_8c.html#a21740f29abf7c6ce21c01558a37fb6f3"
+"request_8c.html#a1652b6de52491ad1f8e12c257581fd85"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

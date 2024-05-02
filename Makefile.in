@@ -16,52 +16,13 @@
 
 #########################################################################
 #									#
-# Script ID: docs/doxygen/Makefile.am					#
-# Author: Copyright (C) 2018-2022  Mark Grant				#
+# Author: Copyright (C) 2018-2023  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
 #	AutoMake script file to produce doxygen html documentation.	#
-#									#
-#########################################################################
-
-#########################################################################
-#									#
-# Changelog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 11/01/2018	MG	1.0.0	First release.				#
-# 12/02/2018	MG	1.0.1	Make tar use the Posix format for	#
-#				longer filenames.			#
-# 22/06/2018	MG	1.0.2	Remove make, (leave install), of	#
-#				swoc doc-base file as it is now	built	#
-#				using AC_CONFIG_FILES.			#
-# 27/06/2018	MG	1.0.3	Reverse 1.0.2 as AC_CONFIG_FILES cannot	#
-#				be used for the substitution of		#
-#				Installation Directory Variables.	#
-# 19/05/2019	MG	1.0.4	Merge sub-projects into one.		#
-#				Remove shebang.				#
-# 06/11/2019	MG	1.0.5	Do not register with doc-base or	#
-#				dochelp when running make distcheck.	#
-#				Reduce Doxygen output when silent	#
-#				rules are enabled.			#
-# 27/06/2020	MG	1.0.6	Split into API and full internal	#
-#				documentation.				#
-# 11/08/2021	MG	1.0.7	Only register documents if building	#
-#				with ATONLY.				#
-#				Move main source documents into src to	#
-#				enable use of EXTRA_DIST on subdir src.	#
-# 07/12/2021	MG	1.0.8	Tighten SPDX tag.			#
-# 17/07/2022	MG	1.0.9	Add a doxygen target.			#
-#				Add dependency on document sources and	#
-#				C sources.				#
-# 08/09/2022	MG	1.0.10	Remove all doxygen tarballs. Orphaned	#
-#				tarballs can be left if git describe	#
-#				changes and no make clean has been	#
-#				performed.				#
 #									#
 #########################################################################
 
@@ -246,6 +207,8 @@ ETAGS = @ETAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
 GETOPT = @GETOPT@
+GL_CFLAG_ALLOW_WARNINGS = @GL_CFLAG_ALLOW_WARNINGS@
+GL_CFLAG_GNULIB_WARNINGS = @GL_CFLAG_GNULIB_WARNINGS@
 GREP = @GREP@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
@@ -342,8 +305,10 @@ docdir = @docdir@
 dvidir = @dvidir@
 edit = @edit@
 exec_prefix = @exec_prefix@
+gl_LIBOBJDEPS = @gl_LIBOBJDEPS@
 gl_LIBOBJS = @gl_LIBOBJS@
 gl_LTLIBOBJS = @gl_LTLIBOBJS@
+gltests_LIBOBJDEPS = @gltests_LIBOBJDEPS@
 gltests_LIBOBJS = @gltests_LIBOBJS@
 gltests_LTLIBOBJS = @gltests_LTLIBOBJS@
 gltests_WITNESS = @gltests_WITNESS@

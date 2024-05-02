@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Server Wait On Clients System - Full Internal Documentation
-   &#160;<span id="projectnumber">v1.7.0</span>
+   &#160;<span id="projectnumber">v1.7.1</span>
    </div>
    <div id="projectbrief">Server Wait On Clients System.</div>
   </td>
@@ -131,12 +131,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a5c1902a68c3b13fc8fcb1840cd889dfb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tcp_8c.html#a5c1902a68c3b13fc8fcb1840cd889dfb">prep_recv_sock</a> (int *sockfd, int *portno)</td></tr>
 <tr class="memdesc:a5c1902a68c3b13fc8fcb1840cd889dfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepare TCP socket to receive connections.  <a href="tcp_8c.html#a5c1902a68c3b13fc8fcb1840cd889dfb">More...</a><br /></td></tr>
 <tr class="separator:a5c1902a68c3b13fc8fcb1840cd889dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89caea0bfb932ee6b30716791f8a7452"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tcp_8c.html#a89caea0bfb932ee6b30716791f8a7452">init_conn</a> (int *sockfd, int *portno, char *srv)</td></tr>
-<tr class="memdesc:a89caea0bfb932ee6b30716791f8a7452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiate TCP stream socket connection.  <a href="tcp_8c.html#a89caea0bfb932ee6b30716791f8a7452">More...</a><br /></td></tr>
-<tr class="separator:a89caea0bfb932ee6b30716791f8a7452"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2ef757fb2d61d186fd48e162faf7806"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tcp_8c.html#ab2ef757fb2d61d186fd48e162faf7806">est_connect</a> (int *sfd, char *serv, int *portno, struct addrinfo *hints, enum <a class="el" href="libswoccommon_8h.html#a23cc20d6137825542b8ba95fd8823166">comms_mode</a> *mode)</td></tr>
-<tr class="memdesc:ab2ef757fb2d61d186fd48e162faf7806"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establish send or receive connection.  <a href="tcp_8c.html#ab2ef757fb2d61d186fd48e162faf7806">More...</a><br /></td></tr>
-<tr class="separator:ab2ef757fb2d61d186fd48e162faf7806"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92d0cd7b20c558933fa38fc649bc6b69"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tcp_8c.html#a92d0cd7b20c558933fa38fc649bc6b69">init_conn</a> (int *sockfd, int *portno, const char *srv)</td></tr>
+<tr class="memdesc:a92d0cd7b20c558933fa38fc649bc6b69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiate TCP stream socket connection.  <a href="tcp_8c.html#a92d0cd7b20c558933fa38fc649bc6b69">More...</a><br /></td></tr>
+<tr class="separator:a92d0cd7b20c558933fa38fc649bc6b69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a585a293611d800b737668cd5f79d30b0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tcp_8c.html#a585a293611d800b737668cd5f79d30b0">est_connect</a> (int *sfd, const char *serv, int *portno, struct addrinfo *hints, enum <a class="el" href="libswoccommon_8h.html#a23cc20d6137825542b8ba95fd8823166">comms_mode</a> *mode)</td></tr>
+<tr class="memdesc:a585a293611d800b737668cd5f79d30b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establish send or receive connection.  <a href="tcp_8c.html#a585a293611d800b737668cd5f79d30b0">More...</a><br /></td></tr>
+<tr class="separator:a585a293611d800b737668cd5f79d30b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab982ee947f9bab0c4df1ed960eae1631"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tcp_8c.html#ab982ee947f9bab0c4df1ed960eae1631">listen_sock</a> (const int *sfd)</td></tr>
 <tr class="memdesc:ab982ee947f9bab0c4df1ed960eae1631"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set TCP socket to listen.  <a href="tcp_8c.html#ab982ee947f9bab0c4df1ed960eae1631">More...</a><br /></td></tr>
 <tr class="separator:ab982ee947f9bab0c4df1ed960eae1631"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,10 +146,10 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>TCP connection processing functions. </p>
-<dl class="section author"><dt>Author</dt><dd>Copyright (C) 2017-2022 Mark Grant</dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Copyright (C) 2017-2023 Mark Grant</dd></dl>
 <p>Released under the GPLv3 only.<br  />
 SPDX-License-Identifier: GPL-3.0-only</p>
-<dl class="section version"><dt>Version</dt><dd><em>v1.1.10 ==== 17/09/2022</em> </dd></dl>
+<dl class="section version"><dt>Version</dt><dd><em>v1.2.0 ==== 26/11/2023</em> </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a6372952c39dc68d7ddf5900119986544"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6372952c39dc68d7ddf5900119986544">&#9670;&nbsp;</a></span>close_sock()</h2>
@@ -178,8 +178,8 @@ SPDX-License-Identifier: GPL-3.0-only</p>
 
 </div>
 </div>
-<a id="ab2ef757fb2d61d186fd48e162faf7806"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2ef757fb2d61d186fd48e162faf7806">&#9670;&nbsp;</a></span>est_connect()</h2>
+<a id="a585a293611d800b737668cd5f79d30b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a585a293611d800b737668cd5f79d30b0">&#9670;&nbsp;</a></span>est_connect()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -193,7 +193,7 @@ SPDX-License-Identifier: GPL-3.0-only</p>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char *&#160;</td>
+          <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>serv</em>, </td>
         </tr>
         <tr>
@@ -237,8 +237,8 @@ SPDX-License-Identifier: GPL-3.0-only</p>
 
 </div>
 </div>
-<a id="a89caea0bfb932ee6b30716791f8a7452"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89caea0bfb932ee6b30716791f8a7452">&#9670;&nbsp;</a></span>init_conn()</h2>
+<a id="a92d0cd7b20c558933fa38fc649bc6b69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92d0cd7b20c558933fa38fc649bc6b69">&#9670;&nbsp;</a></span>init_conn()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -258,7 +258,7 @@ SPDX-License-Identifier: GPL-3.0-only</p>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char *&#160;</td>
+          <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>srv</em>&#160;</td>
         </tr>
         <tr>

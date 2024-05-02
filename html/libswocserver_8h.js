@@ -1,13 +1,12 @@
 var libswocserver_8h =
 [
-    [ "libswocserver_get_pkg_version", "libswocserver_8h.html#a6d0fef18b90e1e52fc4dbbacd5f6ea01", null ],
-    [ "libswocserver_get_src_version", "libswocserver_8h.html#a0369535858f44c9b8ac687392cc521b4", null ],
+    [ "__attribute__", "libswocserver_8h.html#a470968517221c8cfc4bec284e30b655f", null ],
     [ "libswocserver_print_pkg_version", "libswocserver_8h.html#a5683c388cde0e3bd3e92806e4b25b0e6", null ],
     [ "libswocserver_print_src_version", "libswocserver_8h.html#aae83df00f7911e4be22d955b6c7063d4", null ],
-    [ "sws_cli_block", "libswocserver_8h.html#ad517b6c7f3336a0e21b897a130136c6f", null ],
-    [ "sws_cli_unblock", "libswocserver_8h.html#a7ea9a5f3641d19130f07670c43705c4c", null ],
+    [ "sws_cli_block", "libswocserver_8h.html#a3f9ef05081b9f78a6f151589b4b6b5f9", null ],
+    [ "sws_cli_unblock", "libswocserver_8h.html#ac6f4cac16e0cee2ef6ebb7933c00602b", null ],
     [ "sws_end_daemon", "libswocserver_8h.html#a13921e3aa7fed294a80ddce923dd85f8", null ],
-    [ "sws_release", "libswocserver_8h.html#a93420228ed82c080ebf972c5000d8406", null ],
+    [ "sws_release", "libswocserver_8h.html#a1c16211f4582aaaaeed68c99c88e4ce1", null ],
     [ "sws_reload_config", "libswocserver_8h.html#a86caa69b3d1c1a400bb72acffc601fa2", null ],
     [ "sws_server_wait", "libswocserver_8h.html#ab097377a58114d73c98fe50061e83c78", null ],
     [ "sws_show_block_status", "libswocserver_8h.html#a346bd39b05434056a131939ebb539163", null ],

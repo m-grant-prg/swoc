@@ -16,52 +16,13 @@
 
 #########################################################################
 #									#
-# Script ID: docs/doxygen/Makefile.am					#
-# Author: Copyright (C) 2018-2022  Mark Grant				#
+# Author: Copyright (C) 2018-2023  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # Purpose:								#
 #	AutoMake script file to produce doxygen html documentation.	#
-#									#
-#########################################################################
-
-#########################################################################
-#									#
-# Changelog								#
-#									#
-# Date		Author	Version	Description				#
-#									#
-# 11/01/2018	MG	1.0.0	First release.				#
-# 12/02/2018	MG	1.0.1	Make tar use the Posix format for	#
-#				longer filenames.			#
-# 22/06/2018	MG	1.0.2	Remove make, (leave install), of	#
-#				swoc doc-base file as it is now	built	#
-#				using AC_CONFIG_FILES.			#
-# 27/06/2018	MG	1.0.3	Reverse 1.0.2 as AC_CONFIG_FILES cannot	#
-#				be used for the substitution of		#
-#				Installation Directory Variables.	#
-# 19/05/2019	MG	1.0.4	Merge sub-projects into one.		#
-#				Remove shebang.				#
-# 06/11/2019	MG	1.0.5	Do not register with doc-base or	#
-#				dochelp when running make distcheck.	#
-#				Reduce Doxygen output when silent	#
-#				rules are enabled.			#
-# 27/06/2020	MG	1.0.6	Split into API and full internal	#
-#				documentation.				#
-# 11/08/2021	MG	1.0.7	Only register documents if building	#
-#				with ATONLY.				#
-#				Move main source documents into src to	#
-#				enable use of EXTRA_DIST on subdir src.	#
-# 07/12/2021	MG	1.0.8	Tighten SPDX tag.			#
-# 17/07/2022	MG	1.0.9	Add a doxygen target.			#
-#				Add dependency on document sources and	#
-#				C sources.				#
-# 08/09/2022	MG	1.0.10	Remove all doxygen tarballs. Orphaned	#
-#				tarballs can be left if git describe	#
-#				changes and no make clean has been	#
-#				performed.				#
 #									#
 #########################################################################
 
@@ -246,6 +207,8 @@ ETAGS = etags
 EXEEXT = 
 FGREP = /usr/bin/grep -F
 GETOPT = yes
+GL_CFLAG_ALLOW_WARNINGS = -Wno-error
+GL_CFLAG_GNULIB_WARNINGS =  -Wno-cast-qual -Wno-conversion -Wno-float-equal -Wno-sign-compare -Wno-undef -Wno-unused-function -Wno-unused-parameter -Wno-float-conversion -Wimplicit-fallthrough -Wno-pedantic -Wno-sign-conversion -Wno-type-limits -Wno-unsuffixed-float-constants
 GREP = /usr/bin/grep
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
@@ -273,9 +236,9 @@ LT_SYS_LIBRARY_PATH =
 MAKEINFO = ${SHELL} '/home/runner/work/swoc/swoc/build-aux/missing' makeinfo
 MANIFEST_TOOL = :
 MG_ANALYZER_CFLAGS =  -fanalyzer
-MG_CFLAGS = -g -Wall -Wextra -fstack-protector-strong -grecord-gcc-switches -std=gnu11 -Wbad-function-cast -Wconversion -Wdeclaration-after-statement -Wformat-security -Wmissing-include-dirs -Wmissing-prototypes -Wredundant-decls -Wshadow -Wstrict-prototypes -fasynchronous-unwind-tables -Wduplicated-cond -Wnull-dereference -fstack-clash-protection -Wmultistatement-macros -O2
+MG_CFLAGS = -g -Wall -Wextra -fstack-protector-strong -grecord-gcc-switches -std=gnu11 -Wbad-function-cast -Wconversion -Wdeclaration-after-statement -Wformat-security -Wmissing-declarations -Wmissing-include-dirs -Wmissing-prototypes -Wnested-externs -Woverlength-strings -Wpointer-arith -Wredundant-decls -Wshadow -Wstrict-prototypes -Wswitch-default -Wwrite-strings -Wformat-signedness -Wlogical-op -Wsuggest-attribute=const -fasynchronous-unwind-tables -Wduplicated-cond -Wnull-dereference -Wduplicated-branches -fstack-clash-protection -Wmultistatement-macros -Wsuggest-attribute=malloc -O2
 MG_CPPFLAGS = -DHAVE_WINSOCK2_H=0 -Wdate-time -D_FORTIFY_SOURCE=2
-MG_DEBUG_CFLAGS = -g -Wall -Wextra -fstack-protector-strong -grecord-gcc-switches -std=gnu11 -Wbad-function-cast -Wconversion -Wdeclaration-after-statement -Wformat-security -Wmissing-include-dirs -Wmissing-prototypes -Wredundant-decls -Wshadow -Wstrict-prototypes -fasynchronous-unwind-tables -Wduplicated-cond -Wnull-dereference -fstack-clash-protection -Wmultistatement-macros -ggdb3 -O0
+MG_DEBUG_CFLAGS = -g -Wall -Wextra -fstack-protector-strong -grecord-gcc-switches -std=gnu11 -Wbad-function-cast -Wconversion -Wdeclaration-after-statement -Wformat-security -Wmissing-declarations -Wmissing-include-dirs -Wmissing-prototypes -Wnested-externs -Woverlength-strings -Wpointer-arith -Wredundant-decls -Wshadow -Wstrict-prototypes -Wswitch-default -Wwrite-strings -Wformat-signedness -Wlogical-op -Wsuggest-attribute=const -fasynchronous-unwind-tables -Wduplicated-cond -Wnull-dereference -Wduplicated-branches -fstack-clash-protection -Wmultistatement-macros -Wsuggest-attribute=malloc -ggdb3 -O0
 MG_DEBUG_CPPFLAGS = -DHAVE_WINSOCK2_H=0 -Wdate-time
 MG_LDFLAGS = -Wl,-z,relro
 MKDIR_P = /usr/bin/mkdir -p
@@ -288,10 +251,10 @@ OTOOL64 =
 PACKAGE = swoc
 PACKAGE_BUGREPORT = m.grant.prg@gmail.com
 PACKAGE_NAME = Server Wait On Client Package
-PACKAGE_STRING = Server Wait On Client Package 1.7.0
+PACKAGE_STRING = Server Wait On Client Package 1.7.1
 PACKAGE_TARNAME = swoc
 PACKAGE_URL = 
-PACKAGE_VERSION = 1.7.0
+PACKAGE_VERSION = 1.7.1
 PATH_SEPARATOR = :
 PKGCONFIG = yes
 PTHREAD_CC = gcc
@@ -307,7 +270,7 @@ STRIP = strip
 TAR = yes
 TXT2MAN = yes
 TXT2MANWRAP = yes
-VERSION = 1.7.0
+VERSION = 1.7.1
 abs_builddir = /home/runner/work/swoc/swoc/docs/doxygen
 abs_srcdir = /home/runner/work/swoc/swoc/docs/doxygen
 abs_top_builddir = /home/runner/work/swoc/swoc
@@ -331,10 +294,10 @@ build_vendor = pc
 builddir = .
 cli_pc_requires = libmgec
 cli_pc_requires_private = libmgesysutils libswoccommon
-client_lib_version_info = 2:3:0
+client_lib_version_info = 2:4:0
 com_pc_requires = libmgec
 com_pc_requires_private = libmgesysutils
-common_lib_version_info = 3:5:0
+common_lib_version_info = 3:6:0
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docbaseloc = ${prefix}/share/doc-base
@@ -342,8 +305,10 @@ docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 edit = /usr/bin/sed 		-e 's|@cli_pc_requires@|$(cli_pc_requires)|g' 		-e 's|@cli_pc_requires_private@|$(cli_pc_requires_private)|g' 		-e 's|@com_pc_requires@|$(com_pc_requires)|g' 		-e 's|@com_pc_requires_private@|$(com_pc_requires_private)|g' 		-e 's|@srv_pc_requires@|$(srv_pc_requires)|g' 		-e 's|@srv_pc_requires_private@|$(srv_pc_requires_private)|g' 		-e 's|@pkgversion@|$(pkgversion)|g' 		-e 's|@bashlocation@|$(BASH)|g' 		-e 's|@docbaseloc@|$(docbaseloc)|g' 		-e 's|@CC@|$(CC)|g' 		-e 's|@prefix@|$(prefix)|g' 		-e 's|@exec_prefix@|$(exec_prefix)|g' 		-e 's|@bindir@|$(bindir)|g' 		-e 's|@sbindir@|$(sbindir)|g' 		-e 's|@libexecdir@|$(libexecdir)|g' 		-e 's|@libdir@|$(libdir)|g' 		-e 's|@sysconfdir@|$(sysconfdir)|g' 		-e 's|@sharedstatedir@|$(sharedstatedir)|g' 		-e 's|@localstatedir@|$(localstatedir)|g' 		-e 's|@runstatedir@|$(runstatedir)|g' 		-e 's|@includedir@|$(includedir)|g' 		-e 's|@oldincludedir@|$(oldincludedir)|g' 		-e 's|@datarootdir@|$(datarootdir)|g' 		-e 's|@localedir@|$(localedir)|g' 		-e 's|@datadir@|$(datadir)|g' 		-e 's|@mandir@|$(mandir)|g' 		-e 's|@infodir@|$(infodir)|g' 		-e 's|@docdir@|$(docdir)|g' 		-e 's|@htmldir@|$(htmldir)|g' 		-e 's|@dvidir@|$(dvidir)|g' 		-e 's|@pdfdir@|$(pdfdir)|g' 		-e 's|@psdir@|$(psdir)|g' 		-e 's|@lispdir@|$(lispdir)|g' 		-e 's|@pkgdatadir@|$(pkgdatadir)|g' 		-e 's|@pkgincludedir@|$(pkgincludedir)|g' 		-e 's|@pkglibdir@|$(pkglibdir)|g' 		-e 's|@pkglibexecdir@|$(pkglibexecdir)|g'
 exec_prefix = ${prefix}
+gl_LIBOBJDEPS = 
 gl_LIBOBJS = 
 gl_LTLIBOBJS = 
+gltests_LIBOBJDEPS = 
 gltests_LIBOBJS = 
 gltests_LTLIBOBJS = 
 gltests_WITNESS = IN_SWOC_GNULIB_TESTS
@@ -365,13 +330,13 @@ mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-pkgversion = 1.7.0
+pkgversion = 1.7.1
 prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 runstatedir = ${localstatedir}/run
 sbindir = ${exec_prefix}/sbin
-server_lib_version_info = 3:3:0
+server_lib_version_info = 3:4:0
 sharedstatedir = ${prefix}/com
 srcdir = .
 srv_pc_requires = libmgec

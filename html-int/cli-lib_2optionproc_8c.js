@@ -6,7 +6,7 @@ var cli_lib_2optionproc_8c =
     [ "false", "cli-lib_2optionproc_8c.html#a65e9886d74aaee76545e83dd09011727", null ],
     [ "true", "cli-lib_2optionproc_8c.html#a41f9c5fb8b08eb5dc3edce4dcb37fee7", null ],
     [ "swc_block", "cli-lib_2optionproc_8c.html#ab4f43f303d2adeb9e60c13fd851c28f7", null ],
-    [ "swc_client_wait", "cli-lib_2optionproc_8c.html#a8a84c7270705bb94aa755fa48c563a32", null ],
+    [ "swc_client_wait", "cli-lib_2optionproc_8c.html#aa8cae5ee4199e26015e69095a28f1a99", null ],
     [ "swc_rel_lock", "cli-lib_2optionproc_8c.html#adf509cf55cccde625d4914acc9767e1a", null ],
     [ "swc_reset", "cli-lib_2optionproc_8c.html#a97c14b81969fc3fd9f6d757a2446c2f4", null ],
     [ "swc_set_lock", "cli-lib_2optionproc_8c.html#a85d39aaee4c270451d0f7758c6206b06", null ],

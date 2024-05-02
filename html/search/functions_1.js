@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['bind_5fports_211',['bind_ports',['../comms_8c.html#af33b969ee2cb244d721551f3f7a3e969',1,'comms.c']]]
+  ['authenticate_5fkbdint_200',['authenticate_kbdint',['../ssh_8c.html#a791de80bbc5854666bd9e66302392005',1,'ssh.c']]],
+  ['authenticate_5fpassword_201',['authenticate_password',['../ssh_8c.html#a37a2d27ccd7e1b3a78dd77cb73041a97',1,'ssh.c']]]
 ];
