@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Author: Copyright (C) 2017-2019, 2021-2023  Mark Grant		#
+# Author: Copyright (C) 2017-2019, 2021-2024  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -9,6 +9,22 @@
 #	AutoMake script file to generate com-lib test programs.		#
 #									#
 #########################################################################
+
+
+fix-messagestest.sh fix-sshtest.sh fix-tcptest.sh fix-validatetest.sh: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).in > $@.tmp
+	mv $@.tmp $@
+	chmod a+x $@
+fix-messagestest.sh: $(srcdir)/fix-messagestest.sh.in
+fix-sshtest.sh: $(srcdir)/fix-sshtest.sh.in
+fix-tcptest.sh: $(srcdir)/fix-tcptest.sh.in
+fix-validatetest.sh: $(srcdir)/fix-validatetest.sh.in
+
+check_SCRIPTS = fix-messagestest.sh fix-sshtest.sh fix-tcptest.sh \
+		fix-validatetest.sh
 
 
 if DEBUG
@@ -41,4 +57,11 @@ AM_LDFLAGS += $(LIBMGEC_LIBS)
 
 LDADD = $(tmplibraries)
 LDADD += ../../com-lib/libswoccommon.la
+
+
+EXTRA_DIST = $(srcdir)/fix-messagestest.sh.in $(srcdir)/fix-sshtest.sh.in \
+	     $(srcdir)/fix-tcptest.sh.in $(srcdir)/fix-validatetest.sh.in
+
+CLEANFILES = *.tmp fix-messagestest.sh fix-sshtest.sh fix-tcptest.sh \
+	     fix-validatetest.sh
 

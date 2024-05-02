@@ -402,7 +402,7 @@ place the following in the test program Makefile.am:-
 
 LDADD = ../libmgesysutils/libmgesysutils.la
 
-\section nstallation_condiderations Installation Considerations
+\section installation_condiderations Installation Considerations
 
 Installation instructions can be found in the README file at:-
 
@@ -431,4 +431,92 @@ to say doc-base does not like this.
 The solution is not to automatically install the doc-base documents unless
 specifically asked to do so with the --enable-atonly argument supplied to
 configure.
+
+\section troubleshooting Troubleshooting
+\subsection automake_or_libtool_bug Automake or Libtool Bug
+
+\subsubsection affected_environments Affected Environments
+The issues discussed in this document concern the packages specified below as
+supplied by Debian Bookworm:-
+
+\code{.unparsed}
+autoconf 2.71-3
+automake 1:1.16.5-1.3
+libtool 2.4.7-5
+\endcode
+
+The problems may exist in other versions and / or versions shipped with other
+distributions. This has not been investigated.
+
+\subsubsection the_issue The Issue
+If the test program Makefile.am references another library, perhaps via the
+linker flags, e.g.:-
+
+\code{.unparsed}
+AM_LDFLAGS = $(MG_LDFLAGS)
+AM_LDFLAGS += $(LIBMGEC_LIBS)
+\endcode
+
+Then LD_LIBRARY_PATH must point at the path for system-wide libraries as well
+as the local AT library path. Unfortunately a bug in Automake and / or Libtool
+causes the LD_LIBRARY_PATH variable to be set incorrectly. It is generated as:-
+
+\code{.unparsed}
+LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:/home/mgrantprg/SWDev/Projects/C/libmgesysutils/atbuild/src/prg/c/src/libmgesysutils/.libs:$LD_LIBRARY_PATH"
+\endcode
+
+This means that if the library being tested is already installed (whatever
+version), the test programs, when run through the libtool wrapper, will be run
+against that installed library with dodgy results. The line should read:-
+
+\code{.unparsed}
+LD_LIBRARY_PATH="/home/mgrantprg/SWDev/Projects/C/libmgesysutils/atbuild/src/prg/c/src/libmgesysutils/.libs:/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
+\endcode
+
+\subsubsection workarounds Workarounds
+Whilst waiting for a proper permanent fix there are 2 possible workarounds:-
+
+1) Fix the library variable.
+
+2) Run in a container which does not have the library installed.
+
+**1 ... Fix the library variable**
+
+A script named fix-<libtool-program-wrapper-name>.sh is supplied for each test.
+e.g. For a test called messagestest the script would be fix-messagestest.sh.
+
+These scripts perform a fairly basic reorganisation of the LD_LIBRARY_PATH
+variable. If the first entry starts "/usr" then this is moved to the end of the
+variable just before the ending ":$LD_LIBRARY_PATH". This process is repeated
+until the first element does not start with "/usr".
+
+So, to just run the test from the test object directory:-
+
+\code{.unparsed}
+./fix-messagestest.sh && ./messagestest
+\endcode
+
+to use gdb, run:-
+
+\code{.unparsed}
+./fix-messagestest.sh && libtool --mode=execute gdb --tui --tty=.dev.pts/<X> \
+	./messagestest
+\endcode
+
+and valgrind would be similar to the above.
+
+**2 ... Use a container**
+
+Obviously the container should not have the library installed.
+
+The upside of using a container is that the libtool wrappers should just work,
+so all that would be required would be:-
+./messagestest
+
+\code{.unparsed}
+libtool <etc etc>........
+\endcode
+
+The downside is that all the correct packages need to be installed which may mean
+significant container management.
 
