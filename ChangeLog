@@ -1,3 +1,63 @@
+2024-05-02 v1.7.1 Mark Grant <m.grant.prg@gmail.com>
+	* build(deps): bump CityOfLosAngeles/fetch-latest-github-release
+	build(deps): bump JamesIves/github-pages-deploy-action
+	build(deps): bump JamesIves/github-pages-deploy-action
+	build(deps): bump actions/checkout from 2 to 4
+dependabot[bot] (4):
+
+	git: Correct gitignore reasoning, empty vs untracked
+	git: Add gitignore to ensure directory is present even when empty
+	docs: Consolidate Header Naming Considerations in Doxygen
+	docs: Consolidate gnulib documentation in Doxygen
+	docs: Remove AT Installation document
+	at: docs: tests: com-lib: Provide fix for Automake bug
+	at: Check full iwyu command name
+	Merge pull request #4 from m-grant-prg/dependabot/github_actions/CityOfLosAngeles/fetch-latest-github-release-2.0.4
+	editors: Update local-vimrc to v1.0.5
+	git: Update mailmap to v1.0.4
+	git: Update gitignore to v1.0.12
+	git: Update gitattributes to v1.0.5
+	editors: Update editorconfig to v1.0.6
+	clang-format: Update to v1.0.4
+	at: Update Copyright for 2024
+	actions: Add clang-format coding style check action
+	com-lib: Remove unnecessary include file
+	Merge pull request #3 from m-grant-prg/dependabot/github_actions/JamesIves/github-pages-deploy-action-4.5.0
+	Bump source and library version numbers
+	m4: Upgrade linker m4 to v1.2.0
+	srv-lib: Constify as necessary
+	com-lib: tests: Constify as necessary
+	tests-com-lib: Constify as appropriate
+	cli-lib: Constify where appropriate
+	srv-prg: Constify and use attribute where appropriate
+	cli-prg: Constify and use attribute where appropriate
+	srv-lib: Consify and use attribute where appropriate
+	com-lib: cli-lib: Constify and use attribute as appropriate
+	com-lib: Constify and use attribute where appropriate
+	com-lib: Constify config file path
+	m4: Update c-compiler m4 to v1.3.0
+	srv-prg: Remove redundant else
+	srv-prg: Test for error not success
+	srv-prg: Refactor swocserver help text
+	cli-prg: Remove redundant else
+	cli-prg: Test for error not success
+	cli-prg: Refactor help text
+	srv-prg: man: Improve swocserverd CL syntax description
+	srv-prg: man: Improve swocserver CL syntax description
+	cli-prg: man: Improve CL syntax description
+	at: Improve configure CL syntax description
+	all: Remove most in-file ChangeLogs and versioning
+	docs: Update Doxygen configuration file
+	at: Upgrade gen-gnulib.sh to v1.2.0
+	git: Standardise on non-root gitignore file formats
+	at: Upgrade bootstrap.sh to v1.6.0
+	Merge pull request #2 from m-grant-prg/dependabot/github_actions/JamesIves/github-pages-deploy-action-4.4.3
+	Merge pull request #1 from m-grant-prg/dependabot/github_actions/actions/checkout-4
+	github: Add dependabot version update config
+	gnulib: Update form bookworm upgrade
+	actions: Update fetch-latest-release to v2.0.3
+Mark Grant (54):
+
 2023-07-31 v1.7.0 Mark Grant <m.grant.prg@gmail.com>
 	* at: Add AT installation information
 	actions: Separate standard and PPA repo activities
