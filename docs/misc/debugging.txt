@@ -24,7 +24,7 @@ Find the device name of the terminal you want to attach to for program output.
 		--args ./swocserverd --debug
 
 To send messages to the daemon you can telnet into it:
-	telnet localhost 127.0.0.1
+	telnet localhost 62522
 	Ctrl ] to break to command prompt
 	mode character
 	;
