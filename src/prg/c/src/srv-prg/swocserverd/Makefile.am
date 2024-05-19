@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Author: Copyright (C) 2017-2019, 2021-2023  Mark Grant		#
+# Author: Copyright (C) 2017-2019, 2021-2024  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -14,6 +14,19 @@
 
 # Please note: systemd requires some ordering of it's actions. Please refer to
 # the comment in the top-level Makefile.am
+
+
+if DEBUG
+.gdbinit: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).in > $@.tmp
+	mv $@.tmp $@
+.gdbinit: $(srcdir)/.gdbinit.in
+
+noinst_SCRIPTS = .gdbinit
+endif
 
 
 if DEBUG
@@ -58,4 +71,10 @@ AM_LDFLAGS += $(LIBMGEC_LIBS) $(LIBMGESYSUTILS_LIBS)
 
 LDADD = $(tmplibraries)
 LDADD += ../../com-lib/libswoccommon.la
+
+
+EXTRA_DIST = $(srcdir)/.gdbinit.in
+
+
+CLEANFILES = *.tmp .gdbinit
 

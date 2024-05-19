@@ -28,6 +28,19 @@ check_SCRIPTS = fix-messagestest.sh fix-sshtest.sh fix-tcptest.sh \
 
 
 if DEBUG
+.gdbinit: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).in > $@.tmp
+	mv $@.tmp $@
+.gdbinit: $(srcdir)/.gdbinit.in
+
+noinst_SCRIPTS = .gdbinit
+endif
+
+
+if DEBUG
 AM_CPPFLAGS = $(MG_DEBUG_CPPFLAGS)
 else
 AM_CPPFLAGS = $(MG_CPPFLAGS)
@@ -60,8 +73,10 @@ LDADD += ../../com-lib/libswoccommon.la
 
 
 EXTRA_DIST = $(srcdir)/fix-messagestest.sh.in $(srcdir)/fix-sshtest.sh.in \
-	     $(srcdir)/fix-tcptest.sh.in $(srcdir)/fix-validatetest.sh.in
+	     $(srcdir)/fix-tcptest.sh.in $(srcdir)/fix-validatetest.sh.in \
+	     $(srcdir)/.gdbinit.in
 
 CLEANFILES = *.tmp fix-messagestest.sh fix-sshtest.sh fix-tcptest.sh \
-	     fix-validatetest.sh
+	     fix-validatetest.sh \
+	     .gdbinit
 

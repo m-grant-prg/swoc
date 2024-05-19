@@ -1,0 +1,21 @@
+#########################################################################
+#									#
+# Author: Copyright (C) 2024  Mark Grant				#
+#									#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0-only					#
+#									#
+# N.B.									#
+#	GDB will issue a warning concerning this file unless you have	#
+# either:-								#
+# add-auto-load-safe-path /path/to/this/object/directory/.gdbinit	#
+# or,									#
+# set auto-load safe-path /						#
+#	in your $HOME/.gdbinit file.					#
+#									#
+#########################################################################
+
+
+directory ../../../../../../../src/prg/c/src/com-lib
+

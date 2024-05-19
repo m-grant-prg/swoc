@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Author: Copyright (C) 2015-2023  Mark Grant				#
+# Author: Copyright (C) 2015-2024  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -10,6 +10,19 @@
 # source.								#
 #									#
 #########################################################################
+
+
+if DEBUG
+.gdbinit: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).in > $@.tmp
+	mv $@.tmp $@
+.gdbinit: $(srcdir)/.gdbinit.in
+
+noinst_SCRIPTS = .gdbinit
+endif
 
 
 if DEBUG
@@ -62,4 +75,10 @@ uninstall-local:
 	systemctl stop swocserverd.service
 	systemctl disable swocserverd.service
 endif
+
+
+EXTRA_DIST = $(srcdir)/.gdbinit.in
+
+
+CLEANFILES = *.tmp .gdbinit
 
