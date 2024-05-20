@@ -24,6 +24,18 @@ noinst_SCRIPTS = .gdbinit
 endif
 
 
+fix-optionproctest.sh: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).in > $@.tmp
+	mv $@.tmp $@
+	chmod a+x $@
+fix-optionproctest.sh: $(srcdir)/fix-optionproctest.sh.in
+
+check_SCRIPTS = fix-optionproctest.sh
+
+
 if DEBUG
 AM_CPPFLAGS = $(MG_DEBUG_CPPFLAGS)
 else
@@ -52,8 +64,8 @@ LDADD = $(tmplibraries)
 LDADD += ../../cli-lib/libswocclient.la
 
 
-EXTRA_DIST = $(srcdir)/.gdbinit.in
+EXTRA_DIST = $(srcdir)/.gdbinit.in $(srcdir)/fix-optionproctest.sh.in
 
 
-CLEANFILES = *.tmp .gdbinit
+CLEANFILES = *.tmp .gdbinit fix-optionproctest.sh
 

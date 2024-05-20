@@ -16,6 +16,8 @@
 # the comment in the top-level Makefile.am
 
 
+noinst_SCRIPTS =
+
 if DEBUG
 .gdbinit: Makefile
 	mkdir -p $(@D)
@@ -25,8 +27,20 @@ if DEBUG
 	mv $@.tmp $@
 .gdbinit: $(srcdir)/.gdbinit.in
 
-noinst_SCRIPTS = .gdbinit
+noinst_SCRIPTS += .gdbinit
 endif
+
+
+fix-swocserverd.sh: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).in > $@.tmp
+	mv $@.tmp $@
+	chmod a+x $@
+fix-swocserverd.sh: $(srcdir)/fix-swocserverd.sh.in
+
+noinst_SCRIPTS += fix-swocserverd.sh
 
 
 if DEBUG
@@ -73,8 +87,8 @@ LDADD = $(tmplibraries)
 LDADD += ../../com-lib/libswoccommon.la
 
 
-EXTRA_DIST = $(srcdir)/.gdbinit.in
+EXTRA_DIST = $(srcdir)/.gdbinit.in $(srcdir)/fix-swocserverd.sh.in
 
 
-CLEANFILES = *.tmp .gdbinit
+CLEANFILES = *.tmp .gdbinit fix-swocserverd.sh
 

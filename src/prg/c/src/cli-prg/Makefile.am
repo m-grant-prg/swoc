@@ -12,6 +12,8 @@
 #########################################################################
 
 
+noinst_SCRIPTS =
+
 if DEBUG
 .gdbinit: Makefile
 	mkdir -p $(@D)
@@ -21,8 +23,20 @@ if DEBUG
 	mv $@.tmp $@
 .gdbinit: $(srcdir)/.gdbinit.in
 
-noinst_SCRIPTS = .gdbinit
+noinst_SCRIPTS += .gdbinit
 endif
+
+
+fix-swocclient.sh: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).in > $@.tmp
+	mv $@.tmp $@
+	chmod a+x $@
+fix-swocclient.sh: $(srcdir)/fix-swocclient.sh.in
+
+noinst_SCRIPTS += fix-swocclient.sh
 
 
 if DEBUG
@@ -68,8 +82,8 @@ LDADD += ../com-lib/libswoccommon.la
 LDADD += ../cli-lib/libswocclient.la
 
 
-EXTRA_DIST = $(srcdir)/.gdbinit.in
+EXTRA_DIST = $(srcdir)/.gdbinit.in $(srcdir)/fix-swocclient.sh.in
 
 
-CLEANFILES = *.tmp .gdbinit
+CLEANFILES = *.tmp .gdbinit fix-swocclient.sh
 
