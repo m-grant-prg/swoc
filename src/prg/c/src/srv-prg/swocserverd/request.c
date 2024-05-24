@@ -613,8 +613,8 @@ int cli_lock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		       mge_errno);
 		snprintf(out_msg, ARRAY_SIZE(out_msg),
 			 "swocserverd,lock,err,%i;", mge_errno);
-		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
-		return -mge_errno;
+		ret = send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+		return ret;
 	}
 
 	plocks = add_bst_node(cli_locks, client, strlen(client) + 1);
