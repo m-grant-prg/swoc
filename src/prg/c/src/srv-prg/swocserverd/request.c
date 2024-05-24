@@ -481,7 +481,7 @@ int srv_block_status_req(struct mgemessage *msg, enum msg_arguments *msg_args)
  * No parameters allowed.
  * Set a block on this client so that it cannot instantiate any more locks until
  * the client is unblocked. The client can release locks while blocked.
- * If the client is already blocked the function succedes.
+ * If the client is already blocked the function succeeds.
  * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, < zero on failure.
@@ -530,7 +530,7 @@ int cli_block_req(struct mgemessage *msg, enum msg_arguments *msg_args)
  * Client unblock further locks request.
  * No parameters allowed.
  * Remove a block on this client so that it can instantiate locks again.
- * If the client is already unblocked the function succedes.
+ * If the client is already unblocked the function succeeds.
  * @param msg The message being processed.
  * @param msg_args The message arguments.
  * @return 0 on success, < zero on failure.
