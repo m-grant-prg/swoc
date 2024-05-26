@@ -3,12 +3,12 @@
  *
  * Request processing functions.
  *
- * @author Copyright (C) 2016-2023  Mark Grant
+ * @author Copyright (C) 2016-2024  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.0 ==== 26/11/2023_
+ * @version _v1.1.1 ==== 26/05/2024_
  */
 
 #include <arpa/inet.h>
@@ -605,11 +605,23 @@ int cli_lock_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 	}
 
 	pblocked = find_bst_node(cli_blocked, client);
-	if (pblocked != NULL || srv_blocked) {
+	if (pblocked != NULL) {
 		mge_errno = MGE_CLIENT_BLOCKED;
 		if (debug)
 			fprintf(stderr, "Client blocked - %i.\n", mge_errno);
 		syslog((int)(LOG_USER | LOG_NOTICE), "Client blocked - %i.",
+		       mge_errno);
+		snprintf(out_msg, ARRAY_SIZE(out_msg),
+			 "swocserverd,lock,err,%i;", mge_errno);
+		ret = send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+		return ret;
+	}
+
+	if (srv_blocked) {
+		mge_errno = MGE_SERVER_BLOCKED;
+		if (debug)
+			fprintf(stderr, "Server blocked - %i.\n", mge_errno);
+		syslog((int)(LOG_USER | LOG_NOTICE), "Server blocked - %i.",
 		       mge_errno);
 		snprintf(out_msg, ARRAY_SIZE(out_msg),
 			 "swocserverd,lock,err,%i;", mge_errno);
