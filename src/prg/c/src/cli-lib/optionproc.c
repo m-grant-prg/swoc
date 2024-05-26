@@ -3,12 +3,12 @@
  *
  * Functions to process client lock flag options.
  *
- * @author Copyright (C) 2016-2019, 2021-2023  Mark Grant
+ * @author Copyright (C) 2016-2019, 2021-2024  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.2.0 ==== 26/11/2023_
+ * @version _v1.2.1 ==== 26/05/2024_
  */
 
 #include <limits.h>
@@ -83,8 +83,8 @@ int swc_show_status(void)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
-		       msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "%s",
+		       mge_strerror(mge_errno));
 		clear_msg(msg, ';', ',');
 		return -mge_errno;
 	}
@@ -135,8 +135,8 @@ int swc_show_srv_block_status(void)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
-		       msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "%s",
+		       mge_strerror(mge_errno));
 		clear_msg(msg, ';', ',');
 		return -mge_errno;
 	}
@@ -186,8 +186,8 @@ int swc_block(void)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
-		       msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "%s",
+		       mge_strerror(mge_errno));
 		clear_msg(msg, ';', ',');
 		return -mge_errno;
 	}
@@ -235,8 +235,8 @@ int swc_unblock(void)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
-		       msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "%s",
+		       mge_strerror(mge_errno));
 		clear_msg(msg, ';', ',');
 		return -mge_errno;
 	}
@@ -284,8 +284,8 @@ int swc_set_lock(void)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
-		       msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "%s",
+		       mge_strerror(mge_errno));
 		clear_msg(msg, ';', ',');
 		return -mge_errno;
 	}
@@ -333,8 +333,8 @@ int swc_rel_lock(void)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
-		       msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "%s",
+		       mge_strerror(mge_errno));
 		clear_msg(msg, ';', ',');
 		return -mge_errno;
 	}
@@ -402,10 +402,8 @@ int swc_client_wait(const char *cnumlocks)
 						mge_errno = (int)x;
 				}
 			}
-			syslog((int)(LOG_USER | LOG_NOTICE),
-			       "Invalid message "
-			       "- %s",
-			       msg->message);
+			syslog((int)(LOG_USER | LOG_NOTICE), "%s",
+			       mge_strerror(mge_errno));
 			clear_msg(msg, ';', ',');
 			return -mge_errno;
 		}
@@ -465,8 +463,8 @@ int swc_reset(void)
 					mge_errno = (int)x;
 			}
 		}
-		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
-		       msg->message);
+		syslog((int)(LOG_USER | LOG_NOTICE), "%s",
+		       mge_strerror(mge_errno));
 		clear_msg(msg, ';', ',');
 		return -mge_errno;
 	}
