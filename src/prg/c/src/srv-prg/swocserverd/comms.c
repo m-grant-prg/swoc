@@ -3,12 +3,12 @@
  *
  * Comms functions associated with the swocserverd daemon.
  *
- * @author Copyright (C) 2017-2023  Mark Grant
+ * @author Copyright (C) 2017-2024  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.0 ==== 26/11/2023_
+ * @version _v1.1.1 ==== 27/05/2024_
  */
 
 #include <netdb.h>
@@ -351,9 +351,8 @@ static int proc_msg(struct mgemessage *msg)
 		       client, msg->message);
 		snprintf(out_msg, ARRAY_SIZE(out_msg), "swocserverd, ,err,%i;",
 			 MGE_INVAL_MSG);
-		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
-		mge_errno = MGE_INVAL_MSG;
-		return -mge_errno;
+		ret = send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+		return ret;
 	}
 
 	/* Must identify before any other message. */
@@ -365,9 +364,8 @@ static int proc_msg(struct mgemessage *msg)
 		       "Host not identified for message %s\n", msg->message);
 		snprintf(out_msg, ARRAY_SIZE(out_msg), "swocserverd,%s,err,%i;",
 			 msg->argv[1], MGE_ID);
-		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
-		mge_errno = MGE_ID;
-		return -mge_errno;
+		ret = send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+		return ret;
 	}
 	switch (msg_src) {
 	case swocserver:
@@ -442,9 +440,9 @@ static int proc_msg(struct mgemessage *msg)
 			       client, msg->message);
 			snprintf(out_msg, ARRAY_SIZE(out_msg),
 				 "swocserverd, ,err,%i;", MGE_INVAL_MSG);
-			send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
-			mge_errno = MGE_INVAL_MSG;
-			return -mge_errno;
+			ret = send_outgoing_msg(out_msg, strlen(out_msg),
+						&cursockfd);
+			return ret;
 		}
 		break;
 	case swocclient:
@@ -521,9 +519,8 @@ static int proc_msg(struct mgemessage *msg)
 		       client, msg->message);
 		snprintf(out_msg, ARRAY_SIZE(out_msg), "swocserverd, ,err,%i;",
 			 MGE_INVAL_MSG);
-		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
-		mge_errno = MGE_INVAL_MSG;
-		return -mge_errno;
+		ret = send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+		return ret;
 	}
 
 	if (msg_args == args_err) {
@@ -538,9 +535,8 @@ static int proc_msg(struct mgemessage *msg)
 		       client, msg->message);
 		snprintf(out_msg, ARRAY_SIZE(out_msg), "swocserverd, ,err,%i;",
 			 MGE_INVAL_MSG);
-		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
-		mge_errno = MGE_INVAL_MSG;
-		return -mge_errno;
+		ret = send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+		return ret;
 	}
 	return ret;
 }
