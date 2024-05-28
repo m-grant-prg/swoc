@@ -14,6 +14,14 @@
 # set auto-load safe-path /						#
 #	in your $HOME/.gdbinit file.					#
 #									#
+# N.B.									#
+#	Without a specific 'set history filename' in force and with an	#
+# empty GDBHISTFILE environment variable, gdb will place the history	#
+# file in the current directory. This can cause problems leaving the	#
+# file in the build directory. You may well want a			#
+#			set history filename ~/.gdb_history		#
+#					in your ~/.gdbinit file.	#
+#									#
 #########################################################################
 
 
