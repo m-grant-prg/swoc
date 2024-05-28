@@ -7,12 +7,12 @@
 # SPDX-License-Identifier: GPL-3.0-only					#
 #									#
 # N.B.									#
-#	GDB will issue a warning concerning this file unless you have	#
+#	gdb will issue a warning concerning this file unless you have	#
 # either:-								#
-# add-auto-load-safe-path /path/to/this/object/directory/.gdbinit	#
+#	add-auto-load-safe-path /path/to/this/object/directory/.gdbinit	#
 # or,									#
-# set auto-load safe-path /						#
-#	in your $HOME/.gdbinit file.					#
+#	set auto-load safe-path /					#
+#		in your $HOME/.gdbinit file.				#
 #									#
 # N.B.									#
 #	Without a specific 'set history filename' in force and with an	#
