@@ -19,7 +19,8 @@ OPTIONS
 
 -h, --help  prints usage information
 
--rCLIENT, --release{ |=}CLIENT  remove 1 lock for 'CLIENT'
+-rCLIENT, --release{ |=}CLIENT  remove 1 lock for 'CLIENT'. Locks can be
+released even if the client or server is blocked.
 
 -s, --status  reports on the status of server locking
 
@@ -47,7 +48,7 @@ Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2015-2019, 2021, 2023 Mark Grant.
+Copyright (C) 2015-2019, 2021, 2023, 2024 Mark Grant.
 .br
 License GPLv3: GNU GPL version 3 only
 .br

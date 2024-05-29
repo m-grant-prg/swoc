@@ -14,9 +14,11 @@ OPTIONS
 
 -i, --reset  remove all locks and set client as unblocked.
 
--l, --lock  sets or increments the lock flag on the server.
+-l, --lock  sets or increments the lock flag on the server. An error is returned
+if either the client or server is blocked.
 
--r, --release  releases or decrements the lock flag on the server.
+-r, --release  releases or decrements the lock flag on the server. Locks can be
+released even if the client or server is blocked.
 
 -s, --status  reports on the status of server locking, how many locks are
 held and the status of blocking.
@@ -45,7 +47,7 @@ Written by Mark Grant.
 REPORTING BUGS
 Report bugs to <m.grant.prg@gmail.com>
 COPYRIGHT
-Copyright (C) 2015-2019, 2021, 2023 Mark Grant.
+Copyright (C) 2015-2019, 2021, 2023, 2024 Mark Grant.
 .br
 License GPLv3: GNU GPL version 3 only
 .br
