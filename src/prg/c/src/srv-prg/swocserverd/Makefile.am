@@ -16,7 +16,17 @@
 # the comment in the top-level Makefile.am
 
 
-noinst_SCRIPTS =
+fix-swocserverd.sh: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).in > $@.tmp
+	mv $@.tmp $@
+	chmod a+x $@
+fix-swocserverd.sh: $(srcdir)/fix-swocserverd.sh.in
+
+noinst_SCRIPTS = fix-swocserverd.sh
+
 
 if DEBUG
 .gdbinit: Makefile
@@ -31,18 +41,6 @@ if DEBUG
 
 noinst_SCRIPTS += .gdbinit
 endif
-
-
-fix-swocserverd.sh: Makefile
-	mkdir -p $(@D)
-	rm -f $@ $@.tmp
-	test -f ./$@.in || srcdir=$(srcdir)/; \
-	$(edit) $${srcdir}$(@F).in > $@.tmp
-	mv $@.tmp $@
-	chmod a+x $@
-fix-swocserverd.sh: $(srcdir)/fix-swocserverd.sh.in
-
-noinst_SCRIPTS += fix-swocserverd.sh
 
 
 if DEBUG
