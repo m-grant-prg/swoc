@@ -31,10 +31,12 @@ if DEBUG
 .gdbinit: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
-	test -f ./$@.in || srcdir=$(srcdir)/; \
-	$(edit) $${srcdir}$(@F).in > $@.tmp
+	no_dot_target=`echo $@ | sed "s/^.//"`; \
+		test -f ./$${no_dot_target}.in || srcdir=$(srcdir)/; \
+		no_dot_file=`echo $(@F) | sed "s/^.//"`; \
+		$(edit) $${srcdir}$${no_dot_file}.in > $@.tmp
 	mv $@.tmp $@
-.gdbinit: $(srcdir)/.gdbinit.in
+.gdbinit: $(srcdir)/gdbinit.in
 
 noinst_SCRIPTS = .gdbinit
 endif
@@ -74,7 +76,7 @@ LDADD += ../../com-lib/libswoccommon.la
 
 EXTRA_DIST = $(srcdir)/fix-messagestest.sh.in $(srcdir)/fix-sshtest.sh.in \
 	     $(srcdir)/fix-tcptest.sh.in $(srcdir)/fix-validatetest.sh.in \
-	     $(srcdir)/.gdbinit.in
+	     $(srcdir)/gdbinit.in
 
 CLEANFILES = *.tmp fix-messagestest.sh fix-sshtest.sh fix-tcptest.sh \
 	     fix-validatetest.sh \

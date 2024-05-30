@@ -18,10 +18,12 @@ if DEBUG
 .gdbinit: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
-	test -f ./$@.in || srcdir=$(srcdir)/; \
-	$(edit) $${srcdir}$(@F).in > $@.tmp
+	no_dot_target=`echo $@ | sed "s/^.//"`; \
+		test -f ./$${no_dot_target}.in || srcdir=$(srcdir)/; \
+		no_dot_file=`echo $(@F) | sed "s/^.//"`; \
+		$(edit) $${srcdir}$${no_dot_file}.in > $@.tmp
 	mv $@.tmp $@
-.gdbinit: $(srcdir)/.gdbinit.in
+.gdbinit: $(srcdir)/gdbinit.in
 
 noinst_SCRIPTS += .gdbinit
 endif
@@ -82,7 +84,7 @@ LDADD += ../com-lib/libswoccommon.la
 LDADD += ../cli-lib/libswocclient.la
 
 
-EXTRA_DIST = $(srcdir)/.gdbinit.in $(srcdir)/fix-swocclient.sh.in
+EXTRA_DIST = $(srcdir)/gdbinit.in $(srcdir)/fix-swocclient.sh.in
 
 
 CLEANFILES = *.tmp .gdbinit fix-swocclient.sh

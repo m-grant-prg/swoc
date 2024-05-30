@@ -18,10 +18,12 @@ if DEBUG
 .gdbinit: Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
-	test -f ./$@.in || srcdir=$(srcdir)/; \
-	$(edit) $${srcdir}$(@F).in > $@.tmp
+	no_dot_target=`echo $@ | sed "s/^.//"`; \
+		test -f ./$${no_dot_target}.in || srcdir=$(srcdir)/; \
+		no_dot_file=`echo $(@F) | sed "s/^.//"`; \
+		$(edit) $${srcdir}$${no_dot_file}.in > $@.tmp
 	mv $@.tmp $@
-.gdbinit: $(srcdir)/.gdbinit.in
+.gdbinit: $(srcdir)/gdbinit.in
 
 noinst_SCRIPTS += .gdbinit
 endif
@@ -91,7 +93,7 @@ uninstall-local:
 endif
 
 
-EXTRA_DIST = $(srcdir)/.gdbinit.in $(srcdir)/fix-swocserver.sh.in
+EXTRA_DIST = $(srcdir)/gdbinit.in $(srcdir)/fix-swocserver.sh.in
 
 
 CLEANFILES = *.tmp .gdbinit fix-swocserver.sh
