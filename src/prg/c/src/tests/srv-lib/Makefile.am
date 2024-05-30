@@ -11,6 +11,18 @@
 #########################################################################
 
 
+fix-optionproctest.sh: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).in > $@.tmp
+	mv $@.tmp $@
+	chmod a+x $@
+fix-optionproctest.sh: $(srcdir)/fix-optionproctest.sh.in
+
+check_SCRIPTS = fix-optionproctest.sh
+
+
 if DEBUG
 .gdbinit: Makefile
 	mkdir -p $(@D)
@@ -22,20 +34,8 @@ if DEBUG
 	mv $@.tmp $@
 .gdbinit: $(srcdir)/gdbinit.in
 
-noinst_SCRIPTS = .gdbinit
+check_SCRIPTS += .gdbinit
 endif
-
-
-fix-optionproctest.sh: Makefile
-	mkdir -p $(@D)
-	rm -f $@ $@.tmp
-	test -f ./$@.in || srcdir=$(srcdir)/; \
-	$(edit) $${srcdir}$(@F).in > $@.tmp
-	mv $@.tmp $@
-	chmod a+x $@
-fix-optionproctest.sh: $(srcdir)/fix-optionproctest.sh.in
-
-check_SCRIPTS = fix-optionproctest.sh
 
 
 if DEBUG

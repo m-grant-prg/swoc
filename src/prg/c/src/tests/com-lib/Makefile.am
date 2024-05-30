@@ -38,7 +38,7 @@ if DEBUG
 	mv $@.tmp $@
 .gdbinit: $(srcdir)/gdbinit.in
 
-noinst_SCRIPTS = .gdbinit
+check_SCRIPTS += .gdbinit
 endif
 
 
