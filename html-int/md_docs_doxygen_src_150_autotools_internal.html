@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Server Wait On Clients System - Full Internal Documentation
-   &#160;<span id="projectnumber">v1.7.1</span>
+   &#160;<span id="projectnumber">v1.7.2</span>
    </div>
    <div id="projectbrief">Server Wait On Clients System.</div>
   </td>
@@ -148,7 +148,7 @@ Internal</h2>
 API</h2>
 <p>If headers are installed in includedir the name should be as unique as possible due to the large potential for name clashes, namespacing would help.</p>
 <p>If headers are installed in pkgincludedir and a pkg-config file is supplied then the situation is like the above since the pkg-config file supplies the compiler with the Cflags of pkgincludedir. So, the compiler command line will have both -I${includedir} and -I${pkgincludedir} making a large pool.</p>
-<p>If headers are installed in pkgincludedir and all #includes use ${PACKAGE}/example.h then the names can be anything.</p>
+<p>If headers are installed in pkgincludedir and all <code>#includes</code> use ${PACKAGE}/example.h then the names can be anything.</p>
 <h1><a class="anchor" id="temporaries"></a>
 Temporary Headers and Libraries</h1>
 <h2><a class="anchor" id="concept"></a>

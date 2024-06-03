@@ -63,7 +63,7 @@ then the situation is like the above since the pkg-config file supplies the
 compiler with the Cflags of pkgincludedir. So, the compiler command line will
 have both -I${includedir} and -I${pkgincludedir} making a large pool.
 
-If headers are installed in pkgincludedir and all #includes use
+If headers are installed in pkgincludedir and all \c \#includes use
 ${PACKAGE}/example.h then the names can be anything.
 
 \section temporaries Temporary Headers and Libraries

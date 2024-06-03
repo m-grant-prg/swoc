@@ -236,9 +236,9 @@ LT_SYS_LIBRARY_PATH =
 MAKEINFO = ${SHELL} '/home/runner/work/swoc/swoc/build-aux/missing' makeinfo
 MANIFEST_TOOL = :
 MG_ANALYZER_CFLAGS =  -fanalyzer
-MG_CFLAGS = -g -Wall -Wextra -fstack-protector-strong -grecord-gcc-switches -std=gnu11 -Wbad-function-cast -Wconversion -Wdeclaration-after-statement -Wformat-security -Wmissing-declarations -Wmissing-include-dirs -Wmissing-prototypes -Wnested-externs -Woverlength-strings -Wpointer-arith -Wredundant-decls -Wshadow -Wstrict-prototypes -Wswitch-default -Wwrite-strings -Wformat-signedness -Wlogical-op -Wsuggest-attribute=const -fasynchronous-unwind-tables -Wduplicated-cond -Wnull-dereference -Wduplicated-branches -fstack-clash-protection -Wmultistatement-macros -Wsuggest-attribute=malloc -O2
+MG_CFLAGS = -g -Wall -Wextra -fstack-protector-strong -grecord-gcc-switches -Wbad-function-cast -Wconversion -Wdeclaration-after-statement -Wformat-security -Wmissing-declarations -Wmissing-include-dirs -Wmissing-prototypes -Wnested-externs -Woverlength-strings -Wpointer-arith -Wredundant-decls -Wshadow -Wstrict-prototypes -Wswitch-default -Wwrite-strings -Wformat-signedness -Wlogical-op -Wsuggest-attribute=const -fasynchronous-unwind-tables -Wduplicated-cond -Wnull-dereference -Wduplicated-branches -fstack-clash-protection -Wmultistatement-macros -Wsuggest-attribute=malloc -std=gnu17 -O2
 MG_CPPFLAGS = -DHAVE_WINSOCK2_H=0 -Wdate-time -D_FORTIFY_SOURCE=2
-MG_DEBUG_CFLAGS = -g -Wall -Wextra -fstack-protector-strong -grecord-gcc-switches -std=gnu11 -Wbad-function-cast -Wconversion -Wdeclaration-after-statement -Wformat-security -Wmissing-declarations -Wmissing-include-dirs -Wmissing-prototypes -Wnested-externs -Woverlength-strings -Wpointer-arith -Wredundant-decls -Wshadow -Wstrict-prototypes -Wswitch-default -Wwrite-strings -Wformat-signedness -Wlogical-op -Wsuggest-attribute=const -fasynchronous-unwind-tables -Wduplicated-cond -Wnull-dereference -Wduplicated-branches -fstack-clash-protection -Wmultistatement-macros -Wsuggest-attribute=malloc -ggdb3 -O0
+MG_DEBUG_CFLAGS = -g -Wall -Wextra -fstack-protector-strong -grecord-gcc-switches -Wbad-function-cast -Wconversion -Wdeclaration-after-statement -Wformat-security -Wmissing-declarations -Wmissing-include-dirs -Wmissing-prototypes -Wnested-externs -Woverlength-strings -Wpointer-arith -Wredundant-decls -Wshadow -Wstrict-prototypes -Wswitch-default -Wwrite-strings -Wformat-signedness -Wlogical-op -Wsuggest-attribute=const -fasynchronous-unwind-tables -Wduplicated-cond -Wnull-dereference -Wduplicated-branches -fstack-clash-protection -Wmultistatement-macros -Wsuggest-attribute=malloc -std=gnu17 -ggdb3 -O0
 MG_DEBUG_CPPFLAGS = -DHAVE_WINSOCK2_H=0 -Wdate-time
 MG_LDFLAGS = -Wl,-z,relro
 MKDIR_P = /usr/bin/mkdir -p
@@ -251,10 +251,10 @@ OTOOL64 =
 PACKAGE = swoc
 PACKAGE_BUGREPORT = m.grant.prg@gmail.com
 PACKAGE_NAME = Server Wait On Client Package
-PACKAGE_STRING = Server Wait On Client Package 1.7.1
+PACKAGE_STRING = Server Wait On Client Package 1.7.2
 PACKAGE_TARNAME = swoc
 PACKAGE_URL = 
-PACKAGE_VERSION = 1.7.1
+PACKAGE_VERSION = 1.7.2
 PATH_SEPARATOR = :
 PKGCONFIG = yes
 PTHREAD_CC = gcc
@@ -270,7 +270,7 @@ STRIP = strip
 TAR = yes
 TXT2MAN = yes
 TXT2MANWRAP = yes
-VERSION = 1.7.1
+VERSION = 1.7.2
 abs_builddir = /home/runner/work/swoc/swoc/docs/doxygen
 abs_srcdir = /home/runner/work/swoc/swoc/docs/doxygen
 abs_top_builddir = /home/runner/work/swoc/swoc
@@ -294,7 +294,7 @@ build_vendor = pc
 builddir = .
 cli_pc_requires = libmgec
 cli_pc_requires_private = libmgesysutils libswoccommon
-client_lib_version_info = 2:4:0
+client_lib_version_info = 2:5:0
 com_pc_requires = libmgec
 com_pc_requires_private = libmgesysutils
 common_lib_version_info = 3:6:0
@@ -330,7 +330,7 @@ mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-pkgversion = 1.7.1
+pkgversion = 1.7.2
 prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
