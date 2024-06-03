@@ -1,3 +1,33 @@
+2024-06-03 v1.7.2 Mark Grant <m.grant.prg@gmail.com>
+	* build(deps): bump jidicula/clang-format-action from 4.12.0 to 4.13.0
+	--- updated-dependencies: - dependency-name: JamesIves/github-pages-deploy-action   dependency-type: direct:production   update-type: version-update:semver-minor ...
+	--- updated-dependencies: - dependency-name: jidicula/clang-format-action   dependency-type: direct:production   update-type: version-update:semver-minor ...
+dependabot[bot] (3):
+
+	Server daemon source v1.1.1
+	Client library version info v2:5:0
+	Client library source v1.2.1
+	at: Re-organise sections to simplify
+	at: Only build gdbinit if running make check
+	at: gdb: Make gdbinit.in source file visible
+	man: Clarify when locking / unlocking is possible
+	gdb: Trivial fix to comment format
+	gdb: Add comment on history file location
+	Merge pull request #8 from m-grant-prg/dependabot/github_actions/jidicula/clang-format-action-4.13.0
+	srv-prg: Incorrect messages received are not a daemon error
+	cli-lib: Improve error messaging
+	srv-prg: Separate server and client blocked handling
+	srv-prg: Fix spelling succedes to succeeds
+	srv-prg: Client blocked is not an error in daemon
+	Merge pull request #7 from m-grant-prg/dependabot/github_actions/JamesIves/github-pages-deploy-action-4.6.1
+	Merge pull request #6 from m-grant-prg/dependabot/github_actions/jidicula/clang-format-action-4.12.0
+	at: tests: cli-prg: srv-prg: Provide fix for Automake bug Part 2
+	doxygen: Escape #include to avoid warning
+	c: tests: Add gdbinit to find non-cwd source files
+	docs: Correct telnet command
+	m4: Update C compiler m4 to v1.3.1
+Mark Grant (23):
+
 2024-05-02 v1.7.1 Mark Grant <m.grant.prg@gmail.com>
 	* build(deps): bump CityOfLosAngeles/fetch-latest-github-release
 	build(deps): bump JamesIves/github-pages-deploy-action
