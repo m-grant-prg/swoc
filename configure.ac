@@ -133,7 +133,7 @@ AC_DEFINE(SWOCCLIENT_SOURCE_VERSION, "1.2.0", \
 AC_DEFINE(SWOCSERVER_SOURCE_VERSION, "1.2.0", \
 	Define to the version of source code for the server program.)
 
-AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.1.0", \
+AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.1.1", \
 	Define to the version of source code for the server daemon.)
 
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
