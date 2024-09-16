@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.1 ==== 26/05/2024_
+ * @version _v1.1.2 ==== 16/09/2024_
  */
 
 #include <arpa/inet.h>
@@ -287,6 +287,8 @@ int srv_cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		snprintf(out_msg, ARRAY_SIZE(out_msg),
 			 "swocserverd,release,err,%i;", mge_errno);
 		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+		if (mge_errno == MGE_LOCK_NOT_FOUND)
+			return 0;
 		return -mge_errno;
 	}
 
@@ -685,6 +687,8 @@ int cli_rel_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 		snprintf(out_msg, ARRAY_SIZE(out_msg),
 			 "swocserverd,release,err,%i;", mge_errno);
 		send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
+		if (mge_errno == MGE_LOCK_NOT_FOUND)
+			return 0;
 		return -mge_errno;
 	}
 	cli_locks = plocks;
