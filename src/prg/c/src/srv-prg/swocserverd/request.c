@@ -8,7 +8,7 @@
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.2 ==== 16/09/2024_
+ * @version _v1.1.2 ==== 17/09/2024_
  */
 
 #include <arpa/inet.h>
@@ -890,11 +890,13 @@ void id_req(struct mgemessage *msg, enum msg_arguments *msg_args)
 			 mge_errno);
 		goto free_exit;
 	}
-	if (debug)
+	if (debug) {
 		printf("Host and IP matched - %s %s\n", *(msg->argv + 2),
 		       *(msg->argv + 3));
-	syslog((int)(LOG_USER | LOG_NOTICE), "Host and IP matched - %s %s",
-	       *(msg->argv + 2), *(msg->argv + 3));
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "Host and IP matched - %s %s", *(msg->argv + 2),
+		       *(msg->argv + 3));
+	}
 	snprintf(out_msg, ARRAY_SIZE(out_msg), "swocserverd,id,ok;");
 	strcpy(client, canonname);
 
