@@ -16,13 +16,14 @@
 # the comment in the top-level Makefile.am
 
 
-fix-swocserverd.sh: Makefile
+fix-swocserverd.sh: swocserverd Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	test -f ./$@.in || srcdir=$(srcdir)/; \
 	$(edit) $${srcdir}$(@F).in > $@.tmp
 	mv $@.tmp $@
 	chmod a+x $@
+	./$@
 fix-swocserverd.sh: $(srcdir)/fix-swocserverd.sh.in
 
 noinst_SCRIPTS = fix-swocserverd.sh

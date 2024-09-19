@@ -11,13 +11,14 @@
 #########################################################################
 
 
-fix-optionproctest.sh: Makefile
+fix-optionproctest.sh: optionproctest Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	test -f ./$@.in || srcdir=$(srcdir)/; \
 	$(edit) $${srcdir}$(@F).in > $@.tmp
 	mv $@.tmp $@
 	chmod a+x $@
+	./$@
 fix-optionproctest.sh: $(srcdir)/fix-optionproctest.sh.in
 
 check_SCRIPTS = fix-optionproctest.sh

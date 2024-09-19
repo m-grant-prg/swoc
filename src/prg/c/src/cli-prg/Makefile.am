@@ -12,13 +12,14 @@
 #########################################################################
 
 
-fix-swocclient.sh: Makefile
+fix-swocclient.sh: swocclient Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	test -f ./$@.in || srcdir=$(srcdir)/; \
 	$(edit) $${srcdir}$(@F).in > $@.tmp
 	mv $@.tmp $@
 	chmod a+x $@
+	./$@
 fix-swocclient.sh: $(srcdir)/fix-swocclient.sh.in
 
 noinst_SCRIPTS = fix-swocclient.sh

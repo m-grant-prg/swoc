@@ -512,20 +512,9 @@ variable. If the first entry starts "/usr" then this is moved to the end of the
 variable just before the ending ":$LD_LIBRARY_PATH". This process is repeated
 until the first element does not start with "/usr".
 
-So, to just run the test from the test object directory:-
-
-\code{.unparsed}
-./fix-messagestest.sh && ./messagestest
-\endcode
-
-to use gdb, run:-
-
-\code{.unparsed}
-./fix-messagestest.sh && libtool --mode=execute gdb --tui --tty=.dev.pts/<X> \
-	./messagestest
-\endcode
-
-and valgrind would be similar to the above.
+No circumstance can be envisaged whereby it would be required that these scripts
+were not run, so, automatic execution of these scripts has been incorporated
+into the relevant Makefile.am's.
 
 **2 ... Use a container**
 

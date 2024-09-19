@@ -11,13 +11,15 @@
 #########################################################################
 
 
-fix-messagestest.sh fix-sshtest.sh fix-tcptest.sh fix-validatetest.sh: Makefile
+fix-messagestest.sh fix-sshtest.sh fix-tcptest.sh fix-validatetest.sh: \
+	messagestest sshtest tcptest validatetest Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	test -f ./$@.in || srcdir=$(srcdir)/; \
 	$(edit) $${srcdir}$(@F).in > $@.tmp
 	mv $@.tmp $@
 	chmod a+x $@
+	./$@
 fix-messagestest.sh: $(srcdir)/fix-messagestest.sh.in
 fix-sshtest.sh: $(srcdir)/fix-sshtest.sh.in
 fix-tcptest.sh: $(srcdir)/fix-tcptest.sh.in
