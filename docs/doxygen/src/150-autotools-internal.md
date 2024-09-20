@@ -504,10 +504,10 @@ Whilst waiting for a proper permanent fix there are 2 possible workarounds:-
 
 **1 ... Fix the library variable**
 
-A script named fix-<libtool-program-wrapper-name>.sh is supplied for each test.
-e.g. For a test called messagestest the script would be fix-messagestest.sh.
+A generic script named fix-AT-LD-LIBRARY-PATH-bug.sh is supplied for
+each subsystem affected taking 1 or more Libtool wrapper scripts as arguments.
 
-These scripts perform a fairly basic reorganisation of the LD_LIBRARY_PATH
+This script performs a fairly basic reorganisation of the LD_LIBRARY_PATH
 variable. If the first entry starts "/usr" then this is moved to the end of the
 variable just before the ending ":$LD_LIBRARY_PATH". This process is repeated
 until the first element does not start with "/usr".

@@ -1,7 +1,7 @@
 #! @bashlocation@
 #########################################################################
 #									#
-#	fix-optionproctest.sh is automatically generated,		#
+#	fix-AT-LD-LIBRARY-PATH-bug.sh is automatically generated,	#
 #		please do not modify!					#
 #									#
 #########################################################################
@@ -16,6 +16,7 @@
 # Purpose:								#
 # To fix the LD_LIBRARY_PATH variable which is incorrectly built due to	#
 # a bug in Automake or Libtool. See docs in the source tree.		#
+# CLA's:- 1 or more libtool wrapper scripts to fix.			#
 #									#
 # Syntax:	See usage().						#
 #									#
@@ -54,7 +55,7 @@ set -eo pipefail
 ##################
 # Init variables #
 ##################
-readonly version=1.0.1				# Script version
+readonly version=1.1.0				# Script version
 readonly packageversion=@pkgversion@		# Package version
 
 
@@ -69,6 +70,7 @@ usage()
 {
 cat << EOF
 Usage is $0 {-h|-V}
+Usage is $0 LIBTOOL_WRAPPER_SCRIPT [LIBTOOL_WRAPPER_SCRIPT ...]
 Usage is $0 [OPTIONS]
 	[OPTIONS] are:-
 	-h or --help Displays usage information
@@ -162,12 +164,6 @@ proc_CL()
 			;;
 		esac
 	done
-
-	# Script does not accept other arguments.
-	if (( $# )); then
-		output "Invalid argument." 1
-		script_exit 64
-	fi
 }
 
 
@@ -177,22 +173,28 @@ proc_CL()
 
 proc_CL "$@"
 
-while grep -q 'LD_LIBRARY_PATH=\"/usr' ./optionproctest ; do
-	l_lib_path=$(grep 'LD_LIBRARY_PATH=\"/usr' ./optionproctest)
+for script in $@; do
+	while grep -q 'LD_LIBRARY_PATH=\"/usr' ./$script ; do
+		l_lib_path=$(grep 'LD_LIBRARY_PATH=\"/usr' ./$script)
 
-	# shellcheck disable=SC2016 # The env variable must not be expanded.
-	l_lib_path=$(echo "$l_lib_path" | sed -e 's/ //g' \
-		-e 's/LD_LIBRARY_PATH=\"//g' -e 's/\:\$LD_LIBRARY_PATH\"//g')
+		# shellcheck disable=SC2016 # Do not expand The env variable.
+		l_lib_path=$(echo "$l_lib_path" | sed -e 's/ //g' \
+			-e 's/LD_LIBRARY_PATH=\"//g' \
+			-e 's/\:\$LD_LIBRARY_PATH\"//g')
+		bad_first_element=$(echo "$l_lib_path" \
+			| sed -e '/^\/usr/ s/\:.*$//')
 
-	bad_first_element=$(echo "$l_lib_path" | sed -e '/^\/usr/ s/\:.*$//')
+		# shellcheck disable=SC2001 # Happy to use sed for consistency.
+		l_lib_path=$(echo "$l_lib_path" \
+			| sed "s;$bad_first_element\:;;")
 
-	# shellcheck disable=SC2001 # Happy to use sed for consistency.
-	l_lib_path=$(echo "$l_lib_path" | sed "s;$bad_first_element\:;;")
+		l_lib_path="$l_lib_path:$bad_first_element:\$LD_LIBRARY_PATH"
 
-	l_lib_path="$l_lib_path:$bad_first_element:\$LD_LIBRARY_PATH"
-
-	sed -i "/LD_LIBRARY_PATH=\"\/usr/ s;=.*$;=\"$l_lib_path\";" \
-		./optionproctest
+		sed -i "/LD_LIBRARY_PATH=\"\/usr/ s;=.*$;=\"$l_lib_path\";" \
+			./$script
+		msg="LD_LIBRARY_PATH bug fixed in Libtool wrapper script %s\n"
+		printf "$msg" $script
+	done
 done
 
 script_exit 0

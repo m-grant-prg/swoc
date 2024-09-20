@@ -16,17 +16,17 @@
 # the comment in the top-level Makefile.am
 
 
-fix-swocserverd.sh: swocserverd Makefile
+fix-AT-LD-LIBRARY-PATH-bug.sh: swocserverd Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	test -f ./$@.in || srcdir=$(srcdir)/; \
 	$(edit) $${srcdir}$(@F).in > $@.tmp
 	mv $@.tmp $@
 	chmod a+x $@
-	./$@
-fix-swocserverd.sh: $(srcdir)/fix-swocserverd.sh.in
+	./$@ "swocserverd"
+fix-AT-LD-LIBRARY-PATH-bug.sh: $(srcdir)/fix-AT-LD-LIBRARY-PATH-bug.sh.in
 
-noinst_SCRIPTS = fix-swocserverd.sh
+noinst_SCRIPTS = fix-AT-LD-LIBRARY-PATH-bug.sh
 
 
 if DEBUG
@@ -88,8 +88,9 @@ LDADD = $(tmplibraries)
 LDADD += ../../com-lib/libswoccommon.la
 
 
-EXTRA_DIST = $(srcdir)/gdbinit.in $(srcdir)/fix-swocserverd.sh.in
+EXTRA_DIST = $(srcdir)/fix-AT-LD-LIBRARY-PATH-bug.sh.in \
+	     $(srcdir)/gdbinit.in
 
-
-CLEANFILES = *.tmp .gdbinit fix-swocserverd.sh
+CLEANFILES = *.tmp fix-AT-LD-LIBRARY-PATH-bug.sh \
+	     .gdbinit
 

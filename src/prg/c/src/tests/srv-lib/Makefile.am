@@ -11,17 +11,17 @@
 #########################################################################
 
 
-fix-optionproctest.sh: optionproctest Makefile
+fix-AT-LD-LIBRARY-PATH-bug.sh: optionproctest Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	test -f ./$@.in || srcdir=$(srcdir)/; \
 	$(edit) $${srcdir}$(@F).in > $@.tmp
 	mv $@.tmp $@
 	chmod a+x $@
-	./$@
-fix-optionproctest.sh: $(srcdir)/fix-optionproctest.sh.in
+	./$@ "optionproctest"
+fix-AT-LD-LIBRARY-PATH-bug.sh: $(srcdir)/fix-AT-LD-LIBRARY-PATH-bug.sh.in
 
-check_SCRIPTS = fix-optionproctest.sh
+check_SCRIPTS = fix-AT-LD-LIBRARY-PATH-bug.sh
 
 
 if DEBUG
@@ -67,8 +67,9 @@ LDADD = $(tmplibraries)
 LDADD += ../../srv-lib/libswocserver.la
 
 
-EXTRA_DIST = $(srcdir)/gdbinit.in $(srcdir)/fix-optionproctest.sh.in
+EXTRA_DIST = $(srcdir)/fix-AT-LD-LIBRARY-PATH-bug.sh.in \
+	     $(srcdir)/gdbinit.in
 
-
-CLEANFILES = *.tmp .gdbinit fix-optionproctest.sh
+CLEANFILES = *.tmp fix-AT-LD-LIBRARY-PATH-bug.sh \
+	     .gdbinit
 

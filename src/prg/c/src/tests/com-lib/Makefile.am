@@ -11,22 +11,18 @@
 #########################################################################
 
 
-fix-messagestest.sh fix-sshtest.sh fix-tcptest.sh fix-validatetest.sh: \
-	messagestest sshtest tcptest validatetest Makefile
+fix-AT-LD-LIBRARY-PATH-bug.sh: messagestest sshtest tcptest validatetest \
+	Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
 	test -f ./$@.in || srcdir=$(srcdir)/; \
 	$(edit) $${srcdir}$(@F).in > $@.tmp
 	mv $@.tmp $@
 	chmod a+x $@
-	./$@
-fix-messagestest.sh: $(srcdir)/fix-messagestest.sh.in
-fix-sshtest.sh: $(srcdir)/fix-sshtest.sh.in
-fix-tcptest.sh: $(srcdir)/fix-tcptest.sh.in
-fix-validatetest.sh: $(srcdir)/fix-validatetest.sh.in
+	./$@ "messagestest sshtest tcptest validatetest"
+fix-AT-LD-LIBRARY-PATH-bug.sh: $(srcdir)/fix-AT-LD-LIBRARY-PATH-bug.sh.in
 
-check_SCRIPTS = fix-messagestest.sh fix-sshtest.sh fix-tcptest.sh \
-		fix-validatetest.sh
+check_SCRIPTS = fix-AT-LD-LIBRARY-PATH-bug.sh
 
 
 if DEBUG
@@ -76,11 +72,9 @@ LDADD = $(tmplibraries)
 LDADD += ../../com-lib/libswoccommon.la
 
 
-EXTRA_DIST = $(srcdir)/fix-messagestest.sh.in $(srcdir)/fix-sshtest.sh.in \
-	     $(srcdir)/fix-tcptest.sh.in $(srcdir)/fix-validatetest.sh.in \
+EXTRA_DIST = $(srcdir)/fix-AT-LD-LIBRARY-PATH-bug.sh.in \
 	     $(srcdir)/gdbinit.in
 
-CLEANFILES = *.tmp fix-messagestest.sh fix-sshtest.sh fix-tcptest.sh \
-	     fix-validatetest.sh \
+CLEANFILES = *.tmp fix-AT-LD-LIBRARY-PATH-bug.sh \
 	     .gdbinit
 
