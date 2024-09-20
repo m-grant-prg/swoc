@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Author: Copyright (C) 2015-2023  Mark Grant				#
+# Author: Copyright (C) 2015-2024  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -49,11 +49,6 @@ SUBDIRS += src/prg/c/src/com-lib
 SUBDIRS += src/prg/c/src/cli-lib
 SUBDIRS += src/prg/c/src/srv-lib
 SUBDIRS += src/prg/c/src/cli-prg
-SUBDIRS += src/prg/c/src/tests/cli-lib
-SUBDIRS += src/prg/c/src/tests/com-lib
-SUBDIRS += src/prg/c/src/tests/srv-lib
-SUBDIRS += src/prg/c/src/tests/test-headers
-SUBDIRS += src/prg/c/src/tests/run-tests
 
 # systemd requires the ordering of certain actions, so:-
 # Install
@@ -77,14 +72,20 @@ SUBDIRS += src/prg/c/src/srv-prg/swocserverd
 if SYSD
 SUBDIRS += src/systemd/srv-prg
 endif
+
 SUBDIRS += docs/doxygen
+SUBDIRS += src/prg/c/src/tests/cli-lib
+SUBDIRS += src/prg/c/src/tests/com-lib
+SUBDIRS += src/prg/c/src/tests/srv-lib
+SUBDIRS += src/prg/c/src/tests/test-headers
+SUBDIRS += src/prg/c/src/tests/run-tests
 
 
 doc_DATA = AUTHORS ChangeLog COPYING NEWS README
 
 
 EXTRA_DIST = $(srcdir)/AUTHORS $(srcdir)/ChangeLog $(srcdir)/COPYING \
-		$(srcdir)/NEWS $(srcdir)/README
+	     $(srcdir)/NEWS $(srcdir)/README
 EXTRA_DIST += m4/gnulib-cache.m4
 EXTRA_DIST += docs/misc misc
 
