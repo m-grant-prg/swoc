@@ -1,3 +1,19 @@
+2024-09-30 v1.7.3 Mark Grant <m.grant.prg@gmail.com>
+	* build(deps): bump JamesIves/github-pages-deploy-action
+	build(deps): bump JamesIves/github-pages-deploy-action
+dependabot[bot] (2):
+
+	at: Put tests at the end of make process
+	at: docs: Make LD_LIBRARY_PATH bug fix script generic
+	at: docs: Run AT LD_LIBRARY_PATH bug workaround automatically
+	srv-prg: IP / Hostname ID matching spamming the logs
+	srv-prg: Daemon crashes when client releases a non-existent lock
+	srv-lib: Server syslogging incorrect message
+	srv-lib: Server syslogging incorrect message
+	Merge pull request #10 from m-grant-prg/dependabot/github_actions/JamesIves/github-pages-deploy-action-4.6.4
+	Merge pull request #9 from m-grant-prg/dependabot/github_actions/JamesIves/github-pages-deploy-action-4.6.3
+Mark Grant (11):
+
 2024-06-03 v1.7.2 Mark Grant <m.grant.prg@gmail.com>
 	* build(deps): bump jidicula/clang-format-action from 4.12.0 to 4.13.0
 	--- updated-dependencies: - dependency-name: JamesIves/github-pages-deploy-action   dependency-type: direct:production   update-type: version-update:semver-minor ...
