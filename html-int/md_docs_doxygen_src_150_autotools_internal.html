@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Server Wait On Clients System - Full Internal Documentation
-   &#160;<span id="projectnumber">v1.7.2</span>
+   &#160;<span id="projectnumber">v1.7.3</span>
    </div>
    <div id="projectbrief">Server Wait On Clients System.</div>
   </td>
@@ -460,14 +460,9 @@ Workarounds</h3>
 <p>1) Fix the library variable.</p>
 <p>2) Run in a container which does not have the library installed.</p>
 <p><b>1 ... Fix the library variable</b></p>
-<p>A script named fix-&lt;libtool-program-wrapper-name&gt;.sh is supplied for each test. e.g. For a test called messagestest the script would be fix-messagestest.sh.</p>
-<p>These scripts perform a fairly basic reorganisation of the LD_LIBRARY_PATH variable. If the first entry starts "/usr" then this is moved to the end of the variable just before the ending ":$LD_LIBRARY_PATH". This process is repeated until the first element does not start with "/usr".</p>
-<p>So, to just run the test from the test object directory:-</p>
-<div class="fragment"><div class="line">./fix-messagestest.sh &amp;&amp; ./messagestest</div>
-</div><!-- fragment --><p>to use gdb, run:-</p>
-<div class="fragment"><div class="line">./fix-messagestest.sh &amp;&amp; libtool --mode=execute gdb --tui --tty=.dev.pts/&lt;X&gt; \</div>
-<div class="line">    ./messagestest</div>
-</div><!-- fragment --><p>and valgrind would be similar to the above.</p>
+<p>A generic script named fix-AT-LD-LIBRARY-PATH-bug.sh is supplied for each subsystem affected taking 1 or more Libtool wrapper scripts as arguments.</p>
+<p>This script performs a fairly basic reorganisation of the LD_LIBRARY_PATH variable. If the first entry starts "/usr" then this is moved to the end of the variable just before the ending ":$LD_LIBRARY_PATH". This process is repeated until the first element does not start with "/usr".</p>
+<p>No circumstance can be envisaged whereby it would be required that these scripts were not run, so, automatic execution of these scripts has been incorporated into the relevant Makefile.am's.</p>
 <p><b>2 ... Use a container</b></p>
 <p>Obviously the container should not have the library installed.</p>
 <p>The upside of using a container is that the libtool wrappers should just work, so all that would be required would be:- ./messagestest</p>
