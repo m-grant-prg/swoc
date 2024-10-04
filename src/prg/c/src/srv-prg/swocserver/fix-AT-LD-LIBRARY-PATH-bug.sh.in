@@ -55,7 +55,7 @@ set -eo pipefail
 ##################
 # Init variables #
 ##################
-readonly version=1.1.0				# Script version
+readonly version=1.1.1				# Script version
 readonly packageversion=@pkgversion@		# Package version
 
 
@@ -174,8 +174,8 @@ proc_CL()
 proc_CL "$@"
 
 for script in $@; do
-	while grep -q 'LD_LIBRARY_PATH=\"/usr' ./$script ; do
-		l_lib_path=$(grep 'LD_LIBRARY_PATH=\"/usr' ./$script)
+	while grep -q 'LD_LIBRARY_PATH=\"/usr' "./$script" ; do
+		l_lib_path=$(grep 'LD_LIBRARY_PATH=\"/usr' "./$script")
 
 		# shellcheck disable=SC2016 # Do not expand The env variable.
 		l_lib_path=$(echo "$l_lib_path" | sed -e 's/ //g' \
@@ -191,9 +191,9 @@ for script in $@; do
 		l_lib_path="$l_lib_path:$bad_first_element:\$LD_LIBRARY_PATH"
 
 		sed -i "/LD_LIBRARY_PATH=\"\/usr/ s;=.*$;=\"$l_lib_path\";" \
-			./$script
+			"./$script"
 		msg="LD_LIBRARY_PATH bug fixed in Libtool wrapper script %s\n"
-		printf "$msg" $script
+		printf "$msg" "$script"
 	done
 done
 
