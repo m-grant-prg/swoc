@@ -173,6 +173,7 @@ proc_CL()
 
 proc_CL "$@"
 
+# shellcheck disable=SC2068 # Word splitting is required.
 for script in $@; do
 	while grep -q 'LD_LIBRARY_PATH=\"/usr' "./$script" ; do
 		l_lib_path=$(grep 'LD_LIBRARY_PATH=\"/usr' "./$script")
