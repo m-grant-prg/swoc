@@ -192,8 +192,8 @@ for script in $@; do
 
 		sed -i "/LD_LIBRARY_PATH=\"\/usr/ s;=.*$;=\"$l_lib_path\";" \
 			"./$script"
-		msg="LD_LIBRARY_PATH bug fixed in Libtool wrapper script %s\n"
-		printf "$msg" "$script"
+		msg="LD_LIBRARY_PATH bug fixed in Libtool wrapper script"
+		printf "$msg %s\n" "$script"
 	done
 done
 
