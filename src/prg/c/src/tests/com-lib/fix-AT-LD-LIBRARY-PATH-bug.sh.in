@@ -15,10 +15,21 @@
 #									#
 # Purpose:								#
 # To fix the LD_LIBRARY_PATH variable which is incorrectly built due to	#
-# a bug in Automake or Libtool. See docs in the source tree.		#
+# a bug in Debian's build system, (openSUSE & Fedora build correctly	#
+# but this script perfornms checks for them as well).			#
+# See docs in the source tree.						#
 # CLA's:- 1 or more libtool wrapper scripts to fix.			#
 #									#
 # Syntax:	See usage().						#
+#									#
+# Limitations:-								#
+# This is a temporary hack to fix a bug. It is not perfect. In		#
+# particular the following:-						#
+#	a) LD_LIBRARY_PATH must contain at least one path		#
+#	b) There must be one valid path ie does not match patterns	#
+#	c) Only one valid path is moved to the start of the variable	#
+#	d) Starting patterns that match are moved to the end but this	#
+#		can re-order the remaining paths			#
 #									#
 # Exit codes used:-							#
 # Bash standard Exit Codes:	0 - success				#
@@ -55,8 +66,12 @@ set -eo pipefail
 ##################
 # Init variables #
 ##################
-readonly version=1.1.1				# Script version
+readonly version=1.2.0				# Script version
 readonly packageversion=@pkgversion@		# Package version
+
+path_prefix_patterns="/usr/lib64"			# Fedora and openSUSE
+path_prefix_patterns+=" /usr/lib/x86_64-linux-gnu"	# Debian
+readonly path_prefix_patterns+=" /usr/local/lib"	# All local installs
 
 
 #############
@@ -167,35 +182,70 @@ proc_CL()
 }
 
 
+# Strip script LD_LIBRARY_PATH= line to just literal paths.
+# No parameters
+# No return value
+strip_script_path_line()
+{
+	l_lib_path=$(grep "LD_LIBRARY_PATH=\"$path_prefix_pattern" "./$script")
+
+	# shellcheck disable=SC2016 # Do not expand The env  variable.
+	l_lib_path=$(echo "$l_lib_path" | sed -e 's/ //g' \
+		-e 's/LD_LIBRARY_PATH=\"//g' -e 's/\:\$LD_LIBRARY_PATH\"//g')
+}
+
+
+# Extract the offending normal /usr/lib type path
+# No parameters
+# No return value
+get_bad_first_element()
+{
+	bad_first_element=$(echo "$l_lib_path" \
+		| sed -e "/^${path_prefix_pattern////\\/}/ s/\:.*$//")
+}
+
+
+# Reorganise path elements and rebuild script LD_LIBRARY_PATH= line
+# No parameters
+# No return value
+rebuild_script_path_line()
+{
+	# shellcheck disable=SC2001 # Happy to use sed for consistency.
+	l_lib_path=$(echo "$l_lib_path" | sed "s;$bad_first_element\:;;")
+
+	l_lib_path="$l_lib_path:$bad_first_element"
+	l_lib_path+=":\$LD_LIBRARY_PATH"
+
+	# Bash parameter expansion escapes the path seperator /
+	sed -i "/LD_LIBRARY_PATH=\"${path_prefix_pattern////\\/}/ s;=.*$;=\"$l_lib_path\";" "./$script"
+}
+
+
 ########
 # Main #
 ########
 
 proc_CL "$@"
 
+# See Limitations at SOF
+
 # shellcheck disable=SC2068 # Word splitting is required.
 for script in $@; do
-	while grep -q 'LD_LIBRARY_PATH=\"/usr' "./$script" ; do
-		l_lib_path=$(grep 'LD_LIBRARY_PATH=\"/usr' "./$script")
+	msg="Checking Libtool wrapper script $script for LD_LIBRARY_PATH bug..."
+	printf "$msg"
 
-		# shellcheck disable=SC2016 # Do not expand The env variable.
-		l_lib_path=$(echo "$l_lib_path" | sed -e 's/ //g' \
-			-e 's/LD_LIBRARY_PATH=\"//g' \
-			-e 's/\:\$LD_LIBRARY_PATH\"//g')
-		bad_first_element=$(echo "$l_lib_path" \
-			| sed -e '/^\/usr/ s/\:.*$//')
+	msg="OK as is"
+	for path_prefix_pattern in $path_prefix_patterns; do
+		while grep -q "LD_LIBRARY_PATH=\"$path_prefix_pattern" \
+			"./$script" ; do
+			strip_script_path_line
+			get_bad_first_element
+			rebuild_script_path_line
 
-		# shellcheck disable=SC2001 # Happy to use sed for consistency.
-		l_lib_path=$(echo "$l_lib_path" \
-			| sed "s;$bad_first_element\:;;")
-
-		l_lib_path="$l_lib_path:$bad_first_element:\$LD_LIBRARY_PATH"
-
-		sed -i "/LD_LIBRARY_PATH=\"\/usr/ s;=.*$;=\"$l_lib_path\";" \
-			"./$script"
-		msg="LD_LIBRARY_PATH bug fixed in Libtool wrapper script"
-		printf "$msg %s\n" "$script"
+			msg="Fixed"
+		done
 	done
+	printf "$msg \n"
 done
 
 script_exit 0
