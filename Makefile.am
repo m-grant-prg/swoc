@@ -88,6 +88,7 @@ EXTRA_DIST = $(srcdir)/AUTHORS $(srcdir)/ChangeLog $(srcdir)/COPYING \
 	     $(srcdir)/NEWS $(srcdir)/README
 EXTRA_DIST += m4/gnulib-cache.m4
 EXTRA_DIST += docs/misc misc
+EXTRA_DIST += $(srcdir)/fix-AT-LD-LIBRARY-PATH-bug.sh.in
 
 
 srctarball:
@@ -109,4 +110,7 @@ doxygen:
 		|| exit 1
 
 .PHONY: doxygen
+
+
+CLEANFILES = *.tmp
 

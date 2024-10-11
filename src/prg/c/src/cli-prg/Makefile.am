@@ -15,12 +15,12 @@
 fix-AT-LD-LIBRARY-PATH-bug.sh: swocclient Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
-	test -f ./$@.in || srcdir=$(srcdir)/; \
-	$(edit) $${srcdir}$(@F).in > $@.tmp
+	test -f ./$@.in || top_srcdir=$(top_srcdir)/; \
+	$(edit) $${top_srcdir}$(@F).in > $@.tmp
 	mv $@.tmp $@
 	chmod a+x $@
 	./$@ "swocclient"
-fix-AT-LD-LIBRARY-PATH-bug.sh: $(srcdir)/fix-AT-LD-LIBRARY-PATH-bug.sh.in
+fix-AT-LD-LIBRARY-PATH-bug.sh: $(top_srcdir)/fix-AT-LD-LIBRARY-PATH-bug.sh.in
 
 noinst_SCRIPTS = fix-AT-LD-LIBRARY-PATH-bug.sh
 
@@ -83,8 +83,7 @@ LDADD += ../com-lib/libswoccommon.la
 LDADD += ../cli-lib/libswocclient.la
 
 
-EXTRA_DIST = $(srcdir)/fix-AT-LD-LIBRARY-PATH-bug.sh.in \
-	     $(srcdir)/gdbinit.in
+EXTRA_DIST = $(srcdir)/gdbinit.in
 
 CLEANFILES = *.tmp fix-AT-LD-LIBRARY-PATH-bug.sh \
 	     .gdbinit

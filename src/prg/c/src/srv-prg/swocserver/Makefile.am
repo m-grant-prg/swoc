@@ -15,12 +15,12 @@
 fix-AT-LD-LIBRARY-PATH-bug.sh: swocserver Makefile
 	mkdir -p $(@D)
 	rm -f $@ $@.tmp
-	test -f ./$@.in || srcdir=$(srcdir)/; \
-	$(edit) $${srcdir}$(@F).in > $@.tmp
+	test -f ./$@.in || top_srcdir=$(top_srcdir)/; \
+	$(edit) $${top_srcdir}$(@F).in > $@.tmp
 	mv $@.tmp $@
 	chmod a+x $@
 	./$@ "swocserver"
-fix-AT-LD-LIBRARY-PATH-bug.sh: $(srcdir)/fix-AT-LD-LIBRARY-PATH-bug.sh.in
+fix-AT-LD-LIBRARY-PATH-bug.sh: $(top_srcdir)/fix-AT-LD-LIBRARY-PATH-bug.sh.in
 
 noinst_SCRIPTS = fix-AT-LD-LIBRARY-PATH-bug.sh
 
@@ -92,8 +92,7 @@ uninstall-local:
 endif
 
 
-EXTRA_DIST = $(srcdir)/fix-AT-LD-LIBRARY-PATH-bug.sh.in \
-	     $(srcdir)/gdbinit.in
+EXTRA_DIST = $(srcdir)/gdbinit.in
 
 CLEANFILES = *.tmp fix-AT-LD-LIBRARY-PATH-bug.sh \
 	     .gdbinit
