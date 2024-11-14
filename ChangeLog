@@ -1,3 +1,18 @@
+2024-11-14 v1.7.4 Mark Grant <m.grant.prg@gmail.com>
+	* build(deps): bump JamesIves/github-pages-deploy-action
+	build(deps): bump JamesIves/github-pages-deploy-action
+dependabot[bot] (2):
+
+	Merge pull request #16 from m-grant-prg/dependabot/github_actions/JamesIves/github-pages-deploy-action-4.6.9
+	lxcu: Start using libssh OpenSSL flavour
+	at: Reduce to 1 source copy of LD_LIBRARY_PATH bug fix script
+	at: Fix LD_LIBRARY_PATH correction for different paths
+	Merge pull request #14 from m-grant-prg/dependabot/github_actions/JamesIves/github-pages-deploy-action-4.6.8
+	at: Disable warning about required word splitting
+	at: Correct format of printf statement
+	at: Double quote to prevent globbing and word splitting
+Mark Grant (10):
+
 2024-09-30 v1.7.3 Mark Grant <m.grant.prg@gmail.com>
 	* build(deps): bump JamesIves/github-pages-deploy-action
 	build(deps): bump JamesIves/github-pages-deploy-action
