@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Server Wait On Clients System - Full Internal Documentation
-   &#160;<span id="projectnumber">v1.7.3</span>
+   &#160;<span id="projectnumber">v1.7.4</span>
    </div>
    <div id="projectbrief">Server Wait On Clients System.</div>
   </td>
@@ -444,7 +444,7 @@ Affected Environments</h3>
 <div class="fragment"><div class="line">autoconf 2.71-3</div>
 <div class="line">automake 1:1.16.5-1.3</div>
 <div class="line">libtool 2.4.7-5</div>
-</div><!-- fragment --><p>The problems may exist in other versions and / or versions shipped with other distributions. This has not been investigated.</p>
+</div><!-- fragment --><p>The problems may exist in other versions and / or versions shipped with other distributions. This has not been thoroughly investigated.</p>
 <h3><a class="anchor" id="the_issue"></a>
 The Issue</h3>
 <p>If the test program Makefile.am references another library, perhaps via the linker flags, e.g.:-</p>
@@ -461,7 +461,7 @@ Workarounds</h3>
 <p>2) Run in a container which does not have the library installed.</p>
 <p><b>1 ... Fix the library variable</b></p>
 <p>A generic script named fix-AT-LD-LIBRARY-PATH-bug.sh is supplied for each subsystem affected taking 1 or more Libtool wrapper scripts as arguments.</p>
-<p>This script performs a fairly basic reorganisation of the LD_LIBRARY_PATH variable. If the first entry starts "/usr" then this is moved to the end of the variable just before the ending ":$LD_LIBRARY_PATH". This process is repeated until the first element does not start with "/usr".</p>
+<p>This script performs a fairly basic reorganisation of the LD_LIBRARY_PATH variable. If the first entry starts /usr/lib64, /usr/lib/x86_64-linux-gnu or /usr/local/lib then this is moved to the end of the variable just before the ending ":$LD_LIBRARY_PATH". This process is repeated until the first element is correct. The 3 starting patterns are intended to cover, Fedora and openSUSE, then Debian and then all 3 in a local AT installation.</p>
 <p>No circumstance can be envisaged whereby it would be required that these scripts were not run, so, automatic execution of these scripts has been incorporated into the relevant Makefile.am's.</p>
 <p><b>2 ... Use a container</b></p>
 <p>Obviously the container should not have the library installed.</p>

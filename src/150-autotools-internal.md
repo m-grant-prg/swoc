@@ -468,7 +468,7 @@ libtool 2.4.7-5
 \endcode
 
 The problems may exist in other versions and / or versions shipped with other
-distributions. This has not been investigated.
+distributions. This has not been thoroughly investigated.
 
 \subsubsection the_issue The Issue
 If the test program Makefile.am references another library, perhaps via the
@@ -508,9 +508,11 @@ A generic script named fix-AT-LD-LIBRARY-PATH-bug.sh is supplied for
 each subsystem affected taking 1 or more Libtool wrapper scripts as arguments.
 
 This script performs a fairly basic reorganisation of the LD_LIBRARY_PATH
-variable. If the first entry starts "/usr" then this is moved to the end of the
-variable just before the ending ":$LD_LIBRARY_PATH". This process is repeated
-until the first element does not start with "/usr".
+variable. If the first entry starts /usr/lib64, /usr/lib/x86_64-linux-gnu
+or /usr/local/lib then this is moved to the end of the variable just before the
+ending ":$LD_LIBRARY_PATH". This process is repeated until the first element is
+correct. The 3 starting patterns are intended to cover, Fedora and openSUSE,
+then Debian and then all 3 in a local AT installation.
 
 No circumstance can be envisaged whereby it would be required that these scripts
 were not run, so, automatic execution of these scripts has been incorporated
