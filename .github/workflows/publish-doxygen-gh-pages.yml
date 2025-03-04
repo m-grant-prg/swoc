@@ -1,14 +1,14 @@
 #########################################################################
-#									#
-# Author: Copyright (C) 2022, 2023  Mark Grant				#
-#									#
-# Released under the GPLv3 only.					#
-# SPDX-License-Identifier: GPL-3.0-only					#
-#									#
-# Purpose:								#
+#                                                                       #
+# Author: Copyright (C) 2022, 2023  Mark Grant                          #
+#                                                                       #
+# Released under the GPLv3 only.                                        #
+# SPDX-License-Identifier: GPL-3.0-only                                 #
+#                                                                       #
+# Purpose:                                                              #
 # Configuration file for GitHub Actions publication of Doxygen          #
 # documentation to Github Pages. Only runs on published release event.  #
-#									#
+#                                                                       #
 #########################################################################
 
 
