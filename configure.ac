@@ -498,6 +498,11 @@ if test "x${enable_iwyu}" = xtrue; then
 	fi
 fi
 
+AC_CHECK_PROG(PKGCONFIG, pkg-config, yes, no)
+if test "x$PKGCONFIG" = "xno" ; then
+	AC_MSG_ERROR(pkg-config not found)
+fi
+
 if test "x${scan_build}" = xtrue; then
 	AC_CHECK_PROG(SCAN_BUILD, scan-build, yes, no)
 	if test "x$SCAN_BUILD" = "xno" ; then
@@ -518,11 +523,6 @@ fi
 AC_CHECK_PROG(TXT2MANWRAP, txt2manwrap, yes, no)
 if test "x$TXT2MANWRAP" = "xno" ; then
    	AC_MSG_ERROR(txt2manwrap not found)
-fi
-
-AC_CHECK_PROG(PKGCONFIG, pkg-config, yes, no)
-if test "x$PKGCONFIG" = "xno" ; then
-	AC_MSG_ERROR(pkg-config not found)
 fi
 
 AC_MSG_NOTICE(checking for particular programs required at build and run time)
