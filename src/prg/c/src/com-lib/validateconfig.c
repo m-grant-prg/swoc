@@ -5,12 +5,12 @@
  *
  * Used for swocserver and swocclient not swocserverd.
  *
- * @author Copyright (C) 2017-2019, 2021-2023  Mark Grant
+ * @author Copyright (C) 2017-2019, 2021-2023, 2025  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.0 ==== 26/11/2023_
+ * @version _v1.1.1 ==== 30/03/2025_
  */
 
 #include <ctype.h>
@@ -27,93 +27,12 @@
 #include <libmgesysutils/mge-configfile.h>
 #include <swoc/libswoccommon.h>
 
-static int validateconfigfileparams(const struct confsection *);
-static int validatepollint(const struct confsection *);
-static int validatessh(const struct confsection *ps);
-static int validateserver(const struct confsection *);
-static int validatesrvportno(const struct confsection *);
-static int validatesshportno(const struct confsection *);
-static int validatesshuser(const struct confsection *ps);
-
 int pollint;			     /**< Polling interval. */
 int ssh;			     /**< Use SSH false == 0, true == 1 */
 char server[_POSIX_HOST_NAME_MAX];   /**< Server name. */
 int srvportno;			     /**< Server port number. */
 int sshportno;			     /**< Local port to use if using SSH. */
 char sshuser[_POSIX_LOGIN_NAME_MAX]; /**< Server username for SSH. */
-
-/**
- * Parse and validate the config file.
- * On error mge_errno is set.
- * @return 0 on success, < zero on failure.
- */
-int swcom_validate_config(void)
-{
-	int swscom_err = 0;
-	/* Expand config file full path. */
-	const char *configfile = SYSCONFDIR "/swoc.conf";
-	struct confsection *psections;
-
-	/* Set up config file parameters. */
-	int nsections = 3;
-	psections = malloc((sizeof(struct confsection)) * (size_t)nsections);
-	if (psections == NULL) {
-		sav_errno = errno;
-		mge_errno = MGE_ERRNO;
-		return -mge_errno;
-	}
-
-	psections[0] = (struct confsection){ "General",
-					     1,
-					     0,
-					     { { "pollint", 1, 0, "" },
-					       { "ssh", 1, 0, "" } } };
-
-	psections[1] = (struct confsection){ "Server",
-					     1,
-					     0,
-					     { { "server", 1, 0, "" },
-					       { "srvportno", 1, 0, "" } } };
-
-	psections[2] = (struct confsection){ "SSH",
-					     1,
-					     0,
-					     { { "sshportno", 1, 0, "" },
-					       { "sshuser", 1, 0, "" } } };
-
-	/* Parse config file. */
-	swscom_err = parsefile(psections, nsections, configfile);
-	if (swscom_err)
-		goto exit;
-
-	/* Validate config file params. */
-	swscom_err = validateconfigfileparams(psections);
-
-exit:
-	free(psections);
-	return swscom_err;
-}
-
-/*
- * Validate config file params.
- */
-static int validateconfigfileparams(const struct confsection *ps)
-{
-	int e;
-
-	if ((e = validatepollint(ps)))
-		return e;
-	if ((e = validatessh(ps)))
-		return e;
-	if ((e = validateserver(ps)))
-		return e;
-	if ((e = validatesrvportno(ps)))
-		return e;
-	if ((e = validatesshportno(ps)))
-		return e;
-	e = validatesshuser(ps);
-	return e;
-}
 
 /*
  * Ensure config file param pollint contains a reasonable value, ie under
@@ -262,4 +181,77 @@ static int validatesshuser(const struct confsection *ps)
 	}
 	strcpy(sshuser, (ps + 2)->keys[1].value);
 	return 0;
+}
+
+/*
+ * Validate config file params.
+ */
+static int validateconfigfileparams(const struct confsection *ps)
+{
+	int e;
+
+	if ((e = validatepollint(ps)))
+		return e;
+	if ((e = validatessh(ps)))
+		return e;
+	if ((e = validateserver(ps)))
+		return e;
+	if ((e = validatesrvportno(ps)))
+		return e;
+	if ((e = validatesshportno(ps)))
+		return e;
+	e = validatesshuser(ps);
+	return e;
+}
+
+/**
+ * Parse and validate the config file.
+ * On error mge_errno is set.
+ * @return 0 on success, < zero on failure.
+ */
+int swcom_validate_config(void)
+{
+	int swscom_err = 0;
+	/* Expand config file full path. */
+	const char *configfile = SYSCONFDIR "/swoc.conf";
+	struct confsection *psections;
+
+	/* Set up config file parameters. */
+	int nsections = 3;
+	psections = malloc((sizeof(struct confsection)) * (size_t)nsections);
+	if (psections == NULL) {
+		sav_errno = errno;
+		mge_errno = MGE_ERRNO;
+		return -mge_errno;
+	}
+
+	psections[0] = (struct confsection){ "General",
+					     1,
+					     0,
+					     { { "pollint", 1, 0, "" },
+					       { "ssh", 1, 0, "" } } };
+
+	psections[1] = (struct confsection){ "Server",
+					     1,
+					     0,
+					     { { "server", 1, 0, "" },
+					       { "srvportno", 1, 0, "" } } };
+
+	psections[2] = (struct confsection){ "SSH",
+					     1,
+					     0,
+					     { { "sshportno", 1, 0, "" },
+					       { "sshuser", 1, 0, "" } } };
+
+	/* Parse config file. */
+	swscom_err = parsefile(psections, nsections, configfile);
+	if (swscom_err)
+		goto exit;
+
+	/* Validate config file params. */
+	swscom_err = validateconfigfileparams(psections);
+
+exit:
+	free(psections);
+	return swscom_err;
 }

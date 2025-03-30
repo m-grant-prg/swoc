@@ -3,12 +3,12 @@
  *
  * Message processing functions common to swoc programs.
  *
- * @author Copyright (C) 2017-2023  Mark Grant
+ * @author Copyright (C) 2017-2023, 2025  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.2.0 ==== 06/12/2023_
+ * @version _v1.2.1 ==== 30/03/2025_
  */
 
 #include <arpa/inet.h>
@@ -27,11 +27,243 @@
 #include <libmgec/mge-message.h>
 #include <swoc/libswoccommon.h>
 
-static int get_reply_msg(int sockfd, struct mgemessage *recv_msg);
-static int host_id(int sockfd, const char *orig_outgoing_msg);
+/*
+ * Get the socket's IP address and the associated canonical host name.
+ * If over an SSH tunnel, separately create a new normal TCP socket, otherwise
+ * the socket is bound to localhost.
+ * On error mge_errno will be set.
+ * @param sock_fd The socket file descriptor in use.
+ * @param host_name The string to contain the host name.
+ * @param host_name_size The size of the string to hold the host name.
+ * @param host_ip The string to contain the IP address.
+ * @param sock_host_ip_size The size of the string to hold the IP address.
+ * @return 0 on success, < zero on error.
+ */
 static int get_host_name_ip(int sock_fd, char *host_name,
 			    socklen_t host_name_size, char *host_ip,
-			    socklen_t host_ip_size);
+			    socklen_t host_ip_size)
+{
+	/* sockaddr_storage is large enough for IPv4 of IPv6 */
+	struct sockaddr_storage local_addr;
+	struct sockaddr *address = (struct sockaddr *)&local_addr;
+	socklen_t addr_size = sizeof(local_addr);
+	struct addrinfo hints;
+	struct addrinfo *info;
+	char hostname[host_name_size];
+	socklen_t sockaddr_size;
+	void *num_address;
+	int s;
+
+	/*
+	 * If the connection is over an SSH tunnel then the socket IP address
+	 * would be localhost. So we must establish a non-SSH connection to get
+	 * the real external IF IP address.
+	 */
+	if (ssh) {
+		s = init_conn(&sock_fd, &srvportno, server);
+		if (s)
+			return s;
+	}
+	s = getsockname(sock_fd, (struct sockaddr *)&local_addr, &addr_size);
+	if (s) {
+		sav_errno = errno;
+		mge_errno = MGE_ERRNO;
+		syslog((int)(LOG_USER | LOG_NOTICE), "getsockname error - %s",
+		       mge_strerror(mge_errno));
+		return -mge_errno;
+	}
+	switch (address->sa_family) {
+	case AF_INET:
+		num_address = &((struct sockaddr_in *)address)->sin_addr;
+		sockaddr_size = sizeof(struct sockaddr_in);
+		break;
+	case AF_INET6:
+		num_address = &((struct sockaddr_in6 *)address)->sin6_addr;
+		sockaddr_size = sizeof(struct sockaddr_in6);
+		break;
+	default:
+		mge_errno = MGE_PROTO;
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "getsockname error - Unknown type, not IPv4 or IPv6 ");
+		return -mge_errno;
+	}
+	if (inet_ntop(address->sa_family, num_address, host_ip, host_ip_size)
+	    == NULL) {
+		sav_errno = errno;
+		mge_errno = MGE_ERRNO;
+		syslog((int)(LOG_USER | LOG_NOTICE), "getsockname error - %s",
+		       mge_strerror(mge_errno));
+		return -mge_errno;
+	}
+
+	s = getnameinfo((struct sockaddr *)&local_addr, sockaddr_size, hostname,
+			host_name_size, NULL, 0, NI_NAMEREQD);
+	if (s) {
+		sav_errno = s;
+		mge_errno = MGE_GAI;
+		syslog((int)(LOG_USER | LOG_NOTICE), "getnameinfo error - %s",
+		       mge_strerror(mge_errno));
+		return -mge_errno;
+	}
+
+	memset(&hints, 0, sizeof hints);
+	hints.ai_family = AF_UNSPEC; /* Either IPV4 or IPV6 */
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_flags = AI_CANONNAME;
+
+	s = getaddrinfo(hostname, "http", &hints, &info);
+	if (s) {
+		sav_errno = s;
+		mge_errno = MGE_GAI;
+		syslog((int)(LOG_USER | LOG_NOTICE), "getnameinfo error - %s",
+		       mge_strerror(mge_errno));
+		return -mge_errno;
+	}
+
+	strcpy(host_name, hostname);
+
+	if (ssh) {
+		s = close_sock(&sock_fd);
+		if (s)
+			return s;
+	}
+	return 0;
+}
+
+/*
+ * Get daemon reply message.
+ * Send and receive 1 message.
+ * Discard anything in the buffer after the 1st message terminator.
+ * On error mge_errno will be set.
+ * @param sockfd The socket to use.
+ * @param msg The received message.
+ * @return 0 on success, < zero on error.
+ */
+static int get_reply_msg(int sockfd, struct mgemessage *recv_msg)
+{
+	ssize_t n;
+	char sock_buf[SOCK_BUF_SIZE];
+	struct mgebuffer msg_buf1 = MGEBUFFER_INIT;
+	struct mgebuffer *msg_buf = &msg_buf1;
+
+	/* Get server daemon reply. */
+	memset(sock_buf, '\0', sizeof(sock_buf));
+
+	n = recv(sockfd, sock_buf, sizeof(sock_buf), 0);
+	if (!n) {
+		mge_errno = MGE_INVAL_MSG;
+		return -mge_errno;
+	}
+
+	do {
+		if (n < 0) {
+			sav_errno = errno;
+			mge_errno = MGE_ERRNO;
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "ERROR reading "
+			       "from socket - %s",
+			       mge_strerror(mge_errno));
+			return -mge_errno;
+		}
+		msg_buf = concat_buf(sock_buf, (size_t)n, msg_buf);
+		if (msg_buf1.buffer == NULL)
+			return -mge_errno;
+
+		/*
+		 * Only 1 message can be valid, anything else is erroneous,
+		 * so don't loop emptying the buffer of messages.
+		 */
+		recv_msg = pull_msg(msg_buf, recv_msg);
+		if (recv_msg == NULL) {
+			free(msg_buf1.buffer);
+			return -mge_errno;
+		}
+
+		if (recv_msg->complete)
+			break;
+
+		memset(sock_buf, '\0', sizeof(sock_buf));
+	} while ((n = recv(sockfd, sock_buf, sizeof(sock_buf), 0)) != 0);
+	free(msg_buf1.buffer);
+	return 0;
+}
+
+/*
+ * Server or client submits id.
+ * The host name and IP address are submitted for the daemon to know the
+ * machine identity even if it is coming over SSH (which always appears as
+ * localhost to the daemon).
+ * Daemon is unaffected by errors which are relayed back to the sender.
+ * Exactly 2 arguments, the host name and IP address.
+ * On error mge_errno will be set.
+ * @param sockfd The socket in use.
+ * @param orig_outgoing_msg The original (main) outgoing message.
+ * @return 0 on success, < zero on error.
+ */
+static int host_id(int sockfd, const char *orig_outgoing_msg)
+{
+	char host_name[_POSIX_HOST_NAME_MAX];
+	char host_ip[INET6_ADDRSTRLEN];
+	socklen_t host_name_size = sizeof(host_name);
+	socklen_t host_ip_size = sizeof(host_ip);
+	char *p_host_name = host_name;
+	char *p_host_ip = host_ip;
+	char om[13 + _POSIX_HOST_NAME_MAX + INET6_ADDRSTRLEN];
+	char oom[strlen(orig_outgoing_msg) + 1];
+	char *end;
+	struct mgemessage ret_msg = MGEMESSAGE_INIT(';', ',');
+	long int x;
+	int s;
+
+	/*
+	 * Get the IP address bound to the socket and the host name attached to
+	 * the socket.
+	 */
+	s = get_host_name_ip(sockfd, p_host_name, host_name_size, p_host_ip,
+			     host_ip_size);
+	if (s)
+		return s;
+
+	strcpy(oom, orig_outgoing_msg);
+	strcpy(om, strtok(oom, ","));
+	strcat(om, ",id,");
+	strcat(om, host_name);
+	strcat(om, ",");
+	strcat(om, host_ip);
+	strcat(om, ";");
+	s = send_outgoing_msg(om, strlen(om), &sockfd);
+	if (s)
+		goto msg_free_exit;
+
+	s = get_reply_msg(sockfd, &ret_msg);
+	if (s)
+		goto msg_free_exit;
+
+	if (strncmp(ret_msg.message, "swocserverd,id,ok", 17)) {
+		mge_errno = MGE_INVAL_MSG;
+		if (ret_msg.argc == 4) {
+			if (!(strcmp(ret_msg.argv[0], "swocserverd"))
+			    && !(strcmp(ret_msg.argv[1], "id"))
+			    && !(strcmp(ret_msg.argv[2], "err"))) {
+				x = strtol(ret_msg.argv[3], &end, 10);
+				if ((*end == '\0') && x <= INT_MAX
+				    && x >= INT_MIN)
+					mge_errno = (int)x;
+			}
+		}
+		s = -mge_errno;
+		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
+		       mge_strerror(mge_errno));
+		goto msg_free_exit;
+	}
+
+	clear_msg(&ret_msg, ';', ',');
+	return 0;
+
+msg_free_exit:
+	clear_msg(&ret_msg, ';', ',');
+	return s;
+}
 
 /**
  * Parse a message.
@@ -177,242 +409,4 @@ err_exit_0:
 	if (ssh)
 		close_ssh_tunnel();
 	return res;
-}
-
-/*
- * Get daemon reply message.
- * Send and receive 1 message.
- * Discard anything in the buffer after the 1st message terminator.
- * On error mge_errno will be set.
- * @param sockfd The socket to use.
- * @param msg The received message.
- * @return 0 on success, < zero on error.
- */
-static int get_reply_msg(int sockfd, struct mgemessage *recv_msg)
-{
-	ssize_t n;
-	char sock_buf[SOCK_BUF_SIZE];
-	struct mgebuffer msg_buf1 = MGEBUFFER_INIT;
-	struct mgebuffer *msg_buf = &msg_buf1;
-
-	/* Get server daemon reply. */
-	memset(sock_buf, '\0', sizeof(sock_buf));
-
-	n = recv(sockfd, sock_buf, sizeof(sock_buf), 0);
-	if (!n) {
-		mge_errno = MGE_INVAL_MSG;
-		return -mge_errno;
-	}
-
-	do {
-		if (n < 0) {
-			sav_errno = errno;
-			mge_errno = MGE_ERRNO;
-			syslog((int)(LOG_USER | LOG_NOTICE),
-			       "ERROR reading "
-			       "from socket - %s",
-			       mge_strerror(mge_errno));
-			return -mge_errno;
-		}
-		msg_buf = concat_buf(sock_buf, (size_t)n, msg_buf);
-		if (msg_buf1.buffer == NULL)
-			return -mge_errno;
-
-		/*
-		 * Only 1 message can be valid, anything else is erroneous,
-		 * so don't loop emptying the buffer of messages.
-		 */
-		recv_msg = pull_msg(msg_buf, recv_msg);
-		if (recv_msg == NULL) {
-			free(msg_buf1.buffer);
-			return -mge_errno;
-		}
-
-		if (recv_msg->complete)
-			break;
-
-		memset(sock_buf, '\0', sizeof(sock_buf));
-	} while ((n = recv(sockfd, sock_buf, sizeof(sock_buf), 0)) != 0);
-	free(msg_buf1.buffer);
-	return 0;
-}
-
-/*
- * Server or client submits id.
- * The host name and IP address are submitted for the daemon to know the
- * machine identity even if it is coming over SSH (which always appears as
- * localhost to the daemon).
- * Daemon is unaffected by errors which are relayed back to the sender.
- * Exactly 2 arguments, the host name and IP address.
- * On error mge_errno will be set.
- * @param sockfd The socket in use.
- * @param orig_outgoing_msg The original (main) outgoing message.
- * @return 0 on success, < zero on error.
- */
-static int host_id(int sockfd, const char *orig_outgoing_msg)
-{
-	char host_name[_POSIX_HOST_NAME_MAX];
-	char host_ip[INET6_ADDRSTRLEN];
-	socklen_t host_name_size = sizeof(host_name);
-	socklen_t host_ip_size = sizeof(host_ip);
-	char *p_host_name = host_name;
-	char *p_host_ip = host_ip;
-	char om[13 + _POSIX_HOST_NAME_MAX + INET6_ADDRSTRLEN];
-	char oom[strlen(orig_outgoing_msg) + 1];
-	char *end;
-	struct mgemessage ret_msg = MGEMESSAGE_INIT(';', ',');
-	long int x;
-	int s;
-
-	/*
-	 * Get the IP address bound to the socket and the host name attached to
-	 * the socket.
-	 */
-	s = get_host_name_ip(sockfd, p_host_name, host_name_size, p_host_ip,
-			     host_ip_size);
-	if (s)
-		return s;
-
-	strcpy(oom, orig_outgoing_msg);
-	strcpy(om, strtok(oom, ","));
-	strcat(om, ",id,");
-	strcat(om, host_name);
-	strcat(om, ",");
-	strcat(om, host_ip);
-	strcat(om, ";");
-	s = send_outgoing_msg(om, strlen(om), &sockfd);
-	if (s)
-		goto msg_free_exit;
-
-	s = get_reply_msg(sockfd, &ret_msg);
-	if (s)
-		goto msg_free_exit;
-
-	if (strncmp(ret_msg.message, "swocserverd,id,ok", 17)) {
-		mge_errno = MGE_INVAL_MSG;
-		if (ret_msg.argc == 4) {
-			if (!(strcmp(ret_msg.argv[0], "swocserverd"))
-			    && !(strcmp(ret_msg.argv[1], "id"))
-			    && !(strcmp(ret_msg.argv[2], "err"))) {
-				x = strtol(ret_msg.argv[3], &end, 10);
-				if ((*end == '\0') && x <= INT_MAX
-				    && x >= INT_MIN)
-					mge_errno = (int)x;
-			}
-		}
-		s = -mge_errno;
-		syslog((int)(LOG_USER | LOG_NOTICE), "Invalid message - %s",
-		       mge_strerror(mge_errno));
-		goto msg_free_exit;
-	}
-
-	clear_msg(&ret_msg, ';', ',');
-	return 0;
-
-msg_free_exit:
-	clear_msg(&ret_msg, ';', ',');
-	return s;
-}
-
-/*
- * Get the socket's IP address and the associated canonical host name.
- * If over an SSH tunnel, separately create a new normal TCP socket, otherwise
- * the socket is bound to localhost.
- * On error mge_errno will be set.
- * @param sock_fd The socket file descriptor in use.
- * @param host_name The string to contain the host name.
- * @param host_name_size The size of the string to hold the host name.
- * @param host_ip The string to contain the IP address.
- * @param sock_host_ip_size The size of the string to hold the IP address.
- * @return 0 on success, < zero on error.
- */
-static int get_host_name_ip(int sock_fd, char *host_name,
-			    socklen_t host_name_size, char *host_ip,
-			    socklen_t host_ip_size)
-{
-	/* sockaddr_storage is large enough for IPv4 of IPv6 */
-	struct sockaddr_storage local_addr;
-	struct sockaddr *address = (struct sockaddr *)&local_addr;
-	socklen_t addr_size = sizeof(local_addr);
-	struct addrinfo hints;
-	struct addrinfo *info;
-	char hostname[host_name_size];
-	socklen_t sockaddr_size;
-	void *num_address;
-	int s;
-
-	/*
-	 * If the connection is over an SSH tunnel then the socket IP address
-	 * would be localhost. So we must establish a non-SSH connection to get
-	 * the real external IF IP address.
-	 */
-	if (ssh) {
-		s = init_conn(&sock_fd, &srvportno, server);
-		if (s)
-			return s;
-	}
-	s = getsockname(sock_fd, (struct sockaddr *)&local_addr, &addr_size);
-	if (s) {
-		sav_errno = errno;
-		mge_errno = MGE_ERRNO;
-		syslog((int)(LOG_USER | LOG_NOTICE), "getsockname error - %s",
-		       mge_strerror(mge_errno));
-		return -mge_errno;
-	}
-	switch (address->sa_family) {
-	case AF_INET:
-		num_address = &((struct sockaddr_in *)address)->sin_addr;
-		sockaddr_size = sizeof(struct sockaddr_in);
-		break;
-	case AF_INET6:
-		num_address = &((struct sockaddr_in6 *)address)->sin6_addr;
-		sockaddr_size = sizeof(struct sockaddr_in6);
-		break;
-	default:
-		mge_errno = MGE_PROTO;
-		syslog((int)(LOG_USER | LOG_NOTICE),
-		       "getsockname error - Unknown type, not IPv4 or IPv6 ");
-		return -mge_errno;
-	}
-	if (inet_ntop(address->sa_family, num_address, host_ip, host_ip_size)
-	    == NULL) {
-		sav_errno = errno;
-		mge_errno = MGE_ERRNO;
-		syslog((int)(LOG_USER | LOG_NOTICE), "getsockname error - %s",
-		       mge_strerror(mge_errno));
-		return -mge_errno;
-	}
-
-	s = getnameinfo((struct sockaddr *)&local_addr, sockaddr_size, hostname,
-			host_name_size, NULL, 0, NI_NAMEREQD);
-	if (s) {
-		sav_errno = s;
-		mge_errno = MGE_GAI;
-		syslog((int)(LOG_USER | LOG_NOTICE), "getnameinfo error - %s",
-		       mge_strerror(mge_errno));
-		return -mge_errno;
-	}
-
-	memset(&hints, 0, sizeof hints);
-	hints.ai_family = AF_UNSPEC; /* Either IPV4 or IPV6 */
-	hints.ai_socktype = SOCK_STREAM;
-	hints.ai_flags = AI_CANONNAME;
-
-	s = getaddrinfo(hostname, "http", &hints, &info);
-	if (s) {
-		sav_errno = s;
-		mge_errno = MGE_GAI;
-		syslog((int)(LOG_USER | LOG_NOTICE), "getnameinfo error - %s",
-		       mge_strerror(mge_errno));
-		return -mge_errno;
-	}
-
-	strcpy(host_name, hostname);
-
-	if (ssh) {
-		s = close_sock(&sock_fd);
-		if (s)
-			return s;
-	}
-	return 0;
 }
