@@ -5,12 +5,12 @@
  * Daemon to enable a server to manage client locks and wait on the removal of
  * those locks prior to further server processing.
  *
- * @author Copyright (C) 2016-2023  Mark Grant
+ * @author Copyright (C) 2016-2023, 2025  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.0 ==== 26/11/2023_
+ * @version _v1.1.1 ==== 31/03/2025_
  */
 
 #include <errno.h>
@@ -59,8 +59,87 @@ struct bstree *cli_locks;	   /**< Clients and locks. */
 struct bstree *cli_blocked;	   /**< Blocked client list. */
 struct bstree *port_sock;	   /**< Port / socket actual mappings. */
 
-static void daemonise(void);
-static int csscmp(const struct comm_spec *first, const struct comm_spec *last);
+/*
+ * Daemonise the process.
+ */
+static void daemonise(void)
+{
+	const char *pidfile = RUNSTATEDIR "/swocserverd.pid";
+	pid_t pid, sid;
+	char spid[256];
+	FILE *fp;
+
+	syslog((int)(LOG_USER | LOG_NOTICE), "Starting daemon.");
+
+	/*
+	 * Fork off the parent process.
+	 * < 0 Error
+	 * == 0 This is the child
+	 * > 0 is pid of child, ie this is the parent.
+	 */
+	pid = fork();
+	if (pid < 0) {
+		syslog((int)(LOG_USER | LOG_NOTICE), "Error forking.");
+		exit(EXIT_FAILURE);
+	}
+	/* This is the parent process, so exit after creating pid file. */
+	if (pid > 0) {
+		/* Create pid file. */
+		if ((fp = fopen(pidfile, "w")) == NULL) {
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "Cannot create "
+			       "pid file - %s",
+			       pidfile);
+			exit(EXIT_FAILURE);
+		}
+		snprintf(spid, ARRAY_SIZE(spid), "%i\n", (int)pid);
+		fputs(spid, fp);
+		fclose(fp);
+		exit(EXIT_SUCCESS);
+	}
+
+	/* Set the file mode creation mask for this new process. */
+	umask(0);
+
+	/*
+	 * Create a new session and sets this process as process group leader
+	 * in new process group.
+	 */
+	if ((sid = setsid()) < 0) {
+		syslog((int)(LOG_USER | LOG_NOTICE), "setsid error.");
+		exit(EXIT_FAILURE);
+	}
+
+	/* Change the current working directory. */
+	if ((chdir("/")) < 0) {
+		syslog((int)(LOG_USER | LOG_NOTICE), "Error on cd /.");
+		exit(EXIT_FAILURE);
+	}
+
+	/*
+	 * Rather than closing the standard file descriptors we shall
+	 * re-direct them to /dev/null. This is because epoll_wait silently
+	 * does not work as intended if these file descriptors are re-used.
+	 */
+	if (freopen("/dev/null", "r", stdin) == NULL)
+		syslog((int)(LOG_USER | LOG_NOTICE), "stdin freopen error.");
+	if (freopen("/dev/null", "w", stdout) == NULL)
+		syslog((int)(LOG_USER | LOG_NOTICE), "stdout freopen error.");
+	if (freopen("/dev/null", "w", stderr) == NULL)
+		syslog((int)(LOG_USER | LOG_NOTICE), "stderr freopen error.");
+	syslog((int)(LOG_USER | LOG_NOTICE), "Daemon started successfully.");
+}
+
+/*
+ * comm_spec struct (css) comparison function.
+ * Tree should be indexed by socket file descriptor so compare the socket value.
+ */
+static int csscmp(const struct comm_spec *first, const struct comm_spec *last)
+{
+	if (first->socketfd == last->socketfd)
+		return 0;
+	return first->socketfd < last->socketfd ? -1 : 1;
+}
 
 /**
  * Program entry point.
@@ -179,86 +258,4 @@ b4_cli_locks:
 	if (swsd_err)
 		exit(EXIT_FAILURE);
 	exit(EXIT_SUCCESS);
-}
-
-/*
- * Daemonise the process.
- */
-static void daemonise(void)
-{
-	const char *pidfile = RUNSTATEDIR "/swocserverd.pid";
-	pid_t pid, sid;
-	char spid[256];
-	FILE *fp;
-
-	syslog((int)(LOG_USER | LOG_NOTICE), "Starting daemon.");
-
-	/*
-	 * Fork off the parent process.
-	 * < 0 Error
-	 * == 0 This is the child
-	 * > 0 is pid of child, ie this is the parent.
-	 */
-	pid = fork();
-	if (pid < 0) {
-		syslog((int)(LOG_USER | LOG_NOTICE), "Error forking.");
-		exit(EXIT_FAILURE);
-	}
-	/* This is the parent process, so exit after creating pid file. */
-	if (pid > 0) {
-		/* Create pid file. */
-		if ((fp = fopen(pidfile, "w")) == NULL) {
-			syslog((int)(LOG_USER | LOG_NOTICE),
-			       "Cannot create "
-			       "pid file - %s",
-			       pidfile);
-			exit(EXIT_FAILURE);
-		}
-		snprintf(spid, ARRAY_SIZE(spid), "%i\n", (int)pid);
-		fputs(spid, fp);
-		fclose(fp);
-		exit(EXIT_SUCCESS);
-	}
-
-	/* Set the file mode creation mask for this new process. */
-	umask(0);
-
-	/*
-	 * Create a new session and sets this process as process group leader
-	 * in new process group.
-	 */
-	if ((sid = setsid()) < 0) {
-		syslog((int)(LOG_USER | LOG_NOTICE), "setsid error.");
-		exit(EXIT_FAILURE);
-	}
-
-	/* Change the current working directory. */
-	if ((chdir("/")) < 0) {
-		syslog((int)(LOG_USER | LOG_NOTICE), "Error on cd /.");
-		exit(EXIT_FAILURE);
-	}
-
-	/*
-	 * Rather than closing the standard file descriptors we shall
-	 * re-direct them to /dev/null. This is because epoll_wait silently
-	 * does not work as intended if these file descriptors are re-used.
-	 */
-	if (freopen("/dev/null", "r", stdin) == NULL)
-		syslog((int)(LOG_USER | LOG_NOTICE), "stdin freopen error.");
-	if (freopen("/dev/null", "w", stdout) == NULL)
-		syslog((int)(LOG_USER | LOG_NOTICE), "stdout freopen error.");
-	if (freopen("/dev/null", "w", stderr) == NULL)
-		syslog((int)(LOG_USER | LOG_NOTICE), "stderr freopen error.");
-	syslog((int)(LOG_USER | LOG_NOTICE), "Daemon started successfully.");
-}
-
-/*
- * comm_spec struct (css) comparison function.
- * Tree should be indexed by socket file descriptor so compare the socket value.
- */
-static int csscmp(const struct comm_spec *first, const struct comm_spec *last)
-{
-	if (first->socketfd == last->socketfd)
-		return 0;
-	return first->socketfd < last->socketfd ? -1 : 1;
 }

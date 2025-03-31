@@ -3,12 +3,12 @@
  *
  * Comms functions associated with the swocserverd daemon.
  *
- * @author Copyright (C) 2017-2024  Mark Grant
+ * @author Copyright (C) 2017-2025  Mark Grant
  *
  * Released under the GPLv3 only.\n
  * SPDX-License-Identifier: GPL-3.0-only
  *
- * @version _v1.1.1 ==== 27/05/2024_
+ * @version _v1.1.2 ==== 31/03/2025_
  */
 
 #include <netdb.h>
@@ -45,59 +45,6 @@
 #include <libmgec/mge-errno.h>
 #include <libmgec/mge-message.h>
 #include <swoc/libswoccommon.h>
-
-static int bind_ports(int *sfd, int *portno, struct addrinfo *hints);
-static int init_epoll(int *pepfd, struct epoll_event *pevent,
-		      struct comm_spec *pt_ps);
-static int proc_events(int n_events, struct epoll_event *pevents);
-static int proc_msg(struct mgemessage *message);
-
-/**
- * Prepare all sockets.
- * On error mge_errno will be set.
- * @return 0 on success, < zero on failure.
- */
-int prepare_sockets(void)
-{
-	int i, ret;
-	struct addrinfo hints;
-	struct bstree *tmp_p_sock;
-
-	/*
-	 * BSD now allows that the PF_ prefix always has same value as AF_. It
-	 * is now accepted that AF_ is the standard. Ref NOTES in man 2 socket.
-	 * Old plan was PF_ prefix described as "TCP/IP" and AF_ prefix as
-	 * "Internet".
-	 */
-	memset(&hints, 0, sizeof(struct addrinfo));
-	hints.ai_family = AF_UNSPEC;	 /* Allow IPv4 or IPv6 */
-	hints.ai_socktype = SOCK_STREAM; /* TCP stream socket */
-	hints.ai_flags = AI_PASSIVE;	 /* For wildcard IP address */
-	hints.ai_protocol = IPPROTO_TCP; /* Only TCP protocol */
-	hints.ai_canonname = NULL;
-	hints.ai_addr = NULL;
-	hints.ai_next = NULL;
-
-	for (i = 0; i < 10; i++) {
-		if ((port_spec + i)->portno == 0)
-			continue;
-		ret = bind_ports(&((port_spec + i)->socketfd),
-				 &((port_spec + i)->portno), &hints);
-		if (ret)
-			return ret;
-
-		tmp_p_sock = add_bst_node(port_sock, (port_spec + i),
-					  sizeof(*port_spec));
-		if (tmp_p_sock == NULL)
-			return -mge_errno;
-		port_sock = tmp_p_sock;
-
-		ret = listen_sock(&((port_spec + i)->socketfd));
-		if (ret)
-			return ret;
-	}
-	return 0;
-}
 
 /*
  * Establish send or receive connection.
@@ -150,54 +97,6 @@ static int bind_ports(int *sfd, int *portno, struct addrinfo *hints)
 	return r;
 }
 
-/**
- * Wait and then process communications.
- * On error mge_errno will be set.
- * @return 0 on success, < zero on failure.
- */
-int process_comms(void)
-{
-	int e, epfd, nr_events, ret;
-	struct comm_spec tmp_ps = { 0, 0 };
-	struct comm_spec *ptmp_ps = &tmp_ps;
-	struct epoll_event event, *events;
-
-	e = init_epoll(&epfd, &event, ptmp_ps);
-	if (e)
-		return e;
-
-	events = malloc(sizeof(*events) * MAX_EPOLL_EVENTS);
-	if (events == NULL) {
-		mge_errno = MGE_ERRNO;
-		if (debug)
-			perror("ERROR allocating events");
-		syslog((int)(LOG_USER | LOG_NOTICE),
-		       "ERROR allocating "
-		       "events - %s",
-		       mge_strerror(mge_errno));
-		return -mge_errno;
-	}
-
-	while (1) {
-		nr_events = epoll_wait(epfd, events, MAX_EPOLL_EVENTS, -1);
-		ret = proc_events(nr_events, events);
-		if (ret)
-			goto free_exit;
-		if (end)
-			break;
-	}
-	ptmp_ps = &tmp_ps;
-	while ((ptmp_ps = find_next_bst_node(port_sock, ptmp_ps)) != NULL) {
-		ret = close_sock(&(ptmp_ps->socketfd));
-		if (ret)
-			goto free_exit;
-	}
-
-free_exit:
-	free(events);
-	return ret;
-}
-
 /*
  * Initialise the epoll instance.
  */
@@ -236,94 +135,6 @@ static int init_epoll(int *pepfd, struct epoll_event *pevent,
 		}
 	}
 	return 0;
-}
-
-/*
- * Process epoll events.
- */
-static int proc_events(int n_events, struct epoll_event *pevents)
-{
-	int i, tmp_comp;
-	int err = 0;
-	ssize_t n;
-	struct sockaddr_in cli_addr;
-	socklen_t clilen;
-	char sock_buf[SOCK_BUF_SIZE];
-	struct mgebuffer msg_buf1;
-	struct mgebuffer *msg_buf;
-	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
-	struct mgemessage *msg = &msg1;
-
-	clilen = sizeof(cli_addr);
-
-	for (i = 0; i < n_events; i++) {
-		msg_buf1 = (struct mgebuffer){ NULL, 0, 0, 0 };
-		msg_buf = &msg_buf1;
-
-		cursockfd = accept(pevents[i].data.fd,
-				   (struct sockaddr *)&cli_addr, &clilen);
-		if (cursockfd < 0) {
-			mge_errno = MGE_ERRNO;
-			if (debug)
-				perror("ERROR on accept");
-			syslog((int)(LOG_USER | LOG_NOTICE),
-			       "ERROR on accept "
-			       "- %s",
-			       mge_strerror(mge_errno));
-			return -mge_errno;
-		}
-
-		client[0] = '\0';
-
-		memset(sock_buf, '\0', sizeof(sock_buf));
-		while ((n = recv(cursockfd, sock_buf, sizeof(sock_buf), 0))
-		       != 0) {
-			if (n < 0) {
-				mge_errno = MGE_ERRNO;
-				if (debug)
-					perror("ERROR reading from socket");
-				syslog((int)(LOG_USER | LOG_NOTICE),
-				       "ERROR "
-				       "reading from socket - %s",
-				       mge_strerror(mge_errno));
-				return -mge_errno;
-			}
-			msg_buf = concat_buf(sock_buf, (size_t)n, msg_buf);
-			if (msg_buf1.buffer == NULL)
-				return -mge_errno;
-			if (debug)
-				print_buf(msg_buf);
-
-			do {
-				tmp_comp = 0;
-				msg = pull_msg(msg_buf, msg);
-				if (msg == NULL)
-					err = mge_errno;
-				if (debug)
-					print_msg(msg);
-				tmp_comp = msg1.complete;
-				if (tmp_comp && !err) {
-					err = proc_msg(msg);
-					clear_msg(msg, ';', ',');
-				}
-			} while (tmp_comp && !err);
-
-			if (debug)
-				print_buf(msg_buf);
-
-			if (end || err)
-				break;
-
-			memset(sock_buf, '\0', sizeof(sock_buf));
-		}
-		clear_msg(msg, ';', ',');
-		free(msg_buf1.buffer);
-		if (close_sock(&cursockfd))
-			return err;
-		if (end)
-			break;
-	}
-	return err;
 }
 
 /*
@@ -538,5 +349,188 @@ static int proc_msg(struct mgemessage *msg)
 		ret = send_outgoing_msg(out_msg, strlen(out_msg), &cursockfd);
 		return ret;
 	}
+	return ret;
+}
+
+/*
+ * Process epoll events.
+ */
+static int proc_events(int n_events, struct epoll_event *pevents)
+{
+	int i, tmp_comp;
+	int err = 0;
+	ssize_t n;
+	struct sockaddr_in cli_addr;
+	socklen_t clilen;
+	char sock_buf[SOCK_BUF_SIZE];
+	struct mgebuffer msg_buf1;
+	struct mgebuffer *msg_buf;
+	struct mgemessage msg1 = MGEMESSAGE_INIT(';', ',');
+	struct mgemessage *msg = &msg1;
+
+	clilen = sizeof(cli_addr);
+
+	for (i = 0; i < n_events; i++) {
+		msg_buf1 = (struct mgebuffer){ NULL, 0, 0, 0 };
+		msg_buf = &msg_buf1;
+
+		cursockfd = accept(pevents[i].data.fd,
+				   (struct sockaddr *)&cli_addr, &clilen);
+		if (cursockfd < 0) {
+			mge_errno = MGE_ERRNO;
+			if (debug)
+				perror("ERROR on accept");
+			syslog((int)(LOG_USER | LOG_NOTICE),
+			       "ERROR on accept "
+			       "- %s",
+			       mge_strerror(mge_errno));
+			return -mge_errno;
+		}
+
+		client[0] = '\0';
+
+		memset(sock_buf, '\0', sizeof(sock_buf));
+		while ((n = recv(cursockfd, sock_buf, sizeof(sock_buf), 0))
+		       != 0) {
+			if (n < 0) {
+				mge_errno = MGE_ERRNO;
+				if (debug)
+					perror("ERROR reading from socket");
+				syslog((int)(LOG_USER | LOG_NOTICE),
+				       "ERROR "
+				       "reading from socket - %s",
+				       mge_strerror(mge_errno));
+				return -mge_errno;
+			}
+			msg_buf = concat_buf(sock_buf, (size_t)n, msg_buf);
+			if (msg_buf1.buffer == NULL)
+				return -mge_errno;
+			if (debug)
+				print_buf(msg_buf);
+
+			do {
+				tmp_comp = 0;
+				msg = pull_msg(msg_buf, msg);
+				if (msg == NULL)
+					err = mge_errno;
+				if (debug)
+					print_msg(msg);
+				tmp_comp = msg1.complete;
+				if (tmp_comp && !err) {
+					err = proc_msg(msg);
+					clear_msg(msg, ';', ',');
+				}
+			} while (tmp_comp && !err);
+
+			if (debug)
+				print_buf(msg_buf);
+
+			if (end || err)
+				break;
+
+			memset(sock_buf, '\0', sizeof(sock_buf));
+		}
+		clear_msg(msg, ';', ',');
+		free(msg_buf1.buffer);
+		if (close_sock(&cursockfd))
+			return err;
+		if (end)
+			break;
+	}
+	return err;
+}
+
+/**
+ * Prepare all sockets.
+ * On error mge_errno will be set.
+ * @return 0 on success, < zero on failure.
+ */
+int prepare_sockets(void)
+{
+	int i, ret;
+	struct addrinfo hints;
+	struct bstree *tmp_p_sock;
+
+	/*
+	 * BSD now allows that the PF_ prefix always has same value as AF_. It
+	 * is now accepted that AF_ is the standard. Ref NOTES in man 2 socket.
+	 * Old plan was PF_ prefix described as "TCP/IP" and AF_ prefix as
+	 * "Internet".
+	 */
+	memset(&hints, 0, sizeof(struct addrinfo));
+	hints.ai_family = AF_UNSPEC;	 /* Allow IPv4 or IPv6 */
+	hints.ai_socktype = SOCK_STREAM; /* TCP stream socket */
+	hints.ai_flags = AI_PASSIVE;	 /* For wildcard IP address */
+	hints.ai_protocol = IPPROTO_TCP; /* Only TCP protocol */
+	hints.ai_canonname = NULL;
+	hints.ai_addr = NULL;
+	hints.ai_next = NULL;
+
+	for (i = 0; i < 10; i++) {
+		if ((port_spec + i)->portno == 0)
+			continue;
+		ret = bind_ports(&((port_spec + i)->socketfd),
+				 &((port_spec + i)->portno), &hints);
+		if (ret)
+			return ret;
+
+		tmp_p_sock = add_bst_node(port_sock, (port_spec + i),
+					  sizeof(*port_spec));
+		if (tmp_p_sock == NULL)
+			return -mge_errno;
+		port_sock = tmp_p_sock;
+
+		ret = listen_sock(&((port_spec + i)->socketfd));
+		if (ret)
+			return ret;
+	}
+	return 0;
+}
+
+/**
+ * Wait and then process communications.
+ * On error mge_errno will be set.
+ * @return 0 on success, < zero on failure.
+ */
+int process_comms(void)
+{
+	int e, epfd, nr_events, ret;
+	struct comm_spec tmp_ps = { 0, 0 };
+	struct comm_spec *ptmp_ps = &tmp_ps;
+	struct epoll_event event, *events;
+
+	e = init_epoll(&epfd, &event, ptmp_ps);
+	if (e)
+		return e;
+
+	events = malloc(sizeof(*events) * MAX_EPOLL_EVENTS);
+	if (events == NULL) {
+		mge_errno = MGE_ERRNO;
+		if (debug)
+			perror("ERROR allocating events");
+		syslog((int)(LOG_USER | LOG_NOTICE),
+		       "ERROR allocating "
+		       "events - %s",
+		       mge_strerror(mge_errno));
+		return -mge_errno;
+	}
+
+	while (1) {
+		nr_events = epoll_wait(epfd, events, MAX_EPOLL_EVENTS, -1);
+		ret = proc_events(nr_events, events);
+		if (ret)
+			goto free_exit;
+		if (end)
+			break;
+	}
+	ptmp_ps = &tmp_ps;
+	while ((ptmp_ps = find_next_bst_node(port_sock, ptmp_ps)) != NULL) {
+		ret = close_sock(&(ptmp_ps->socketfd));
+		if (ret)
+			goto free_exit;
+	}
+
+free_exit:
+	free(events);
 	return ret;
 }
