@@ -8,10 +8,7 @@
 # Purpose:								#
 #	AutoConf script file to configure SWOCServer-C project.		#
 #									#
-# cmd line syntax of standard configure:				#
-# ./configure --help							#
-#									#
-# cmd line syntax of additional functionality:				#
+# configure cmd line syntax:						#
 # ./configure	[--enable-atonly[={yes|no}]]				#
 #		[--enable-debug[={yes|no}]]				#
 #		[--enable-distcheckfake[={yes|no}]]			#
@@ -23,18 +20,19 @@
 # Parameter defaults:							#
 #	When specified on the CL, but without the [={yes|no}], the	#
 #	default is yes.							#
-#	When not specified the default is no.				#
 #									#
-# Parameters generic description. For specifics to this configure.ac	#
-# please see inline comments at the point of definition:-		#
+# Parameters general description. For specifics please see inline	#
+# comments at the point of definition:-					#
 # --enable-atonly							#
 #	Used to produce a fully working package just from the AT build	#
 #	when the build references a (distro / external) static location	#
 #	eg another package's config file in /etc (AOT AT's		#
 #	/usr/local/etc), or an externally installed jar file in		#
 #	/usr/share/jave (AOT AT's /usr/local/share/java).		#
+#	If not specified on the CL then the default is no.		#
 # --enable-debug							#
 #	Used to set things like compiler debug flags.			#
+#	If not specified on the CL then the default is no.		#
 # --enable-distcheckfake						#
 #	Enables the replacement of an absolute directory path specified	#
 #	in a variable, with a value based on AutoTools standard		#
@@ -42,16 +40,22 @@
 #	variable based value when running distcheck and the absolute	#
 #	path for all else. Hence distcheck can now succeed when it	#
 #	would normally fail.						#
+#	If not specified on the CL then the default is no.		#
 # --enable-headercheck							#
 #	Used to set a flag to output the header file nesting.		#
+#	If not specified on the CL then the default is no.		#
 # --enable-iwyu								#
 #	Used to check that include-what-you-use is installed.		#
+#	If not specified on the CL then the default is no.		#
 # --enable-scan-build							#
 #	Used to check that clang's scan-build is installed.		#
+#	If not specified on the CL then the default is no.		#
 # --enable-sparse							#
 #	Used to compile with the sparse static analyser.		#
+#	If not specified on the CL then the default is no.		#
 # --enable-systemd							#
 #	Used to provide systemd setup.					#
+#	If not specified on the CL then the default is no.		#
 #									#
 # Layout: (Only relevant sections will exist).				#
 # SECTION  1: Initialisation & Setup					#
