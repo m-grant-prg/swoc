@@ -22,7 +22,7 @@ jobs:
   version_check:
     outputs:
       status: ${{ steps.build.outputs.flag }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       # Check-out the repository under $GITHUB_WORKSPACE.
