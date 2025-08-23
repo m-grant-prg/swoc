@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 #########################################################################
 #									#
-# Author: Copyright (C) 2019, 2021-2024  Mark Grant			#
+# Author: Copyright (C) 2019, 2021-2025  Mark Grant			#
 #									#
 # This file is maintained in the project at:-				#
 #	https://github.com/m-grant-prg/project-misc			#
@@ -22,12 +22,12 @@
 
 #########################################################################
 #									#
-# Script version	v1.3.1						#
+# Script version	v1.3.2						#
 #									#
 # Checked up to:-							#
 #			gcc v14						#
 #			clang v14					#
-#			sparse v0.64					#
+#			sparse v0.6.4					#
 #									#
 #########################################################################
 
@@ -58,6 +58,10 @@ if test "$sparse" = true; then
 	AX_COMPARE_VERSION($sparse_version, ge, "0.4.2")
 	if [[ x${ax_compare_version} == xtrue ]]; then
 		$1+=" -Wno-unknown-attribute"
+	fi
+	AX_COMPARE_VERSION($sparse_version, ge, "0.6.4")
+	if [[ x${ax_compare_version} == xtrue ]]; then
+		$1+=" -Wno-default-bitfield-sign"
 	fi
 fi
 
