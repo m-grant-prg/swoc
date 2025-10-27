@@ -1,6 +1,6 @@
 ## DO NOT EDIT! GENERATED AUTOMATICALLY!
 ## Process this file with automake to produce Makefile.in.
-# Copyright (C) 2002-2023 Free Software Foundation, Inc.
+# Copyright (C) 2002-2025 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ SUBDIRS =
 noinst_HEADERS =
 noinst_LIBRARIES =
 noinst_LTLIBRARIES =
+pkgdata_DATA =
 EXTRA_DIST =
 BUILT_SOURCES =
 SUFFIXES =
@@ -58,8 +59,8 @@ noinst_LIBRARIES += libgnu.a
 
 libgnu_a_SOURCES =
 libgnu_a_CFLAGS = $(AM_CFLAGS) $(GL_CFLAG_GNULIB_WARNINGS)
-libgnu_a_LIBADD = $(gl_LIBOBJS)
-libgnu_a_DEPENDENCIES = $(gl_LIBOBJS)
+libgnu_a_LIBADD = $(gl_libgnu_LIBOBJS)
+libgnu_a_DEPENDENCIES = $(gl_libgnu_LIBOBJS)
 EXTRA_libgnu_a_SOURCES =
 
 ## begin gnulib module configmake
@@ -73,34 +74,34 @@ configmake.h: Makefile
 	  echo '#if HAVE_WINSOCK2_H'; \
 	  echo '# include <winsock2.h> /* avoid mingw pollution on DATADIR */'; \
 	  echo '#endif'; \
-	  echo '#define PREFIX "$(prefix)"'; \
-	  echo '#define EXEC_PREFIX "$(exec_prefix)"'; \
-	  echo '#define BINDIR "$(bindir)"'; \
-	  echo '#define SBINDIR "$(sbindir)"'; \
-	  echo '#define LIBEXECDIR "$(libexecdir)"'; \
-	  echo '#define DATAROOTDIR "$(datarootdir)"'; \
-	  echo '#define DATADIR "$(datadir)"'; \
-	  echo '#define SYSCONFDIR "$(sysconfdir)"'; \
-	  echo '#define SHAREDSTATEDIR "$(sharedstatedir)"'; \
-	  echo '#define LOCALSTATEDIR "$(localstatedir)"'; \
-	  echo '#define RUNSTATEDIR "$(runstatedir)"'; \
-	  echo '#define INCLUDEDIR "$(includedir)"'; \
-	  echo '#define OLDINCLUDEDIR "$(oldincludedir)"'; \
-	  echo '#define DOCDIR "$(docdir)"'; \
-	  echo '#define INFODIR "$(infodir)"'; \
-	  echo '#define HTMLDIR "$(htmldir)"'; \
-	  echo '#define DVIDIR "$(dvidir)"'; \
-	  echo '#define PDFDIR "$(pdfdir)"'; \
-	  echo '#define PSDIR "$(psdir)"'; \
-	  echo '#define LIBDIR "$(libdir)"'; \
-	  echo '#define LISPDIR "$(lispdir)"'; \
-	  echo '#define LOCALEDIR "$(localedir)"'; \
-	  echo '#define MANDIR "$(mandir)"'; \
-	  echo '#define MANEXT "$(manext)"'; \
-	  echo '#define PKGDATADIR "$(pkgdatadir)"'; \
-	  echo '#define PKGINCLUDEDIR "$(pkgincludedir)"'; \
-	  echo '#define PKGLIBDIR "$(pkglibdir)"'; \
-	  echo '#define PKGLIBEXECDIR "$(pkglibexecdir)"'; \
+	  printf '#define PREFIX %s\n' $(prefix_c_make); \
+	  printf '#define EXEC_PREFIX %s\n' $(exec_prefix_c_make); \
+	  printf '#define BINDIR %s\n' $(bindir_c_make); \
+	  printf '#define SBINDIR %s\n' $(sbindir_c_make); \
+	  printf '#define LIBEXECDIR %s\n' $(libexecdir_c_make); \
+	  printf '#define DATAROOTDIR %s\n' $(datarootdir_c_make); \
+	  printf '#define DATADIR %s\n' $(datadir_c_make); \
+	  printf '#define SYSCONFDIR %s\n' $(sysconfdir_c_make); \
+	  printf '#define SHAREDSTATEDIR %s\n' $(sharedstatedir_c_make); \
+	  printf '#define LOCALSTATEDIR %s\n' $(localstatedir_c_make); \
+	  printf '#define RUNSTATEDIR %s\n' $(runstatedir_c_make); \
+	  printf '#define INCLUDEDIR %s\n' $(includedir_c_make); \
+	  printf '#define OLDINCLUDEDIR %s\n' $(oldincludedir_c_make); \
+	  printf '#define DOCDIR %s\n' $(docdir_c_make); \
+	  printf '#define INFODIR %s\n' $(infodir_c_make); \
+	  printf '#define HTMLDIR %s\n' $(htmldir_c_make); \
+	  printf '#define DVIDIR %s\n' $(dvidir_c_make); \
+	  printf '#define PDFDIR %s\n' $(pdfdir_c_make); \
+	  printf '#define PSDIR %s\n' $(psdir_c_make); \
+	  printf '#define LIBDIR %s\n' $(libdir_c_make); \
+	  printf '#define LISPDIR %s\n' $(lispdir_c_make); \
+	  printf '#define LOCALEDIR %s\n' $(localedir_c_make); \
+	  printf '#define MANDIR %s\n' $(mandir_c_make); \
+	  printf '#define MANEXT %s\n' \"$(manext)\"; \
+	  printf '#define PKGDATADIR %s\n' $(pkgdatadir_c_make); \
+	  printf '#define PKGINCLUDEDIR %s\n' $(pkgincludedir_c_make); \
+	  printf '#define PKGLIBDIR %s\n' $(pkglibdir_c_make); \
+	  printf '#define PKGLIBEXECDIR %s\n' $(pkglibexecdir_c_make); \
 	} | sed '/""/d' > $@-t
 	$(AM_V_at)mv $@-t $@
 
@@ -124,6 +125,7 @@ SED_HEADER_STDOUT = sed -e 1h -e '1$(SED_HEADER_NOEDIT)' -e 1G
 SED_HEADER_TO_AT_t = $(SED_HEADER_STDOUT) -n -e 'w $@-t'
 
 # Use $(gl_V_at) instead of $(AM_V_GEN) or $(AM_V_at) on a line that
+# is its recipe's first line if and only if @NMD@ lines are absent.
 gl_V_at = $(AM_V_GEN)
 
 ## end   gnulib module gen-header
@@ -144,5 +146,5 @@ mostlyclean-local: mostlyclean-generic
 	:
 distclean-local: distclean-gnulib-libobjs
 distclean-gnulib-libobjs:
-	-rm -f @gl_LIBOBJDEPS@
+	-rm -f @gl_libgnu_LIBOBJDEPS@
 maintainer-clean-local: distclean-gnulib-libobjs
