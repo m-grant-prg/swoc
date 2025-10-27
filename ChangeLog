@@ -1,3 +1,7 @@
+2025-10-27 v1.8.1 Mark Grant <m.grant.prg@gmail.com>
+	* docs: Fix copy and paste error
+Mark Grant (1):
+
 2025-10-27 v1.8.0 Mark Grant <m.grant.prg@gmail.com>
 	* build(deps): bump actions/checkout from 4 to 5
 	build(deps): bump CityOfLosAngeles/fetch-latest-github-release
