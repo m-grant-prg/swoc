@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Author: Copyright (C) 2018-2023  Mark Grant				#
+# Author: Copyright (C) 2018-2023, 2025  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -20,8 +20,14 @@ srcdepends := $(shell find $(srcdir)/src -type f -printf "%p ") \
 
 docpkg = $(PACKAGE_TARNAME)-doxy-$(PACKAGE_VERSION).tar.gz
 
+# Create a reproducible archive
 $(docpkg): doxygen.stamp
-	tar -chz --format=posix -f $@ html
+	LC_ALL=C tar -ch --sort=name --format=posix --numeric-owner \
+	       --owner=0 --group=0 \
+	       --pax-option=exthdr.name=%d/PaxHeaders/%f \
+	       --pax-option=delete=atime,delete=ctime \
+	       --mtime="UTC 2025-10-01" -f - html \
+	       | gzip --no-name --best > $@
 
 doxygen.stamp: Doxyfile $(srcdepends)
 	if $(AM_V_P); then \
@@ -46,8 +52,14 @@ doxygen.stamp: Doxyfile $(srcdepends)
 
 intdocpkg = $(PACKAGE_TARNAME)-int-doxy-$(PACKAGE_VERSION).tar.gz
 
+# Create a reproducible archive
 $(intdocpkg): doxygen1.stamp
-	tar -chz --format=posix -f $@ html-int
+	LC_ALL=C tar -ch --sort=name --format=posix --numeric-owner \
+	       --owner=0 --group=0 \
+	       --pax-option=exthdr.name=%d/PaxHeaders/%f \
+	       --pax-option=delete=atime,delete=ctime \
+	       --mtime="UTC 2025-10-01" -f - html \
+	       | gzip --no-name --best > $@
 
 doxygen1.stamp: Doxyfile $(srcdepends)
 	if $(AM_V_P); then \
