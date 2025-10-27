@@ -1,3 +1,39 @@
+2025-10-27 v1.8.0 Mark Grant <m.grant.prg@gmail.com>
+	* build(deps): bump actions/checkout from 4 to 5
+	build(deps): bump CityOfLosAngeles/fetch-latest-github-release
+	build(deps): bump CityOfLosAngeles/fetch-latest-github-release
+	build(deps): bump jidicula/clang-format-action from 4.14.0 to 4.15.0
+	build(deps): bump JamesIves/github-pages-deploy-action
+	build(deps): bump JamesIves/github-pages-deploy-action
+	build(deps): bump jidicula/clang-format-action from 4.13.0 to 4.14.0
+	build(deps): bump JamesIves/github-pages-deploy-action
+dependabot[bot] (8):
+
+	docs: Create a reproducible archive for html
+	docs: Run doxygen -u Doxyfile.in after Doxygen upgrade
+	gnulib: Upgrade after Trixie implementation
+	at: Upgrade bootstrap.sh to v1.6.1
+	m4: Update c-compiler flags to v1.3.2
+	Merge pull request #26 from m-grant-prg/dependabot/github_actions/tip/actions/checkout-5
+	v1.8.0-rc1
+	actions: Run on Noble
+	Merge pull request #24 from m-grant-prg/dependabot/github_actions/tip/CityOfLosAngeles/fetch-latest-github-release-3.0.1
+	actions: Set dependabot to target stable and old stable branches
+	at: Improve CL arguments comments
+	Merge pull request #22 from m-grant-prg/dependabot/github_actions/CityOfLosAngeles/fetch-latest-github-release-3.0.0
+	srv-prg: Refactor to remove forward declarations
+	com-lib: Refactor to remove forward declarations
+	Merge pull request #21 from m-grant-prg/dependabot/github_actions/jidicula/clang-format-action-4.15.0
+	at: Re-order program checks alphabetically
+	at: Update Copyright for 2025
+	actions: Update Copyright for 2025
+	actions: Trivial whitespace formatting fix
+	Merge pull request #20 from m-grant-prg/dependabot/github_actions/JamesIves/github-pages-deploy-action-4.7.3
+	Merge pull request #19 from m-grant-prg/dependabot/github_actions/JamesIves/github-pages-deploy-action-4.7.2
+	Merge pull request #18 from m-grant-prg/dependabot/github_actions/jidicula/clang-format-action-4.14.0
+	Merge pull request #17 from m-grant-prg/dependabot/github_actions/JamesIves/github-pages-deploy-action-4.7.1
+Mark Grant (23):
+
 2024-11-14 v1.7.4 Mark Grant <m.grant.prg@gmail.com>
 	* build(deps): bump JamesIves/github-pages-deploy-action
 	build(deps): bump JamesIves/github-pages-deploy-action
