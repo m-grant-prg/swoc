@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['relay_5fdata_241',['relay_data',['../ssh_8c.html#a42fed61de1814b6937c7e0d3c9b659d2',1,'ssh.c']]]
+  ['relay_5fdata_241',['relay_data',['../ssh_8c.html#a476c594803440935e1bcdba110223c4a',1,'ssh.c']]]
 ];

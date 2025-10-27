@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Server Wait On Clients System - API Documentation
-   &#160;<span id="projectnumber">v1.7.4</span>
+   &#160;<span id="projectnumber">v1.8.0</span>
    </div>
    <div id="projectbrief">Server Wait On Clients System.</div>
   </td>
@@ -155,10 +155,10 @@ Functions</h2></td></tr>
 <tr class="separator:af33b969ee2cb244d721551f3f7a3e969"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6b35ebb513d54ff28799fd9c60241c0"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="comms_8c.html#ae6b35ebb513d54ff28799fd9c60241c0">init_epoll</a> (int *pepfd, struct epoll_event *pevent, struct comm_spec *pt_ps)</td></tr>
 <tr class="separator:ae6b35ebb513d54ff28799fd9c60241c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15cdd395a4c5993564707e78b540b5c4"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="comms_8c.html#a15cdd395a4c5993564707e78b540b5c4">proc_msg</a> (struct mgemessage *msg)</td></tr>
+<tr class="separator:a15cdd395a4c5993564707e78b540b5c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ea7e9ee19702d2d99b1701b724990f7"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="comms_8c.html#a6ea7e9ee19702d2d99b1701b724990f7">proc_events</a> (int n_events, struct epoll_event *pevents)</td></tr>
 <tr class="separator:a6ea7e9ee19702d2d99b1701b724990f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aadec1e9bb7a8c0a3eec70a8c45807b44"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="comms_8c.html#aadec1e9bb7a8c0a3eec70a8c45807b44">proc_msg</a> (struct mgemessage *message)</td></tr>
-<tr class="separator:aadec1e9bb7a8c0a3eec70a8c45807b44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef1b017a8c30cc28e880eb1982456b11"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="comms_8c.html#aef1b017a8c30cc28e880eb1982456b11">prepare_sockets</a> (void)</td></tr>
 <tr class="memdesc:aef1b017a8c30cc28e880eb1982456b11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepare all sockets.  <a href="comms_8c.html#aef1b017a8c30cc28e880eb1982456b11">More...</a><br /></td></tr>
 <tr class="separator:aef1b017a8c30cc28e880eb1982456b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -168,10 +168,10 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Comms functions associated with the swocserverd daemon. </p>
-<dl class="section author"><dt>Author</dt><dd>Copyright (C) 2017-2024 Mark Grant</dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Copyright (C) 2017-2025 Mark Grant</dd></dl>
 <p>Released under the GPLv3 only.<br  />
 SPDX-License-Identifier: GPL-3.0-only</p>
-<dl class="section version"><dt>Version</dt><dd><em>v1.1.1 ==== 27/05/2024</em> </dd></dl>
+<dl class="section version"><dt>Version</dt><dd><em>v1.1.2 ==== 31/03/2025</em> </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a665b0cc9ee2ced31785321d55cde349e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a665b0cc9ee2ced31785321d55cde349e">&#9670;&nbsp;</a></span>__bool_true_false_are_defined</h2>
@@ -385,8 +385,8 @@ SPDX-License-Identifier: GPL-3.0-only</p>
 
 </div>
 </div>
-<a id="aadec1e9bb7a8c0a3eec70a8c45807b44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aadec1e9bb7a8c0a3eec70a8c45807b44">&#9670;&nbsp;</a></span>proc_msg()</h2>
+<a id="a15cdd395a4c5993564707e78b540b5c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15cdd395a4c5993564707e78b540b5c4">&#9670;&nbsp;</a></span>proc_msg()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -398,7 +398,7 @@ SPDX-License-Identifier: GPL-3.0-only</p>
           <td class="memname">static int proc_msg </td>
           <td>(</td>
           <td class="paramtype">struct mgemessage *&#160;</td>
-          <td class="paramname"><em>message</em></td><td>)</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
           <td></td>
         </tr>
       </table>

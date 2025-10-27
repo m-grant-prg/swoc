@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Server Wait On Clients System - Full Internal Documentation
-   &#160;<span id="projectnumber">v1.7.4</span>
+   &#160;<span id="projectnumber">v1.8.0</span>
    </div>
    <div id="projectbrief">Server Wait On Clients System.</div>
   </td>
@@ -133,12 +133,12 @@ Include dependency graph for messages.c:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a73152cbc60a6b5cbd0efd11db9df7247"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="messages_8c.html#a73152cbc60a6b5cbd0efd11db9df7247">get_host_name_ip</a> (int sock_fd, char *host_name, socklen_t host_name_size, char *host_ip, socklen_t host_ip_size)</td></tr>
+<tr class="separator:a73152cbc60a6b5cbd0efd11db9df7247"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16b62773e6b26470b090ffdc960e6b0d"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="messages_8c.html#a16b62773e6b26470b090ffdc960e6b0d">get_reply_msg</a> (int sockfd, struct mgemessage *recv_msg)</td></tr>
 <tr class="separator:a16b62773e6b26470b090ffdc960e6b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e6448227362b18bd87ee44622eed5a8"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="messages_8c.html#a0e6448227362b18bd87ee44622eed5a8">host_id</a> (int sockfd, const char *orig_outgoing_msg)</td></tr>
 <tr class="separator:a0e6448227362b18bd87ee44622eed5a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73152cbc60a6b5cbd0efd11db9df7247"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="messages_8c.html#a73152cbc60a6b5cbd0efd11db9df7247">get_host_name_ip</a> (int sock_fd, char *host_name, socklen_t host_name_size, char *host_ip, socklen_t host_ip_size)</td></tr>
-<tr class="separator:a73152cbc60a6b5cbd0efd11db9df7247"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4052ba9bf4315c744ca2f45d8d14358f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="messages_8c.html#a4052ba9bf4315c744ca2f45d8d14358f">parse_msg</a> (struct mgemessage *msg, enum <a class="el" href="libswoccommon_8h.html#a009cd213f4fddab05e70ce656842ceb8">msg_arguments</a> *msg_args, enum <a class="el" href="libswoccommon_8h.html#aa7ee043ec20cc69bece9a076abbc027e">msg_source</a> *msg_src, enum <a class="el" href="libswoccommon_8h.html#a3ba16a3027ba641544a63716df098b3b">msg_request</a> *msg_req)</td></tr>
 <tr class="memdesc:a4052ba9bf4315c744ca2f45d8d14358f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a message.  <a href="messages_8c.html#a4052ba9bf4315c744ca2f45d8d14358f">More...</a><br /></td></tr>
 <tr class="separator:a4052ba9bf4315c744ca2f45d8d14358f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,10 +151,10 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Message processing functions common to swoc programs. </p>
-<dl class="section author"><dt>Author</dt><dd>Copyright (C) 2017-2023 Mark Grant</dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Copyright (C) 2017-2023, 2025 Mark Grant</dd></dl>
 <p>Released under the GPLv3 only.<br  />
 SPDX-License-Identifier: GPL-3.0-only</p>
-<dl class="section version"><dt>Version</dt><dd><em>v1.2.0 ==== 06/12/2023</em> </dd></dl>
+<dl class="section version"><dt>Version</dt><dd><em>v1.2.1 ==== 30/03/2025</em> </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="aa463dc8ce0737dbd04a660eaed009f71"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa463dc8ce0737dbd04a660eaed009f71">&#9670;&nbsp;</a></span>exch_msg()</h2>

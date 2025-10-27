@@ -5,7 +5,7 @@ var ssh_8c =
     [ "close_ssh_tunnel", "ssh_8c.html#add62324565a944f940d309a189f92f86", null ],
     [ "direct_forwarding", "ssh_8c.html#a9e945edba52021b73fc02c595d739196", null ],
     [ "open_ssh_tunnel", "ssh_8c.html#a6be32f1b2cbf9eb18d67a4067974ce69", null ],
-    [ "relay_data", "ssh_8c.html#a42fed61de1814b6937c7e0d3c9b659d2", null ],
+    [ "relay_data", "ssh_8c.html#a476c594803440935e1bcdba110223c4a", null ],
     [ "try_auth_methods_seq", "ssh_8c.html#aeac7a1c19cd14886a9195d427115c590", null ],
     [ "verify_knownhost", "ssh_8c.html#a9c2651fb31023ef3ac344b8361d1775e", null ],
     [ "fwd_chan", "ssh_8c.html#a1720f5218b4979ef14c344f9919e7a4f", null ],

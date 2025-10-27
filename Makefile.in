@@ -16,7 +16,7 @@
 
 #########################################################################
 #									#
-# Author: Copyright (C) 2018-2023  Mark Grant				#
+# Author: Copyright (C) 2018-2023, 2025  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -82,9 +82,6 @@ am__make_running_with_option = \
   test $$has_opt = yes
 am__make_dryrun = (target_option=n; $(am__make_running_with_option))
 am__make_keepgoing = (target_option=k; $(am__make_running_with_option))
-pkgdatadir = $(datadir)/@PACKAGE@
-pkgincludedir = $(includedir)/@PACKAGE@
-pkglibdir = $(libdir)/@PACKAGE@
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
 install_sh_PROGRAM = $(install_sh) -c
@@ -104,6 +101,7 @@ subdir = docs/doxygen
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4extra/c-compiler.m4 \
 	$(top_srcdir)/m4extra/linker.m4 $(top_srcdir)/m4/00gnulib.m4 \
+	$(top_srcdir)/m4/build-to-host.m4 \
 	$(top_srcdir)/m4/configmake.m4 \
 	$(top_srcdir)/m4/gnulib-common.m4 \
 	$(top_srcdir)/m4/gnulib-comp.m4 $(top_srcdir)/m4/libtool.m4 \
@@ -169,6 +167,9 @@ DATA = $(api_DATA) $(docbase_DATA) $(int_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 am__DIST_COMMON = $(srcdir)/Doxyfile.in $(srcdir)/Makefile.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+pkgdatadir = @pkgdatadir@
+pkgincludedir = @pkgincludedir@
+pkglibdir = @pkglibdir@
 pkglibexecdir = @pkglibexecdir@
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -286,6 +287,8 @@ am__tar = @am__tar@
 am__untar = @am__untar@
 ax_pthread_config = @ax_pthread_config@
 bindir = @bindir@
+bindir_c = @bindir_c@
+bindir_c_make = @bindir_c_make@
 build = @build@
 build_alias = @build_alias@
 build_cpu = @build_cpu@
@@ -299,49 +302,107 @@ com_pc_requires = @com_pc_requires@
 com_pc_requires_private = @com_pc_requires_private@
 common_lib_version_info = @common_lib_version_info@
 datadir = @datadir@
+datadir_c = @datadir_c@
+datadir_c_make = @datadir_c_make@
 datarootdir = @datarootdir@
+datarootdir_c = @datarootdir_c@
+datarootdir_c_make = @datarootdir_c_make@
 docbaseloc = @docbaseloc@
 docdir = @docdir@
+docdir_c = @docdir_c@
+docdir_c_make = @docdir_c_make@
 dvidir = @dvidir@
+dvidir_c = @dvidir_c@
+dvidir_c_make = @dvidir_c_make@
 edit = @edit@
 exec_prefix = @exec_prefix@
+exec_prefix_c = @exec_prefix_c@
+exec_prefix_c_make = @exec_prefix_c_make@
 gl_LIBOBJDEPS = @gl_LIBOBJDEPS@
 gl_LIBOBJS = @gl_LIBOBJS@
 gl_LTLIBOBJS = @gl_LTLIBOBJS@
+gl_libgnu_LIBOBJDEPS = @gl_libgnu_LIBOBJDEPS@
+gl_libgnu_LIBOBJS = @gl_libgnu_LIBOBJS@
+gl_libgnu_LTLIBOBJS = @gl_libgnu_LTLIBOBJS@
 gltests_LIBOBJDEPS = @gltests_LIBOBJDEPS@
 gltests_LIBOBJS = @gltests_LIBOBJS@
 gltests_LTLIBOBJS = @gltests_LTLIBOBJS@
 gltests_WITNESS = @gltests_WITNESS@
+gltests_libgnu_LIBOBJDEPS = @gltests_libgnu_LIBOBJDEPS@
+gltests_libgnu_LIBOBJS = @gltests_libgnu_LIBOBJS@
+gltests_libgnu_LTLIBOBJS = @gltests_libgnu_LTLIBOBJS@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
 host_os = @host_os@
 host_vendor = @host_vendor@
 htmldir = @htmldir@
+htmldir_c = @htmldir_c@
+htmldir_c_make = @htmldir_c_make@
 includedir = @includedir@
+includedir_c = @includedir_c@
+includedir_c_make = @includedir_c_make@
 infodir = @infodir@
+infodir_c = @infodir_c@
+infodir_c_make = @infodir_c_make@
 install_sh = @install_sh@
 libdir = @libdir@
+libdir_c = @libdir_c@
+libdir_c_make = @libdir_c_make@
 libexecdir = @libexecdir@
+libexecdir_c = @libexecdir_c@
+libexecdir_c_make = @libexecdir_c_make@
 lispdir = @lispdir@
+lispdir_c = @lispdir_c@
+lispdir_c_make = @lispdir_c_make@
 localedir = @localedir@
+localedir_c = @localedir_c@
+localedir_c_make = @localedir_c_make@
 localstatedir = @localstatedir@
+localstatedir_c = @localstatedir_c@
+localstatedir_c_make = @localstatedir_c_make@
 mandir = @mandir@
+mandir_c = @mandir_c@
+mandir_c_make = @mandir_c_make@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
+oldincludedir_c = @oldincludedir_c@
+oldincludedir_c_make = @oldincludedir_c_make@
 pdfdir = @pdfdir@
+pdfdir_c = @pdfdir_c@
+pdfdir_c_make = @pdfdir_c_make@
+pkgdatadir_c = @pkgdatadir_c@
+pkgdatadir_c_make = @pkgdatadir_c_make@
+pkgincludedir_c = @pkgincludedir_c@
+pkgincludedir_c_make = @pkgincludedir_c_make@
+pkglibdir_c = @pkglibdir_c@
+pkglibdir_c_make = @pkglibdir_c_make@
+pkglibexecdir_c = @pkglibexecdir_c@
+pkglibexecdir_c_make = @pkglibexecdir_c_make@
 pkgversion = @pkgversion@
 prefix = @prefix@
+prefix_c = @prefix_c@
+prefix_c_make = @prefix_c_make@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+psdir_c = @psdir_c@
+psdir_c_make = @psdir_c_make@
 runstatedir = @runstatedir@
+runstatedir_c = @runstatedir_c@
+runstatedir_c_make = @runstatedir_c_make@
 sbindir = @sbindir@
+sbindir_c = @sbindir_c@
+sbindir_c_make = @sbindir_c_make@
 server_lib_version_info = @server_lib_version_info@
 sharedstatedir = @sharedstatedir@
+sharedstatedir_c = @sharedstatedir_c@
+sharedstatedir_c_make = @sharedstatedir_c_make@
 srcdir = @srcdir@
 srv_pc_requires = @srv_pc_requires@
 srv_pc_requires_private = @srv_pc_requires_private@
 sysconfdir = @sysconfdir@
+sysconfdir_c = @sysconfdir_c@
+sysconfdir_c_make = @sysconfdir_c_make@
 target = @target@
 target_alias = @target_alias@
 target_cpu = @target_cpu@
@@ -643,8 +704,14 @@ uninstall-am: uninstall-apiDATA uninstall-docbaseDATA \
 .PRECIOUS: Makefile
 
 
+# Create a reproducible archive
 $(docpkg): doxygen.stamp
-	tar -chz --format=posix -f $@ html
+	LC_ALL=C tar -ch --sort=name --format=posix --numeric-owner \
+	       --owner=0 --group=0 \
+	       --pax-option=exthdr.name=%d/PaxHeaders/%f \
+	       --pax-option=delete=atime,delete=ctime \
+	       --mtime="UTC 2025-10-01" -f - html \
+	       | gzip --no-name --best > $@
 
 doxygen.stamp: Doxyfile $(srcdepends)
 	if $(AM_V_P); then \
@@ -664,8 +731,14 @@ doxygen.stamp: Doxyfile $(srcdepends)
 	fi
 	echo Timestamp > $@
 
+# Create a reproducible archive
 $(intdocpkg): doxygen1.stamp
-	tar -chz --format=posix -f $@ html-int
+	LC_ALL=C tar -ch --sort=name --format=posix --numeric-owner \
+	       --owner=0 --group=0 \
+	       --pax-option=exthdr.name=%d/PaxHeaders/%f \
+	       --pax-option=delete=atime,delete=ctime \
+	       --mtime="UTC 2025-10-01" -f - html \
+	       | gzip --no-name --best > $@
 
 doxygen1.stamp: Doxyfile $(srcdepends)
 	if $(AM_V_P); then \

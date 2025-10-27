@@ -16,7 +16,7 @@
 
 #########################################################################
 #									#
-# Author: Copyright (C) 2018-2023  Mark Grant				#
+# Author: Copyright (C) 2018-2023, 2025  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -82,9 +82,6 @@ am__make_running_with_option = \
   test $$has_opt = yes
 am__make_dryrun = (target_option=n; $(am__make_running_with_option))
 am__make_keepgoing = (target_option=k; $(am__make_running_with_option))
-pkgdatadir = $(datadir)/swoc
-pkgincludedir = $(includedir)/swoc
-pkglibdir = $(libdir)/swoc
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
 install_sh_PROGRAM = $(install_sh) -c
@@ -104,6 +101,7 @@ subdir = docs/doxygen
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4extra/c-compiler.m4 \
 	$(top_srcdir)/m4extra/linker.m4 $(top_srcdir)/m4/00gnulib.m4 \
+	$(top_srcdir)/m4/build-to-host.m4 \
 	$(top_srcdir)/m4/configmake.m4 \
 	$(top_srcdir)/m4/gnulib-common.m4 \
 	$(top_srcdir)/m4/gnulib-comp.m4 $(top_srcdir)/m4/libtool.m4 \
@@ -169,6 +167,9 @@ DATA = $(api_DATA) $(docbase_DATA) $(int_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 am__DIST_COMMON = $(srcdir)/Doxyfile.in $(srcdir)/Makefile.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+pkgdatadir = ${datadir}/${PACKAGE}
+pkgincludedir = ${includedir}/${PACKAGE}
+pkglibdir = ${libdir}/${PACKAGE}
 pkglibexecdir = ${libexecdir}/${PACKAGE}
 ACLOCAL = ${SHELL} '/home/runner/work/swoc/swoc/build-aux/missing' aclocal-1.16
 AMTAR = $${TAR-tar}
@@ -208,7 +209,7 @@ EXEEXT =
 FGREP = /usr/bin/grep -F
 GETOPT = yes
 GL_CFLAG_ALLOW_WARNINGS = -Wno-error
-GL_CFLAG_GNULIB_WARNINGS =  -Wno-cast-qual -Wno-conversion -Wno-float-equal -Wno-sign-compare -Wno-undef -Wno-unused-function -Wno-unused-parameter -Wno-float-conversion -Wimplicit-fallthrough -Wno-pedantic -Wno-sign-conversion -Wno-type-limits -Wno-unsuffixed-float-constants
+GL_CFLAG_GNULIB_WARNINGS =  -Wno-cast-qual -Wno-conversion -Wno-float-equal -Wno-sign-compare -Wno-undef -Wno-unused-function -Wno-unused-parameter -Wno-float-conversion -Wimplicit-fallthrough -Wno-pedantic -Wno-sign-conversion -Wno-type-limits -Wno-unused-const-variable -Wno-unsuffixed-float-constants
 GREP = /usr/bin/grep
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
@@ -251,10 +252,10 @@ OTOOL64 =
 PACKAGE = swoc
 PACKAGE_BUGREPORT = m.grant.prg@gmail.com
 PACKAGE_NAME = Server Wait On Client Package
-PACKAGE_STRING = Server Wait On Client Package 1.7.4
+PACKAGE_STRING = Server Wait On Client Package 1.8.0
 PACKAGE_TARNAME = swoc
 PACKAGE_URL = 
-PACKAGE_VERSION = 1.7.4
+PACKAGE_VERSION = 1.8.0
 PATH_SEPARATOR = :
 PKGCONFIG = yes
 PTHREAD_CC = gcc
@@ -270,7 +271,7 @@ STRIP = strip
 TAR = yes
 TXT2MAN = yes
 TXT2MANWRAP = yes
-VERSION = 1.7.4
+VERSION = 1.8.0
 abs_builddir = /home/runner/work/swoc/swoc/docs/doxygen
 abs_srcdir = /home/runner/work/swoc/swoc/docs/doxygen
 abs_top_builddir = /home/runner/work/swoc/swoc
@@ -286,6 +287,8 @@ am__tar = tar --format=posix -chf - "$$tardir"
 am__untar = tar -xf -
 ax_pthread_config = 
 bindir = ${exec_prefix}/bin
+bindir_c = "/usr/local/bin"
+bindir_c_make = \"$(bindir)\"
 build = x86_64-pc-linux-gnu
 build_alias = 
 build_cpu = x86_64
@@ -299,49 +302,107 @@ com_pc_requires = libmgec
 com_pc_requires_private = libmgesysutils
 common_lib_version_info = 3:6:0
 datadir = ${datarootdir}
+datadir_c = "/usr/local/share"
+datadir_c_make = \"$(datadir)\"
 datarootdir = ${prefix}/share
+datarootdir_c = "/usr/local/share"
+datarootdir_c_make = \"$(datarootdir)\"
 docbaseloc = ${prefix}/share/doc-base
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
+docdir_c = "/usr/local/share/doc/swoc"
+docdir_c_make = \"$(docdir)\"
 dvidir = ${docdir}
+dvidir_c = "/usr/local/share/doc/swoc"
+dvidir_c_make = \"$(dvidir)\"
 edit = /usr/bin/sed 		-e 's|@cli_pc_requires@|$(cli_pc_requires)|g' 		-e 's|@cli_pc_requires_private@|$(cli_pc_requires_private)|g' 		-e 's|@com_pc_requires@|$(com_pc_requires)|g' 		-e 's|@com_pc_requires_private@|$(com_pc_requires_private)|g' 		-e 's|@srv_pc_requires@|$(srv_pc_requires)|g' 		-e 's|@srv_pc_requires_private@|$(srv_pc_requires_private)|g' 		-e 's|@pkgversion@|$(pkgversion)|g' 		-e 's|@bashlocation@|$(BASH)|g' 		-e 's|@docbaseloc@|$(docbaseloc)|g' 		-e 's|@CC@|$(CC)|g' 		-e 's|@prefix@|$(prefix)|g' 		-e 's|@exec_prefix@|$(exec_prefix)|g' 		-e 's|@bindir@|$(bindir)|g' 		-e 's|@sbindir@|$(sbindir)|g' 		-e 's|@libexecdir@|$(libexecdir)|g' 		-e 's|@libdir@|$(libdir)|g' 		-e 's|@sysconfdir@|$(sysconfdir)|g' 		-e 's|@sharedstatedir@|$(sharedstatedir)|g' 		-e 's|@localstatedir@|$(localstatedir)|g' 		-e 's|@runstatedir@|$(runstatedir)|g' 		-e 's|@includedir@|$(includedir)|g' 		-e 's|@oldincludedir@|$(oldincludedir)|g' 		-e 's|@datarootdir@|$(datarootdir)|g' 		-e 's|@localedir@|$(localedir)|g' 		-e 's|@datadir@|$(datadir)|g' 		-e 's|@mandir@|$(mandir)|g' 		-e 's|@infodir@|$(infodir)|g' 		-e 's|@docdir@|$(docdir)|g' 		-e 's|@htmldir@|$(htmldir)|g' 		-e 's|@dvidir@|$(dvidir)|g' 		-e 's|@pdfdir@|$(pdfdir)|g' 		-e 's|@psdir@|$(psdir)|g' 		-e 's|@lispdir@|$(lispdir)|g' 		-e 's|@pkgdatadir@|$(pkgdatadir)|g' 		-e 's|@pkgincludedir@|$(pkgincludedir)|g' 		-e 's|@pkglibdir@|$(pkglibdir)|g' 		-e 's|@pkglibexecdir@|$(pkglibexecdir)|g'
 exec_prefix = ${prefix}
+exec_prefix_c = "/usr/local"
+exec_prefix_c_make = \"$(exec_prefix)\"
 gl_LIBOBJDEPS = 
 gl_LIBOBJS = 
 gl_LTLIBOBJS = 
+gl_libgnu_LIBOBJDEPS = 
+gl_libgnu_LIBOBJS = 
+gl_libgnu_LTLIBOBJS = 
 gltests_LIBOBJDEPS = 
 gltests_LIBOBJS = 
 gltests_LTLIBOBJS = 
 gltests_WITNESS = IN_SWOC_GNULIB_TESTS
+gltests_libgnu_LIBOBJDEPS = 
+gltests_libgnu_LIBOBJS = 
+gltests_libgnu_LTLIBOBJS = 
 host = x86_64-pc-linux-gnu
 host_alias = 
 host_cpu = x86_64
 host_os = linux-gnu
 host_vendor = pc
 htmldir = ${docdir}
+htmldir_c = "/usr/local/share/doc/swoc"
+htmldir_c_make = \"$(htmldir)\"
 includedir = ${prefix}/include
+includedir_c = "/usr/local/include"
+includedir_c_make = \"$(includedir)\"
 infodir = ${datarootdir}/info
+infodir_c = "/usr/local/share/info"
+infodir_c_make = \"$(infodir)\"
 install_sh = ${SHELL} /home/runner/work/swoc/swoc/build-aux/install-sh
 libdir = ${exec_prefix}/lib
+libdir_c = "/usr/local/lib"
+libdir_c_make = \"$(libdir)\"
 libexecdir = ${exec_prefix}/libexec
+libexecdir_c = "/usr/local/libexec"
+libexecdir_c_make = \"$(libexecdir)\"
 lispdir = ${datarootdir}/emacs/site-lisp
+lispdir_c = "/usr/local/share/emacs/site-lisp"
+lispdir_c_make = \"$(lispdir)\"
 localedir = ${datarootdir}/locale
+localedir_c = "/usr/local/share/locale"
+localedir_c_make = \"$(localedir)\"
 localstatedir = ${prefix}/var
+localstatedir_c = "/usr/local/var"
+localstatedir_c_make = \"$(localstatedir)\"
 mandir = ${datarootdir}/man
+mandir_c = "/usr/local/share/man"
+mandir_c_make = \"$(mandir)\"
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
+oldincludedir_c = "/usr/include"
+oldincludedir_c_make = \"$(oldincludedir)\"
 pdfdir = ${docdir}
-pkgversion = 1.7.4
+pdfdir_c = "/usr/local/share/doc/swoc"
+pdfdir_c_make = \"$(pdfdir)\"
+pkgdatadir_c = "/usr/local/share/swoc"
+pkgdatadir_c_make = \"$(pkgdatadir)\"
+pkgincludedir_c = "/usr/local/include/swoc"
+pkgincludedir_c_make = \"$(pkgincludedir)\"
+pkglibdir_c = "/usr/local/lib/swoc"
+pkglibdir_c_make = \"$(pkglibdir)\"
+pkglibexecdir_c = "/usr/local/libexec/swoc"
+pkglibexecdir_c_make = \"$(pkglibexecdir)\"
+pkgversion = 1.8.0
 prefix = /usr/local
+prefix_c = "/usr/local"
+prefix_c_make = \"$(prefix)\"
 program_transform_name = s,x,x,
 psdir = ${docdir}
+psdir_c = "/usr/local/share/doc/swoc"
+psdir_c_make = \"$(psdir)\"
 runstatedir = ${localstatedir}/run
+runstatedir_c = "/usr/local/var/run"
+runstatedir_c_make = \"$(runstatedir)\"
 sbindir = ${exec_prefix}/sbin
+sbindir_c = "/usr/local/sbin"
+sbindir_c_make = \"$(sbindir)\"
 server_lib_version_info = 3:5:0
 sharedstatedir = ${prefix}/com
+sharedstatedir_c = "/usr/local/com"
+sharedstatedir_c_make = \"$(sharedstatedir)\"
 srcdir = .
 srv_pc_requires = libmgec
 srv_pc_requires_private = libswoccommon
 sysconfdir = ${prefix}/etc
+sysconfdir_c = "/usr/local/etc"
+sysconfdir_c_make = \"$(sysconfdir)\"
 target = x86_64-pc-linux-gnu
 target_alias = 
 target_cpu = x86_64
@@ -643,8 +704,14 @@ uninstall-am: uninstall-apiDATA uninstall-docbaseDATA \
 .PRECIOUS: Makefile
 
 
+# Create a reproducible archive
 $(docpkg): doxygen.stamp
-	tar -chz --format=posix -f $@ html
+	LC_ALL=C tar -ch --sort=name --format=posix --numeric-owner \
+	       --owner=0 --group=0 \
+	       --pax-option=exthdr.name=%d/PaxHeaders/%f \
+	       --pax-option=delete=atime,delete=ctime \
+	       --mtime="UTC 2025-10-01" -f - html \
+	       | gzip --no-name --best > $@
 
 doxygen.stamp: Doxyfile $(srcdepends)
 	if $(AM_V_P); then \
@@ -664,8 +731,14 @@ doxygen.stamp: Doxyfile $(srcdepends)
 	fi
 	echo Timestamp > $@
 
+# Create a reproducible archive
 $(intdocpkg): doxygen1.stamp
-	tar -chz --format=posix -f $@ html-int
+	LC_ALL=C tar -ch --sort=name --format=posix --numeric-owner \
+	       --owner=0 --group=0 \
+	       --pax-option=exthdr.name=%d/PaxHeaders/%f \
+	       --pax-option=delete=atime,delete=ctime \
+	       --mtime="UTC 2025-10-01" -f - html \
+	       | gzip --no-name --best > $@
 
 doxygen1.stamp: Doxyfile $(srcdepends)
 	if $(AM_V_P); then \
