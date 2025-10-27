@@ -737,7 +737,7 @@ $(intdocpkg): doxygen1.stamp
 	       --owner=0 --group=0 \
 	       --pax-option=exthdr.name=%d/PaxHeaders/%f \
 	       --pax-option=delete=atime,delete=ctime \
-	       --mtime="UTC 2025-10-01" -f - html \
+	       --mtime="UTC 2025-10-01" -f - html-int \
 	       | gzip --no-name --best > $@
 
 doxygen1.stamp: Doxyfile $(srcdepends)

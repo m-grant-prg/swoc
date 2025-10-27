@@ -252,10 +252,10 @@ OTOOL64 =
 PACKAGE = swoc
 PACKAGE_BUGREPORT = m.grant.prg@gmail.com
 PACKAGE_NAME = Server Wait On Client Package
-PACKAGE_STRING = Server Wait On Client Package 1.8.0
+PACKAGE_STRING = Server Wait On Client Package 1.8.1
 PACKAGE_TARNAME = swoc
 PACKAGE_URL = 
-PACKAGE_VERSION = 1.8.0
+PACKAGE_VERSION = 1.8.1
 PATH_SEPARATOR = :
 PKGCONFIG = yes
 PTHREAD_CC = gcc
@@ -271,7 +271,7 @@ STRIP = strip
 TAR = yes
 TXT2MAN = yes
 TXT2MANWRAP = yes
-VERSION = 1.8.0
+VERSION = 1.8.1
 abs_builddir = /home/runner/work/swoc/swoc/docs/doxygen
 abs_srcdir = /home/runner/work/swoc/swoc/docs/doxygen
 abs_top_builddir = /home/runner/work/swoc/swoc
@@ -379,7 +379,7 @@ pkglibdir_c = "/usr/local/lib/swoc"
 pkglibdir_c_make = \"$(pkglibdir)\"
 pkglibexecdir_c = "/usr/local/libexec/swoc"
 pkglibexecdir_c_make = \"$(pkglibexecdir)\"
-pkgversion = 1.8.0
+pkgversion = 1.8.1
 prefix = /usr/local
 prefix_c = "/usr/local"
 prefix_c_make = \"$(prefix)\"
@@ -737,7 +737,7 @@ $(intdocpkg): doxygen1.stamp
 	       --owner=0 --group=0 \
 	       --pax-option=exthdr.name=%d/PaxHeaders/%f \
 	       --pax-option=delete=atime,delete=ctime \
-	       --mtime="UTC 2025-10-01" -f - html \
+	       --mtime="UTC 2025-10-01" -f - html-int \
 	       | gzip --no-name --best > $@
 
 doxygen1.stamp: Doxyfile $(srcdepends)
