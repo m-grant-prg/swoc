@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Author: Copyright (C) 2017-2019, 2021-2024  Mark Grant		#
+# Author: Copyright (C) 2017-2019, 2021-2025  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -16,19 +16,6 @@
 # the comment in the top-level Makefile.am
 
 
-fix-AT-LD-LIBRARY-PATH-bug.sh: swocserverd Makefile
-	mkdir -p $(@D)
-	rm -f $@ $@.tmp
-	test -f ./$@.in || top_srcdir=$(top_srcdir)/; \
-	$(edit) $${top_srcdir}$(@F).in > $@.tmp
-	mv $@.tmp $@
-	chmod a+x $@
-	./$@ "swocserverd"
-fix-AT-LD-LIBRARY-PATH-bug.sh: $(top_srcdir)/fix-AT-LD-LIBRARY-PATH-bug.sh.in
-
-noinst_SCRIPTS = fix-AT-LD-LIBRARY-PATH-bug.sh
-
-
 if DEBUG
 .gdbinit: Makefile
 	mkdir -p $(@D)
@@ -40,7 +27,7 @@ if DEBUG
 	mv $@.tmp $@
 .gdbinit: $(srcdir)/gdbinit.in
 
-noinst_SCRIPTS += .gdbinit
+noinst_SCRIPTS = .gdbinit
 endif
 
 
@@ -90,6 +77,5 @@ LDADD += ../../com-lib/libswoccommon.la
 
 EXTRA_DIST = $(srcdir)/gdbinit.in
 
-CLEANFILES = *.tmp fix-AT-LD-LIBRARY-PATH-bug.sh \
-	     .gdbinit
+CLEANFILES = *.tmp .gdbinit
 
