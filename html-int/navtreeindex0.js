@@ -210,9 +210,7 @@ var NAVTREEINDEX0 =
 "libswocserver_8h.html#ac6f4cac16e0cee2ef6ebb7933c00602b":[5,0,1,0,0,0,0,3,4],
 "libswocserver_8h_source.html":[5,0,1,0,0,0,0,3],
 "md_docs_doxygen_src_150_autotools_internal.html":[1],
-"md_docs_doxygen_src_150_autotools_internal.html#affected_environments":[1,7,0,0],
 "md_docs_doxygen_src_150_autotools_internal.html#api_header_naming":[1,3,1],
-"md_docs_doxygen_src_150_autotools_internal.html#automake_or_libtool_bug":[1,7,0],
 "md_docs_doxygen_src_150_autotools_internal.html#bootstrapping":[1,1],
 "md_docs_doxygen_src_150_autotools_internal.html#concept":[1,4,0],
 "md_docs_doxygen_src_150_autotools_internal.html#doc_base":[1,6,1],
@@ -233,9 +231,6 @@ var NAVTREEINDEX0 =
 "md_docs_doxygen_src_150_autotools_internal.html#linking_verification":[1,4,2,3],
 "md_docs_doxygen_src_150_autotools_internal.html#overview":[1,0],
 "md_docs_doxygen_src_150_autotools_internal.html#temporaries":[1,4],
-"md_docs_doxygen_src_150_autotools_internal.html#the_issue":[1,7,0,1],
-"md_docs_doxygen_src_150_autotools_internal.html#troubleshooting":[1,7],
-"md_docs_doxygen_src_150_autotools_internal.html#workarounds":[1,7,0,2],
 "md_docs_doxygen_src_200_common_lib.html":[2],
 "md_docs_doxygen_src_200_common_lib.html#parsefile":[2,0],
 "md_docs_doxygen_src_300_client_lib.html":[3],
@@ -249,5 +244,10 @@ var NAVTREEINDEX0 =
 "messages_8c.html#af24e33983d656d19fb356a6ad0bf73a1":[5,0,1,0,0,1,2,0,5],
 "pages.html":[],
 "request_8c.html":[5,0,1,0,0,1,4,1,4],
-"request_8c.html#a13d926605f3eb2d136388309997bb8dc":[5,0,1,0,0,1,4,1,4,20]
+"request_8c.html#a13d926605f3eb2d136388309997bb8dc":[5,0,1,0,0,1,4,1,4,20],
+"request_8c.html#a1652b6de52491ad1f8e12c257581fd85":[5,0,1,0,0,1,4,1,4,5],
+"request_8c.html#a1a1cda43fb792ccb8b2fb4ba5eb1b593":[5,0,1,0,0,1,4,1,4,8],
+"request_8c.html#a1f152a6379c32e487092e17be4656c66":[5,0,1,0,0,1,4,1,4,9],
+"request_8c.html#a21740f29abf7c6ce21c01558a37fb6f3":[5,0,1,0,0,1,4,1,4,17],
+"request_8c.html#a2402e1b01611bb7df3ebd746ccb099e8":[5,0,1,0,0,1,4,1,4,18]
 };

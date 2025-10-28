@@ -59,13 +59,6 @@ var NAVTREE =
       [ "Installation Considerations", "md_docs_doxygen_src_150_autotools_internal.html#installation_condiderations", [
         [ "Making Libraries Available", "md_docs_doxygen_src_150_autotools_internal.html#ldconfig", null ],
         [ "doc-base Documentation", "md_docs_doxygen_src_150_autotools_internal.html#doc_base", null ]
-      ] ],
-      [ "Troubleshooting", "md_docs_doxygen_src_150_autotools_internal.html#troubleshooting", [
-        [ "Automake or Libtool Bug", "md_docs_doxygen_src_150_autotools_internal.html#automake_or_libtool_bug", [
-          [ "Affected Environments", "md_docs_doxygen_src_150_autotools_internal.html#affected_environments", null ],
-          [ "The Issue", "md_docs_doxygen_src_150_autotools_internal.html#the_issue", null ],
-          [ "Workarounds", "md_docs_doxygen_src_150_autotools_internal.html#workarounds", null ]
-        ] ]
       ] ]
     ] ],
     [ "Common Library", "md_docs_doxygen_src_200_common_lib.html", [
@@ -99,7 +92,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"request_8c.html#a1652b6de52491ad1f8e12c257581fd85"
+"request_8c.html#a2fdb5e524caad40f097572cf6321ed00"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
