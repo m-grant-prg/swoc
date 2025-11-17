@@ -2,7 +2,7 @@
 Server Wait On Clients (SWOC) System
 ====================================
 
-Author - Copyright (C) 2018-2023 Mark Grant
+Author - Copyright (C) 2018-2023, 2025 Mark Grant
 
 --------
 Contents
@@ -104,8 +104,8 @@ d) ... If you downloaded the source tarball type 'autoreconf -if'
 e) ... Documents can be registered with scrollkeeper but this process will
 	conflict if the documents have already been installed via a package
 	manager. So, if the documents have not been installed by a package
-	manager. (For further information please see
-	docs/misc/AT-Installation.txt.):-
+	manager (For further information please see
+	https://m-grant-prg.github.io/swoc/html-int/md_docs_doxygen_src_150_autotools_internal.html#doc_base ):-
 
 	Type './configure --enable-atonly'
 
@@ -119,7 +119,7 @@ g) ... Edit the sysconfdir/swocserverd.conf, (usually /etc/swocserverd.conf), as
 	required.
 
 h) ... Update shared libraries links and cache. (For further information please
-	see docs/misc/AT-Installation.txt.)
+	see https://m-grant-prg.github.io/swoc/html-int/md_docs_doxygen_src_150_autotools_internal.html#ldconfig )
 
 	As root or sudo, type 'ldconfig'
 
@@ -176,7 +176,7 @@ https://github.com/m-grant-prg/acmbuild/wiki
 gen-gnulib.sh
 -------------
 This script generates or re-generates the gnulib requirements, I shan't go into
-detail here. For further information please see docs/misc/gnulib.txt.
+detail here. For further information please see https://m-grant-prg.github.io/swoc/html-int/md_docs_doxygen_src_150_autotools_internal.html#gnulib
 
 It is useful when setting up the project initially, when you are actually
 building in what is required and thinking about it, thereafter it is best to use
