@@ -35,31 +35,35 @@ Overnight, clients want to perform crontab work as a user and root, then do a
 backup and then shutdown enabling the server to initiate its own shutdown.
 
 So an example root crontab on the client:-
-# This line adds a lock, performs some work of unknown duration and releases the
-# lock.
-10 00 * * 0,1,2,3,4,5,6 date ; swocclient -l ; apt-get update -qq ; \
-apt-get upgrade -d -q -y ; apt-get dist-upgrade -d -q -y ; swocclient -r ; date
 
-# This line adds a lock of its own, waits until this client has one lock
-# outstanding, ie its own, then performs a backup, releases the lock and shuts
-# down.
-15 00 * * 0,1,2,3,4,6 date ; swocclient -l ; swocclient -w1 ; date ; \
-netbckup -d ; swocclient -r ; date ; at -f shutdown now
+	# This line adds a lock, performs some work of unknown duration and
+	# releases the lock.
+	10 00 * * 0,1,2,3,4,5,6 date ; swocclient -l ; apt-get update -qq ; \
+	apt-get upgrade -d -q -y ; apt-get dist-upgrade -d -q -y ; \
+	swocclient -r ; date
+
+	# This line adds a lock of its own, waits until this client has one lock
+	# outstanding, ie its own, then performs a backup, releases the lock
+	# and shuts down.
+	15 00 * * 0,1,2,3,4,6 date ; swocclient -l ; swocclient -w1 ; date ; \
+	netbckup -d ; swocclient -r ; date ; at -f shutdown now
 
 At the same time, a user crontab on the client is using two crontab entries to
 run some jobs each taking its own lock at the start and releasing it at the
 end. Both of these lines are of unknown and variable duration:-
-10 00 * * 0,1,2,3,4,6 swocclient -l ; \
-get_iplayer --pvr 2>/home/mgrant/Videos/iPlayer/VideosErr.log ; date ; \
-swocclient -r
 
-10 00 * * 0,1,2,3,4,6 swocclient -l ; \
-mget --quiet --sourcefile /home/mgrant/Downloads/MultiGetSource.txt \
---targetdir /home/mgrant/Downloads ; date ; swocclient -r
+	10 00 * * 0,1,2,3,4,6 swocclient -l ; \
+	get_iplayer --pvr 2>/home/mgrant/Videos/iPlayer/VideosErr.log ; date ; \
+	swocclient -r
+
+	10 00 * * 0,1,2,3,4,6 swocclient -l ; \
+	mget --quiet --sourcefile /home/mgrant/Downloads/MultiGetSource.txt \
+	--targetdir /home/mgrant/Downloads ; date ; swocclient -r
 
 Meanwhile on the server, it waits until it has no more registered locks and then
 initiates a shutdown.
-20 00 * * 0,1,2,3,4,5,6 date ; swocserver -w ; date ; at -f shutdown now
+
+	20 00 * * 0,1,2,3,4,5,6 date ; swocserver -w ; date ; at -f shutdown now
 
 This Project
 ------------
