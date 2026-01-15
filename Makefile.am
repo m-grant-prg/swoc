@@ -103,6 +103,10 @@ srctarball:
 	cd -
 
 
+sign_tarball:
+	gpg --armor --detach-sign @PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz
+
+
 doxygen:
 	(cd docs/doxygen && rm -f *.stamp && $(MAKE) $(AM_MAKEFLAGS) $@) \
 		|| exit 1
