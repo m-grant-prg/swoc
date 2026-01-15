@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Author: Copyright (C) 2015-2025  Mark Grant				#
+# Author: Copyright (C) 2015-2026  Mark Grant				#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -92,13 +92,12 @@ EXTRA_DIST += docs/misc misc
 
 srctarball:
 	@cwd="$${PWD}" && \
-	varg="$$(echo @PACKAGE_VERSION@ | sed -e s/\-rc/\~rc/ )" && \
-	targ="$${cwd}/@PACKAGE_TARNAME@-$${varg}.tar.gz" && \
+	targ="$${cwd}/@PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz" && \
 	cd @srcdir@ && \
 	echo "making srctarball from @srcdir@" && \
 	echo "GA	$${targ}" && \
 	git archive --format=tar.gz \
-		--prefix=@PACKAGE_TARNAME@-$${varg}/ \
+		--prefix=@PACKAGE_TARNAME@-@PACKAGE_VERSION@/ \
 		--output=$${targ} \
 		HEAD && \
 	cd -
