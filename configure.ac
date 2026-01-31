@@ -9,7 +9,8 @@
 #	AutoConf script file to configure SWOCServer-C project.		#
 #									#
 # configure cmd line syntax:						#
-# ./configure	[--enable-atonly[={yes|no}]]				#
+# ./configure	[--enable-analyzer[={yes|no}]]				#
+#		[--enable-atonly[={yes|no}]]				#
 #		[--enable-debug[={yes|no}]]				#
 #		[--enable-distcheckfake[={yes|no}]]			#
 #		[--enable-headercheck[={yes|no}]]			#
@@ -23,6 +24,12 @@
 #									#
 # Parameters general description. For specifics please see inline	#
 # comments at the point of definition:-					#
+# --enable-analyzer							#
+#	Use gcc's analyzer. If the gcc version does not support the	#
+#	analyzer, which was first available in version 10, then the	#
+#	string passed to the makefiles is empty and the whole thing	#
+#	becomes a no-op.						#
+#	If not specified on the CL then the default is no.		#
 # --enable-atonly							#
 #	Used to produce a fully working package just from the AT build	#
 #	when the build references a (distro / external) static location	#
