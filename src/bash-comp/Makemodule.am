@@ -1,0 +1,33 @@
+#########################################################################
+#									#
+# Author: Copyright (C) 2026  Mark Grant				#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0-only					#
+#									#
+# Purpose:								#
+# AutoMake script file to generate bash-completion from source.		#
+#									#
+#########################################################################
+
+
+bashcompdir = $(datadir)/bash-completion/completions
+
+
+swocclient swocserver: Makefile
+	mkdir -p $(@D)
+	rm -f $@ $@.tmp
+	test -f ./$@.in || srcdir=$(srcdir)/; \
+	$(edit) $${srcdir}$(@F).sh.in > $@.tmp
+	mv $@.tmp $@
+swocclient: $(srcdir)/swocclient.sh.in
+swocserver: $(srcdir)/swocserver.sh.in
+
+bashcomp_DATA = swocclient swocserver
+
+
+EXTRA_DIST = $(srcdir)/swocclient.sh.in $(srcdir)/swocserver.sh.in
+
+
+CLEANFILES = *.tmp swocclient swocserver
+

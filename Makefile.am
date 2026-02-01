@@ -26,7 +26,8 @@ ACLOCAL_AMFLAGS = -I m4 -I m4extra
 AM_DISTCHECK_CONFIGURE_FLAGS = --enable-distcheckfake=yes
 
 
-SUBDIRS = src/conf/etc/com-lib
+SUBDIRS = src/bash-comp
+SUBDIRS += src/conf/etc/com-lib
 SUBDIRS += src/conf/etc/srv-prg
 SUBDIRS += src/man/3/cli-dev
 SUBDIRS += src/man/3/com-dev/messages

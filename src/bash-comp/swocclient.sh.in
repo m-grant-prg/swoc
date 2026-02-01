@@ -1,0 +1,35 @@
+# shellcheck shell=bash
+#########################################################################
+#									#
+# Author: Copyright (C) 2026  Mark Grant				#
+#									#
+# Released under the GPLv3 only.					#
+# SPDX-License-Identifier: GPL-3.0-only					#
+#									#
+# Purpose:								#
+# Bash completion script.						#
+#									#
+#########################################################################
+
+
+set -o pipefail
+
+
+_swocclient()
+{
+	local cur OPTS
+
+	COMPREPLY=()
+	cur="${COMP_WORDS[COMP_CWORD]}"
+
+	OPTS="-b -h -i -l -r -u -s -V -w"
+	OPTS+=" --block --help --lock --release --reset --status --unblock"
+	OPTS+=" --version --wait"
+	# shellcheck disable=SC2207  # This is _the_ bash completion
+	# pattern, so leave it be.
+	COMPREPLY=( $(compgen -W "${OPTS[*]}" -- "$cur") )
+
+	return 0
+}
+complete -F _swocclient swocclient
+
