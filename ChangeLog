@@ -1,3 +1,30 @@
+2026-02-02 v1.8.3 Mark Grant <m.grant.prg@gmail.com>
+	* build(deps): bump JamesIves/github-pages-deploy-action
+	build(deps): bump JamesIves/github-pages-deploy-action
+	build(deps): bump actions/checkout from 5 to 6
+	build(deps): bump JamesIves/github-pages-deploy-action
+	build(deps): bump jidicula/clang-format-action from 4.15.0 to 4.16.0
+dependabot[bot] (5):
+
+	v1.8.3-rc1
+	bash-comp: Add bash completion
+	at: Add TOF CL details for enable-analyzer
+	at: Upgrade bootstrap.sh to v1.7.0
+	at: Add sign_tarball target
+	at: Leave source tarball name same as distribution tarball
+	Merge pull request #36 from m-grant-prg/dependabot/github_actions/tip/JamesIves/github-pages-deploy-action-4.8.0
+	at: Update Copyright for 2026
+	Merge pull request #34 from m-grant-prg/dependabot/github_actions/tip/JamesIves/github-pages-deploy-action-4.7.6
+	Merge pull request #31 from m-grant-prg/dependabot/github_actions/tip/actions/checkout-6
+	at: Upgrade bootstrap.sh to v1.6.2
+	gnulib: Upgrade gen-gnulib.sh to v1.3.0
+	at: Fix ugly formatting mistake
+	at: Correct links to doxygen documentation on GitHub
+	Merge pull request #30 from m-grant-prg/dependabot/github_actions/tip/JamesIves/github-pages-deploy-action-4.7.4
+	Merge pull request #27 from m-grant-prg/dependabot/github_actions/tip/jidicula/clang-format-action-4.16.0
+	m4: Update c-compiler flags to v1.3.3
+Mark Grant (17):
+
 2025-10-28 v1.8.2 Mark Grant <m.grant.prg@gmail.com>
 	* at: docs: cli-prg: srv-prg: tests: Remove fix for AutoTools LD_LIBRARY_PATH bug
 Mark Grant (1):
