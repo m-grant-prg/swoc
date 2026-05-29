@@ -8,7 +8,7 @@
 
 #########################################################################
 #									#
-# Author: Copyright (C) 2018, 2021, 2023, 2025  Mark Grant		#
+# Author: Copyright (C) 2018, 2021, 2023, 2025, 2026  Mark Grant	#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -50,8 +50,8 @@
 ##################
 # Init variables #
 ##################
-readonly version=1.3.0				# Script version
-readonly packageversion=1.4.1		# Package version
+readonly version=1.3.3				# Script version
+readonly packageversion=1.4.4		# Package version
 
 basedir="."
 modules=()
@@ -68,8 +68,8 @@ usage()
 {
 cat << EOF
 Usage is:-
-$(basename "$0") {-h|-V}
 $(basename "$0") [-b BASE_DIRECTORY] MODULE [MODULE ...]
+$(basename "$0") {-h|-V}
 Usage is:-
 $(basename "$0") [options]
 	-b or --base-dir BASE_DIRECTORY
@@ -117,8 +117,9 @@ std_cmd_err_handler()
 # Standard trap exit function.
 # No parameters.
 # No return value.
-# shellcheck disable=SC2317  # Do not warn about unreachable commands in trap
-# functions, they are legitimate.
+# Do not warn about unreachable commands in trap functions, nor function is
+# never invoked as these are legitimate features of trap handlers.
+# shellcheck disable=SC2317,SC2329
 trap_exit()
 {
 	local -i exit_code=$?
@@ -194,6 +195,7 @@ if [[ ! -d "$basedir" ]]; then
 	output "Invalid directory" 1
 	script_exit 64
 fi
+# shellcheck disable=SC2164 # cd failure covered by std_cmd_err_handler.
 cd "$basedir"
 status=$?
 std_cmd_err_handler $status
@@ -202,6 +204,9 @@ gnulib-tool --import --dir="." --source-base=src/prg/c/gen/lib \
 	--no-conditional-dependencies --no-libtool --no-vc-files "${modules[@]}"
 status=$?
 std_cmd_err_handler $status
+# cd failure covered by std_cmd_err_handler.
+# Cannot use subshell as using the standard error function
+# shellcheck disable=SC2164,2103
 cd -
 status=$?
 std_cmd_err_handler $status
