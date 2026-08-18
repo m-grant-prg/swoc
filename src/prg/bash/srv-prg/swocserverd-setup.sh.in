@@ -109,8 +109,8 @@ do
 		script_exit_code=0
 		script_exit
 		;;
-	V)	echo "$0 Script version "$version
-		echo "$0 Package version "$packageversion
+	V)	echo "$0 Script version $version"
+		echo "$0 Package version $packageversion"
 		script_exit_code=0
 		script_exit
 		;;
@@ -121,7 +121,7 @@ do
 	esac
 done
 
-if [ -f $etclocation/swocserverd.conf ]
+if [ -f "$etclocation"/swocserverd.conf ]
 then
 	script_exit_code=65
 	output "File(s) exist, they must be maintained with an editor." 1
@@ -136,34 +136,34 @@ do
 	std_cmd_err_handler $?
 done
 
-echo "To setup more ports please edit the file - "$etclocation/swocserverd.conf
+echo "To setup more ports please edit the file - $etclocation/swocserverd.conf"
 std_cmd_err_handler $?
 
 
 # Setup location
-test -d $etclocation || mkdir -p $etclocation
+test -d "$etclocation" || mkdir -p "$etclocation"
 std_cmd_err_handler $?
 
 # Write $etclocation/swocserverd.conf file
-echo "[Ports]" >> $etclocation/swocserverd.conf
+echo "[Ports]" >> "$etclocation"/swocserverd.conf
 std_cmd_err_handler $?
 echo "# Port numbers must be in the range 49152 - 65535" \
-	>> $etclocation/swocserverd.conf
+	>> "$etclocation"/swocserverd.conf
 std_cmd_err_handler $?
 echo "portno-0=$portno" >> "$etclocation"/swocserverd.conf
 std_cmd_err_handler $?
-echo "# portno-1=62523" >> $etclocation/swocserverd.conf
+echo "# portno-1=62523" >> "$etclocation"/swocserverd.conf
 std_cmd_err_handler $?
-echo "# portno-2=62524" >> $etclocation/swocserverd.conf
+echo "# portno-2=62524" >> "$etclocation"/swocserverd.conf
 std_cmd_err_handler $?
-echo "# portno-3=62525" >> $etclocation/swocserverd.conf
+echo "# portno-3=62525" >> "$etclocation"/swocserverd.conf
 std_cmd_err_handler $?
-echo "# portno-4=62526" >> $etclocation/swocserverd.conf
+echo "# portno-4=62526" >> "$etclocation"/swocserverd.conf
 std_cmd_err_handler $?
 
 
 # Ensure there is a new line
-echo "" >> $etclocation/swocserverd.conf
+echo "" >> "$etclocation"/swocserverd.conf
 std_cmd_err_handler $?
 
 script_exit_code=0

@@ -114,8 +114,8 @@ do
 		script_exit_code=0
 		script_exit
 		;;
-	V)	echo "$0 Script version "$version
-		echo "$0 Package version "$packageversion
+	V)	echo "$0 Script version $version"
+		echo "$0 Package version $packageversion"
 		script_exit_code=0
 		script_exit
 		;;
@@ -126,7 +126,7 @@ do
 	esac
 done
 
-if [ -f $etclocation/swoc.conf ]
+if [ -f "$etclocation"/swoc.conf ]
 then
 	script_exit_code=65
 	output "File(s) exist, they must be maintained with an editor." 1
@@ -179,59 +179,59 @@ std_cmd_err_handler $?
 
 
 # Setup location
-test -d $etclocation || mkdir -p $etclocation
+test -d "$etclocation" || mkdir -p "$etclocation"
 std_cmd_err_handler $?
 
 # Write $etclocation/swoc.conf file
-echo "[General]" >>$etclocation/swoc.conf
+echo "[General]" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
 echo "# Polling interval must be in the range 1 - 21600 (seconds)" \
-	>>$etclocation/swoc.conf
+	>>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 echo "pollint=$pollint" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
 echo "# Use SSH must be yes or no (case insensitive)" \
-	>>$etclocation/swoc.conf
+	>>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 echo "ssh=$ssh" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
-echo "[Server]" >>$etclocation/swoc.conf
+echo "[Server]" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
-echo "# Name of the SWOC server" >>$etclocation/swoc.conf
+echo "# Name of the SWOC server" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 echo "server=$server" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
 echo "# Server port number must be in the range 49152 - 65535" \
-	>>$etclocation/swoc.conf
+	>>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 echo "srvportno=$srvportno" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
-echo "[SSH]" >>$etclocation/swoc.conf
+echo "[SSH]" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
 echo "# Local port number for user access to this client end of the tunnel." \
-	>>$etclocation/swoc.conf
-echo "# MUST be different from Server portno above." >>$etclocation/swoc.conf
+	>>"$etclocation"/swoc.conf
+echo "# MUST be different from Server portno above." >>"$etclocation"/swoc.conf
 echo "# Port number must be in the range 49152 - 65535" \
-	>>$etclocation/swoc.conf
+	>>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 echo "sshportno=$sshportno" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
-echo "# User name on server for SSH authentication." >>$etclocation/swoc.conf
+echo "# User name on server for SSH authentication." >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 echo "sshuser=$sshuser" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
 
 # Ensure there is a new line
-echo "" >>$etclocation/swoc.conf
+echo "" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
 script_exit_code=0
