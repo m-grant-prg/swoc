@@ -1,4 +1,4 @@
-#! @bashlocation@
+#! @envlocation@ bash
 #########################################################################
 #									#
 #	swocserverd-setup.sh is automatically generated,		#
