@@ -134,7 +134,6 @@ then
 fi
 
 echo "Polling interval must be in the range 1 - 21600 (seconds)"
-std_cmd_err_handler $?
 while ((pollint < 1 || pollint > 21600))
 do
 	read -p "Polling interval for checking server lock status: " pollint
@@ -142,7 +141,6 @@ do
 done
 
 echo "Use SSH - yes / no"
-std_cmd_err_handler $?
 while [ "$ssh" != "YES" -a "$ssh" != "yes" -a "$ssh" != "NO" -a "$ssh" != "no" ]
 do
 	read -p "SSH: " ssh
@@ -150,12 +148,10 @@ do
 done
 
 echo "Name of the SWOC server"
-std_cmd_err_handler $?
 read -p "Server name: " server
 std_cmd_err_handler $?
 
 echo "Port number must be in the range 49152 - 65535"
-std_cmd_err_handler $?
 while ((srvportno < 49152 || srvportno > 65535))
 do
 	read -p "Port number: " srvportno
@@ -165,7 +161,6 @@ done
 echo "Local port number for user access to this client end of the tunnel."
 echo "MUST be different from Server portno above."
 echo "Port number must be in the range 49152 - 65535"
-std_cmd_err_handler $?
 while ((sshportno < 49152 || sshportno > 65535 || sshportno == srvportno))
 do
 	read -p "SSH Port number: " sshportno
@@ -173,7 +168,6 @@ do
 done
 
 echo "User name on server for SSH authentication."
-std_cmd_err_handler $?
 read -p "User name: " sshuser
 std_cmd_err_handler $?
 
@@ -184,54 +178,74 @@ std_cmd_err_handler $?
 
 # Write $etclocation/swoc.conf file
 echo "[General]" >>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 
 echo "# Polling interval must be in the range 1 - 21600 (seconds)" \
 	>>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 echo "pollint=$pollint" >>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 
 echo "# Use SSH must be yes or no (case insensitive)" \
 	>>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 echo "ssh=$ssh" >>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 
 echo "[Server]" >>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 
 echo "# Name of the SWOC server" >>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 echo "server=$server" >>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 
 echo "# Server port number must be in the range 49152 - 65535" \
 	>>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 echo "srvportno=$srvportno" >>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 
 echo "[SSH]" >>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 
 echo "# Local port number for user access to this client end of the tunnel." \
 	>>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
+std_cmd_err_handler $?
 echo "# MUST be different from Server portno above." >>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
+std_cmd_err_handler $?
 echo "# Port number must be in the range 49152 - 65535" \
 	>>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 echo "sshportno=$sshportno" >>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 
 echo "# User name on server for SSH authentication." >>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 echo "sshuser=$sshuser" >>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 
 
 # Ensure there is a new line
 echo "" >>"$etclocation"/swoc.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 
 script_exit_code=0

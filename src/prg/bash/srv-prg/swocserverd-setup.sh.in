@@ -129,7 +129,6 @@ then
 fi
 
 echo "Port number must be in the range 49152 - 65535"
-std_cmd_err_handler $?
 while ((portno < 49152 || portno > 65535))
 do
 	read -p "Port number: " portno
@@ -137,7 +136,6 @@ do
 done
 
 echo "To setup more ports please edit the file - $etclocation/swocserverd.conf"
-std_cmd_err_handler $?
 
 
 # Setup location
@@ -146,26 +144,35 @@ std_cmd_err_handler $?
 
 # Write $etclocation/swocserverd.conf file
 echo "[Ports]" >> "$etclocation"/swocserverd.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 echo "# Port numbers must be in the range 49152 - 65535" \
 	>> "$etclocation"/swocserverd.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 echo "portno-0=$portno" >> "$etclocation"/swocserverd.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 echo "# portno-1=62523" >> "$etclocation"/swocserverd.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 echo "# portno-2=62524" >> "$etclocation"/swocserverd.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 echo "# portno-3=62525" >> "$etclocation"/swocserverd.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 echo "# portno-4=62526" >> "$etclocation"/swocserverd.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 
 
 # Ensure there is a new line
 echo "" >> "$etclocation"/swocserverd.conf
+# shellcheck disable=SC2317,SC2320	# We want the result from echo
 std_cmd_err_handler $?
 
 script_exit_code=0
 output "Files set up." 0
 script_exit
+
