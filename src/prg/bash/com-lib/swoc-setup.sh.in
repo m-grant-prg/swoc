@@ -87,11 +87,14 @@ script_exit()
 }
 
 # Standard trap exit function
+# Do not warn about unreachable commands in trap functions, nor function is
+# never invoked as these are legitimate features of trap handlers.
+# shellcheck disable=SC2317,SC2329
 trap_exit()
 {
-script_exit_code=67
-output "Script terminating due to trap received. Code: $script_exit_code" 1
-script_exit
+	script_exit_code=67
+	output "Script terminating due to trap received. Code: $script_exit_code" 1
+	script_exit
 }
 
 # Setup trap
