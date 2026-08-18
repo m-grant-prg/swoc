@@ -79,7 +79,8 @@ SUBDIRS += src/prg/c/src/tests/cli-lib
 SUBDIRS += src/prg/c/src/tests/com-lib
 SUBDIRS += src/prg/c/src/tests/srv-lib
 SUBDIRS += src/prg/c/src/tests/test-headers
-SUBDIRS += src/prg/c/src/tests/run-tests
+SUBDIRS += src/tests/shellcheck
+SUBDIRS += src/run-tests
 
 
 doc_DATA = AUTHORS ChangeLog COPYING NEWS README

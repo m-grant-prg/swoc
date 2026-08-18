@@ -574,6 +574,11 @@ if test "x$BASH" = "xno" ; then
 	AC_MSG_ERROR([bash not found])
 fi
 
+AC_PATH_PROG([ENV], [env], [no])
+if test "x$ENV" = "xno" ; then
+	AC_MSG_ERROR([env not found])
+fi
+
 AC_MSG_NOTICE(checking for particular programs required at run time)
 AC_CHECK_PROG(GETOPT, getopt, yes, no)
 if test "x$GETOPT" = "xno" ; then
@@ -857,9 +862,12 @@ AC_SUBST([edit], ["$SED \
 		-e 's|@com_pc_requires_private[@]|\$(com_pc_requires_private)|g' \
 		-e 's|@srv_pc_requires[@]|\$(srv_pc_requires)|g' \
 		-e 's|@srv_pc_requires_private[@]|\$(srv_pc_requires_private)|g' \
-		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
+		-e 's|@abstopsrcdir[@]|\$(abs_top_srcdir)|g' \
+		-e 's|@abstopbuilddir[@]|\$(abs_top_builddir)|g' \
 		-e 's|@bashlocation[@]|\$(BASH)|g' \
 		-e 's|@docbaseloc[@]|\$(docbaseloc)|g' \
+		-e 's|@envlocation[@]|\$(ENV)|g' \
+		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
 		-e 's|@CC[@]|\$(CC)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
@@ -1036,7 +1044,8 @@ AC_CONFIG_FILES(Makefile
 		src/prg/c/src/tests/com-lib/Makefile
 		src/prg/c/src/tests/srv-lib/Makefile
 		src/prg/c/src/tests/test-headers/Makefile
-		src/prg/c/src/tests/run-tests/Makefile
+		src/tests/shellcheck/Makefile
+		src/run-tests/Makefile
 		src/systemd/srv-prg/Makefile)
 
 AC_OUTPUT

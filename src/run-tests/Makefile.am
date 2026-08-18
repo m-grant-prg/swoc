@@ -1,6 +1,6 @@
 #########################################################################
 #									#
-# Author: Copyright (C) 2022, 2023  Mark Grant				#
+# Author: Copyright (C) 2022, 2023, 2026  Mark Grant			#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -11,5 +11,6 @@
 #########################################################################
 
 
-TESTS = ../test-headers/compile-headers.sh
+TESTS = ../tests/shellcheck/run-dot-sh-dot-in-pattern.sh
+TESTS += ../prg/c/src/tests/test-headers/compile-headers.sh
 
