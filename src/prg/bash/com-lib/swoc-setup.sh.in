@@ -8,7 +8,7 @@
 
 #########################################################################
 #									#
-# Author: Copyright (C) 2017-2019, 2021-2023  Mark Grant		#
+# Author: Copyright (C) 2017-2019, 2021-2023, 2026  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -43,7 +43,7 @@
 ##################
 script_exit_code=0
 outputprefix="swoc-setup.sh: "
-version="1.1.0"				# set version variable
+version="1.1.1"				# set version variable
 etclocation=@sysconfdir@		# Path to etc directory
 packageversion=@pkgversion@		# Version of the complete package
 
@@ -62,7 +62,7 @@ sshuser=""
 # Output $1 to stdout or stderr depending on $2
 output()
 {
-	if [ $2 = 0 ]
+	if [ "$2" = 0 ]
 	then
 		echo "$outputprefix$1"
 	else
@@ -73,7 +73,7 @@ output()
 # Standard function to test command error ($1 is $?) and exit if non-zero
 std_cmd_err_handler()
 {
-	if [ $1 != 0 ]
+	if [ "$1" != 0 ]
 	then
 		script_exit_code=$1
 		script_exit
@@ -83,14 +83,14 @@ std_cmd_err_handler()
 # Standard function to tidy up and return exit code
 script_exit()
 {
-	exit $script_exit_code
+	exit "$script_exit_code"
 }
 
 # Standard trap exit function
 trap_exit()
 {
 script_exit_code=67
-output "Script terminating due to trap received. Code: "$script_exit_code 1
+output "Script terminating due to trap received. Code: $script_exit_code" 1
 script_exit
 }
 
@@ -186,13 +186,13 @@ std_cmd_err_handler $?
 echo "# Polling interval must be in the range 1 - 21600 (seconds)" \
 	>>$etclocation/swoc.conf
 std_cmd_err_handler $?
-echo "pollint="$pollint >>$etclocation/swoc.conf
+echo "pollint=$pollint" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
 echo "# Use SSH must be yes or no (case insensitive)" \
 	>>$etclocation/swoc.conf
 std_cmd_err_handler $?
-echo "ssh="$ssh >>$etclocation/swoc.conf
+echo "ssh=$ssh" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
 echo "[Server]" >>$etclocation/swoc.conf
@@ -200,13 +200,13 @@ std_cmd_err_handler $?
 
 echo "# Name of the SWOC server" >>$etclocation/swoc.conf
 std_cmd_err_handler $?
-echo "server="$server >>$etclocation/swoc.conf
+echo "server=$server" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
 echo "# Server port number must be in the range 49152 - 65535" \
 	>>$etclocation/swoc.conf
 std_cmd_err_handler $?
-echo "srvportno="$srvportno >>$etclocation/swoc.conf
+echo "srvportno=$srvportno" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
 echo "[SSH]" >>$etclocation/swoc.conf
@@ -218,12 +218,12 @@ echo "# MUST be different from Server portno above." >>$etclocation/swoc.conf
 echo "# Port number must be in the range 49152 - 65535" \
 	>>$etclocation/swoc.conf
 std_cmd_err_handler $?
-echo "sshportno="$sshportno >>$etclocation/swoc.conf
+echo "sshportno=$sshportno" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
 echo "# User name on server for SSH authentication." >>$etclocation/swoc.conf
 std_cmd_err_handler $?
-echo "sshuser="$sshuser >>$etclocation/swoc.conf
+echo "sshuser=$sshuser" >>"$etclocation"/swoc.conf
 std_cmd_err_handler $?
 
 

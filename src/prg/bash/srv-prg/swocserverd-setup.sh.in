@@ -8,7 +8,7 @@
 
 #########################################################################
 #									#
-# Author: Copyright (C) 2017-2019, 2021-2023  Mark Grant		#
+# Author: Copyright (C) 2017-2019, 2021-2023, 2026  Mark Grant		#
 #									#
 # Released under the GPLv3 only.					#
 # SPDX-License-Identifier: GPL-3.0-only					#
@@ -43,7 +43,7 @@
 ##################
 script_exit_code=0
 outputprefix="swocserverd-setup.sh: "
-version="1.1.0"				# set version variable
+version="1.1.1"				# set version variable
 etclocation=@sysconfdir@		# Path to etc directory
 packageversion=@pkgversion@		# Version of the complete package
 
@@ -57,7 +57,7 @@ portno=""
 # Output $1 to stdout or stderr depending on $2
 output()
 {
-	if [ $2 = 0 ]
+	if [ "$2" = 0 ]
 	then
 		echo "$outputprefix$1"
 	else
@@ -68,7 +68,7 @@ output()
 # Standard function to test command error ($1 is $?) and exit if non-zero
 std_cmd_err_handler()
 {
-	if [ $1 != 0 ]
+	if [ "$1" != 0 ]
 	then
 		script_exit_code=$1
 		script_exit
@@ -78,14 +78,14 @@ std_cmd_err_handler()
 # Standard function to tidy up and return exit code
 script_exit()
 {
-	exit $script_exit_code
+	exit "$script_exit_code"
 }
 
 # Standard trap exit function
 trap_exit()
 {
 script_exit_code=67
-output "Script terminating due to trap received. Code: "$script_exit_code 1
+output "Script terminating due to trap received. Code: $script_exit_code" 1
 script_exit
 }
 
@@ -147,7 +147,7 @@ std_cmd_err_handler $?
 echo "# Port numbers must be in the range 49152 - 65535" \
 	>> $etclocation/swocserverd.conf
 std_cmd_err_handler $?
-echo "portno-0="$portno >> $etclocation/swocserverd.conf
+echo "portno-0=$portno" >> "$etclocation"/swocserverd.conf
 std_cmd_err_handler $?
 echo "# portno-1=62523" >> $etclocation/swocserverd.conf
 std_cmd_err_handler $?
