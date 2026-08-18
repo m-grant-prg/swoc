@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #########################################################################
 #									#
 #	gen-gnulib.sh is automatically generated,			#
@@ -50,8 +50,8 @@
 ##################
 # Init variables #
 ##################
-readonly version=1.3.3				# Script version
-readonly packageversion=1.4.4		# Package version
+readonly version=1.3.4				# Script version
+readonly packageversion=1.4.4-17-g06ec3e2b		# Package version
 
 basedir="."
 modules=()
@@ -160,8 +160,8 @@ proc_CL()
 			script_exit 0
 			;;
 		-V|--version)
-			printf "Script version %s\n" $version
-			printf "Package version %s\n" $packageversion
+			printf "Script version %s\n" "$version"
+			printf "Package version %s\n" "$packageversion"
 			shift
 			script_exit 0
 			;;
@@ -198,18 +198,18 @@ fi
 # shellcheck disable=SC2164 # cd failure covered by std_cmd_err_handler.
 cd "$basedir"
 status=$?
-std_cmd_err_handler $status
+std_cmd_err_handler "$status"
 # N.B. --source-base is relative to --dir
 gnulib-tool --import --dir="." --source-base=src/prg/c/gen/lib \
 	--no-conditional-dependencies --no-libtool --no-vc-files "${modules[@]}"
 status=$?
-std_cmd_err_handler $status
+std_cmd_err_handler "$status"
 # cd failure covered by std_cmd_err_handler.
 # Cannot use subshell as using the standard error function
 # shellcheck disable=SC2164,2103
 cd -
 status=$?
-std_cmd_err_handler $status
+std_cmd_err_handler "$status"
 
 script_exit 0
 
