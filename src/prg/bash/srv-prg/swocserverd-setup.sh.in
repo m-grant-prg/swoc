@@ -131,7 +131,7 @@ fi
 echo "Port number must be in the range 49152 - 65535"
 while ((portno < 49152 || portno > 65535))
 do
-	read -p "Port number: " portno
+	read -pr "Port number: " portno
 	std_cmd_err_handler $?
 done
 

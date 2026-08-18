@@ -136,25 +136,25 @@ fi
 echo "Polling interval must be in the range 1 - 21600 (seconds)"
 while ((pollint < 1 || pollint > 21600))
 do
-	read -p "Polling interval for checking server lock status: " pollint
+	read -pr "Polling interval for checking server lock status: " pollint
 	std_cmd_err_handler $?
 done
 
 echo "Use SSH - yes / no"
 while [ "$ssh" != "YES" -a "$ssh" != "yes" -a "$ssh" != "NO" -a "$ssh" != "no" ]
 do
-	read -p "SSH: " ssh
+	read -pr "SSH: " ssh
 	std_cmd_err_handler $?
 done
 
 echo "Name of the SWOC server"
-read -p "Server name: " server
+read -pr "Server name: " server
 std_cmd_err_handler $?
 
 echo "Port number must be in the range 49152 - 65535"
 while ((srvportno < 49152 || srvportno > 65535))
 do
-	read -p "Port number: " srvportno
+	read -pr "Port number: " srvportno
 	std_cmd_err_handler $?
 done
 
@@ -163,12 +163,12 @@ echo "MUST be different from Server portno above."
 echo "Port number must be in the range 49152 - 65535"
 while ((sshportno < 49152 || sshportno > 65535 || sshportno == srvportno))
 do
-	read -p "SSH Port number: " sshportno
+	read -pr "SSH Port number: " sshportno
 	std_cmd_err_handler $?
 done
 
 echo "User name on server for SSH authentication."
-read -p "User name: " sshuser
+read -pr "User name: " sshuser
 std_cmd_err_handler $?
 
 
