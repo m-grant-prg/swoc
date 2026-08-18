@@ -141,7 +141,7 @@ do
 done
 
 echo "Use SSH - yes / no"
-while [ "$ssh" != "YES" -a "$ssh" != "yes" -a "$ssh" != "NO" -a "$ssh" != "no" ]
+while [[ "$ssh" != "YES" && "$ssh" != "yes" && "$ssh" != "NO" && "$ssh" != "no" ]]
 do
 	read -pr "SSH: " ssh
 	std_cmd_err_handler $?
