@@ -154,7 +154,9 @@ AC_DEFINE(SWOCSERVERD_SOURCE_VERSION, "1.1.2", \
 AC_SUBST(pkgversion, $PACKAGE_VERSION)
 
 # Separate AutoTools generated files from project root.
-AC_CONFIG_AUX_DIR([build-aux])
+m4_define([CONFIG_AUXDIR_NAME], [build-aux])
+AC_CONFIG_AUX_DIR(CONFIG_AUXDIR_NAME)
+AC_SUBST([config_aux_dir], [CONFIG_AUXDIR_NAME])
 
 #
 # Canonical targets are required by AX_PTHREAD.
@@ -862,6 +864,7 @@ AC_SUBST([edit], ["$SED \
 		-e 's|@cli_pc_requires_private[@]|\$(cli_pc_requires_private)|g' \
 		-e 's|@com_pc_requires[@]|\$(com_pc_requires)|g' \
 		-e 's|@com_pc_requires_private[@]|\$(com_pc_requires_private)|g' \
+		-e 's|@configauxdir[@]|\$(config_aux_dir)|g' \
 		-e 's|@docbaseloc[@]|\$(docbaseloc)|g' \
 		-e 's|@envlocation[@]|\$(ENV)|g' \
 		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
