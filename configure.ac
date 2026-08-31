@@ -856,17 +856,17 @@ AC_MSG_NOTICE(processing additional checks and variables)
 #					${libexecdir}/${PACKAGE}
 #
 AC_SUBST([edit], ["$SED \
+		-e 's|@abstopbuilddir[@]|\$(abs_top_builddir)|g' \
+		-e 's|@abstopsrcdir[@]|\$(abs_top_srcdir)|g' \
 		-e 's|@cli_pc_requires[@]|\$(cli_pc_requires)|g' \
 		-e 's|@cli_pc_requires_private[@]|\$(cli_pc_requires_private)|g' \
 		-e 's|@com_pc_requires[@]|\$(com_pc_requires)|g' \
 		-e 's|@com_pc_requires_private[@]|\$(com_pc_requires_private)|g' \
-		-e 's|@srv_pc_requires[@]|\$(srv_pc_requires)|g' \
-		-e 's|@srv_pc_requires_private[@]|\$(srv_pc_requires_private)|g' \
-		-e 's|@abstopsrcdir[@]|\$(abs_top_srcdir)|g' \
-		-e 's|@abstopbuilddir[@]|\$(abs_top_builddir)|g' \
 		-e 's|@docbaseloc[@]|\$(docbaseloc)|g' \
 		-e 's|@envlocation[@]|\$(ENV)|g' \
 		-e 's|@pkgversion[@]|\$(pkgversion)|g' \
+		-e 's|@srv_pc_requires[@]|\$(srv_pc_requires)|g' \
+		-e 's|@srv_pc_requires_private[@]|\$(srv_pc_requires_private)|g' \
 		-e 's|@CC[@]|\$(CC)|g' \
 		-e 's|@prefix[@]|\$(prefix)|g' \
 		-e 's|@exec_prefix[@]|\$(exec_prefix)|g' \
